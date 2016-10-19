@@ -39,6 +39,7 @@
         <activity android:name="ni.org.ics.zip.appmovil.activities.buscar.BuscarEmbarazadaActivity" />
         <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NuevaEmbarazadaActivity"
             android:screenOrientation="portrait"></activity>
+        <activity android:name="ni.org.ics.zip.appmovil.activities.server.EnviarEmbarazadasActivity" />
         <activity android:name="ni.org.ics.zip.appmovil.preferences.PreferencesActivity" />
     </application>
 

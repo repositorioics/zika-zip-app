@@ -13,7 +13,6 @@ public class Zp00ScreeningHelper {
 	public static ContentValues crearZp00ScreeningValues(Zp00Screening screening){
 		ContentValues cv = new ContentValues();
 		cv.put(MainDBConstants.recordId, screening.getRecordId());
-		//cv.put(MainDBConstants.numScreening, screening.getNumScreening());
 		if (screening.getScrVisitDate() != null) cv.put(MainDBConstants.scrVisitDate, screening.getScrVisitDate().getTime());
 		cv.put(MainDBConstants.scrRemain, screening.getScrRemain());
 		cv.put(MainDBConstants.scrAge, screening.getScrAge());
@@ -29,6 +28,7 @@ public class Zp00ScreeningHelper {
 		cv.put(MainDBConstants.scrObDobMon, screening.getScrObDobMon());
 		cv.put(MainDBConstants.scrObDobYear, screening.getScrObDobYear());
 		cv.put(MainDBConstants.scrObAge, screening.getScrObAge());
+		cv.put(MainDBConstants.scrObAssent, screening.getScrObAssent());
 		cv.put(MainDBConstants.scrConsentA, screening.getScrConsentA());
 		cv.put(MainDBConstants.scrConsentB, screening.getScrConsentB());
 		cv.put(MainDBConstants.scrConsentC, screening.getScrConsentC());
@@ -64,7 +64,6 @@ public class Zp00ScreeningHelper {
 	public static Zp00Screening crearZp00Screening(Cursor cursorScreening){		
 		Zp00Screening mScreening = new Zp00Screening();
 		mScreening.setRecordId(cursorScreening.getString(cursorScreening.getColumnIndex(MainDBConstants.recordId)));
-		//mScreening.setNumScreening(cursorScreening.getString(cursorScreening.getColumnIndex(MainDBConstants.numScreening)));
 		if(cursorScreening.getLong(cursorScreening.getColumnIndex(MainDBConstants.scrVisitDate))>0) mScreening.setScrVisitDate(new Date(cursorScreening.getLong(cursorScreening.getColumnIndex(MainDBConstants.scrVisitDate))));
 		mScreening.setScrRemain(cursorScreening.getString(cursorScreening.getColumnIndex(MainDBConstants.scrRemain)));
 		mScreening.setScrAge(cursorScreening.getInt(cursorScreening.getColumnIndex(MainDBConstants.scrAge)));

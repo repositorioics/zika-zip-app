@@ -1,22 +1,15 @@
 package ni.org.ics.zip.appmovil.tasks;
 
-import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.listeners.UploadListener;
-import android.content.Context;
 import android.os.AsyncTask;
 
 public abstract class UploadTask extends
 AsyncTask<String, String, String> {
 
 	protected static final String TAG = UploadTask.class.getSimpleName();
-
-	private Context mContext;
-
-	public UploadTask(Context context) {
-		mContext = context;
+	public UploadTask() {
 	}
 	protected UploadListener mStateListener;
-	protected ZipAdapter va = new ZipAdapter(mContext,"1234",false);
 
 	@Override
 	protected void onProgressUpdate(String... values) {

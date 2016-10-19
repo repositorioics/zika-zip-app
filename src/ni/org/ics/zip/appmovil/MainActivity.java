@@ -2,6 +2,7 @@ package ni.org.ics.zip.appmovil;
 
 
 import ni.org.ics.zip.appmovil.activities.buscar.BuscarEmbarazadaActivity;
+import ni.org.ics.zip.appmovil.activities.server.EnviarEmbarazadasActivity;
 import ni.org.ics.zip.appmovil.adapters.MainActivityAdapter;
 import ni.org.ics.zip.appmovil.preferences.PreferencesActivity;
 import android.os.Bundle;
@@ -201,9 +202,8 @@ public class MainActivity extends ListActivity {
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
 					mSendShowing=false;
-					//Intent ie = new Intent(getApplicationContext(), UploadAllActivity.class);
-					//startActivityForResult(ie, UPDATE_SERVER);
-					showToast("Test", 1);
+					Intent ie = new Intent(getApplicationContext(), EnviarEmbarazadasActivity.class);
+					startActivityForResult(ie, UPDATE_SERVER);
 				}
 			});
 			builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
