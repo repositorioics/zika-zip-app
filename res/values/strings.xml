@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Estudio Zip</string>
+    <string name="main_header">Zika en infantes y en el embarazo (Estudio ZIP)</string>
+    <string name="desc_logo">Instituto de Ciencias Sostenibles</string>
+    
+    <string name="success">Operación exitosa!</string>
+    <string name="error">Ha ocurrido un error!</string>
+    <string name="errordb">Ha ocurrido un error, base de datos no existe!</string>
+    <string name="loading">Cargando.....</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
+    <string name="confirm">Confirmar</string>
+    <string name="exiting">Realmente desea Salir?</string>
+    <string name="downloading">Descargar toda la info del servidor?</string>
+    <string name="uploading">Enviar toda la info al servidor?</string>
+    <string name="desc_barcode">Escanear código de barras</string>
+    <string name="parametro">Parámetro de búsqueda</string>
+    <string name="ok">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="edit">Editar</string>
+    <string name="add">Agregar</string>
+    <string name="select">Seleccionar</string>
+    <string name="enter">Ingresar</string>
+    <string name="barcode_error">Escaner de código de barras no disponible</string>
+    <string name="search_hint">Ingresar texto de búsqueda</string>
+    <string name="code_error">Identificador inválido!</string>
+    <string name="code_notfound">Identificador no encontrado!</string>
+    <string name="scan_error">Esta lectura es inválida!</string>
+    <string name="no_items">No hay registros!</string>
+    <string name="storage_error">Medio de almacenamiento no disponible!</string>
+    <string name="err_not_completed">No ha completado el formulario</string>
+    <string name="study_id">Código del estudio</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="preferences">Configuración</string>
+    
+    <string name="server_preferences">Configuración Servidor</string>
+    <string name="default_server_url">http://192.168.1.136:8080/zika-zip</string>
+    <string name="server_url">URL de servidor</string>
+    <string name="check_server">Verificar en el servidor</string>
+    <string name="url_error">Error en la dirección</string>
+    <string name="change_server_url">Cambiar URL de servidor</string>
+  
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="maternal_1">Datos Iniciales</string>
+    <string name="maternal_2">Antecedentes</string>
+    <string name="maternal_3">Datos Embarazo</string>
+    <string name="maternal_4">Muestras</string>
+    <string name="maternal_5">Visita Mensual</string>
+    <string name="maternal_6">Visita Trimestral</string>
+    <string name="maternal_7">Ultrasonidos</string>
+    <string name="maternal_8">Parto</string>
+    <string name="maternal_9">Salida</string>
+    <string name="mat_search">Buscar Embarazada</string>
+    <!-- Campos materna -->
+    <string name="mat_id">Código de la participante</string>
+    <string name="mat_ini">Iniciales de la participante</string>
+    <string name="mat_tam">Número de tamizaje</string>
+    <string name="mat_fec">Fecha de visita</string>
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string-array name="menu_main">
+        <item>@string/main_maternal</item>
+        <item>@string/main_infant</item>
+        <item>@string/main_specimen</item>
+        <item>@string/main_review</item>
+    </string-array>
+    
+    <string-array name="menu_maternal">
+        <item>@string/maternal_1</item>
+        <item>@string/maternal_2</item>
+        <item>@string/maternal_3</item>
+        <item>@string/maternal_4</item>
+        <item>@string/maternal_5</item>
+        <item>@string/maternal_6</item>
+        <item>@string/maternal_7</item>
+        <item>@string/maternal_8</item>
+        <item>@string/maternal_9</item>
+    </string-array>
+    
+    <string-array name="menu_infant">
+        <item>@string/infant_1</item>
+        <item>@string/infant_2</item>
+    </string-array>
+    
+    <string-array name="menu_specimen">
+        <item>@string/specimen_1</item>
+        <item>@string/specimen_2</item>
+    </string-array>
+    
+</resources>
