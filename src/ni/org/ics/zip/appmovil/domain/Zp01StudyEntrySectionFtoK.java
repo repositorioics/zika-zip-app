@@ -67,7 +67,7 @@ public class Zp01StudyEntrySectionFtoK extends BaseMetaData {
     private String seaBleeding;
     private String seaYesBleeding;
     private String seaUti;
-    private String seaPrenatalCare;
+    private Date seaPrenatalCare;
     private String seaMutiv;
     private String seaIron;
     private String seaOften;
@@ -75,9 +75,9 @@ public class Zp01StudyEntrySectionFtoK extends BaseMetaData {
     private String seaReminderPreg;
     private String seaReminderProvided;
     private Date seaOneweekDate;
-    private Date seaOneweekTime;
+    private String seaOneweekTime;
     private Date seaNextDate;
-    private Date seaNextTime;
+    private String seaNextTime;
     private String seaIdCompleting;
     private Date seaDateCompleted;
     private String seaIdReviewer;
@@ -549,11 +549,11 @@ public class Zp01StudyEntrySectionFtoK extends BaseMetaData {
         this.seaUti = seaUti;
     }
 
-    public String getSeaPrenatalCare() {
+    public Date getSeaPrenatalCare() {
         return seaPrenatalCare;
     }
 
-    public void setSeaPrenatalCare(String seaPrenatalCare) {
+    public void setSeaPrenatalCare(Date seaPrenatalCare) {
         this.seaPrenatalCare = seaPrenatalCare;
     }
 
@@ -613,11 +613,11 @@ public class Zp01StudyEntrySectionFtoK extends BaseMetaData {
         this.seaOneweekDate = seaOneweekDate;
     }
 
-    public Date getSeaOneweekTime() {
+    public String getSeaOneweekTime() {
         return seaOneweekTime;
     }
 
-    public void setSeaOneweekTime(Date seaOneweekTime) {
+    public void setSeaOneweekTime(String seaOneweekTime) {
         this.seaOneweekTime = seaOneweekTime;
     }
 
@@ -629,11 +629,11 @@ public class Zp01StudyEntrySectionFtoK extends BaseMetaData {
         this.seaNextDate = seaNextDate;
     }
 
-    public Date getSeaNextTime() {
+    public String getSeaNextTime() {
         return seaNextTime;
     }
 
-    public void setSeaNextTime(Date seaNextTime) {
+    public void setSeaNextTime(String seaNextTime) {
         this.seaNextTime = seaNextTime;
     }
 
