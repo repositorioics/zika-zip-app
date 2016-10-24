@@ -220,7 +220,7 @@ public class NuevaEmbarazadaActivity extends AbstractAsyncActivity {
 					"_id","jrFormId","displayName"};
 			//cursor que busca el formulario
 			Cursor c = getContentResolver().query(Constants.CONTENT_URI, projection,
-					"jrFormId = 'zp00_screening' and displayName = 'Zip Study VISITA DE TAMIZAJE'", null, null);
+					"jrFormId = 'zp00_screening' and displayName = 'Estudio ZIP Visita de Tamizaje'", null, null);
 			c.moveToFirst();
 			//captura el id del formulario
 			Integer id = Integer.parseInt(c.getString(0));
