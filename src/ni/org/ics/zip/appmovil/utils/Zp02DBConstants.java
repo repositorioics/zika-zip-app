@@ -139,7 +139,7 @@ public class Zp02DBConstants {
             + redcapEventName + " text, "
             + bscDov + " date, "
             + bscVisit + " text, "
-            + bscMatBldCol  + " date, "
+            + bscMatBldCol  + " text, "
             + bscMatBldRsn + " text, "
             + bscMatBldSpecify + " text, "
             + bscMatBldTyp1 + " text, "
