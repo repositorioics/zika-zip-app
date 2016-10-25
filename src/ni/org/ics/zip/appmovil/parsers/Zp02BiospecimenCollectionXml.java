@@ -12,8 +12,6 @@ import java.util.Date;
 public class Zp02BiospecimenCollectionXml{
 
     @Element(required=false)
-    private String redcapEventName;
-    @Element(required=false)
     private Date bscDov;
     @Element(required=false)
     private String bscVisit;
@@ -334,10 +332,6 @@ public class Zp02BiospecimenCollectionXml{
     private String imei;
     @Element(required=false)
     private Date today;
-
-    public String getRedcapEventName() {
-        return redcapEventName;
-    }
 
     public Date getBscDov() {
         return bscDov;

@@ -53,7 +53,6 @@ public class Zp03MonthlyVisitHelper {
         cv.put(Zp03DBConstants.monCharacDischarge, monthlyVisit.getMonCharacDischarge());
         cv.put(Zp03DBConstants.monBleeding, monthlyVisit.getMonBleeding());
         cv.put(Zp03DBConstants.monBleedingCharac, monthlyVisit.getMonBleedingCharac());
-
         cv.put(Zp03DBConstants.monUtiTold, monthlyVisit.getMonUtiTold());
         cv.put(Zp03DBConstants.monPrenatalDay, monthlyVisit.getMonPrenatalDay());
         cv.put(Zp03DBConstants.monPrenatalMonth, monthlyVisit.getMonPrenatalMonth());
@@ -88,7 +87,6 @@ public class Zp03MonthlyVisitHelper {
         cv.put(Zp03DBConstants.monJointYear, monthlyVisit.getMonJointYear());
         cv.put(Zp03DBConstants.monJointDuration, monthlyVisit.getMonJointDuration());
         cv.put(Zp03DBConstants.monHeadache, monthlyVisit.getMonHeadache());
-
         cv.put(Zp03DBConstants.monHeadacheDay, monthlyVisit.getMonHeadacheDay());
         cv.put(Zp03DBConstants.monHeadacheMonth, monthlyVisit.getMonHeadacheMonth());
         cv.put(Zp03DBConstants.monHeadacheYear, monthlyVisit.getMonHeadacheYear());
@@ -122,7 +120,6 @@ public class Zp03MonthlyVisitHelper {
         cv.put(Zp03DBConstants.monSensationMin, monthlyVisit.getMonSensationMin());
         cv.put(Zp03DBConstants.monSensationHr, monthlyVisit.getMonSensationHr());
         cv.put(Zp03DBConstants.monSenstaionDay, monthlyVisit.getMonSenstaionDay());
-
         cv.put(Zp03DBConstants.monInjury, monthlyVisit.getMonInjury());
         cv.put(Zp03DBConstants.monTinglingDay, monthlyVisit.getMonTinglingDay());
         cv.put(Zp03DBConstants.monTinglingMonth, monthlyVisit.getMonTinglingMonth());
