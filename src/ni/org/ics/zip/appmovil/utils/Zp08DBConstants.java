@@ -1,7 +1,5 @@
 package ni.org.ics.zip.appmovil.utils;
 
-import java.util.Date;
-
 /**
  * Created by FIRSTICT on 10/25/2016.
  * V1.0

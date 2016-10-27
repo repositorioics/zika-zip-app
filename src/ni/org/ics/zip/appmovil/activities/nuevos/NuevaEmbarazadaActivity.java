@@ -12,6 +12,7 @@ import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.domain.Zp00Screening;
+import ni.org.ics.zip.appmovil.domain.ZpEstadoEmbarazada;
 import ni.org.ics.zip.appmovil.parsers.Zp00ScreeningXml;
 import ni.org.ics.zip.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.zip.appmovil.utils.Constants;
@@ -47,6 +48,7 @@ public class NuevaEmbarazadaActivity extends AbstractAsyncActivity {
 	
 	private ZipAdapter zipA;
 	private static Zp00Screening mTamizaje = new Zp00Screening();
+	private static ZpEstadoEmbarazada mEstado = new ZpEstadoEmbarazada();
 	
 	public static final int ADD_TAMIZAJE_ODK = 1;
 	public static final int BARCODE_CAPTURE_TAM = 2;
@@ -292,6 +294,18 @@ public class NuevaEmbarazadaActivity extends AbstractAsyncActivity {
 			mTamizaje.setSimserial(zp00Xml.getSimserial());
 			mTamizaje.setPhonenumber(zp00Xml.getPhonenumber());
 			mTamizaje.setToday(zp00Xml.getToday());
+			mEstado.setRecordId(mRecordId);
+			mEstado.setRecordDate(new Date());
+			mEstado.setRecordUser(username);
+			mEstado.setIdInstancia(idInstancia);
+			mEstado.setInstancePath(instanceFilePath);
+			mEstado.setEstado(Constants.STATUS_NOT_SUBMITTED);
+			mEstado.setStart(zp00Xml.getStart());
+			mEstado.setEnd(zp00Xml.getEnd());
+			mEstado.setDeviceid(zp00Xml.getDeviceid());
+			mEstado.setSimserial(zp00Xml.getSimserial());
+			mEstado.setPhonenumber(zp00Xml.getPhonenumber());
+			mEstado.setToday(zp00Xml.getToday());
 			new SaveDataTask().execute();
 			
 		} catch (Exception e) {
@@ -376,6 +390,7 @@ public class NuevaEmbarazadaActivity extends AbstractAsyncActivity {
 			try {
 				zipA.open();
 				zipA.crearZp00Screening(mTamizaje);
+				zipA.crearZpEstadoEmbarazada(mEstado);
 				zipA.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);

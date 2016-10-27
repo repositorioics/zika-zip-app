@@ -1,18 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="maternal_1">Datos Iniciales</string>
-    <string name="maternal_2">Antecedentes</string>
-    <string name="maternal_3">Datos Embarazo</string>
-    <string name="maternal_4">Muestras</string>
-    <string name="maternal_5">Visita Mensual</string>
-    <string name="maternal_6">Visita Trimestral</string>
-    <string name="maternal_7">Ultrasonidos</string>
-    <string name="maternal_8">Parto</string>
-    <string name="maternal_9">Salida</string>
+    <!-- Eventos -->
+    <string name="maternal_events">Matriz de eventos para embarazadas</string>
+    <string name="maternal_a_1">Ingreso</string>
+    <string name="maternal_a_2">4 semanas</string>
+    <string name="maternal_a_3">8 semanas</string>
+    <string name="maternal_a_4">12 semanas</string>
+    <string name="maternal_a_5">16 semanas</string>
+    <string name="maternal_a_6">20 semanas</string>
+    <string name="maternal_a_7">24 semanas</string>
+    <string name="maternal_a_8">28 semanas</string>
+    <string name="maternal_a_9">32 semanas</string>
+    <string name="maternal_a_10">36 semanas</string>
+    <string name="maternal_a_11">40 semanas</string>
+    <string name="maternal_a_12">44 semanas</string>
+    <string name="maternal_a_13">Parto</string>
+    <string name="maternal_a_14">6 semanas post parto</string>
+    <string name="maternal_a_15">Salida</string>
+    <string name="maternal_a_16">No programada 1</string>
+    <string name="maternal_a_17">No programada 2</string>
+    <string name="maternal_a_18">No programada 3</string>
+    <string name="maternal_a_19">No programada 4</string>
+    <string name="maternal_a_20">No programada 5</string>
+    
+    <!-- Formularios -->
+    <string name="maternal_b_1">Demografía</string>
+    <string name="maternal_b_2">Estado de Salud</string>
+    <string name="maternal_b_3">Historia Embarazo</string>
+    <string name="maternal_b_4">Muestras</string>
+    <string name="maternal_b_5">Visita Mensual</string>
+    <string name="maternal_b_6">Profesión, Hogar y Factores de Riesgo</string>
+    <string name="maternal_b_7">Exposición ambiental</string>
+    <string name="maternal_b_8">Pesticidas e Insecticidas</string>
+    <string name="maternal_b_9">Ultrasonidos</string>
+    <string name="maternal_b_10">Parto</string>
+    <string name="maternal_b_11">Posparto</string>    
+    
+    
     <string name="mat_search">Buscar Embarazada</string>
     <!-- Campos materna -->
     <string name="mat_id">Código de la participante</string>
     <string name="mat_ini">Iniciales de la participante</string>
     <string name="mat_tam">Número de tamizaje</string>
-    <string name="mat_fec">Fecha de visita</string>
+    <string name="mat_fec">Fecha de ingreso</string>
 </resources>

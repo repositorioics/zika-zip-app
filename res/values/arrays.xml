@@ -8,16 +8,38 @@
         <item>@string/main_review</item>
     </string-array>
     
-    <string-array name="menu_maternal">
-        <item>@string/maternal_1</item>
-        <item>@string/maternal_2</item>
-        <item>@string/maternal_3</item>
-        <item>@string/maternal_4</item>
-        <item>@string/maternal_5</item>
-        <item>@string/maternal_6</item>
-        <item>@string/maternal_7</item>
-        <item>@string/maternal_8</item>
-        <item>@string/maternal_9</item>
+    <string-array name="menu_maternal_a">
+        <item>@string/maternal_a_1</item>
+        <item>@string/maternal_a_2</item>
+        <item>@string/maternal_a_3</item>
+        <item>@string/maternal_a_4</item>
+        <item>@string/maternal_a_5</item>
+        <item>@string/maternal_a_6</item>
+        <item>@string/maternal_a_7</item>
+        <item>@string/maternal_a_8</item>
+        <item>@string/maternal_a_9</item>
+        <item>@string/maternal_a_10</item>
+        <item>@string/maternal_a_11</item>
+        <item>@string/maternal_a_12</item>
+        <item>@string/maternal_a_13</item>
+        <item>@string/maternal_a_14</item>
+        <item>@string/maternal_a_15</item>
+        <item>@string/maternal_a_16</item>
+        <item>@string/maternal_a_17</item>
+        <item>@string/maternal_a_18</item>
+        <item>@string/maternal_a_19</item>
+        <item>@string/maternal_a_20</item>
+    </string-array>
+    
+    <string-array name="menu_maternal_ingreso">
+        <item>@string/maternal_b_1</item>
+        <item>@string/maternal_b_2</item>
+        <item>@string/maternal_b_3</item>
+        <item>@string/maternal_b_4</item>
+        <item>@string/maternal_b_6</item>
+        <item>@string/maternal_b_7</item>
+        <item>@string/maternal_b_8</item>
+        <item>@string/maternal_b_9</item>
     </string-array>
     
     <string-array name="menu_infant">

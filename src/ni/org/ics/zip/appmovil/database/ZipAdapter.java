@@ -51,6 +51,7 @@ public class ZipAdapter {
 			db.execSQL(MainDBConstants.CREATE_USER_TABLE);
 			db.execSQL(MainDBConstants.CREATE_ROLE_TABLE);
 			db.execSQL(MainDBConstants.CREATE_SCREENING_TABLE);
+			db.execSQL(MainDBConstants.CREATE_STATUS_PREG_TABLE);
 			db.execSQL(Zp01DBConstants.CREATE_STUDYENTRY_AD_TABLE);
             db.execSQL(Zp01DBConstants.CREATE_STUDYENTRY_E_TABLE);
             db.execSQL(Zp01DBConstants.CREATE_STUDYENTRY_FK_TABLE);
@@ -70,6 +71,7 @@ public class ZipAdapter {
 			db.execSQL("DROP TABLE IF EXISTS " + MainDBConstants.USER_TABLE);
 			db.execSQL("DROP TABLE IF EXISTS " + MainDBConstants.ROLE_TABLE);
 			db.execSQL("DROP TABLE IF EXISTS " + MainDBConstants.SCREENING_TABLE);
+			db.execSQL("DROP TABLE IF EXISTS " + MainDBConstants.STATUS_PREG_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + Zp01DBConstants.CREATE_STUDYENTRY_AD_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + Zp01DBConstants.CREATE_STUDYENTRY_E_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + Zp01DBConstants.CREATE_STUDYENTRY_FK_TABLE);
@@ -236,6 +238,40 @@ public class ZipAdapter {
 		}
 		if (!cursorScreenings.isClosed()) cursorScreenings.close();
 		return mScreenings;
+	}
+	
+	/**
+	 * Metodos para ZpEstadoEmbarazada en la base de datos
+	 * 
+	 * @param screening
+	 *            Objeto ZpEstadoEmbarazada que contiene la informacion
+	 *
+	 */
+	//Crear nuevo ZpEstadoEmbarazada en la base de datos
+	public void crearZpEstadoEmbarazada(ZpEstadoEmbarazada estado) {
+		ContentValues cv = ZpEstadoEmbarazadaHelper.crearZpEstadoEmbarazadaValues(estado);
+		mDb.insert(MainDBConstants.STATUS_PREG_TABLE, null, cv);
+	}
+	//Editar ZpEstadoEmbarazada existente en la base de datos
+	public boolean editarZpEstadoEmbarazada(ZpEstadoEmbarazada estado) {
+		ContentValues cv = ZpEstadoEmbarazadaHelper.crearZpEstadoEmbarazadaValues(estado);
+		return mDb.update(MainDBConstants.STATUS_PREG_TABLE, cv, MainDBConstants.recordId + "='" 
+				+ estado.getRecordId()+"'", null) > 0;
+	}
+	//Limpiar la tabla de ZpEstadoEmbarazada de la base de datos
+	public boolean borrarZpEstadoEmbarazada() {
+		return mDb.delete(MainDBConstants.STATUS_PREG_TABLE, null, null) > 0;
+	}
+	//Obtener un ZpEstadoEmbarazada de la base de datos
+	public ZpEstadoEmbarazada getZpEstadoEmbarazada(String filtro, String orden) throws SQLException {
+		ZpEstadoEmbarazada mEstado = null;
+		Cursor cursorEstado = crearCursor(MainDBConstants.STATUS_PREG_TABLE, filtro, null, orden);
+		if (cursorEstado != null && cursorEstado.getCount() > 0) {
+			cursorEstado.moveToFirst();
+			mEstado=ZpEstadoEmbarazadaHelper.crearZpEstadoEmbarazada(cursorEstado);
+		}
+		if (!cursorEstado.isClosed()) cursorEstado.close();
+		return mEstado;
 	}
 
     /**

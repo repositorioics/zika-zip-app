@@ -8,9 +8,11 @@ import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.activities.nuevos.NuevaEmbarazadaActivity;
+import ni.org.ics.zip.appmovil.activities.paginas.MenuEmbarazadasActivity;
 import ni.org.ics.zip.appmovil.adapters.ScreeningAdapter;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.domain.Zp00Screening;
+import ni.org.ics.zip.appmovil.utils.Constants;
 import ni.org.ics.zip.appmovil.utils.MainDBConstants;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -176,13 +178,13 @@ public class BuscarEmbarazadaActivity extends AbstractAsyncListActivity {
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
 
-		/*Vivienda mVivienda = (Vivienda) getListAdapter().getItem(position);
+		Zp00Screening mTamizaje = (Zp00Screening) getListAdapter().getItem(position);
 		Bundle arguments = new Bundle();
-		if (mVivienda!=null) arguments.putSerializable("objeto" , mVivienda);
+		if (mTamizaje!=null) arguments.putSerializable(Constants.OBJECTO , mTamizaje);
 		Intent i = new Intent(getApplicationContext(),
-				MenuViviendaActivity.class);
+				MenuEmbarazadasActivity.class);
 		i.putExtras(arguments);
-		startActivity(i);*/
+		startActivity(i);
 	}
 
 	@Override

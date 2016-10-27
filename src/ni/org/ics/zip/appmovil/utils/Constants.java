@@ -27,6 +27,9 @@ public class Constants {
 	//nombres de extras
 	public static final String TITLE = "titulo";
 	public static final String OBJECTO = "objeto";
+	
+	//Eventos
+	public static final String MAT_1 = "ingreso";
 
 
 }

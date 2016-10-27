@@ -181,5 +181,55 @@ public class MainDBConstants {
 			+ PHONE_NUMBER  + " text, "
 			+ TODAY  + " date, "
 			+ "primary key (" + recordId + "));";
+	
+		//Tabla estado embarazada
+		public static final String STATUS_PREG_TABLE = "estado_embarazada";
+		//Campos estado embarazada
+		public static final String ingreso = "ingreso";
+		public static final String sem4 = "sem4";
+		public static final String sem8 = "sem8";
+		public static final String sem12 = "sem12";
+		public static final String sem16 = "sem16";
+		public static final String sem20 = "sem20";
+		public static final String sem24 = "sem24";
+		public static final String sem28 = "sem28";
+		public static final String sem32 = "sem32";
+		public static final String sem36 = "sem36";
+		public static final String sem40 = "sem40";
+		public static final String sem44 = "sem44";
+		public static final String parto = "parto";
+		public static final String posparto = "posparto";
+		
+		//Crear tabla estado embarazada
+		public static final String CREATE_STATUS_PREG_TABLE = "create table "
+				+ STATUS_PREG_TABLE + " ("
+				+ recordId + " text not null, "
+				+ ingreso + " text, "
+				+ sem4 + " text, "
+				+ sem8 + " text, "
+				+ sem12 + " text, "
+				+ sem16 + " text, "
+				+ sem20 + " text, "
+				+ sem24 + " text, "
+				+ sem28 + " text, "
+				+ sem32 + " text, "
+				+ sem36 + " text, "
+				+ sem40 + " text, "
+				+ sem44 + " text, "
+				+ parto + " text, "
+				+ posparto + " text, "
+				+ recordDate + " date, " 
+				+ recordUser + " text, "
+				+ pasive + " text, "
+				+ ID_INSTANCIA + " integer," 
+				+ FILE_PATH + " text," 
+				+ STATUS + " text not null, "
+				+ START  + " text, "
+				+ END  + " text, "
+				+ DEVICE_ID  + " text, "
+				+ SIM_SERIAL + " text, "
+				+ PHONE_NUMBER  + " text, "
+				+ TODAY  + " date, "
+				+ "primary key (" + recordId + "));";
 
 }
