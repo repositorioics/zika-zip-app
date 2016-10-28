@@ -32,4 +32,12 @@
     <string name="storage_error">Medio de almacenamiento no disponible!</string>
     <string name="err_not_completed">No ha completado el formulario</string>
     <string name="study_id">Código del estudio</string>
+    <string name="pending">Pendiente</string>
+    <string name="done">Realizado</string>
+    <string name="ontime">(En tiempo)</string>
+    <string name="delayed">(Con atraso)</string>
+    <string name="notavailable">No disponible</string>
+    <string name="available">Disponible</string>
+    <string name="programmed">Programado</string>
+    
 </resources>
