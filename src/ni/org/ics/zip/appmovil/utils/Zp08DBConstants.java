@@ -43,7 +43,7 @@ public class Zp08DBConstants {
             + extInfDeathTime + " text, "
             + extTestResultsRcvd + " text, "
             + extCounselingRcvd + " text, "
-            + extComments + "text, "
+            + extComments + " text, "
             + extIdCompleting + " text, "
             + extDateCompleted + " date, "
             + extIdReviewer + " text, "
