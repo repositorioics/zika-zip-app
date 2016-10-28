@@ -21,6 +21,7 @@ public class Zp08DBConstants {
     public static final String extInfDeathTime = "extInfDeathTime";
     public static final String extTestResultsRcvd = "extTestResultsRcvd";
     public static final String extCounselingRcvd = "extCounselingRcvd";
+    public static final String extComments = "extComments";
     public static final String extIdCompleting = "extIdCompleting";
     public static final String extDateCompleted = "extDateCompleted";
     public static final String extIdReviewer = "extIdReviewer";
@@ -42,6 +43,7 @@ public class Zp08DBConstants {
             + extInfDeathTime + " text, "
             + extTestResultsRcvd + " text, "
             + extCounselingRcvd + " text, "
+            + extComments + " text, "
             + extIdCompleting + " text, "
             + extDateCompleted + " date, "
             + extIdReviewer + " text, "

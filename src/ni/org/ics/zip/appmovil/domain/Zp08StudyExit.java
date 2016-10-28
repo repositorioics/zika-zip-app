@@ -21,6 +21,7 @@ public class Zp08StudyExit extends BaseMetaData{
     private String extInfDeathTime;
     private String extTestResultsRcvd;
     private String extCounselingRcvd;
+    private String extComments;
     private String extIdCompleting;
     private Date extDateCompleted;
     private String extIdReviewer;
@@ -116,6 +117,10 @@ public class Zp08StudyExit extends BaseMetaData{
     public void setExtCounselingRcvd(String extCounselingRcvd) {
         this.extCounselingRcvd = extCounselingRcvd;
     }
+
+    public String getExtComments() { return extComments; }
+
+    public void setExtComments(String extComments) { this.extComments = extComments; }
 
     public String getExtIdCompleting() {
         return extIdCompleting;

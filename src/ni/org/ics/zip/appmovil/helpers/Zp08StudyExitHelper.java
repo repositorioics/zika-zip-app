@@ -28,6 +28,7 @@ public class Zp08StudyExitHelper {
         cv.put(Zp08DBConstants.extInfDeathTime, studyExit.getExtInfDeathTime());
         cv.put(Zp08DBConstants.extTestResultsRcvd, studyExit.getExtTestResultsRcvd());
         cv.put(Zp08DBConstants.extCounselingRcvd, studyExit.getExtCounselingRcvd());
+        cv.put(Zp08DBConstants.extComments, studyExit.getExtComments());
         cv.put(Zp08DBConstants.extIdCompleting, studyExit.getExtIdCompleting());
         if (studyExit.getExtDateCompleted()!=null) cv.put(Zp08DBConstants.extDateCompleted, studyExit.getExtDateCompleted().getTime());
         cv.put(Zp08DBConstants.extIdReviewer, studyExit.getExtIdReviewer());
@@ -65,6 +66,7 @@ public class Zp08StudyExitHelper {
         studyExit.setExtInfDeathTime(cursor.getString(cursor.getColumnIndex(Zp08DBConstants.extInfDeathTime)));
         studyExit.setExtTestResultsRcvd(cursor.getString(cursor.getColumnIndex(Zp08DBConstants.extTestResultsRcvd)));
         studyExit.setExtCounselingRcvd(cursor.getString(cursor.getColumnIndex(Zp08DBConstants.extCounselingRcvd)));
+        studyExit.setExtComments(cursor.getString(cursor.getColumnIndex(Zp08DBConstants.extComments)));
         studyExit.setExtIdCompleting(cursor.getString(cursor.getColumnIndex(Zp08DBConstants.extIdCompleting)));
         if (cursor.getLong(cursor.getColumnIndex(Zp08DBConstants.extDateCompleted))>0) studyExit.setExtDateCompleted(new Date(cursor.getLong(cursor.getColumnIndex(Zp08DBConstants.extDateCompleted))));
         studyExit.setExtIdReviewer(cursor.getString(cursor.getColumnIndex(Zp08DBConstants.extIdReviewer)));
