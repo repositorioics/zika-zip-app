@@ -2,6 +2,7 @@ package ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo;
 
 import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.R;
+import ni.org.ics.zip.appmovil.activities.nuevos.NewZp01StudyEntrySectionAtoDActivity;
 import ni.org.ics.zip.appmovil.adapters.eventosembarazo.IngresoAdapter;
 import ni.org.ics.zip.appmovil.domain.Zp00Screening;
 import ni.org.ics.zip.appmovil.utils.Constants;
@@ -60,15 +61,16 @@ public class IngresoActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
-				//Bundle arguments = new Bundle();
-				//Intent i;
+				Bundle arguments = new Bundle();
+				Intent i;
 				switch(position){
 				
 				case 0:
-					/*i = new Intent(getApplicationContext(),
-							MiembrosClusterZikaActivity.class);
-					i.putExtra(ConstantsDB.CODIGO, mRecordId);
-					startActivity(i);*/
+					i = new Intent(getApplicationContext(),
+							NewZp01StudyEntrySectionAtoDActivity.class);
+					if (zp00!=null) arguments.putSerializable(Constants.OBJECTO , zp00);
+					i.putExtras(arguments);
+					startActivity(i);
 					break;
 				default:					
 					break;

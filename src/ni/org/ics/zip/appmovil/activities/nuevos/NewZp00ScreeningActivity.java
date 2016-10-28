@@ -42,9 +42,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class NuevaEmbarazadaActivity extends AbstractAsyncActivity {
+public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 
-	protected static final String TAG = NuevaEmbarazadaActivity.class.getSimpleName();
+	protected static final String TAG = NewZp00ScreeningActivity.class.getSimpleName();
 	
 	private ZipAdapter zipA;
 	private static Zp00Screening mTamizaje = new Zp00Screening();

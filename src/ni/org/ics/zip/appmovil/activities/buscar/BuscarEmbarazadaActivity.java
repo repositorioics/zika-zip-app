@@ -7,7 +7,7 @@ import ni.org.ics.zip.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
-import ni.org.ics.zip.appmovil.activities.nuevos.NuevaEmbarazadaActivity;
+import ni.org.ics.zip.appmovil.activities.nuevos.NewZp00ScreeningActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.MenuEmbarazadasActivity;
 import ni.org.ics.zip.appmovil.adapters.ScreeningAdapter;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
@@ -150,7 +150,7 @@ public class BuscarEmbarazadaActivity extends AbstractAsyncListActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(getApplicationContext(),
-						NuevaEmbarazadaActivity.class);
+						NewZp00ScreeningActivity.class);
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);
 			}

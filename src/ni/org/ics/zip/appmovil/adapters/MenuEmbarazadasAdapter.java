@@ -99,7 +99,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		case 1: 
 			fechaIngreso.add(Calendar.DATE, 28);
 			fechaEvento = fechaIngreso.getTime();
-			if(String.valueOf(mZp01.getIngreso()).equals("0")){
+			if(String.valueOf(mZp01.getSem4()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
 				if(dif<-7){
@@ -130,7 +130,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		case 2: 
 			fechaIngreso.add(Calendar.DATE, 56);
 			fechaEvento = fechaIngreso.getTime();
-			if(String.valueOf(mZp01.getIngreso()).equals("0")){
+			if(String.valueOf(mZp01.getSem8()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
 				if(dif<-7){
@@ -161,7 +161,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		case 3:
 			fechaIngreso.add(Calendar.DATE, 84);
 			fechaEvento = fechaIngreso.getTime();
-			if(String.valueOf(mZp01.getIngreso()).equals("0")){
+			if(String.valueOf(mZp01.getSem12()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
 				if(dif<-7){
@@ -190,44 +190,314 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 			fechaIngreso.add(Calendar.DATE, -84);
 			break;
 		case 4: 
+			fechaIngreso.add(Calendar.DATE, 112);
+			fechaEvento = fechaIngreso.getTime();
+			if(String.valueOf(mZp01.getSem16()).equals("0")){
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+				if(dif<-7){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.programmed)+": "+ formatter.format(fechaEvento));
+				}
+				else if(dif>7){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
+				}
+				else if(dif<=0){
+					textView.setTextColor(Color.BLUE);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.ontime));
+				}
+				else{
+					textView.setTextColor(Color.RED);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.delayed));
+				}
+			}
+			else{
+				textView.setTextColor(Color.BLACK);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_vis4);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			fechaIngreso.add(Calendar.DATE, -112);
 			break;
 		case 5: 
+			fechaIngreso.add(Calendar.DATE, 140);
+			fechaEvento = fechaIngreso.getTime();
+			if(String.valueOf(mZp01.getSem20()).equals("0")){
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+				if(dif<-7){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.programmed)+": "+ formatter.format(fechaEvento));
+				}
+				else if(dif>7){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
+				}
+				else if(dif<=0){
+					textView.setTextColor(Color.BLUE);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.ontime));
+				}
+				else{
+					textView.setTextColor(Color.RED);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.delayed));
+				}
+			}
+			else{
+				textView.setTextColor(Color.BLACK);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_vis5);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			fechaIngreso.add(Calendar.DATE, -140);
 			break;
 		case 6: 
+			fechaIngreso.add(Calendar.DATE, 168);
+			fechaEvento = fechaIngreso.getTime();
+			if(String.valueOf(mZp01.getSem24()).equals("0")){
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+				if(dif<-7){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.programmed)+": "+ formatter.format(fechaEvento));
+				}
+				else if(dif>7){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
+				}
+				else if(dif<=0){
+					textView.setTextColor(Color.BLUE);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.ontime));
+				}
+				else{
+					textView.setTextColor(Color.RED);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.delayed));
+				}
+			}
+			else{
+				textView.setTextColor(Color.BLACK);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_vis6);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			fechaIngreso.add(Calendar.DATE, -168);
 			break;
 		case 7: 
+			fechaIngreso.add(Calendar.DATE, 196);
+			fechaEvento = fechaIngreso.getTime();
+			if(String.valueOf(mZp01.getSem28()).equals("0")){
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+				if(dif<-7){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.programmed)+": "+ formatter.format(fechaEvento));
+				}
+				else if(dif>7){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
+				}
+				else if(dif<=0){
+					textView.setTextColor(Color.BLUE);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.ontime));
+				}
+				else{
+					textView.setTextColor(Color.RED);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.delayed));
+				}
+			}
+			else{
+				textView.setTextColor(Color.BLACK);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_vis7);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			fechaIngreso.add(Calendar.DATE, -193);
 			break;
 		case 8: 
+			fechaIngreso.add(Calendar.DATE, 224);
+			fechaEvento = fechaIngreso.getTime();
+			if(String.valueOf(mZp01.getSem32()).equals("0")){
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+				if(dif<-7){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.programmed)+": "+ formatter.format(fechaEvento));
+				}
+				else if(dif>7){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
+				}
+				else if(dif<=0){
+					textView.setTextColor(Color.BLUE);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.ontime));
+				}
+				else{
+					textView.setTextColor(Color.RED);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.delayed));
+				}
+			}
+			else{
+				textView.setTextColor(Color.BLACK);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_vis8);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			fechaIngreso.add(Calendar.DATE, -224);
 			break;
 		case 9: 
+			fechaIngreso.add(Calendar.DATE, 252);
+			fechaEvento = fechaIngreso.getTime();
+			if(String.valueOf(mZp01.getSem36()).equals("0")){
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+				if(dif<-7){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.programmed)+": "+ formatter.format(fechaEvento));
+				}
+				else if(dif>7){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
+				}
+				else if(dif<=0){
+					textView.setTextColor(Color.BLUE);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.ontime));
+				}
+				else{
+					textView.setTextColor(Color.RED);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.delayed));
+				}
+			}
+			else{
+				textView.setTextColor(Color.BLACK);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_vis9);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			fechaIngreso.add(Calendar.DATE, -252);
 			break;
 		case 10: 
+			fechaIngreso.add(Calendar.DATE, 280);
+			fechaEvento = fechaIngreso.getTime();
+			if(String.valueOf(mZp01.getSem40()).equals("0")){
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+				if(dif<-7){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.programmed)+": "+ formatter.format(fechaEvento));
+				}
+				else if(dif>7){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
+				}
+				else if(dif<=0){
+					textView.setTextColor(Color.BLUE);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.ontime));
+				}
+				else{
+					textView.setTextColor(Color.RED);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.delayed));
+				}
+			}
+			else{
+				textView.setTextColor(Color.BLACK);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_vis10);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			fechaIngreso.add(Calendar.DATE, -280);
 			break;
 		case 11: 
+			fechaIngreso.add(Calendar.DATE, 308);
+			fechaEvento = fechaIngreso.getTime();
+			if(String.valueOf(mZp01.getSem44()).equals("0")){
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+				if(dif<-28){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.programmed)+": "+ formatter.format(fechaEvento));
+				}
+				else if(dif>28){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
+				}
+				else if(dif<=0){
+					textView.setTextColor(Color.BLUE);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.ontime));
+				}
+				else{
+					textView.setTextColor(Color.RED);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.delayed));
+				}
+			}
+			else{
+				textView.setTextColor(Color.BLACK);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_vis11);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			fechaIngreso.add(Calendar.DATE, -308);
 			break;
 		case 12: 
+			fechaIngreso.add(Calendar.DATE, 309);
+			fechaEvento = fechaIngreso.getTime();
+			if(String.valueOf(mZp01.getParto()).equals("0")){
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+				if(dif<-28){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.programmed)+": "+ formatter.format(fechaEvento));
+				}
+				else if(dif>28){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
+				}
+				else if(dif<=0){
+					textView.setTextColor(Color.BLUE);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.ontime));
+				}
+				else{
+					textView.setTextColor(Color.RED);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.delayed));
+				}
+			}
+			else{
+				textView.setTextColor(Color.BLACK);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_parto);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			fechaIngreso.add(Calendar.DATE, -309);
 			break;
 		case 13: 
+			fechaIngreso.add(Calendar.DATE, 322);
+			fechaEvento = fechaIngreso.getTime();
+			if(String.valueOf(mZp01.getPosparto()).equals("0")){
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+				if(dif<-7){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.programmed)+": "+ formatter.format(fechaEvento));
+				}
+				else if(dif>7){
+					textView.setTextColor(Color.GRAY);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
+				}
+				else if(dif<=0){
+					textView.setTextColor(Color.BLUE);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.ontime));
+				}
+				else{
+					textView.setTextColor(Color.RED);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.delayed));
+				}
+			}
+			else{
+				textView.setTextColor(Color.BLACK);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_post);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			fechaIngreso.add(Calendar.DATE, -322);
 			break;
 		case 14: 
 			img=getContext().getResources().getDrawable( R.drawable.ic_exit);
