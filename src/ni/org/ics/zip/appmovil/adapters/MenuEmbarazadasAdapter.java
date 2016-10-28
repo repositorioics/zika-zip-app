@@ -20,14 +20,18 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 
 	private final String[] values;
 	private final Zp00Screening mZp00;
+	private final ZpEstadoEmbarazada mZp01;
 	private final Date todayDate;
 	private final Calendar fechaIngreso;
+	private final Context context;
 	
 	public MenuEmbarazadasAdapter(Context context, int textViewResourceId,
 			String[] values, Zp00Screening zp00, ZpEstadoEmbarazada zp01) {
 		super(context, textViewResourceId, values);
+		this.context = context;
 		this.values = values;
 		this.mZp00 = zp00;
+		this.mZp01 = zp01;
 		this.todayDate = new Date();
 		this.fechaIngreso = Calendar.getInstance();
 		fechaIngreso.setTime(mZp00.getScrVisitDate());
@@ -53,17 +57,16 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		}
 		TextView textView = (TextView) v.findViewById(R.id.label);
 		textView.setTypeface(null, Typeface.BOLD);
-		
+		textView.setText(values[position]);
 		// Change icon based on position
 		Drawable img = null;
 		switch (position){
 		case 0:
-			textView.setText(values[position]);
-			if(todayDate.after(fechaIngreso.getTime())){
+			if(todayDate.after(fechaIngreso.getTime()) && String.valueOf(mZp01.getIngreso()).equals('0')){
 				textView.setTextColor(Color.RED);
 				textView.setText(textView.getText()+"\n"+"Pendiente");
+				textView.setText(context.getResources().getString(R.string.add));
 			}
-			
 			img=getContext().getResources().getDrawable( R.drawable.ic_enroll);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;

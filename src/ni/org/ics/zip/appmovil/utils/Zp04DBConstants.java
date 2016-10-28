@@ -332,7 +332,6 @@ public class Zp04DBConstants {
             + TRIMESTERVISIT_E_TABLE + " ("
             + recordId + " text not null, "
             + redcapEventName + " text, "
-            + redcapEventName + " text, "
             + tri24HrsDeodorant + " text, "
             + triBrandDeodorant + " text, "
             + triFragFreeDeodorant + " text, "

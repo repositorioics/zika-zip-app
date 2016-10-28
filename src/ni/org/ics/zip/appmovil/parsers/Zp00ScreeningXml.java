@@ -89,7 +89,14 @@ public class Zp00ScreeningXml {
 	@Element(required=false)
 	private String group6;
 	@Element(required=false)
-	private String group10;
+	private String group7;
+	
+	@Element(required=false)
+    private String question1;
+	@Element(required=false)
+    private String question2;
+	@Element(required=false)
+    private String question3;
 
 
     @Attribute
