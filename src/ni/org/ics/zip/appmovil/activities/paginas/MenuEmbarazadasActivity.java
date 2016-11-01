@@ -32,7 +32,7 @@ import android.widget.TextView;
 public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 
 	private static Zp00Screening zp00 = new Zp00Screening();
-	private static ZpEstadoEmbarazada zp01 = new ZpEstadoEmbarazada();
+	private static ZpEstadoEmbarazada zpEstado = new ZpEstadoEmbarazada();
 	private GridView gridView;
 	private TextView textView;
 	private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
@@ -51,7 +51,7 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 		}
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
 		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
-		zp00 = (Zp00Screening) getIntent().getExtras().getSerializable(Constants.OBJECTO);
+		zp00 = (Zp00Screening) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP00);
 		String filtro = MainDBConstants.recordId + "='" + zp00.getRecordId() + "'";
 		new FetchDataEmbarazadaTask().execute(filtro);
 		textView = (TextView) findViewById(R.id.label);
@@ -61,7 +61,7 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 									getString(R.string.mat_fec)+": "+ mDateFormat.format(zp00.getScrVisitDate()));
 		String[] menu_maternal_info = getResources().getStringArray(R.array.menu_maternal_a);
 		gridView = (GridView) findViewById(R.id.gridView1);
-		gridView.setAdapter(new MenuEmbarazadasAdapter(this, R.layout.menu_item_2, menu_maternal_info, zp00, zp01));
+		gridView.setAdapter(new MenuEmbarazadasAdapter(this, R.layout.menu_item_2, menu_maternal_info, zp00, zpEstado));
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v,
@@ -73,8 +73,10 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 				case 0:
 					i = new Intent(getApplicationContext(),
 							IngresoActivity.class);
-					arguments.putString(Constants.TITLE, Constants.MAT_1);
-					if (zp00!=null) arguments.putSerializable(Constants.OBJECTO , zp00);
+					/*Aca se pasa evento, tamizaje y estado*/
+					arguments.putString(Constants.EVENT, Constants.ENTRY);
+					if (zp00!=null) arguments.putSerializable(Constants.OBJECTO_ZP00 , zp00);
+					if (zpEstado!=null) arguments.putSerializable(Constants.OBJECTO_ZPEST , zpEstado);
 					i.putExtras(arguments);
 					startActivity(i);
 					break;
@@ -152,7 +154,7 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 			filtro = values[0];
 			try {
 				zipA.open();
-				zp01 = zipA.getZpEstadoEmbarazada(filtro, MainDBConstants.recordId);
+				zpEstado = zipA.getZpEstadoEmbarazada(filtro, MainDBConstants.recordId);
 				zipA.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);

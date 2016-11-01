@@ -23,6 +23,7 @@
     <string name="add">Agregar</string>
     <string name="select">Seleccionar</string>
     <string name="enter">Ingresar</string>
+    <string name="form">Formulario</string>
     <string name="barcode_error">Escaner de código de barras no disponible</string>
     <string name="search_hint">Ingresar texto de búsqueda</string>
     <string name="code_error">Identificador inválido!</string>
@@ -39,5 +40,6 @@
     <string name="notavailable">No disponible</string>
     <string name="available">Disponible</string>
     <string name="programmed">Programado</string>
+    <string name="forms">Formularios a realizar en este evento</string>
     
 </resources>

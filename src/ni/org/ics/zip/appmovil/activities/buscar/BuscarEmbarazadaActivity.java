@@ -180,7 +180,7 @@ public class BuscarEmbarazadaActivity extends AbstractAsyncListActivity {
 
 		Zp00Screening mTamizaje = (Zp00Screening) getListAdapter().getItem(position);
 		Bundle arguments = new Bundle();
-		if (mTamizaje!=null) arguments.putSerializable(Constants.OBJECTO , mTamizaje);
+		if (mTamizaje!=null) arguments.putSerializable(Constants.OBJECTO_ZP00 , mTamizaje);
 		Intent i = new Intent(getApplicationContext(),
 				MenuEmbarazadasActivity.class);
 		i.putExtras(arguments);
