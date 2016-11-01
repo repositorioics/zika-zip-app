@@ -2,7 +2,7 @@ package ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo;
 
 import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.R;
-import ni.org.ics.zip.appmovil.activities.nuevos.NewZp01StudyEntrySectionAtoDActivity;
+import ni.org.ics.zip.appmovil.activities.nuevos.*;
 import ni.org.ics.zip.appmovil.adapters.eventosembarazo.IngresoAdapter;
 import ni.org.ics.zip.appmovil.domain.Zp00Screening;
 import ni.org.ics.zip.appmovil.utils.Constants;
@@ -72,9 +72,38 @@ public class IngresoActivity extends Activity {
 					i.putExtras(arguments);
 					startActivity(i);
 					break;
+				case 1:
+						i = new Intent(getApplicationContext(),
+								NewZp01StudyEntrySectionEActivity.class);
+						if (zp00!=null) arguments.putSerializable(Constants.OBJECTO , zp00);
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
+				case 4:
+						i = new Intent(getApplicationContext(),
+								NewZp04TrimesterVisitSectionAtoDActivity.class);
+						if (zp00!=null) arguments.putSerializable(Constants.OBJECTO , zp00);
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
+				case 5:
+						i = new Intent(getApplicationContext(),
+								NewZp04TrimesterVisitSectionEActivity.class);
+						if (zp00!=null) arguments.putSerializable(Constants.OBJECTO , zp00);
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
+				case 6:
+						i = new Intent(getApplicationContext(),
+								NewZp04TrimesterVisitSectionFtoHActivity.class);
+						if (zp00!=null) arguments.putSerializable(Constants.OBJECTO , zp00);
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
 				default:					
 					break;
 				}
+
 			}
 		});
 
