@@ -48,7 +48,6 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
     private SharedPreferences settings;
     private String username;
     private String mRecordId = "";
-    private boolean hecho =  false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +64,8 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
                         null);
         String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
         zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
-        hecho = getIntent().getExtras().getBoolean(Constants.DONE);
+        mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
+        mExit = (Zp08StudyExit) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP08);
         createInitDialog();
     }
 
@@ -80,7 +80,7 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
 
         //to set the message
         TextView message =(TextView) dialogInit.findViewById(R.id.yesnotext);
-        if (hecho){
+        if (mExit!=null){
             message.setText(getString(R.string.edit)+ " " + getString(R.string.main_maternal));
         }
         else{

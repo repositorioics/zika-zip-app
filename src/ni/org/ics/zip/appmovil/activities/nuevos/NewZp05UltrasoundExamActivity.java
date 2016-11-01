@@ -48,7 +48,6 @@ public class NewZp05UltrasoundExamActivity extends AbstractAsyncActivity {
     private SharedPreferences settings;
     private String username;
     private String mRecordId = "";
-    private boolean hecho =  false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +64,8 @@ public class NewZp05UltrasoundExamActivity extends AbstractAsyncActivity {
                         null);
         String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
         zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
-        hecho = getIntent().getExtras().getBoolean(Constants.DONE);
+        mUltrasoun = (Zp05UltrasoundExam) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP05);
+        mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
         createInitDialog();
     }
 
@@ -80,8 +80,8 @@ public class NewZp05UltrasoundExamActivity extends AbstractAsyncActivity {
 
         //to set the message
         TextView message =(TextView) dialogInit.findViewById(R.id.yesnotext);
-        if (hecho){
-            message.setText(getString(R.string.edit)+ " " + getString(R.string.main_maternal));
+        if (mUltrasoun!=null){
+            message.setText(getString(R.string.edit)+ " " + getString(R.string.main_review));
         }
         else{
             message.setText(getString(R.string.add)+ " " + getString(R.string.main_maternal));

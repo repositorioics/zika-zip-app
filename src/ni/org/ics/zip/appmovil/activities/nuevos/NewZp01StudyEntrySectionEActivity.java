@@ -49,8 +49,7 @@ public class NewZp01StudyEntrySectionEActivity extends AbstractAsyncActivity {
 	private SharedPreferences settings;
 	private String username;
 	private String mRecordId = "";
-	private boolean hecho =  false;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,9 +65,8 @@ public class NewZp01StudyEntrySectionEActivity extends AbstractAsyncActivity {
 						null);
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
 		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
-		hecho = getIntent().getExtras().getBoolean(Constants.DONE);
-		Zp00Screening screening = (Zp00Screening) getIntent().getExtras().getSerializable(Constants.OBJECTO);
-		mRecordId = screening.getRecordId();
+		mIngreso = (Zp01StudyEntrySectionE) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP01E);
+        mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
 		createInitDialog();
 	}
 
@@ -83,7 +81,7 @@ public class NewZp01StudyEntrySectionEActivity extends AbstractAsyncActivity {
 
 		//to set the message
 		TextView message =(TextView) dialogInit.findViewById(R.id.yesnotext);
-		if (hecho){
+		if (mIngreso!=null){
 			message.setText(getString(R.string.edit)+ " " + getString(R.string.main_maternal));
 		}
 		else{

@@ -9,10 +9,7 @@ import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.activities.nuevos.*;
 import ni.org.ics.zip.appmovil.adapters.eventosembarazo.IngresoAdapter;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
-import ni.org.ics.zip.appmovil.domain.Zp00Screening;
-import ni.org.ics.zip.appmovil.domain.Zp01StudyEntrySectionAtoD;
-import ni.org.ics.zip.appmovil.domain.Zp02BiospecimenCollection;
-import ni.org.ics.zip.appmovil.domain.ZpEstadoEmbarazada;
+import ni.org.ics.zip.appmovil.domain.*;
 import ni.org.ics.zip.appmovil.utils.Constants;
 import ni.org.ics.zip.appmovil.utils.MainDBConstants;
 import ni.org.ics.zip.appmovil.utils.Zp02DBConstants;
@@ -38,8 +35,14 @@ public class IngresoActivity extends AbstractAsyncActivity {
 	private static Zp00Screening zp00 = new Zp00Screening();
 	private static ZpEstadoEmbarazada zpEstado = new ZpEstadoEmbarazada();
 	private static Zp01StudyEntrySectionAtoD zp01a = new Zp01StudyEntrySectionAtoD();
+    private static Zp01StudyEntrySectionE zp01e = new Zp01StudyEntrySectionE();
+    private static Zp01StudyEntrySectionFtoK zp01f = new Zp01StudyEntrySectionFtoK();
 	private static Zp02BiospecimenCollection zp02 = new Zp02BiospecimenCollection();
-	
+    private static Zp04TrimesterVisitSectionAtoD zp04a = new Zp04TrimesterVisitSectionAtoD();
+    private static Zp04TrimesterVisitSectionE zp04e = new Zp04TrimesterVisitSectionE();
+    private static Zp04TrimesterVisitSectionFtoH zp04f = new Zp04TrimesterVisitSectionFtoH();
+    private static Zp05UltrasoundExam zp05 = new Zp05UltrasoundExam();
+
 	private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
 	private static String evento;
 	private GridView gridView;
@@ -69,7 +72,7 @@ public class IngresoActivity extends AbstractAsyncActivity {
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
 		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
 		/*Aca se recupera evento, tamizaje y estado*/
-		evento = getIntent().getStringExtra(Constants.EVENT);
+		evento = getIntent().getStringExtra(Constants.ENTRY);
 		zp00 = (Zp00Screening) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP00);
 		zpEstado = (ZpEstadoEmbarazada) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZPEST);
 		//Aca se recupera los datos de los formularios para ver si estan realizados o no...
@@ -87,49 +90,70 @@ public class IngresoActivity extends AbstractAsyncActivity {
 					int position, long id) {
 				Bundle arguments = new Bundle();
 				Intent i;
+                arguments.putString(Constants.EVENT, Constants.ENTRY);
+                arguments.putString(Constants.RECORDID, zp00.getRecordId());
 				switch(position){
 				
-				case 0:
-					i = new Intent(getApplicationContext(),
-							NewZp01StudyEntrySectionAtoDActivity.class);
-					//Se pone el evento y el objeto en caso de que no sea nulo...
-					arguments.putString(Constants.EVENT, Constants.ENTRY);
-					if (zp01a!=null) arguments.putSerializable(Constants.OBJECTO_ZP01A, zp01a);
-					i.putExtras(arguments);
-					startActivity(i);
-					break;
-				case 1:
-						i = new Intent(getApplicationContext(),
-								NewZp01StudyEntrySectionEActivity.class);
-						if (zp00!=null) arguments.putSerializable(Constants.OBJECTO , zp00);
-						i.putExtras(arguments);
-						startActivity(i);
-						break;
-				case 4:
-						i = new Intent(getApplicationContext(),
-								NewZp04TrimesterVisitSectionAtoDActivity.class);
-						if (zp00!=null) arguments.putSerializable(Constants.OBJECTO , zp00);
-						i.putExtras(arguments);
-						startActivity(i);
-						break;
-				case 5:
-						i = new Intent(getApplicationContext(),
-								NewZp04TrimesterVisitSectionEActivity.class);
-						if (zp00!=null) arguments.putSerializable(Constants.OBJECTO , zp00);
-						i.putExtras(arguments);
-						startActivity(i);
-						break;
-				case 6:
-						i = new Intent(getApplicationContext(),
-								NewZp04TrimesterVisitSectionFtoHActivity.class);
-						if (zp00!=null) arguments.putSerializable(Constants.OBJECTO , zp00);
-						i.putExtras(arguments);
-						startActivity(i);
-						break;
+                    case 0: // DEMOGRAFIA
+                        i = new Intent(getApplicationContext(),
+                                NewZp01StudyEntrySectionAtoDActivity.class);
+                        //Se pone el evento y el objeto en caso de que no sea nulo...
+                        if (zp01a!=null) arguments.putSerializable(Constants.OBJECTO_ZP01A, zp01a);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        break;
+                    case 1: // ESTADO SALUD
+                        i = new Intent(getApplicationContext(),
+                                NewZp01StudyEntrySectionEActivity.class);
+                        if (zp01e!=null) arguments.putSerializable(Constants.OBJECTO_ZP01E , zp01e);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        break;
+                    case 2: // HISTORIA EMBARAZO
+                        i = new Intent(getApplicationContext(),
+                                NewZp01StudyEntrySectionFtoKActivity.class);
+                        if (zp01f!=null) arguments.putSerializable(Constants.OBJECTO_ZP01F , zp01f);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        break;
+                    case 3: //MUESTRAS
+                        i = new Intent(getApplicationContext(),
+                                NewZp02BiospecimenCollectionActivity.class);
+                        if (zp02!=null) arguments.putSerializable(Constants.OBJECTO_ZP02 , zp02);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        break;
+                    case 4: //PROFESION
+                        i = new Intent(getApplicationContext(),
+                                NewZp04TrimesterVisitSectionAtoDActivity.class);
+                        if (zp04a!=null) arguments.putSerializable(Constants.OBJECTO_ZP04A , zp04a);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        break;
+                    case 5: //EXPOSICION
+                        i = new Intent(getApplicationContext(),
+                                NewZp04TrimesterVisitSectionEActivity.class);
+                        if (zp04e!=null) arguments.putSerializable(Constants.OBJECTO_ZP04E , zp04e);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        break;
+                    case 6: //PESTICIDAS
+                        i = new Intent(getApplicationContext(),
+                                NewZp04TrimesterVisitSectionFtoHActivity.class);
+                        if (zp04f!=null) arguments.putSerializable(Constants.OBJECTO_ZP04F , zp04f);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        break;
+                    case 7: //ULTRASONIDOS
+                        i = new Intent(getApplicationContext(),
+                                NewZp05UltrasoundExamActivity.class);
+                        if (zp05!=null) arguments.putSerializable(Constants.OBJECTO_ZP05 , zp05);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        break;
 				default:					
 					break;
 				}
-
 			}
 		});
 
@@ -264,6 +288,7 @@ public class IngresoActivity extends AbstractAsyncActivity {
 					filtro = MainDBConstants.recordId + "='" + zp00.getRecordId() + "'";
 					zp01a = zipA.getZp01StudyEntrySectionAtoD(filtro, null);
 					filtro = MainDBConstants.recordId + "='" + zp00.getRecordId() + "' and " + Zp02DBConstants.redcapEventName + "='" + eventoaFiltrar +"'";
+                    zp02 = zipA.getZp02BiospecimenCollection(filtro,null);
 					zipA.close();
 				} catch (Exception e) {
 					Log.e(TAG, e.getLocalizedMessage(), e);

@@ -49,7 +49,6 @@ public class NewZp02BiospecimenCollectionActivity extends AbstractAsyncActivity 
     private SharedPreferences settings;
     private String username;
     private String mRecordId = "";
-    private boolean hecho =  false;
     private String event;
 
     @Override
@@ -67,9 +66,8 @@ public class NewZp02BiospecimenCollectionActivity extends AbstractAsyncActivity 
                         null);
         String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
         zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
-        hecho = getIntent().getExtras().getBoolean(Constants.DONE);
-        //event = getIntent().getExtras().getString(Constants.EVENT);
-        event="PRUEBA";
+        mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
+        mCollection = (Zp02BiospecimenCollection) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP02);
         createInitDialog();
     }
 
@@ -84,11 +82,11 @@ public class NewZp02BiospecimenCollectionActivity extends AbstractAsyncActivity 
 
         //to set the message
         TextView message =(TextView) dialogInit.findViewById(R.id.yesnotext);
-        if (hecho){
-            message.setText(getString(R.string.edit)+ " " + getString(R.string.main_maternal));
+        if (mCollection!=null){
+            message.setText(getString(R.string.edit)+ " " + getString(R.string.main_specimen));
         }
         else{
-            message.setText(getString(R.string.add)+ " " + getString(R.string.main_maternal));
+            message.setText(getString(R.string.add)+ " " + getString(R.string.main_specimen));
         }
 
         //add some action to the buttons

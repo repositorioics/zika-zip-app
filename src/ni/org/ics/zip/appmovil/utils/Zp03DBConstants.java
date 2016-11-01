@@ -175,7 +175,7 @@ public class Zp03DBConstants {
             + monTempUnit + " text, "
             + monPregnancyLoss + " text, "
             + monDateLoss + " date, "
-            + monPersisHeadache + " text "
+            + monPersisHeadache + " text, "
             + monDizziness + " text, "
             + monNausea + " text, "
             + monVomiting + " text, "
