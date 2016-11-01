@@ -24,14 +24,18 @@ public class Constants {
 	public static final String AUTHORITY_I = "org.odk.collect.android.provider.odk.instances";
 	public static final Uri CONTENT_URI_I = Uri.parse("content://" + AUTHORITY_I + "/instances");
 	
-	//nombres de extras
+	//nombres de objetos
 	public static final String TITLE = "titulo";
-	public static final String OBJECTO = "objeto";
+	public static final String OBJECTO_ZP00 = "zp00";
+	public static final String OBJECTO_ZP01A = "zp01a";
+	public static final String OBJECTO_ZPEST = "zpestado";
 	public static final String DONE = "hecho";
 	
 	//Eventos
-	public static final String MAT_1 = "ingreso";
-	
+	public static final String EVENT = "event";
+	public static final String SCREENING = "screening_arm_1";
+	public static final String ENTRY = "entry_arm_1";
+	public static final String WEEK4 = "4_week_post_entry_arm_1";
 	
 
 

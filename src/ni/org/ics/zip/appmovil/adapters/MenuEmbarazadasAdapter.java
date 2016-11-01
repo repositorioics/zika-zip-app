@@ -51,8 +51,20 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
     public boolean isEnabled(int position) {
         // Disable the first item of GridView
 		boolean habilitado = true;
-        if (position == 0) {
-        	
+		long diff =0;
+		switch (position){
+		case 0:
+        	fechaEvento = fechaIngreso.getTime();
+        	diff = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+        	if(diff>1) habilitado = false;
+        	break;
+		case 1:
+			fechaIngreso.add(Calendar.DATE, 28);fechaEvento = fechaIngreso.getTime();fechaIngreso.add(Calendar.DATE, -28);
+        	diff = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+        	if(diff<-7||diff>7) habilitado = false;
+        	break;
+		default:
+			break;
         }
         return habilitado;
     }
@@ -311,7 +323,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_vis7);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-			fechaIngreso.add(Calendar.DATE, -193);
+			fechaIngreso.add(Calendar.DATE, -196);
 			break;
 		case 8: 
 			fechaIngreso.add(Calendar.DATE, 224);
@@ -500,17 +512,50 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 			fechaIngreso.add(Calendar.DATE, -322);
 			break;
 		case 14: 
+			textView.setTextColor(Color.BLACK);
+			textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.available)+"\n\n");
 			img=getContext().getResources().getDrawable( R.drawable.ic_exit);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
-		default:
+		case 15: 
+			textView.setTextColor(Color.BLACK);
+			textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.available)+"\n\n");
 			img=getContext().getResources().getDrawable( R.drawable.ic_addvisit);
+			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			break;
+		case 16: 
+			textView.setTextColor(Color.BLACK);
+			textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.available)+"\n\n");
+			img=getContext().getResources().getDrawable( R.drawable.ic_addvisit);
+			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			break;
+		case 17: 
+			textView.setTextColor(Color.BLACK);
+			textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.available)+"\n\n");
+			img=getContext().getResources().getDrawable( R.drawable.ic_addvisit);
+			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			break;
+		case 18: 
+			textView.setTextColor(Color.BLACK);
+			textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.available)+"\n\n");
+			img=getContext().getResources().getDrawable( R.drawable.ic_addvisit);
+			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			break;
+		case 19: 
+			textView.setTextColor(Color.BLACK);
+			textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.available)+"\n\n");
+			img=getContext().getResources().getDrawable( R.drawable.ic_addvisit);
+			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			break;
+		default:
+			img=getContext().getResources().getDrawable( R.drawable.logo);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
 		}
 
 		return v;
 	}
+
 	
 	/**
 	 * Get a diff between two dates

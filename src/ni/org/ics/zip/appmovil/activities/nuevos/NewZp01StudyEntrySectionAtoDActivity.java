@@ -40,16 +40,14 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 	protected static final String TAG = NewZp01StudyEntrySectionAtoDActivity.class.getSimpleName();
 	
 	private ZipAdapter zipA;
-	private static Zp01StudyEntrySectionAtoD mIngreso = new Zp01StudyEntrySectionAtoD();
+	private static Zp01StudyEntrySectionAtoD mZp01A = new Zp01StudyEntrySectionAtoD();
 	
-	public static final int ADD_TAMIZAJE_ODK = 1;
-	public static final int BARCODE_CAPTURE_TAM = 2;
+	public static final int ADD_ZP01A_ODK = 1;
 
 	Dialog dialogInit;
 	private SharedPreferences settings;
 	private String username;
 	private String mRecordId = "";
-	private boolean hecho =  false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +63,8 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
+		mZp01A = (Zp01StudyEntrySectionAtoD) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP01A);
 		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
-		hecho = getIntent().getExtras().getBoolean(Constants.DONE);
 		createInitDialog();
 	}
 
@@ -81,11 +79,11 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 
 		//to set the message
 		TextView message =(TextView) dialogInit.findViewById(R.id.yesnotext);
-		if (hecho){
-			message.setText(getString(R.string.edit)+ " " + getString(R.string.main_maternal));
+		if (mZp01A!=null){
+			message.setText(getString(R.string.edit)+ " " + getString(R.string.maternal_b_1));
 		}
 		else{
-			message.setText(getString(R.string.add)+ " " + getString(R.string.main_maternal));
+			message.setText(getString(R.string.add)+ " " + getString(R.string.maternal_b_1));
 		}
 
 		//add some action to the buttons
@@ -95,7 +93,7 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 
 			public void onClick(View v) {
 				dialogInit.dismiss();
-				addTamizaje();
+				addZp01a();
 			}
 		});
 
@@ -140,7 +138,7 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
-		if(requestCode == ADD_TAMIZAJE_ODK) {
+		if(requestCode == ADD_ZP01A_ODK) {
 	        if(resultCode == RESULT_OK) {
 	        	Uri instanceUri = intent.getData();
 				//Busca la instancia resultado
@@ -159,7 +157,7 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 				}
 				if (complete.matches("complete")){
 					//Parsear el resultado obteniendo un tamizaje si esta completo
-					parseTamizaje(idInstancia,instanceFilePath);
+					parseZp01(idInstancia,instanceFilePath);
 				}
 				else{
 					Toast.makeText(getApplicationContext(),	getString(R.string.err_not_completed), Toast.LENGTH_LONG).show();
@@ -175,7 +173,7 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 	/**
 	 * 
 	 */
-	private void addTamizaje() {
+	private void addZp01a() {
 		try{
 			//campos de proveedor de collect
 			String[] projection = new String[] {
@@ -194,7 +192,7 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 			Uri formUri = ContentUris.withAppendedId(Constants.CONTENT_URI,id);
 			//Arranca la actividad ODK Collect en busca de resultado
 			Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
-			startActivityForResult(odkA, ADD_TAMIZAJE_ODK);
+			startActivityForResult(odkA, ADD_ZP01A_ODK);
 		}
 		catch(Exception e){
 			//No existe el formulario en el equipo
@@ -203,25 +201,25 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 		}
 	}
 	
-	private void parseTamizaje(Integer idInstancia, String instanceFilePath) {
+	private void parseZp01(Integer idInstancia, String instanceFilePath) {
 		Serializer serializer = new Persister(); 
 		File source = new File(instanceFilePath);
 		try {
 			Zp01StudyEntrySectionAtoDXml zp01Xml = new Zp01StudyEntrySectionAtoDXml();
 			zp01Xml = serializer.read(Zp01StudyEntrySectionAtoDXml.class, source);
-			mIngreso.setRecordId(mRecordId);
+			mZp01A.setRecordId(mRecordId);
 			
-			mIngreso.setRecordDate(new Date());
-			mIngreso.setRecordUser(username);
-			mIngreso.setIdInstancia(idInstancia);
-			mIngreso.setInstancePath(instanceFilePath);
-			mIngreso.setEstado(Constants.STATUS_NOT_SUBMITTED);
-			mIngreso.setStart(zp01Xml.getStart());
-			mIngreso.setEnd(zp01Xml.getEnd());
-			mIngreso.setDeviceid(zp01Xml.getDeviceid());
-			mIngreso.setSimserial(zp01Xml.getSimserial());
-			mIngreso.setPhonenumber(zp01Xml.getPhonenumber());
-			mIngreso.setToday(zp01Xml.getToday());
+			mZp01A.setRecordDate(new Date());
+			mZp01A.setRecordUser(username);
+			mZp01A.setIdInstancia(idInstancia);
+			mZp01A.setInstancePath(instanceFilePath);
+			mZp01A.setEstado(Constants.STATUS_NOT_SUBMITTED);
+			mZp01A.setStart(zp01Xml.getStart());
+			mZp01A.setEnd(zp01Xml.getEnd());
+			mZp01A.setDeviceid(zp01Xml.getDeviceid());
+			mZp01A.setSimserial(zp01Xml.getSimserial());
+			mZp01A.setPhonenumber(zp01Xml.getPhonenumber());
+			mZp01A.setToday(zp01Xml.getToday());
 			new SaveDataTask().execute();
 			
 		} catch (Exception e) {
@@ -245,7 +243,7 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 		protected String doInBackground(String... values) {
 			try {
 				zipA.open();
-				zipA.crearZp01StudyEntrySectionAtoD(mIngreso);
+				zipA.crearZp01StudyEntrySectionAtoD(mZp01A);
 				zipA.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);

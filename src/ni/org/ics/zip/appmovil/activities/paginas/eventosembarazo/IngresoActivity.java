@@ -1,19 +1,30 @@
 package ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo;
 
+import java.text.SimpleDateFormat;
+
+import ni.org.ics.zip.appmovil.AbstractAsyncActivity;
 import ni.org.ics.zip.appmovil.MainActivity;
+import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.activities.nuevos.*;
 import ni.org.ics.zip.appmovil.adapters.eventosembarazo.IngresoAdapter;
+import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.domain.Zp00Screening;
+import ni.org.ics.zip.appmovil.domain.Zp01StudyEntrySectionAtoD;
+import ni.org.ics.zip.appmovil.domain.Zp02BiospecimenCollection;
+import ni.org.ics.zip.appmovil.domain.ZpEstadoEmbarazada;
 import ni.org.ics.zip.appmovil.utils.Constants;
+import ni.org.ics.zip.appmovil.utils.MainDBConstants;
+import ni.org.ics.zip.appmovil.utils.Zp02DBConstants;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,10 +33,15 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 
-public class IngresoActivity extends Activity {
-
+public class IngresoActivity extends AbstractAsyncActivity {
+	private ZipAdapter zipA;
 	private static Zp00Screening zp00 = new Zp00Screening();
-	//private static String evento;
+	private static ZpEstadoEmbarazada zpEstado = new ZpEstadoEmbarazada();
+	private static Zp01StudyEntrySectionAtoD zp01a = new Zp01StudyEntrySectionAtoD();
+	private static Zp02BiospecimenCollection zp02 = new Zp02BiospecimenCollection();
+	
+	private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+	private static String evento;
 	private GridView gridView;
 	private TextView textView;
 	private AlertDialog alertDialog;
@@ -50,13 +66,21 @@ public class IngresoActivity extends Activity {
 				mExitShowing = savedInstanceState.getBoolean(EXIT_SHOWING, false);
 			}
 		}
-		zp00 = (Zp00Screening) getIntent().getExtras().getSerializable(Constants.OBJECTO);
-		//evento = getIntent().getStringExtra(Constants.TITLE);
+		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
+		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
+		/*Aca se recupera evento, tamizaje y estado*/
+		evento = getIntent().getStringExtra(Constants.EVENT);
+		zp00 = (Zp00Screening) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP00);
+		zpEstado = (ZpEstadoEmbarazada) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZPEST);
+		//Aca se recupera los datos de los formularios para ver si estan realizados o no...
+		new FetchDataIngresoTask().execute(evento);
 		textView = (TextView) findViewById(R.id.label);
-		textView.setText(zp00.getRecordId());
+		textView.setText(getString(R.string.forms)+"\n"+
+				getString(R.string.mat_id)+": "+zp00.getRecordId()+"\n"+
+						getString(R.string.mat_fec)+": "+ mDateFormat.format(zp00.getScrVisitDate()));
 		String[] menu_maternal_info = getResources().getStringArray(R.array.menu_maternal_ingreso);
 		gridView = (GridView) findViewById(R.id.gridView1);
-		gridView.setAdapter(new IngresoAdapter(this, R.layout.menu_item_2, menu_maternal_info, zp00));
+		gridView.setAdapter(new IngresoAdapter(this, R.layout.menu_item_2, menu_maternal_info, zp01a, zp02));
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v,
@@ -68,7 +92,9 @@ public class IngresoActivity extends Activity {
 				case 0:
 					i = new Intent(getApplicationContext(),
 							NewZp01StudyEntrySectionAtoDActivity.class);
-					if (zp00!=null) arguments.putSerializable(Constants.OBJECTO , zp00);
+					//Se pone el evento y el objeto en caso de que no sea nulo...
+					arguments.putString(Constants.EVENT, Constants.ENTRY);
+					if (zp01a!=null) arguments.putSerializable(Constants.OBJECTO_ZP01A, zp01a);
 					i.putExtras(arguments);
 					startActivity(i);
 					break;
@@ -217,6 +243,41 @@ public class IngresoActivity extends Activity {
 		alertDialog = builder.create();
 		alertDialog.show();
 	}
+	
+	// ***************************************
+		// Private classes
+		// ***************************************
+		private class FetchDataIngresoTask extends AsyncTask<String, Void, String> {
+			private String eventoaFiltrar = null;
+			private String filtro = null;
+			@Override
+			protected void onPreExecute() {
+				// before the request begins, show a progress indicator
+				showLoadingProgressDialog();
+			}
+
+			@Override
+			protected String doInBackground(String... values) {
+				eventoaFiltrar = values[0];
+				try {
+					zipA.open();
+					filtro = MainDBConstants.recordId + "='" + zp00.getRecordId() + "'";
+					zp01a = zipA.getZp01StudyEntrySectionAtoD(filtro, null);
+					filtro = MainDBConstants.recordId + "='" + zp00.getRecordId() + "' and " + Zp02DBConstants.redcapEventName + "='" + eventoaFiltrar +"'";
+					zipA.close();
+				} catch (Exception e) {
+					Log.e(TAG, e.getLocalizedMessage(), e);
+					return "error";
+				}
+				return "exito";
+			}
+
+			protected void onPostExecute(String resultado) {
+				// after the network request completes, hide the progress indicator
+				dismissProgressDialog();
+			}
+
+		}
 
 }
 	
