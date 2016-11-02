@@ -1,7 +1,6 @@
 package ni.org.ics.zip.appmovil.adapters.eventosembarazo;
 
 import ni.org.ics.zip.appmovil.R;
-import ni.org.ics.zip.appmovil.domain.Zp00Screening;
 import ni.org.ics.zip.appmovil.domain.Zp01StudyEntrySectionAtoD;
 import ni.org.ics.zip.appmovil.domain.Zp02BiospecimenCollection;
 import android.content.Context;
@@ -65,6 +64,12 @@ public class IngresoAdapter extends ArrayAdapter<String> {
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
 		case 3: 
+			if(mZp02!=null){
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+			}
+			else{
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_sample);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;

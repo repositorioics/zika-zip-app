@@ -233,8 +233,9 @@ public class IngresoActivity extends AbstractAsyncActivity {
 				try {
 					zipA.open();
 					filtro = MainDBConstants.recordId + "='" + zp00.getRecordId() + "'";
-					zp01a = zipA.getZp01StudyEntrySectionAtoD(filtro, null);
+					zp01a = zipA.getZp01StudyEntrySectionAtoD(filtro, MainDBConstants.recordId);
 					filtro = MainDBConstants.recordId + "='" + zp00.getRecordId() + "' and " + Zp02DBConstants.redcapEventName + "='" + eventoaFiltrar +"'";
+					zp02 = zipA.getZp02BiospecimenCollection(filtro, MainDBConstants.recordId);
 					zipA.close();
 				} catch (Exception e) {
 					Log.e(TAG, e.getLocalizedMessage(), e);
