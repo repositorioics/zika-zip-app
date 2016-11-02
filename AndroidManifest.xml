@@ -47,6 +47,26 @@
         <activity android:name="ni.org.ics.zip.appmovil.preferences.PreferencesActivity" />
         <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp01StudyEntrySectionAtoDActivity"
             android:screenOrientation="portrait"></activity>
+        <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp01StudyEntrySectionEActivity"
+                  android:screenOrientation="portrait"></activity>.
+        <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp04TrimesterVisitSectionAtoDActivity"
+                  android:screenOrientation="portrait"></activity>
+        <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp04TrimesterVisitSectionEActivity"
+                  android:screenOrientation="portrait"></activity>
+        <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp04TrimesterVisitSectionFtoHActivity"
+                  android:screenOrientation="portrait"></activity>
+        <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp01StudyEntrySectionFtoKActivity"
+                  android:screenOrientation="portrait"></activity>
+        <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp02BiospecimenCollectionActivity"
+                  android:screenOrientation="portrait"></activity>
+        <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp03MonthlyVisitActivity"
+                  android:screenOrientation="portrait"></activity>
+        <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp05UltrasoundExamActivity"
+                  android:screenOrientation="portrait"></activity>
+        <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp06DeliveryAnd6weekVisitActivity"
+                  android:screenOrientation="portrait"></activity>
+        <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp08StudyExitActivity"
+                  android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

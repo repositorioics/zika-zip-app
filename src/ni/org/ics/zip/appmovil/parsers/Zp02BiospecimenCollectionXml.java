@@ -311,6 +311,8 @@ public class Zp02BiospecimenCollectionXml{
     private String note4;
     @Element(required=false)
     private String note5;
+    @Element(required=false)
+    private String question1;
 
 
     @Attribute

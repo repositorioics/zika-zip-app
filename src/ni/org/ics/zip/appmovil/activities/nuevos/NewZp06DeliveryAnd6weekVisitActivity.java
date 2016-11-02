@@ -49,7 +49,6 @@ public class NewZp06DeliveryAnd6weekVisitActivity extends AbstractAsyncActivity 
     private SharedPreferences settings;
     private String username;
     private String mRecordId = "";
-    private boolean hecho =  false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +65,8 @@ public class NewZp06DeliveryAnd6weekVisitActivity extends AbstractAsyncActivity 
                         null);
         String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
         zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
-        hecho = getIntent().getExtras().getBoolean(Constants.DONE);
+        mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
+        mDelivery = (Zp06DeliveryAnd6weekVisit) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP06);
         createInitDialog();
     }
 
@@ -81,7 +81,7 @@ public class NewZp06DeliveryAnd6weekVisitActivity extends AbstractAsyncActivity 
 
         //to set the message
         TextView message =(TextView) dialogInit.findViewById(R.id.yesnotext);
-        if (hecho){
+        if (mDelivery!=null){
             message.setText(getString(R.string.edit)+ " " + getString(R.string.main_maternal));
         }
         else{

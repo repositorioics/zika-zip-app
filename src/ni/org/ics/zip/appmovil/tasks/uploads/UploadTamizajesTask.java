@@ -34,7 +34,8 @@ public class UploadTamizajesTask extends UploadTask {
 
 	protected static final String TAG = UploadTamizajesTask.class.getSimpleName();
 	private List<Zp00Screening> mTamizajes = new ArrayList<Zp00Screening>();
-    private List<Zp01StudyEntrySectionFtoK> mIngresos = new ArrayList<Zp01StudyEntrySectionFtoK>();
+    private List<Zp01StudyEntrySectionAtoD> mIngresosAD = new ArrayList<Zp01StudyEntrySectionAtoD>();
+    private List<Zp01StudyEntrySectionFtoK> mIngresosFK = new ArrayList<Zp01StudyEntrySectionFtoK>();
     private List<Zp02BiospecimenCollection> mCollections = new ArrayList<Zp02BiospecimenCollection>();
     private List<Zp03MonthlyVisit> mMonthlyVisits = new ArrayList<Zp03MonthlyVisit>();
     private List<Zp05UltrasoundExam> mUltrasounds = new ArrayList<Zp05UltrasoundExam>();
@@ -57,6 +58,10 @@ public class UploadTamizajesTask extends UploadTask {
 			if (!error.matches("Datos recibidos!")){
 				return error;
 			}
+            error = uploadEntrysAD(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                return error;
+            }
             error = uploadEntrysFK(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 return error;
@@ -149,6 +154,68 @@ public class UploadTamizajesTask extends UploadTask {
 	}
 
     /***************************************************/
+    /*************** Zp01 AtoD ************************/
+    /***************************************************/
+    // url, username, password
+    protected String uploadEntrysAD(String url, String username,
+                                    String password) throws Exception {
+        try {
+            getEntryAD();
+            if(mIngresosAD.size()>0){
+                saveEntryAD(Constants.STATUS_SUBMITTED);
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/zp01StudyEntrySectionAtoDs";
+                Zp01StudyEntrySectionAtoD[] envio = mIngresosAD.toArray(new Zp01StudyEntrySectionAtoD[mIngresosAD.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<Zp01StudyEntrySectionAtoD[]> requestEntity =
+                        new HttpEntity<Zp01StudyEntrySectionAtoD[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                // Regresa la respuesta a mostrar al usuario
+                if (!response.getBody().matches("Datos recibidos!")) {
+                    saveEntryAD(Constants.STATUS_NOT_SUBMITTED);
+                }
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            saveEntryAD(Constants.STATUS_NOT_SUBMITTED);
+            return e.getMessage();
+        }
+
+    }
+
+    private void saveEntryAD(String estado) {
+        ZipAdapter zipA = new ZipAdapter(mContext, password, false);
+        zipA.open();
+        int c = mIngresosAD.size();
+        for (Zp01StudyEntrySectionAtoD ingreso : mIngresosAD) {
+            ingreso.setEstado(estado);
+            zipA.editarZp01StudyEntrySectionAtoD(ingreso);
+            publishProgress("Actualizando datos de ingreso (A-D)", Integer.valueOf(mIngresosAD.indexOf(ingreso)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+        zipA.close();
+    }
+
+    private void getEntryAD() {
+        ZipAdapter zipA = new ZipAdapter(mContext, password, false);
+        zipA.open();
+        mIngresosAD = zipA.getZp01StudyEntrySectionAtoDs("", MainDBConstants.recordId);
+        zipA.close();
+    }
+
+    /***************************************************/
     /*************** Zp01 FtoK ************************/
     /***************************************************/
     // url, username, password
@@ -156,11 +223,11 @@ public class UploadTamizajesTask extends UploadTask {
                                    String password) throws Exception {
         try {
             getEntryFK();
-            if(mIngresos.size()>0){
+            if(mIngresosFK.size()>0){
                 saveEntryFK(Constants.STATUS_SUBMITTED);
                 // La URL de la solicitud POST
                 final String urlRequest = url + "/movil/zp01StudyEntrySectionFtoKs";
-                Zp01StudyEntrySectionFtoK[] envio = mIngresos.toArray(new Zp01StudyEntrySectionFtoK[mIngresos.size()]);
+                Zp01StudyEntrySectionFtoK[] envio = mIngresosFK.toArray(new Zp01StudyEntrySectionFtoK[mIngresosFK.size()]);
                 HttpHeaders requestHeaders = new HttpHeaders();
                 HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
                 requestHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -193,11 +260,11 @@ public class UploadTamizajesTask extends UploadTask {
     private void saveEntryFK(String estado) {
         ZipAdapter zipA = new ZipAdapter(mContext, password, false);
         zipA.open();
-        int c = mIngresos.size();
-        for (Zp01StudyEntrySectionFtoK ingreso : mIngresos) {
+        int c = mIngresosFK.size();
+        for (Zp01StudyEntrySectionFtoK ingreso : mIngresosFK) {
             ingreso.setEstado(estado);
             zipA.editarZp01StudyEntrySectionFtoK(ingreso);
-            publishProgress("Actualizando datos de ingreso (F-K)", Integer.valueOf(mIngresos.indexOf(ingreso)).toString(), Integer
+            publishProgress("Actualizando datos de ingreso (F-K)", Integer.valueOf(mIngresosFK.indexOf(ingreso)).toString(), Integer
                     .valueOf(c).toString());
         }
         zipA.close();
@@ -206,7 +273,7 @@ public class UploadTamizajesTask extends UploadTask {
     private void getEntryFK() {
         ZipAdapter zipA = new ZipAdapter(mContext, password, false);
         zipA.open();
-        mIngresos = zipA.getZp01StudyEntrySectionFtoKs("", MainDBConstants.recordId);
+        mIngresosFK = zipA.getZp01StudyEntrySectionFtoKs("", MainDBConstants.recordId);
         zipA.close();
     }
 

@@ -64,6 +64,7 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 						null);
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
 		mZp01A = (Zp01StudyEntrySectionAtoD) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP01A);
+        mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
 		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
 		createInitDialog();
 	}
@@ -163,9 +164,6 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 					Toast.makeText(getApplicationContext(),	getString(R.string.err_not_completed), Toast.LENGTH_LONG).show();
 				}
 	        }
-	        else{
-	        	
-	        }
 	    }
 		super.onActivityResult(requestCode, resultCode, intent);
 	}
@@ -207,7 +205,8 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 		try {
 			Zp01StudyEntrySectionAtoDXml zp01Xml = new Zp01StudyEntrySectionAtoDXml();
 			zp01Xml = serializer.read(Zp01StudyEntrySectionAtoDXml.class, source);
-			mZp01A.setRecordId(mRecordId);
+			if (mZp01A==null) mZp01A = new Zp01StudyEntrySectionAtoD();
+            mZp01A.setRecordId(mRecordId);
 			
 			mZp01A.setRecordDate(new Date());
 			mZp01A.setRecordUser(username);
