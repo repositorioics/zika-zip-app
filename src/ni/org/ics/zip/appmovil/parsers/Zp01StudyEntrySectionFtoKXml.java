@@ -206,6 +206,18 @@ public class Zp01StudyEntrySectionFtoKXml{
     @Element(required=false)
     private String note6;
 
+    @Element(required=false)
+    private String generated_table_list_label_5;
+    @Element(required=false)
+    private String generated_table_list_label_12;
+
+    @Element(required=false)
+    private String reserved_name_for_field_list_labels_6;
+    @Element(required=false)
+    private String reserved_name_for_field_list_labels_13;
+
+
+
     @Attribute
     private String id;
     @Element(required=false)
