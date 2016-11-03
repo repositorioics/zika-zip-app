@@ -409,12 +409,19 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 			// after the network request completes, hide the progress indicator
 			dismissProgressDialog();
 			showResult(resultado);
-			Bundle arguments = new Bundle();
-			if (mTamizaje!=null) arguments.putSerializable(Constants.OBJECTO_ZP00 , mTamizaje);
-			Intent i = new Intent(getApplicationContext(),
-					MenuEmbarazadasActivity.class);
-			i.putExtras(arguments);
-			startActivity(i);
+			if (mTamizaje.getScrRemain().equals("0") || mTamizaje.getScrAge15().equals("0") || mTamizaje.getScrPregnant().equals("0") 
+					|| mTamizaje.getScrPregant13().equals("0") || mTamizaje.getScrZikaOther().equals("1") || mTamizaje.getScrMeetCriteria().equals("0")
+					|| mTamizaje.getScrConsentObta().equals("0") || mTamizaje.getScrObAssent().equals("0")){
+				Toast.makeText(getApplicationContext(),	getString(R.string.notelegible), Toast.LENGTH_LONG).show();
+			}
+			else{
+				Bundle arguments = new Bundle();
+				if (mTamizaje!=null) arguments.putSerializable(Constants.OBJECTO_ZP00 , mTamizaje);
+				Intent i = new Intent(getApplicationContext(),
+						MenuEmbarazadasActivity.class);
+				i.putExtras(arguments);
+				startActivity(i);
+			}
 			finish();
 		}
 
