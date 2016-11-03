@@ -43,4 +43,7 @@
     <string name="mat_ini">Iniciales de la participante</string>
     <string name="mat_tam">Número de tamizaje</string>
     <string name="mat_fec">Fecha de ingreso</string>
+    <string name="mat_exit">Fecha de salida</string>
+    <string name="mat_retired">Retirada del estudio</string>
+    <string name="mat_retire">Retirar a esta participante del estudio??</string>
 </resources>

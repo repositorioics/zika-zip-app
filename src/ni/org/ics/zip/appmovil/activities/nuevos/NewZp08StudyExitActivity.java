@@ -42,7 +42,7 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
     private ZipAdapter zipA;
     private static Zp08StudyExit mExit = new Zp08StudyExit();
 
-    public static final int ADD_TAMIZAJE_ODK = 1;
+    public static final int ADD_EXIT_ODK = 1;
 
     Dialog dialogInit;
     private SharedPreferences settings;
@@ -65,7 +65,6 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
         String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
         zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
         mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
-        mExit = (Zp08StudyExit) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP08);
         createInitDialog();
     }
 
@@ -80,13 +79,8 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
 
         //to set the message
         TextView message =(TextView) dialogInit.findViewById(R.id.yesnotext);
-        if (mExit!=null){
-            message.setText(getString(R.string.edit)+ " " + getString(R.string.main_maternal));
-        }
-        else{
-            message.setText(getString(R.string.add)+ " " + getString(R.string.main_maternal));
-        }
-
+        message.setText(getString(R.string.mat_retire)+"\n"+getString(R.string.verify));
+        
         //add some action to the buttons
 
         Button yes = (Button) dialogInit.findViewById(R.id.yesnoYes);
@@ -138,7 +132,7 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent intent) {
-        if(requestCode == ADD_TAMIZAJE_ODK) {
+        if(requestCode == ADD_EXIT_ODK) {
             if(resultCode == RESULT_OK) {
                 Uri instanceUri = intent.getData();
                 //Busca la instancia resultado
@@ -164,7 +158,7 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
                 }
             }
             else{
-
+            	finish();
             }
         }
         super.onActivityResult(requestCode, resultCode, intent);
@@ -189,7 +183,7 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
             Uri formUri = ContentUris.withAppendedId(Constants.CONTENT_URI, id);
             //Arranca la actividad ODK Collect en busca de resultado
             Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
-            startActivityForResult(odkA, ADD_TAMIZAJE_ODK);
+            startActivityForResult(odkA, ADD_EXIT_ODK);
         }
         catch(Exception e){
             //No existe el formulario en el equipo
@@ -241,6 +235,7 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
             // Presenta el error al parsear el xml
             Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             e.printStackTrace();
+            finish();
         }
     }
 
@@ -280,5 +275,6 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
     // ***************************************
     private void showResult(String resultado) {
         Toast.makeText(getApplicationContext(),	resultado, Toast.LENGTH_LONG).show();
+        finish();
     }
 }

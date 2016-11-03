@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.domain.Zp00Screening;
+import ni.org.ics.zip.appmovil.domain.Zp08StudyExit;
 import ni.org.ics.zip.appmovil.domain.ZpEstadoEmbarazada;
 import android.content.Context;
 import android.graphics.Color;
@@ -23,7 +24,8 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 
 	private final String[] values;
 	private final Zp00Screening mZp00;
-	private final ZpEstadoEmbarazada mZp01;
+	private final ZpEstadoEmbarazada mZpEstado;
+	private final Zp08StudyExit mZpSalida;
 	private final Calendar fechaIngreso;
 	private final Context context;
 	private Date fechaEvento;
@@ -31,12 +33,13 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public MenuEmbarazadasAdapter(Context context, int textViewResourceId,
-			String[] values, Zp00Screening zp00, ZpEstadoEmbarazada zpEstado) {
+			String[] values, Zp00Screening zp00, ZpEstadoEmbarazada zpEstado, Zp08StudyExit zpSalida) {
 		super(context, textViewResourceId, values);
 		this.context = context;
 		this.values = values;
 		this.mZp00 = zp00;
-		this.mZp01 = zpEstado;
+		this.mZpEstado = zpEstado;
+		this.mZpSalida = zpSalida;
 		try {
 			this.todayDate = formatter.parse(formatter.format(new Date()));
 		} catch (ParseException e) {
@@ -51,6 +54,9 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
     public boolean isEnabled(int position) {
         // Disable the first item of GridView
 		boolean habilitado = true;
+		if(mZpSalida!= null){
+			return false;
+		}
 		long diff =0;
 		switch (position){
 		case 0:
@@ -146,7 +152,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		switch (position){
 		case 0:
 			fechaEvento = fechaIngreso.getTime();
-			if(String.valueOf(mZp01.getIngreso()).equals("0")){
+			if(String.valueOf(mZpEstado.getIngreso()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
 				if(dif>1){
@@ -172,7 +178,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		case 1: 
 			fechaIngreso.add(Calendar.DATE, 28);
 			fechaEvento = fechaIngreso.getTime();
-			if(String.valueOf(mZp01.getSem4()).equals("0")){
+			if(String.valueOf(mZpEstado.getSem4()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
 				if(dif<-7){
@@ -203,7 +209,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		case 2: 
 			fechaIngreso.add(Calendar.DATE, 56);
 			fechaEvento = fechaIngreso.getTime();
-			if(String.valueOf(mZp01.getSem8()).equals("0")){
+			if(String.valueOf(mZpEstado.getSem8()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
 				if(dif<-7){
@@ -234,7 +240,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		case 3:
 			fechaIngreso.add(Calendar.DATE, 84);
 			fechaEvento = fechaIngreso.getTime();
-			if(String.valueOf(mZp01.getSem12()).equals("0")){
+			if(String.valueOf(mZpEstado.getSem12()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
 				if(dif<-7){
@@ -265,7 +271,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		case 4: 
 			fechaIngreso.add(Calendar.DATE, 112);
 			fechaEvento = fechaIngreso.getTime();
-			if(String.valueOf(mZp01.getSem16()).equals("0")){
+			if(String.valueOf(mZpEstado.getSem16()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
 				if(dif<-7){
@@ -296,7 +302,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		case 5: 
 			fechaIngreso.add(Calendar.DATE, 140);
 			fechaEvento = fechaIngreso.getTime();
-			if(String.valueOf(mZp01.getSem20()).equals("0")){
+			if(String.valueOf(mZpEstado.getSem20()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
 				if(dif<-7){
@@ -327,7 +333,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		case 6: 
 			fechaIngreso.add(Calendar.DATE, 168);
 			fechaEvento = fechaIngreso.getTime();
-			if(String.valueOf(mZp01.getSem24()).equals("0")){
+			if(String.valueOf(mZpEstado.getSem24()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
 				if(dif<-7){
@@ -358,7 +364,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		case 7: 
 			fechaIngreso.add(Calendar.DATE, 196);
 			fechaEvento = fechaIngreso.getTime();
-			if(String.valueOf(mZp01.getSem28()).equals("0")){
+			if(String.valueOf(mZpEstado.getSem28()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
 				if(dif<-7){
@@ -389,7 +395,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		case 8: 
 			fechaIngreso.add(Calendar.DATE, 224);
 			fechaEvento = fechaIngreso.getTime();
-			if(String.valueOf(mZp01.getSem32()).equals("0")){
+			if(String.valueOf(mZpEstado.getSem32()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
 				if(dif<-7){
@@ -420,7 +426,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		case 9: 
 			fechaIngreso.add(Calendar.DATE, 252);
 			fechaEvento = fechaIngreso.getTime();
-			if(String.valueOf(mZp01.getSem36()).equals("0")){
+			if(String.valueOf(mZpEstado.getSem36()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
 				if(dif<-7){
@@ -451,7 +457,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		case 10: 
 			fechaIngreso.add(Calendar.DATE, 280);
 			fechaEvento = fechaIngreso.getTime();
-			if(String.valueOf(mZp01.getSem40()).equals("0")){
+			if(String.valueOf(mZpEstado.getSem40()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
 				if(dif<-7){
@@ -482,7 +488,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		case 11: 
 			fechaIngreso.add(Calendar.DATE, 308);
 			fechaEvento = fechaIngreso.getTime();
-			if(String.valueOf(mZp01.getSem44()).equals("0")){
+			if(String.valueOf(mZpEstado.getSem44()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
 				if(dif<-28){
@@ -513,7 +519,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		case 12: 
 			fechaIngreso.add(Calendar.DATE, 309);
 			fechaEvento = fechaIngreso.getTime();
-			if(String.valueOf(mZp01.getParto()).equals("0")){
+			if(String.valueOf(mZpEstado.getParto()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
 				if(dif<-28){
@@ -544,7 +550,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		case 13: 
 			fechaIngreso.add(Calendar.DATE, 322);
 			fechaEvento = fechaIngreso.getTime();
-			if(String.valueOf(mZp01.getPosparto()).equals("0")){
+			if(String.valueOf(mZpEstado.getPosparto()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
 				if(dif<-7){
@@ -574,7 +580,12 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 			break;
 		case 14: 
 			textView.setTextColor(Color.BLACK);
-			textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.available)+"\n\n");
+			if(mZpSalida!=null){
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.mat_retired)+"\n\n");
+			}
+			else{
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.available)+"\n\n");
+			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_exit);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;

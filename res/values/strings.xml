@@ -43,5 +43,6 @@
     <string name="available">Disponible</string>
     <string name="programmed">Programado</string>
     <string name="forms">Formularios a realizar en este evento</string>
+    <string name="verify">Esta acción no se puede deshacer, desea proceder???</string>
     
 </resources>

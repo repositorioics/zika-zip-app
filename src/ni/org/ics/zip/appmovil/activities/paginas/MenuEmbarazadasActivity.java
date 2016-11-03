@@ -6,10 +6,12 @@ import ni.org.ics.zip.appmovil.AbstractAsyncActivity;
 import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
+import ni.org.ics.zip.appmovil.activities.nuevos.NewZp08StudyExitActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.IngresoActivity;
 import ni.org.ics.zip.appmovil.adapters.MenuEmbarazadasAdapter;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.domain.Zp00Screening;
+import ni.org.ics.zip.appmovil.domain.Zp08StudyExit;
 import ni.org.ics.zip.appmovil.domain.ZpEstadoEmbarazada;
 import ni.org.ics.zip.appmovil.utils.Constants;
 import ni.org.ics.zip.appmovil.utils.MainDBConstants;
@@ -33,6 +35,7 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 
 	private static Zp00Screening zp00 = new Zp00Screening();
 	private static ZpEstadoEmbarazada zpEstado = new ZpEstadoEmbarazada();
+	private static Zp08StudyExit zpSalida= new Zp08StudyExit();
 	private GridView gridView;
 	private TextView textView;
 	private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
@@ -51,18 +54,15 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 			ActionBar actionBar = getActionBar();
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
+		textView = (TextView) findViewById(R.id.label);
+		gridView = (GridView) findViewById(R.id.gridView1);
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
 		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
 		zp00 = (Zp00Screening) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP00);
 		filtro = MainDBConstants.recordId + "='" + zp00.getRecordId() + "'";
 		new FetchDataEmbarazadaTask().execute(filtro);
-		textView = (TextView) findViewById(R.id.label);
-		textView.setTextColor(Color.BLUE);
-		textView.setText(getString(R.string.maternal_events)+"\n"+
-							getString(R.string.mat_id)+": "+zp00.getRecordId()+"\n"+
-									getString(R.string.mat_fec)+": "+ mDateFormat.format(zp00.getScrVisitDate()));
 		menu_maternal_info = getResources().getStringArray(R.array.menu_maternal_a);
-		gridView = (GridView) findViewById(R.id.gridView1);
+		
 		
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -79,6 +79,14 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 					arguments.putString(Constants.EVENT, Constants.ENTRY);
 					if (zp00!=null) arguments.putSerializable(Constants.OBJECTO_ZP00 , zp00);
 					if (zpEstado!=null) arguments.putSerializable(Constants.OBJECTO_ZPEST , zpEstado);
+					i.putExtras(arguments);
+					startActivity(i);
+					break;
+				case 14:
+					i = new Intent(getApplicationContext(),
+							NewZp08StudyExitActivity.class);
+					/*Aca se pasa evento, tamizaje y estado*/
+					arguments.putString(Constants.RECORDID, zp00.getRecordId());
 					i.putExtras(arguments);
 					startActivity(i);
 					break;
@@ -158,6 +166,7 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 			try {
 				zipA.open();
 				zpEstado = zipA.getZpEstadoEmbarazada(filtro, MainDBConstants.recordId);
+				zpSalida = zipA.getZp08StudyExit(filtro, null);
 				zipA.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -168,7 +177,17 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 
 		protected void onPostExecute(String resultado) {
 			// after the network request completes, hide the progress indicator
-			gridView.setAdapter(new MenuEmbarazadasAdapter(getApplicationContext(), R.layout.menu_item_2, menu_maternal_info, zp00, zpEstado));
+			textView.setText("");
+			textView.setTextColor(Color.BLUE);
+			textView.setText(getString(R.string.maternal_events)+"\n"+
+								getString(R.string.mat_id)+": "+zp00.getRecordId()+"\n"+
+										getString(R.string.mat_fec)+": "+ mDateFormat.format(zp00.getScrVisitDate()));
+			gridView.setAdapter(new MenuEmbarazadasAdapter(getApplicationContext(), R.layout.menu_item_2, menu_maternal_info, zp00, zpEstado, zpSalida));
+			if (zpSalida != null){
+				textView.setTextColor(Color.RED);
+				textView.setText(textView.getText()+"\n"+getString(R.string.mat_retired)
+						+"\n"+getString(R.string.mat_exit)+": "+ mDateFormat.format(zpSalida.getExtStudyExitDate()));
+			}
 			dismissProgressDialog();
 		}
 
