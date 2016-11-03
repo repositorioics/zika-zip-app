@@ -312,6 +312,11 @@ public class IngresoActivity extends AbstractAsyncActivity {
 					zp04e = zipA.getZp04TrimesterVisitSectionE(filtro, null);
 					zp04f = zipA.getZp04TrimesterVisitSectionFtoH(filtro, null);
 					zp05 = zipA.getZp05UltrasoundExam(filtro, null);
+					if (zp01a!=null && zp01e!=null && zp01f!=null && zp02!=null && 
+							zp04a!=null && zp04e!=null && zp04f!=null && zp05!=null){
+						zpEstado.setIngreso('1');
+						zipA.editarZpEstadoEmbarazada(zpEstado);
+					}
 					zipA.close();
 				} catch (Exception e) {
 					Log.e(TAG, e.getLocalizedMessage(), e);
