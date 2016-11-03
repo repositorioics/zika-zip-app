@@ -39,12 +39,13 @@ public class UploadTamizajesTask extends UploadTask {
     private List<Zp01StudyEntrySectionFtoK> mIngresosFK = new ArrayList<Zp01StudyEntrySectionFtoK>();
     private List<Zp02BiospecimenCollection> mCollections = new ArrayList<Zp02BiospecimenCollection>();
     private List<Zp03MonthlyVisit> mMonthlyVisits = new ArrayList<Zp03MonthlyVisit>();
-    private List<Zp04TrimesterVisitSectionAtoD> mTrimesterVisitAD = new ArrayList<>();
-    private List<Zp04TrimesterVisitSectionE> mTrimesterVisitE = new ArrayList<>();
-    private List<Zp04TrimesterVisitSectionFtoH> mTrimesterVisitFH = new ArrayList<>();
+    private List<Zp04TrimesterVisitSectionAtoD> mTrimesterVisitAD = new ArrayList<Zp04TrimesterVisitSectionAtoD>();
+    private List<Zp04TrimesterVisitSectionE> mTrimesterVisitE = new ArrayList<Zp04TrimesterVisitSectionE>();
+    private List<Zp04TrimesterVisitSectionFtoH> mTrimesterVisitFH = new ArrayList<Zp04TrimesterVisitSectionFtoH>();
     private List<Zp05UltrasoundExam> mUltrasounds = new ArrayList<Zp05UltrasoundExam>();
     private List<Zp06DeliveryAnd6weekVisit> mDeliverys = new ArrayList<Zp06DeliveryAnd6weekVisit>();
     private List<Zp08StudyExit> mExits = new ArrayList<Zp08StudyExit>();
+    private List<ZpEstadoEmbarazada> mStatus = new ArrayList<ZpEstadoEmbarazada>();
 	private String url = null;
 	private String username = null;
 	private String password = null;
@@ -103,6 +104,10 @@ public class UploadTamizajesTask extends UploadTask {
                 return error;
             }
             error = uploadExits(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                return error;
+            }
+            error = uploadStatusPreg(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 return error;
             }
@@ -253,7 +258,7 @@ public class UploadTamizajesTask extends UploadTask {
                 requestHeaders.setContentType(MediaType.APPLICATION_JSON);
                 requestHeaders.setAuthorization(authHeader);
                 HttpEntity<Zp01StudyEntrySectionE[]> requestEntity =
-                        new HttpEntity<>(envio, requestHeaders);
+                        new HttpEntity<Zp01StudyEntrySectionE[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
@@ -503,7 +508,7 @@ public class UploadTamizajesTask extends UploadTask {
                 requestHeaders.setContentType(MediaType.APPLICATION_JSON);
                 requestHeaders.setAuthorization(authHeader);
                 HttpEntity<Zp04TrimesterVisitSectionAtoD[]> requestEntity =
-                        new HttpEntity<>(envio, requestHeaders);
+                        new HttpEntity<Zp04TrimesterVisitSectionAtoD[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
@@ -565,7 +570,7 @@ public class UploadTamizajesTask extends UploadTask {
                 requestHeaders.setContentType(MediaType.APPLICATION_JSON);
                 requestHeaders.setAuthorization(authHeader);
                 HttpEntity<Zp04TrimesterVisitSectionE[]> requestEntity =
-                        new HttpEntity<>(envio, requestHeaders);
+                        new HttpEntity<Zp04TrimesterVisitSectionE[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
@@ -627,7 +632,7 @@ public class UploadTamizajesTask extends UploadTask {
                 requestHeaders.setContentType(MediaType.APPLICATION_JSON);
                 requestHeaders.setAuthorization(authHeader);
                 HttpEntity<Zp04TrimesterVisitSectionFtoH[]> requestEntity =
-                        new HttpEntity<>(envio, requestHeaders);
+                        new HttpEntity<Zp04TrimesterVisitSectionFtoH[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
@@ -855,6 +860,69 @@ public class UploadTamizajesTask extends UploadTask {
         ZipAdapter zipA = new ZipAdapter(mContext, password, false);
         zipA.open();
         mExits = zipA.getZp08StudyExits("", MainDBConstants.recordId);
+        zipA.close();
+    }
+
+
+    /***************************************************/
+    /********************* ZpEstadosEmbarazadas ************************/
+    /***************************************************/
+    // url, username, password
+    protected String uploadStatusPreg(String url, String username,
+                                 String password) throws Exception {
+        try {
+            getStatusPreg();
+            if(mStatus.size()>0){
+                saveStatusPreg(Constants.STATUS_SUBMITTED);
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/zpEstadoEmb";
+                ZpEstadoEmbarazada[] envio = mStatus.toArray(new ZpEstadoEmbarazada[mStatus.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<ZpEstadoEmbarazada[]> requestEntity =
+                        new HttpEntity<ZpEstadoEmbarazada[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                // Regresa la respuesta a mostrar al usuario
+                if (!response.getBody().matches("Datos recibidos!")) {
+                    saveStatusPreg(Constants.STATUS_NOT_SUBMITTED);
+                }
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            saveStatusPreg(Constants.STATUS_NOT_SUBMITTED);
+            return e.getMessage();
+        }
+
+    }
+
+    private void saveStatusPreg(String estado) {
+        ZipAdapter zipA = new ZipAdapter(mContext, password, false);
+        zipA.open();
+        int c = mStatus.size();
+        for (ZpEstadoEmbarazada estadoEmbarazada : mStatus) {
+            estadoEmbarazada.setEstado(estado);
+            zipA.editarZpEstadoEmbarazada(estadoEmbarazada);
+            publishProgress("Actualizando estado de embarazadas", Integer.valueOf(mStatus.indexOf(estadoEmbarazada)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+        zipA.close();
+    }
+
+    private void getStatusPreg() {
+        ZipAdapter zipA = new ZipAdapter(mContext, password, false);
+        zipA.open();
+        mStatus = zipA.getZpEstadoEmbarazadas("", MainDBConstants.recordId);
         zipA.close();
     }
 }

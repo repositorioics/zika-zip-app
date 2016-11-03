@@ -243,7 +243,7 @@ public class ZipAdapter {
 	/**
 	 * Metodos para ZpEstadoEmbarazada en la base de datos
 	 * 
-	 * @param screening
+	 * @param estado
 	 *            Objeto ZpEstadoEmbarazada que contiene la informacion
 	 *
 	 */
@@ -273,6 +273,24 @@ public class ZipAdapter {
 		if (!cursorEstado.isClosed()) cursorEstado.close();
 		return mEstado;
 	}
+
+    //Obtener una lista de ZpEstadoEmbarazada de la base de datos
+    public List<ZpEstadoEmbarazada> getZpEstadoEmbarazadas(String filtro, String orden) throws SQLException {
+        List<ZpEstadoEmbarazada> zpEstadoEmbarazadas = new ArrayList<ZpEstadoEmbarazada>();
+        Cursor cursorStatus = crearCursor(MainDBConstants.STATUS_PREG_TABLE, filtro, null, orden);
+        if (cursorStatus != null && cursorStatus.getCount() > 0) {
+            cursorStatus.moveToFirst();
+            zpEstadoEmbarazadas.clear();
+            do{
+                ZpEstadoEmbarazada estadoEmbarazada = null;
+                estadoEmbarazada = ZpEstadoEmbarazadaHelper.crearZpEstadoEmbarazada(cursorStatus);
+                zpEstadoEmbarazadas.add(estadoEmbarazada);
+            } while (cursorStatus.moveToNext());
+        }
+        if (!cursorStatus.isClosed()) cursorStatus.close();
+        return zpEstadoEmbarazadas;
+    }
+
 
     /**
      * Metodos para Zp01StudyEntrySectionAtoD en la base de datos
