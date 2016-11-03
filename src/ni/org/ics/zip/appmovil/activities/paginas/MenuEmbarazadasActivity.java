@@ -37,6 +37,8 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 	private TextView textView;
 	private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
 	private ZipAdapter zipA;
+	String[] menu_maternal_info;
+	String filtro;
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -52,16 +54,16 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
 		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
 		zp00 = (Zp00Screening) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP00);
-		String filtro = MainDBConstants.recordId + "='" + zp00.getRecordId() + "'";
+		filtro = MainDBConstants.recordId + "='" + zp00.getRecordId() + "'";
 		new FetchDataEmbarazadaTask().execute(filtro);
 		textView = (TextView) findViewById(R.id.label);
 		textView.setTextColor(Color.BLUE);
 		textView.setText(getString(R.string.maternal_events)+"\n"+
 							getString(R.string.mat_id)+": "+zp00.getRecordId()+"\n"+
 									getString(R.string.mat_fec)+": "+ mDateFormat.format(zp00.getScrVisitDate()));
-		String[] menu_maternal_info = getResources().getStringArray(R.array.menu_maternal_a);
+		menu_maternal_info = getResources().getStringArray(R.array.menu_maternal_a);
 		gridView = (GridView) findViewById(R.id.gridView1);
-		gridView.setAdapter(new MenuEmbarazadasAdapter(this, R.layout.menu_item_2, menu_maternal_info, zp00, zpEstado));
+		
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v,
@@ -107,6 +109,7 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 
 	@Override
 	protected void onResume() {
+		new FetchDataEmbarazadaTask().execute(filtro);
 		super.onResume();
 	}
 
@@ -165,6 +168,7 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 
 		protected void onPostExecute(String resultado) {
 			// after the network request completes, hide the progress indicator
+			gridView.setAdapter(new MenuEmbarazadasAdapter(getApplicationContext(), R.layout.menu_item_2, menu_maternal_info, zp00, zpEstado));
 			dismissProgressDialog();
 		}
 

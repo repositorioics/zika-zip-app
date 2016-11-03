@@ -331,7 +331,7 @@ public class Zp01DBConstants {
             + seaVacotherSpecify + " text, "
             + seaOtherDate1 + " date, "
             + seaOtherDate2 + " date, "
-            + seaOtherDate3 + " date "
+            + seaOtherDate3 + " date, "
             + seaRubella + " text, "
             + seaRubellaDate1 + " date, "
             + seaRubellaDate2 + " date, "

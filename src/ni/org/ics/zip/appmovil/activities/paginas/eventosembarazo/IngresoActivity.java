@@ -7,11 +7,24 @@ import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.activities.nuevos.NewZp01StudyEntrySectionAtoDActivity;
+import ni.org.ics.zip.appmovil.activities.nuevos.NewZp01StudyEntrySectionEActivity;
+import ni.org.ics.zip.appmovil.activities.nuevos.NewZp01StudyEntrySectionFtoKActivity;
+import ni.org.ics.zip.appmovil.activities.nuevos.NewZp02BiospecimenCollectionActivity;
+import ni.org.ics.zip.appmovil.activities.nuevos.NewZp04TrimesterVisitSectionAtoDActivity;
+import ni.org.ics.zip.appmovil.activities.nuevos.NewZp04TrimesterVisitSectionEActivity;
+import ni.org.ics.zip.appmovil.activities.nuevos.NewZp04TrimesterVisitSectionFtoHActivity;
+import ni.org.ics.zip.appmovil.activities.nuevos.NewZp05UltrasoundExamActivity;
 import ni.org.ics.zip.appmovil.adapters.eventosembarazo.IngresoAdapter;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.domain.Zp00Screening;
 import ni.org.ics.zip.appmovil.domain.Zp01StudyEntrySectionAtoD;
+import ni.org.ics.zip.appmovil.domain.Zp01StudyEntrySectionE;
+import ni.org.ics.zip.appmovil.domain.Zp01StudyEntrySectionFtoK;
 import ni.org.ics.zip.appmovil.domain.Zp02BiospecimenCollection;
+import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionAtoD;
+import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionE;
+import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionFtoH;
+import ni.org.ics.zip.appmovil.domain.Zp05UltrasoundExam;
 import ni.org.ics.zip.appmovil.domain.ZpEstadoEmbarazada;
 import ni.org.ics.zip.appmovil.utils.Constants;
 import ni.org.ics.zip.appmovil.utils.MainDBConstants;
@@ -37,8 +50,15 @@ public class IngresoActivity extends AbstractAsyncActivity {
 	private ZipAdapter zipA;
 	private static Zp00Screening zp00 = new Zp00Screening();
 	private static ZpEstadoEmbarazada zpEstado = new ZpEstadoEmbarazada();
-	private static Zp01StudyEntrySectionAtoD zp01a = new Zp01StudyEntrySectionAtoD();
-	private static Zp02BiospecimenCollection zp02 = new Zp02BiospecimenCollection();
+	private static Zp01StudyEntrySectionAtoD zp01a = null;
+	private static Zp01StudyEntrySectionE zp01e = null;
+	private static Zp01StudyEntrySectionFtoK zp01f = null;
+	private static Zp02BiospecimenCollection zp02 = null;
+	private static Zp04TrimesterVisitSectionAtoD zp04a = null;
+	private static Zp04TrimesterVisitSectionE zp04e = null;
+    private static Zp04TrimesterVisitSectionFtoH zp04f = null;
+    private static Zp05UltrasoundExam zp05 = null;
+
 	
 	private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
 	private static String evento;
@@ -49,6 +69,7 @@ public class IngresoActivity extends AbstractAsyncActivity {
 	private boolean mExitShowing;
 	private boolean pendiente = false;
 	private static final String EXIT_SHOWING = "exitshowing";
+	String[] menu_maternal_info;
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -78,26 +99,74 @@ public class IngresoActivity extends AbstractAsyncActivity {
 		textView.setText(getString(R.string.forms)+"\n"+
 				getString(R.string.mat_id)+": "+zp00.getRecordId()+"\n"+
 						getString(R.string.mat_fec)+": "+ mDateFormat.format(zp00.getScrVisitDate()));
-		String[] menu_maternal_info = getResources().getStringArray(R.array.menu_maternal_ingreso);
+		menu_maternal_info = getResources().getStringArray(R.array.menu_maternal_ingreso);
 		gridView = (GridView) findViewById(R.id.gridView1);
-		gridView.setAdapter(new IngresoAdapter(this, R.layout.menu_item_2, menu_maternal_info, zp01a, zp02));
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
 				Bundle arguments = new Bundle();
 				Intent i;
-				switch(position){
-				
-				case 0:
+				arguments.putString(Constants.EVENT, Constants.ENTRY);
+                arguments.putString(Constants.RECORDID, zp00.getRecordId());
+				switch(position){ 
+				case 0: // DEMOGRAFIA
 					i = new Intent(getApplicationContext(),
 							NewZp01StudyEntrySectionAtoDActivity.class);
 					//Se pone el evento y el objeto en caso de que no sea nulo...
-					arguments.putString(Constants.EVENT, Constants.ENTRY);
 					if (zp01a!=null) arguments.putSerializable(Constants.OBJECTO_ZP01A, zp01a);
 					i.putExtras(arguments);
 					startActivity(i);
 					break;
+				case 1: // ESTADO SALUD
+                    i = new Intent(getApplicationContext(),
+                            NewZp01StudyEntrySectionEActivity.class);
+                    if (zp01e!=null) arguments.putSerializable(Constants.OBJECTO_ZP01E , zp01e);
+                    i.putExtras(arguments);
+                    startActivity(i);
+                    break;
+				case 2: // HISTORIA EMBARAZO
+                    i = new Intent(getApplicationContext(),
+                            NewZp01StudyEntrySectionFtoKActivity.class);
+                    if (zp01f!=null) arguments.putSerializable(Constants.OBJECTO_ZP01F , zp01f);
+                    i.putExtras(arguments);
+                    startActivity(i);
+                    break;
+                case 3: //MUESTRAS
+                    i = new Intent(getApplicationContext(),
+                            NewZp02BiospecimenCollectionActivity.class);
+                    if (zp02!=null) arguments.putSerializable(Constants.OBJECTO_ZP02 , zp02);
+                    i.putExtras(arguments);
+                    startActivity(i);
+                    break;
+                case 4: //PROFESION
+                    i = new Intent(getApplicationContext(),
+                            NewZp04TrimesterVisitSectionAtoDActivity.class);
+                    if (zp04a!=null) arguments.putSerializable(Constants.OBJECTO_ZP04A , zp04a);
+                    i.putExtras(arguments);
+                    startActivity(i);
+                    break;
+                case 5: //EXPOSICION
+                    i = new Intent(getApplicationContext(),
+                            NewZp04TrimesterVisitSectionEActivity.class);
+                    if (zp04e!=null) arguments.putSerializable(Constants.OBJECTO_ZP04E , zp04e);
+                    i.putExtras(arguments);
+                    startActivity(i);
+                    break;
+                case 6: //PESTICIDAS
+                    i = new Intent(getApplicationContext(),
+                            NewZp04TrimesterVisitSectionFtoHActivity.class);
+                    if (zp04f!=null) arguments.putSerializable(Constants.OBJECTO_ZP04F , zp04f);
+                    i.putExtras(arguments);
+                    startActivity(i);
+                    break;
+                case 7: //ULTRASONIDOS
+                    i = new Intent(getApplicationContext(),
+                            NewZp05UltrasoundExamActivity.class);
+                    if (zp05!=null) arguments.putSerializable(Constants.OBJECTO_ZP05 , zp05);
+                    i.putExtras(arguments);
+                    startActivity(i);
+                    break;
 				default:					
 					break;
 				}
@@ -130,6 +199,7 @@ public class IngresoActivity extends AbstractAsyncActivity {
 		if (mExitShowing) {
 			createDialog(EXIT);
 		}
+		new FetchDataIngresoTask().execute(evento);
 		super.onResume();
 	}
 
@@ -234,18 +304,27 @@ public class IngresoActivity extends AbstractAsyncActivity {
 					zipA.open();
 					filtro = MainDBConstants.recordId + "='" + zp00.getRecordId() + "'";
 					zp01a = zipA.getZp01StudyEntrySectionAtoD(filtro, MainDBConstants.recordId);
+					zp01e = zipA.getZp01StudyEntrySectionE(filtro, null);
+					zp01f = zipA.getZp01StudyEntrySectionFtoK(filtro, null);
 					filtro = MainDBConstants.recordId + "='" + zp00.getRecordId() + "' and " + Zp02DBConstants.redcapEventName + "='" + eventoaFiltrar +"'";
 					zp02 = zipA.getZp02BiospecimenCollection(filtro, MainDBConstants.recordId);
+					zp04a = zipA.getZp04TrimesterVisitSectionAtoD(filtro, null);
+					zp04e = zipA.getZp04TrimesterVisitSectionE(filtro, null);
+					zp04f = zipA.getZp04TrimesterVisitSectionFtoH(filtro, null);
+					zp05 = zipA.getZp05UltrasoundExam(filtro, null);
 					zipA.close();
 				} catch (Exception e) {
 					Log.e(TAG, e.getLocalizedMessage(), e);
-					return "error";
+					return "Error";
 				}
-				return "exito";
+				return "Exito";
 			}
 
 			protected void onPostExecute(String resultado) {
 				// after the network request completes, hide the progress indicator
+				gridView.setAdapter(new IngresoAdapter(getApplicationContext(), R.layout.menu_item_2, menu_maternal_info, zp01a, zp01e, zp01f,
+						zp02, zp04a, zp04e ,zp04f, zp05
+						));
 				dismissProgressDialog();
 			}
 

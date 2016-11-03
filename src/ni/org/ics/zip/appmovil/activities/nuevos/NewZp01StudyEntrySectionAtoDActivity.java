@@ -40,14 +40,16 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 	protected static final String TAG = NewZp01StudyEntrySectionAtoDActivity.class.getSimpleName();
 	
 	private ZipAdapter zipA;
-	private static Zp01StudyEntrySectionAtoD mZp01A = new Zp01StudyEntrySectionAtoD();
+	private static Zp01StudyEntrySectionAtoD mZp01A = null;
 	
 	public static final int ADD_ZP01A_ODK = 1;
+	public static final int EDIT_ZP01A_ODK = 2;
 
 	Dialog dialogInit;
 	private SharedPreferences settings;
 	private String username;
 	private String mRecordId = "";
+	private Integer accion = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +83,10 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 		//to set the message
 		TextView message =(TextView) dialogInit.findViewById(R.id.yesnotext);
 		if (mZp01A!=null){
-			message.setText(getString(R.string.edit)+ " " + getString(R.string.maternal_b_1));
+			message.setText(getString(R.string.edit)+ " " + getString(R.string.maternal_b_1)+"?");
 		}
 		else{
-			message.setText(getString(R.string.add)+ " " + getString(R.string.maternal_b_1));
+			message.setText(getString(R.string.add)+ " " + getString(R.string.maternal_b_1)+"?");
 		}
 
 		//add some action to the buttons
@@ -139,7 +141,7 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
-		if(requestCode == ADD_ZP01A_ODK) {
+		if(requestCode == ADD_ZP01A_ODK||requestCode == EDIT_ZP01A_ODK) {
 	        if(resultCode == RESULT_OK) {
 	        	Uri instanceUri = intent.getData();
 				//Busca la instancia resultado
@@ -158,11 +160,14 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 				}
 				if (complete.matches("complete")){
 					//Parsear el resultado obteniendo un tamizaje si esta completo
-					parseZp01(idInstancia,instanceFilePath);
+					parseZp01(idInstancia,instanceFilePath,accion);
 				}
 				else{
 					Toast.makeText(getApplicationContext(),	getString(R.string.err_not_completed), Toast.LENGTH_LONG).show();
 				}
+	        }
+	        else{
+	        	finish();
 	        }
 	    }
 		super.onActivityResult(requestCode, resultCode, intent);
@@ -173,41 +178,93 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 	 */
 	private void addZp01a() {
 		try{
-			//campos de proveedor de collect
-			String[] projection = new String[] {
-					"_id","jrFormId","displayName"};
-			//cursor que busca el formulario
-			Cursor c = getContentResolver().query(Constants.CONTENT_URI, projection,
-					"jrFormId = 'zp01_study_entry_a_d' and displayName = 'Estudio ZIP Visita inicial en el estudio 1'", null, null);
-			c.moveToFirst();
-			//captura el id del formulario
-			Integer id = Integer.parseInt(c.getString(0));
-			//cierra el cursor
-			if (c != null) {
-				c.close();
+			Uri formUri;
+			if(mZp01A==null){
+				//campos de proveedor de collect
+				String[] projection = new String[] {
+						"_id","jrFormId","displayName"};
+				//cursor que busca el formulario
+				Cursor c = getContentResolver().query(Constants.CONTENT_URI, projection,
+						"jrFormId = 'zp01_study_entry_a_d' and displayName = 'Estudio ZIP Visita inicial en el estudio_A_D'", null, null);
+				c.moveToFirst();
+				//captura el id del formulario
+				Integer id = Integer.parseInt(c.getString(0));
+				//cierra el cursor
+				if (c != null) {
+					c.close();
+				}
+				//forma el uri para ODK Collect
+				formUri = ContentUris.withAppendedId(Constants.CONTENT_URI,id);
+				//Arranca la actividad ODK Collect en busca de resultado
+	        	accion = ADD_ZP01A_ODK;
 			}
-			//forma el uri para ODK Collect
-			Uri formUri = ContentUris.withAppendedId(Constants.CONTENT_URI,id);
-			//Arranca la actividad ODK Collect en busca de resultado
+			else{
+				//forma el uri para la instancia en ODK Collect
+				Integer id = mZp01A.getIdInstancia();
+				formUri = ContentUris.withAppendedId(Constants.CONTENT_URI_I,id);
+				accion = EDIT_ZP01A_ODK;
+			}
 			Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
-			startActivityForResult(odkA, ADD_ZP01A_ODK);
+			//Arranca la actividad proveedor de instancias de ODK Collect en busca de resultado
+			startActivityForResult(odkA, accion);
 		}
 		catch(Exception e){
 			//No existe el formulario en el equipo
 			Log.e(TAG, e.getMessage(), e);
 			Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+			finish();
 		}
 	}
 	
-	private void parseZp01(Integer idInstancia, String instanceFilePath) {
+	private void parseZp01(Integer idInstancia, String instanceFilePath, Integer accion) {
 		Serializer serializer = new Persister(); 
 		File source = new File(instanceFilePath);
 		try {
 			Zp01StudyEntrySectionAtoDXml zp01Xml = new Zp01StudyEntrySectionAtoDXml();
 			zp01Xml = serializer.read(Zp01StudyEntrySectionAtoDXml.class, source);
-			if (mZp01A==null) mZp01A = new Zp01StudyEntrySectionAtoD();
+			if (accion==ADD_ZP01A_ODK) mZp01A = new Zp01StudyEntrySectionAtoD();
             mZp01A.setRecordId(mRecordId);
-			
+            mZp01A.setSeaVdate(zp01Xml.getSeaVdate());
+            mZp01A.setSeaPtdate(zp01Xml.getSeaPtdate());
+            mZp01A.setSeaTresults(zp01Xml.getSeaTresults());
+            mZp01A.setSeaLmpdate(zp01Xml.getSeaLmpdate());
+            mZp01A.setSeaLmpunknown(zp01Xml.getSeaLmpunknown());
+            mZp01A.setSeaGaWeek(zp01Xml.getSeaGaWeek());
+            mZp01A.setSeaGaDay(zp01Xml.getSeaGaDay());
+            mZp01A.setSeaEddLmp(zp01Xml.getSeaEddLmp());
+            mZp01A.setSeaTriultrasound(zp01Xml.getSeaTriultrasound());
+            mZp01A.setSeaUltravailable(zp01Xml.getSeaUltravailable());
+            mZp01A.setSeaUltraDay(zp01Xml.getSeaUltraDay());
+            mZp01A.setSeaUltraMonth(zp01Xml.getSeaUltraMonth());
+            mZp01A.setSeaUltraYear(zp01Xml.getSeaUltraYear());
+            mZp01A.setSeaAgweeks(zp01Xml.getSeaAgweeks());
+            mZp01A.setSeaAgdays(zp01Xml.getSeaAgdays());
+            mZp01A.setSeaEdd(zp01Xml.getSeaEdd());
+            mZp01A.setSeaEddUsed(zp01Xml.getSeaEddUsed());
+            mZp01A.setSeaPreWt(zp01Xml.getSeaPreWt());
+            mZp01A.setSeaPrewtUnit(zp01Xml.getSeaPrewtUnit());
+            mZp01A.setSeaCurHt(zp01Xml.getSeaCurHt());
+            mZp01A.setSeaCurhtUnit(zp01Xml.getSeaCurhtUnit());
+            mZp01A.setSeaMotherWt(zp01Xml.getSeaMotherWt());
+            mZp01A.setSeaMotherwtUnit(zp01Xml.getSeaMotherwtUnit());
+            mZp01A.setSeaHem(zp01Xml.getSeaHem());
+            mZp01A.setSeaSystolic(zp01Xml.getSeaSystolic());
+            mZp01A.setSeaDiastolic(zp01Xml.getSeaDiastolic());
+            mZp01A.setSeaTemp(zp01Xml.getSeaTemp());
+            mZp01A.setSeaTmpUnit(zp01Xml.getSeaTmpUnit());
+            mZp01A.setSeaCity(zp01Xml.getSeaCity());
+            mZp01A.setSeaState(zp01Xml.getSeaState());
+            mZp01A.setSeaCountry(zp01Xml.getSeaCountry());
+            mZp01A.setSeaLive(zp01Xml.getSeaLive());
+            mZp01A.setSeaAgeLeave(zp01Xml.getSeaAgeLeave());
+            mZp01A.setSeaLeavena(zp01Xml.getSeaLeavena());
+            mZp01A.setSeaMstatus(zp01Xml.getSeaMstatus());
+            mZp01A.setSeaRace(zp01Xml.getSeaRace());
+            mZp01A.setSeaEthnicityOther(zp01Xml.getSeaEthnicityOther());
+            mZp01A.setSeaDegreeYou(zp01Xml.getSeaDegreeYou());
+            mZp01A.setSeaYdegreeYears(zp01Xml.getSeaYdegreeYears());
+            mZp01A.setSeaDegreeSpouse(zp01Xml.getSeaDegreeSpouse());
+            mZp01A.setSeaSdegreeYears(zp01Xml.getSeaSdegreeYears());
 			mZp01A.setRecordDate(new Date());
 			mZp01A.setRecordUser(username);
 			mZp01A.setIdInstancia(idInstancia);
@@ -219,19 +276,21 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 			mZp01A.setSimserial(zp01Xml.getSimserial());
 			mZp01A.setPhonenumber(zp01Xml.getPhonenumber());
 			mZp01A.setToday(zp01Xml.getToday());
-			new SaveDataTask().execute();
+			new SaveDataTask().execute(accion);
 			
 		} catch (Exception e) {
 			// Presenta el error al parsear el xml
 			Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 			e.printStackTrace();
+			finish();
 		}		
 	}
 	
 	// ***************************************
 	// Private classes
 	// ***************************************
-	private class SaveDataTask extends AsyncTask<String, Void, String> {
+	private class SaveDataTask extends AsyncTask<Integer, Void, String> {
+		private Integer accionaRealizar = null;
 		@Override
 		protected void onPreExecute() {
 			// before the request begins, show a progress indicator
@@ -239,10 +298,16 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 		}
 
 		@Override
-		protected String doInBackground(String... values) {
+		protected String doInBackground(Integer... values) {
+			accionaRealizar = values[0];
 			try {
 				zipA.open();
-				zipA.crearZp01StudyEntrySectionAtoD(mZp01A);
+				if (accionaRealizar == ADD_ZP01A_ODK){
+					zipA.crearZp01StudyEntrySectionAtoD(mZp01A);
+				}
+				else{
+					zipA.editarZp01StudyEntrySectionAtoD(mZp01A);
+				}
 				zipA.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -264,6 +329,7 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 	// ***************************************
 	private void showResult(String resultado) {
 		Toast.makeText(getApplicationContext(),	resultado, Toast.LENGTH_LONG).show();
+		finish();
 	}	
 
 

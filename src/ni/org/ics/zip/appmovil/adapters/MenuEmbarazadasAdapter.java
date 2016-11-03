@@ -31,12 +31,12 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public MenuEmbarazadasAdapter(Context context, int textViewResourceId,
-			String[] values, Zp00Screening zp00, ZpEstadoEmbarazada zp01) {
+			String[] values, Zp00Screening zp00, ZpEstadoEmbarazada zpEstado) {
 		super(context, textViewResourceId, values);
 		this.context = context;
 		this.values = values;
 		this.mZp00 = zp00;
-		this.mZp01 = zp01;
+		this.mZp01 = zpEstado;
 		try {
 			this.todayDate = formatter.parse(formatter.format(new Date()));
 		} catch (ParseException e) {
@@ -63,7 +63,68 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
         	diff = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
         	if(diff<-7||diff>7) habilitado = false;
         	break;
+		case 2:
+			fechaIngreso.add(Calendar.DATE, 56);fechaEvento = fechaIngreso.getTime();fechaIngreso.add(Calendar.DATE, -56);
+        	diff = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+        	if(diff<-7||diff>7) habilitado = false;
+        	break;
+		case 3:
+			fechaIngreso.add(Calendar.DATE, 84);fechaEvento = fechaIngreso.getTime();fechaIngreso.add(Calendar.DATE, -84);
+        	diff = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+        	if(diff<-7||diff>7) habilitado = false;
+        	break;
+		case 4:
+			fechaIngreso.add(Calendar.DATE, 112);fechaEvento = fechaIngreso.getTime();fechaIngreso.add(Calendar.DATE, -112);
+        	diff = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+        	if(diff<-7||diff>7) habilitado = false;
+        	break;
+		case 5:
+			fechaIngreso.add(Calendar.DATE, 140);fechaEvento = fechaIngreso.getTime();fechaIngreso.add(Calendar.DATE, -140);
+        	diff = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+        	if(diff<-7||diff>7) habilitado = false;
+        	break;
+		case 6:
+			fechaIngreso.add(Calendar.DATE, 168);fechaEvento = fechaIngreso.getTime();fechaIngreso.add(Calendar.DATE, -168);
+        	diff = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+        	if(diff<-7||diff>7) habilitado = false;
+        	break;
+		case 7:
+			fechaIngreso.add(Calendar.DATE, 196);fechaEvento = fechaIngreso.getTime();fechaIngreso.add(Calendar.DATE, -196);
+        	diff = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+        	if(diff<-7||diff>7) habilitado = false;
+        	break;	
+		case 8:
+			fechaIngreso.add(Calendar.DATE, 224);fechaEvento = fechaIngreso.getTime();fechaIngreso.add(Calendar.DATE, -224);
+        	diff = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+        	if(diff<-7||diff>7) habilitado = false;
+        	break;
+		case 9:
+			fechaIngreso.add(Calendar.DATE, 252);fechaEvento = fechaIngreso.getTime();fechaIngreso.add(Calendar.DATE, -252);
+        	diff = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+        	if(diff<-7||diff>7) habilitado = false;
+        	break;
+		case 10:
+			fechaIngreso.add(Calendar.DATE, 280);fechaEvento = fechaIngreso.getTime();fechaIngreso.add(Calendar.DATE, -280);
+        	diff = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+        	if(diff<-7||diff>7) habilitado = false;
+        	break;
+		case 11:
+			fechaIngreso.add(Calendar.DATE, 308);fechaEvento = fechaIngreso.getTime();fechaIngreso.add(Calendar.DATE, -308);
+        	diff = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+        	if(diff<-28||diff>28) habilitado = false;
+        	break;
+		case 12:
+			fechaIngreso.add(Calendar.DATE, 309);fechaEvento = fechaIngreso.getTime();fechaIngreso.add(Calendar.DATE, -309);
+        	diff = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+        	if(diff<-28||diff>28) habilitado = false;
+        	break;
+		case 13:
+			fechaIngreso.add(Calendar.DATE, 322);fechaEvento = fechaIngreso.getTime();fechaIngreso.add(Calendar.DATE, -322);
+        	diff = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
+        	if(diff<-7||diff>7) habilitado = false;
+        	break;
 		default:
+			habilitado = true;
 			break;
         }
         return habilitado;

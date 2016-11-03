@@ -2,7 +2,13 @@ package ni.org.ics.zip.appmovil.adapters.eventosembarazo;
 
 import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.domain.Zp01StudyEntrySectionAtoD;
+import ni.org.ics.zip.appmovil.domain.Zp01StudyEntrySectionE;
+import ni.org.ics.zip.appmovil.domain.Zp01StudyEntrySectionFtoK;
 import ni.org.ics.zip.appmovil.domain.Zp02BiospecimenCollection;
+import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionAtoD;
+import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionE;
+import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionFtoH;
+import ni.org.ics.zip.appmovil.domain.Zp05UltrasoundExam;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -18,15 +24,29 @@ public class IngresoAdapter extends ArrayAdapter<String> {
 	private final Context context;
 	private final String[] values;
 	private final Zp01StudyEntrySectionAtoD mZp01a;
+	private final Zp01StudyEntrySectionE mZp01e;
+	private final Zp01StudyEntrySectionFtoK mZp01f;
 	private final Zp02BiospecimenCollection mZp02;
+	private final Zp04TrimesterVisitSectionAtoD mZp04a;
+	private final Zp04TrimesterVisitSectionE mZp04e;
+	private final Zp04TrimesterVisitSectionFtoH mZp04f;
+	private final Zp05UltrasoundExam mZp05;
 	
 	public IngresoAdapter(Context context, int textViewResourceId,
-			String[] values, Zp01StudyEntrySectionAtoD zp01a, Zp02BiospecimenCollection zp02) {
+			String[] values, Zp01StudyEntrySectionAtoD zp01a, Zp01StudyEntrySectionE zp01e, Zp01StudyEntrySectionFtoK zp01f,
+			Zp02BiospecimenCollection zp02, Zp04TrimesterVisitSectionAtoD zp04a, Zp04TrimesterVisitSectionE zp04e, Zp04TrimesterVisitSectionFtoH zp04f,
+			Zp05UltrasoundExam zp05) {
 		super(context, textViewResourceId, values);
 		this.context = context;
 		this.values = values;
 		this.mZp01a =zp01a;
+		this.mZp01e = zp01e;
+		this.mZp01f = zp01f;
 		this.mZp02 = zp02;
+		this.mZp04a = zp04a;
+		this.mZp04e = zp04e;
+		this.mZp04f = zp04f;
+		this.mZp05 = zp05;
 	}
 
 	@Override
@@ -50,16 +70,31 @@ public class IngresoAdapter extends ArrayAdapter<String> {
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
 			}
 			else{
+				textView.setTextColor(Color.RED);
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_demog);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
-		case 1: 
+		case 1:
+			if(mZp01e!=null){
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+			}
+			else{
+				textView.setTextColor(Color.RED);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_health);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
 		case 2: 
+			if(mZp01f!=null){
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+			}
+			else{
+				textView.setTextColor(Color.RED);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_pregnancy);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
@@ -68,24 +103,53 @@ public class IngresoAdapter extends ArrayAdapter<String> {
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
 			}
 			else{
+				textView.setTextColor(Color.RED);
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_sample);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
 		case 4: 
+			if(mZp04a!=null){
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+			}
+			else{
+				textView.setTextColor(Color.RED);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_briefcase);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
 		case 5: 
+			if(mZp04e!=null){
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+			}
+			else{
+				textView.setTextColor(Color.RED);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_spray);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
 		case 6: 
+			if(mZp04f!=null){
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+			}
+			else{
+				textView.setTextColor(Color.RED);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_pest);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
 		case 7: 
+			if(mZp05!=null){
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+			}
+			else{
+				textView.setTextColor(Color.RED);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_us);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;

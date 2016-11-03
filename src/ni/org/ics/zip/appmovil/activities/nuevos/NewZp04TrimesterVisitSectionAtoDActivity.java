@@ -22,7 +22,6 @@ import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
-import ni.org.ics.zip.appmovil.domain.Zp00Screening;
 import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionAtoD;
 import ni.org.ics.zip.appmovil.parsers.Zp04TrimesterVisitSectionAtoDXml;
 import ni.org.ics.zip.appmovil.preferences.PreferencesActivity;
@@ -39,15 +38,17 @@ public class NewZp04TrimesterVisitSectionAtoDActivity extends AbstractAsyncActiv
 	protected static final String TAG = NewZp04TrimesterVisitSectionAtoDActivity.class.getSimpleName();
 	
 	private ZipAdapter zipA;
-	private static Zp04TrimesterVisitSectionAtoD mIngreso = new Zp04TrimesterVisitSectionAtoD();
+	private static Zp04TrimesterVisitSectionAtoD mZp04A = null;
 	
-	public static final int ADD_TAMIZAJE_ODK = 1;
-	public static final int BARCODE_CAPTURE_TAM = 2;
+	public static final int ADD_ZP04A_ODK = 1;
+	public static final int EDIT_ZP04A_ODK = 2;
 
 	Dialog dialogInit;
 	private SharedPreferences settings;
 	private String username;
 	private String mRecordId = "";
+	private Integer accion = 0;
+	private String event;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +65,9 @@ public class NewZp04TrimesterVisitSectionAtoDActivity extends AbstractAsyncActiv
 						null);
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
 		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
-        mIngreso = (Zp04TrimesterVisitSectionAtoD) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP04A);
+        mZp04A = (Zp04TrimesterVisitSectionAtoD) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP04A);
         mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
+        event = getIntent().getExtras().getString(Constants.EVENT);
 		createInitDialog();
 	}
 
@@ -80,11 +82,11 @@ public class NewZp04TrimesterVisitSectionAtoDActivity extends AbstractAsyncActiv
 
 		//to set the message
 		TextView message =(TextView) dialogInit.findViewById(R.id.yesnotext);
-		if (mIngreso!=null){
-			message.setText(getString(R.string.edit)+ " " + getString(R.string.main_maternal));
+		if (mZp04A!=null){
+			message.setText(getString(R.string.edit)+ " " + getString(R.string.maternal_b_6)+"?");
 		}
 		else{
-			message.setText(getString(R.string.add)+ " " + getString(R.string.main_maternal));
+			message.setText(getString(R.string.add)+ " " + getString(R.string.maternal_b_6)+"?");
 		}
 
 		//add some action to the buttons
@@ -139,7 +141,7 @@ public class NewZp04TrimesterVisitSectionAtoDActivity extends AbstractAsyncActiv
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
-		if(requestCode == ADD_TAMIZAJE_ODK) {
+		if(requestCode == ADD_ZP04A_ODK||requestCode == EDIT_ZP04A_ODK) {
 	        if(resultCode == RESULT_OK) {
 	        	Uri instanceUri = intent.getData();
 				//Busca la instancia resultado
@@ -158,14 +160,14 @@ public class NewZp04TrimesterVisitSectionAtoDActivity extends AbstractAsyncActiv
 				}
 				if (complete.matches("complete")){
 					//Parsear el resultado obteniendo un tamizaje si esta completo
-					parseTrimesterVisit(idInstancia,instanceFilePath);
+					parseTrimesterVisit(idInstancia,instanceFilePath,accion);
 				}
 				else{
 					Toast.makeText(getApplicationContext(),	getString(R.string.err_not_completed), Toast.LENGTH_LONG).show();
 				}
 	        }
 	        else{
-	        	
+	        	finish();
 	        }
 	    }
 		super.onActivityResult(requestCode, resultCode, intent);
@@ -176,155 +178,169 @@ public class NewZp04TrimesterVisitSectionAtoDActivity extends AbstractAsyncActiv
 	 */
 	private void addTrimesterVisit() {
 		try{
-			//campos de proveedor de collect
-			String[] projection = new String[] {
-					"_id","jrFormId","displayName"};
-			//cursor que busca el formulario
-			Cursor c = getContentResolver().query(Constants.CONTENT_URI, projection,
-					"jrFormId = 'ZP04_Trimester_Visit_A_D' and displayName = 'Estudio ZIP Visita Cuestionario Trimestral_A_D'", null, null);
-			c.moveToFirst();
-			//captura el id del formulario
-			Integer id = Integer.parseInt(c.getString(0));
-			//cierra el cursor
-			if (c != null) {
-				c.close();
+			Uri formUri;
+			if(mZp04A==null){
+				//campos de proveedor de collect
+				String[] projection = new String[] {
+						"_id","jrFormId","displayName"};
+				//cursor que busca el formulario
+				Cursor c = getContentResolver().query(Constants.CONTENT_URI, projection,
+						"jrFormId = 'ZP04_Trimester_Visit_A_D' and displayName = 'Estudio ZIP Visita Cuestionario Trimestral_A_D'", null, null);
+				c.moveToFirst();
+				//captura el id del formulario
+				Integer id = Integer.parseInt(c.getString(0));
+				//cierra el cursor
+				if (c != null) {
+					c.close();
+				}
+				//forma el uri para ODK Collect
+				formUri = ContentUris.withAppendedId(Constants.CONTENT_URI,id);
+				accion = ADD_ZP04A_ODK;
 			}
-			//forma el uri para ODK Collect
-			Uri formUri = ContentUris.withAppendedId(Constants.CONTENT_URI,id);
-			//Arranca la actividad ODK Collect en busca de resultado
+			else{
+				//forma el uri para la instancia en ODK Collect
+				Integer id = mZp04A.getIdInstancia();
+				formUri = ContentUris.withAppendedId(Constants.CONTENT_URI_I,id);
+				accion = EDIT_ZP04A_ODK;
+			}
 			Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
-			startActivityForResult(odkA, ADD_TAMIZAJE_ODK);
+			//Arranca la actividad proveedor de instancias de ODK Collect en busca de resultado
+			startActivityForResult(odkA, accion);
 		}
 		catch(Exception e){
 			//No existe el formulario en el equipo
 			Log.e(TAG, e.getMessage(), e);
 			Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+			finish();
 		}
 	}
 	
-	private void parseTrimesterVisit(Integer idInstancia, String instanceFilePath) {
+	private void parseTrimesterVisit(Integer idInstancia, String instanceFilePath, Integer accion) {
 		Serializer serializer = new Persister(); 
 		File source = new File(instanceFilePath);
 		try {
 			Zp04TrimesterVisitSectionAtoDXml zp04Xml = new Zp04TrimesterVisitSectionAtoDXml();
 			zp04Xml = serializer.read(Zp04TrimesterVisitSectionAtoDXml.class, source);
-			mIngreso.setRecordId(mRecordId);
-			//mIngreso.setRedcapEventName();
-			mIngreso.setTriDov(zp04Xml.getTriDov());
-			mIngreso.setTriVisitTyp(zp04Xml.getTriVisitTyp());
-			mIngreso.setTriOccChange(zp04Xml.getTriOccChange());
-			mIngreso.setTriPrimJobInd(zp04Xml.getTriPrimJobInd());
-			mIngreso.setTriPrimJobTitle(zp04Xml.getTriPrimJobTitle());
-			mIngreso.setTriPrimJobTitleRef(zp04Xml.getTriPrimJobTitleRef());
-			mIngreso.setTriPrimJobDat(zp04Xml.getTriPrimJobDat());
-			mIngreso.setTriPrimJobYear(zp04Xml.getTriPrimJobYear());
-			mIngreso.setTriPrimJobHours(zp04Xml.getTriPrimJobHours());
-			mIngreso.setTriPrimJobHoursRef(zp04Xml.getTriPrimJobHoursRef());
-			mIngreso.setTriPrimJobSetting(zp04Xml.getTriPrimJobSetting());
-			mIngreso.setTriPrimJobSetRef(zp04Xml.getTriPrimJobSetRef());
-			mIngreso.setTriPrimJobSetSpecify(zp04Xml.getTriPrimJobSetSpecify());
-			mIngreso.setTriPrevJobInd(zp04Xml.getTriPrevJobInd());
-			mIngreso.setTriPrevJobTitle(zp04Xml.getTriPrevJobTitle());
-			mIngreso.setTriPrevJobTitleRef(zp04Xml.getTriPrevJobTitleRef());
-			mIngreso.setTriPrevJobDat(zp04Xml.getTriPrevJobDat());
-			mIngreso.setTriPrevJobYear(zp04Xml.getTriPrevJobYear());
-			mIngreso.setTriPrevJobHours(zp04Xml.getTriPrevJobHours());
-			mIngreso.setTriPrevJobHoursRef(zp04Xml.getTriPrevJobHoursRef());
-			mIngreso.setTriPrevJobSetting(zp04Xml.getTriPrevJobSetting());
-			mIngreso.setTriPrevJobSetRef(zp04Xml.getTriPrevJobSetRef());
-			mIngreso.setTriPrevJobSetSpecify(zp04Xml.getTriPrevJobSetSpecify());
-			mIngreso.setTriHusbJobInd(zp04Xml.getTriHusbJobInd());
-			mIngreso.setTriHusbJobTitle(zp04Xml.getTriHusbJobTitle());
-			mIngreso.setTriHusbJobTitleRef(zp04Xml.getTriHusbJobTitleRef());
-			mIngreso.setTriHusbJobSet(zp04Xml.getTriHusbJobSet());
-			mIngreso.setTriHusbJobSetRef(zp04Xml.getTriHusbJobSetRef());
-			mIngreso.setTriHusbJobSetSpecify(zp04Xml.getTriHusbJobSetSpecify());
-			mIngreso.setTriHouseSitInd(zp04Xml.getTriHouseSitInd());
-			mIngreso.setTriCity(zp04Xml.getTriCity());
-			mIngreso.setTriState(zp04Xml.getTriState());
-			mIngreso.setTriCountry(zp04Xml.getTriCountry());
-			mIngreso.setTriResidRef(zp04Xml.getTriResidRef());
-			mIngreso.setTriCurrResidDur(zp04Xml.getTriCurrResidDur());
-			mIngreso.setTriCurrResidDurRef(zp04Xml.getTriCurrResidDurRef());
-			mIngreso.setTriNbhoodTyp(zp04Xml.getTriNbhoodTyp());
-			mIngreso.setTriResidTyp(zp04Xml.getTriResidTyp());
-			mIngreso.setTriResidTypSpecify(zp04Xml.getTriResidTypSpecify());
-			mIngreso.setTriFloorMat(zp04Xml.getTriFloorMat());
-			mIngreso.setTriFloorMatSpecify(zp04Xml.getTriFloorMatSpecify());
-			mIngreso.setTriWallMat(zp04Xml.getTriWallMat());
-			mIngreso.setTriWallMatSpecify(zp04Xml.getTriWallMatSpecify());
-			mIngreso.setTriRoofMat(zp04Xml.getTriRoofMat());
-			mIngreso.setTriRoofMatSpecify(zp04Xml.getTriRoofMatSpecify());
-			mIngreso.setTriTrashDispos(zp04Xml.getTriTrashDispos());
-			mIngreso.setTriTrashDisposSpecify(zp04Xml.getTriTrashDisposSpecify());
-			mIngreso.setTriNumTotalRooms(zp04Xml.getTriNumTotalRooms());
-			mIngreso.setTriNumSleepRooms(zp04Xml.getTriNumSleepRooms());
-			mIngreso.setTriNumPeople(zp04Xml.getTriNumPeople());
-			mIngreso.setTriScreensInd(zp04Xml.getTriScreensInd());
-			mIngreso.setTriHouseAmenities(zp04Xml.getTriHouseAmenities());
-			mIngreso.setTriTransAccess(zp04Xml.getTriTransAccess());
-			mIngreso.setTriPrimWaterSrc(zp04Xml.getTriPrimWaterSrc());
-			mIngreso.setTriWaterContainInd(zp04Xml.getTriWaterContainInd());
-			mIngreso.setTriWaterContainTyp(zp04Xml.getTriWaterContainTyp());
-			mIngreso.setTriWaterConSpecify(zp04Xml.getTriWaterConSpecify());
-			mIngreso.setTriWaterTreatHome(zp04Xml.getTriWaterTreatHome());
-			mIngreso.setTriWaterTreatFreq(zp04Xml.getTriWaterTreatFreq());
-			mIngreso.setTriToiletTyp(zp04Xml.getTriToiletTyp());
-			mIngreso.setTriToiletTypSpecify(zp04Xml.getTriToiletTypSpecify());
-			mIngreso.setTriOpSewageInd(zp04Xml.getTriOpSewageInd());
-			mIngreso.setTriAnimalsInd(zp04Xml.getTriAnimalsInd());
-			mIngreso.setTriAnimalTyp(zp04Xml.getTriAnimalTyp());//multiple
-			mIngreso.setTriAnimalSpecify(zp04Xml.getTriAnimalSpecify());
-			mIngreso.setTriNumOtherAnimal(zp04Xml.getTriNumOtherAnimal());
-			mIngreso.setTriNumCattle(zp04Xml.getTriNumCattle());
-			mIngreso.setTriNumPig(zp04Xml.getTriNumPig());
-			mIngreso.setTriNumFowl(zp04Xml.getTriNumFowl());
-			mIngreso.setTriNumGoatsSheep(zp04Xml.getTriNumGoatsSheep());
-			mIngreso.setTriDrugUseInd(zp04Xml.getTriDrugUseInd());
-			mIngreso.setTriSmokeInd(zp04Xml.getTriSmokeInd());
-			mIngreso.setTriSmokeEverInd(zp04Xml.getTriSmokeEverInd());
-			mIngreso.setTriSmokeCigPrevInd(zp04Xml.getTriSmokeCigPrevInd());
-			mIngreso.setTriYearsSmoked(zp04Xml.getTriYearsSmoked());
-			mIngreso.setTriYearsSmokedRef(zp04Xml.getTriYearsSmokedRef());
-			mIngreso.setTriNumCigDay(zp04Xml.getTriNumCigDay());
-			mIngreso.setTriNumCigRef(zp04Xml.getTriNumCigRef());
-			mIngreso.setTriLastCig(zp04Xml.getTriLastCig());
-			mIngreso.setTriHouseSmokeInd(zp04Xml.getTriHouseSmokeInd());
-			mIngreso.setTriNumHrsSmoke(zp04Xml.getTriNumHrsSmoke());
-			mIngreso.setTriNumHrsSmokeRef(zp04Xml.getTriNumHrsSmokeRef());
-			mIngreso.setTriLastDrink(zp04Xml.getTriLastDrink());
-			mIngreso.setTriDaysDrink(zp04Xml.getTriDaysDrink());
-			mIngreso.setTriNumDrinks(zp04Xml.getTriNumDrinks());
-			mIngreso.setTriMarijuanaInd(zp04Xml.getTriMarijuanaInd());
-			mIngreso.setTriOtherDrugsInd(zp04Xml.getTriOtherDrugsInd());
-			mIngreso.setTriOtherDrugs1(zp04Xml.getTriOtherDrugs1());
-			mIngreso.setTriOtherDrugs2(zp04Xml.getTriOtherDrugs2());
-			mIngreso.setTriOtherDrugs3(zp04Xml.getTriOtherDrugs3());
-			mIngreso.setTriOtherDrugs4(zp04Xml.getTriOtherDrugs4());
-			mIngreso.setRecordDate(new Date());
-			mIngreso.setRecordUser(username);
-			mIngreso.setIdInstancia(idInstancia);
-			mIngreso.setInstancePath(instanceFilePath);
-			mIngreso.setEstado(Constants.STATUS_NOT_SUBMITTED);
-			mIngreso.setStart(zp04Xml.getStart());
-			mIngreso.setEnd(zp04Xml.getEnd());
-			mIngreso.setDeviceid(zp04Xml.getDeviceid());
-			mIngreso.setSimserial(zp04Xml.getSimserial());
-			mIngreso.setPhonenumber(zp04Xml.getPhonenumber());
-			mIngreso.setToday(zp04Xml.getToday());
-			new SaveDataTask().execute();
+			if (accion==ADD_ZP04A_ODK) mZp04A = new Zp04TrimesterVisitSectionAtoD();
+			mZp04A.setRecordId(mRecordId);
+			mZp04A.setRedcapEventName(event);
+			mZp04A.setTriDov(zp04Xml.getTriDov());
+			mZp04A.setTriVisitTyp(zp04Xml.getTriVisitTyp());
+			mZp04A.setTriOccChange(zp04Xml.getTriOccChange());
+			mZp04A.setTriPrimJobInd(zp04Xml.getTriPrimJobInd());
+			mZp04A.setTriPrimJobTitle(zp04Xml.getTriPrimJobTitle());
+			mZp04A.setTriPrimJobTitleRef(zp04Xml.getTriPrimJobTitleRef());
+			mZp04A.setTriPrimJobDat(zp04Xml.getTriPrimJobDat());
+			mZp04A.setTriPrimJobYear(zp04Xml.getTriPrimJobYear());
+			mZp04A.setTriPrimJobHours(zp04Xml.getTriPrimJobHours());
+			mZp04A.setTriPrimJobHoursRef(zp04Xml.getTriPrimJobHoursRef());
+			mZp04A.setTriPrimJobSetting(zp04Xml.getTriPrimJobSetting());
+			mZp04A.setTriPrimJobSetRef(zp04Xml.getTriPrimJobSetRef());
+			mZp04A.setTriPrimJobSetSpecify(zp04Xml.getTriPrimJobSetSpecify());
+			mZp04A.setTriPrevJobInd(zp04Xml.getTriPrevJobInd());
+			mZp04A.setTriPrevJobTitle(zp04Xml.getTriPrevJobTitle());
+			mZp04A.setTriPrevJobTitleRef(zp04Xml.getTriPrevJobTitleRef());
+			mZp04A.setTriPrevJobDat(zp04Xml.getTriPrevJobDat());
+			mZp04A.setTriPrevJobYear(zp04Xml.getTriPrevJobYear());
+			mZp04A.setTriPrevJobHours(zp04Xml.getTriPrevJobHours());
+			mZp04A.setTriPrevJobHoursRef(zp04Xml.getTriPrevJobHoursRef());
+			mZp04A.setTriPrevJobSetting(zp04Xml.getTriPrevJobSetting());
+			mZp04A.setTriPrevJobSetRef(zp04Xml.getTriPrevJobSetRef());
+			mZp04A.setTriPrevJobSetSpecify(zp04Xml.getTriPrevJobSetSpecify());
+			mZp04A.setTriHusbJobInd(zp04Xml.getTriHusbJobInd());
+			mZp04A.setTriHusbJobTitle(zp04Xml.getTriHusbJobTitle());
+			mZp04A.setTriHusbJobTitleRef(zp04Xml.getTriHusbJobTitleRef());
+			mZp04A.setTriHusbJobSet(zp04Xml.getTriHusbJobSet());
+			mZp04A.setTriHusbJobSetRef(zp04Xml.getTriHusbJobSetRef());
+			mZp04A.setTriHusbJobSetSpecify(zp04Xml.getTriHusbJobSetSpecify());
+			mZp04A.setTriHouseSitInd(zp04Xml.getTriHouseSitInd());
+			mZp04A.setTriCity(zp04Xml.getTriCity());
+			mZp04A.setTriState(zp04Xml.getTriState());
+			mZp04A.setTriCountry(zp04Xml.getTriCountry());
+			mZp04A.setTriResidRef(zp04Xml.getTriResidRef());
+			mZp04A.setTriCurrResidDur(zp04Xml.getTriCurrResidDur());
+			mZp04A.setTriCurrResidDurRef(zp04Xml.getTriCurrResidDurRef());
+			mZp04A.setTriNbhoodTyp(zp04Xml.getTriNbhoodTyp());
+			mZp04A.setTriResidTyp(zp04Xml.getTriResidTyp());
+			mZp04A.setTriResidTypSpecify(zp04Xml.getTriResidTypSpecify());
+			mZp04A.setTriFloorMat(zp04Xml.getTriFloorMat());
+			mZp04A.setTriFloorMatSpecify(zp04Xml.getTriFloorMatSpecify());
+			mZp04A.setTriWallMat(zp04Xml.getTriWallMat());
+			mZp04A.setTriWallMatSpecify(zp04Xml.getTriWallMatSpecify());
+			mZp04A.setTriRoofMat(zp04Xml.getTriRoofMat());
+			mZp04A.setTriRoofMatSpecify(zp04Xml.getTriRoofMatSpecify());
+			mZp04A.setTriTrashDispos(zp04Xml.getTriTrashDispos());
+			mZp04A.setTriTrashDisposSpecify(zp04Xml.getTriTrashDisposSpecify());
+			mZp04A.setTriNumTotalRooms(zp04Xml.getTriNumTotalRooms());
+			mZp04A.setTriNumSleepRooms(zp04Xml.getTriNumSleepRooms());
+			mZp04A.setTriNumPeople(zp04Xml.getTriNumPeople());
+			mZp04A.setTriScreensInd(zp04Xml.getTriScreensInd());
+			mZp04A.setTriHouseAmenities(zp04Xml.getTriHouseAmenities());
+			mZp04A.setTriTransAccess(zp04Xml.getTriTransAccess());
+			mZp04A.setTriPrimWaterSrc(zp04Xml.getTriPrimWaterSrc());
+			mZp04A.setTriWaterContainInd(zp04Xml.getTriWaterContainInd());
+			mZp04A.setTriWaterContainTyp(zp04Xml.getTriWaterContainTyp());
+			mZp04A.setTriWaterConSpecify(zp04Xml.getTriWaterConSpecify());
+			mZp04A.setTriWaterTreatHome(zp04Xml.getTriWaterTreatHome());
+			mZp04A.setTriWaterTreatFreq(zp04Xml.getTriWaterTreatFreq());
+			mZp04A.setTriToiletTyp(zp04Xml.getTriToiletTyp());
+			mZp04A.setTriToiletTypSpecify(zp04Xml.getTriToiletTypSpecify());
+			mZp04A.setTriOpSewageInd(zp04Xml.getTriOpSewageInd());
+			mZp04A.setTriAnimalsInd(zp04Xml.getTriAnimalsInd());
+			mZp04A.setTriAnimalTyp(zp04Xml.getTriAnimalTyp());//multiple
+			mZp04A.setTriAnimalSpecify(zp04Xml.getTriAnimalSpecify());
+			mZp04A.setTriNumOtherAnimal(zp04Xml.getTriNumOtherAnimal());
+			mZp04A.setTriNumCattle(zp04Xml.getTriNumCattle());
+			mZp04A.setTriNumPig(zp04Xml.getTriNumPig());
+			mZp04A.setTriNumFowl(zp04Xml.getTriNumFowl());
+			mZp04A.setTriNumGoatsSheep(zp04Xml.getTriNumGoatsSheep());
+			mZp04A.setTriDrugUseInd(zp04Xml.getTriDrugUseInd());
+			mZp04A.setTriSmokeInd(zp04Xml.getTriSmokeInd());
+			mZp04A.setTriSmokeEverInd(zp04Xml.getTriSmokeEverInd());
+			mZp04A.setTriSmokeCigPrevInd(zp04Xml.getTriSmokeCigPrevInd());
+			mZp04A.setTriYearsSmoked(zp04Xml.getTriYearsSmoked());
+			mZp04A.setTriYearsSmokedRef(zp04Xml.getTriYearsSmokedRef());
+			mZp04A.setTriNumCigDay(zp04Xml.getTriNumCigDay());
+			mZp04A.setTriNumCigRef(zp04Xml.getTriNumCigRef());
+			mZp04A.setTriLastCig(zp04Xml.getTriLastCig());
+			mZp04A.setTriHouseSmokeInd(zp04Xml.getTriHouseSmokeInd());
+			mZp04A.setTriNumHrsSmoke(zp04Xml.getTriNumHrsSmoke());
+			mZp04A.setTriNumHrsSmokeRef(zp04Xml.getTriNumHrsSmokeRef());
+			mZp04A.setTriLastDrink(zp04Xml.getTriLastDrink());
+			mZp04A.setTriDaysDrink(zp04Xml.getTriDaysDrink());
+			mZp04A.setTriNumDrinks(zp04Xml.getTriNumDrinks());
+			mZp04A.setTriMarijuanaInd(zp04Xml.getTriMarijuanaInd());
+			mZp04A.setTriOtherDrugsInd(zp04Xml.getTriOtherDrugsInd());
+			mZp04A.setTriOtherDrugs1(zp04Xml.getTriOtherDrugs1());
+			mZp04A.setTriOtherDrugs2(zp04Xml.getTriOtherDrugs2());
+			mZp04A.setTriOtherDrugs3(zp04Xml.getTriOtherDrugs3());
+			mZp04A.setTriOtherDrugs4(zp04Xml.getTriOtherDrugs4());
+			mZp04A.setRecordDate(new Date());
+			mZp04A.setRecordUser(username);
+			mZp04A.setIdInstancia(idInstancia);
+			mZp04A.setInstancePath(instanceFilePath);
+			mZp04A.setEstado(Constants.STATUS_NOT_SUBMITTED);
+			mZp04A.setStart(zp04Xml.getStart());
+			mZp04A.setEnd(zp04Xml.getEnd());
+			mZp04A.setDeviceid(zp04Xml.getDeviceid());
+			mZp04A.setSimserial(zp04Xml.getSimserial());
+			mZp04A.setPhonenumber(zp04Xml.getPhonenumber());
+			mZp04A.setToday(zp04Xml.getToday());
+			new SaveDataTask().execute(accion);
 			
 		} catch (Exception e) {
 			// Presenta el error al parsear el xml
 			Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 			e.printStackTrace();
+			finish();
 		}		
 	}
 	
 	// ***************************************
 	// Private classes
 	// ***************************************
-	private class SaveDataTask extends AsyncTask<String, Void, String> {
+	private class SaveDataTask extends AsyncTask<Integer, Void, String> {
+		private Integer accionaRealizar = null;
 		@Override
 		protected void onPreExecute() {
 			// before the request begins, show a progress indicator
@@ -332,10 +348,16 @@ public class NewZp04TrimesterVisitSectionAtoDActivity extends AbstractAsyncActiv
 		}
 
 		@Override
-		protected String doInBackground(String... values) {
+		protected String doInBackground(Integer... values) {
+			accionaRealizar = values[0];
 			try {
 				zipA.open();
-				zipA.crearZp04TrimesterVisitSectionAtoD(mIngreso);
+				if (accionaRealizar == ADD_ZP04A_ODK){
+					zipA.crearZp04TrimesterVisitSectionAtoD(mZp04A);
+				}
+				else{
+					zipA.editarZp04TrimesterVisitSectionAtoD(mZp04A);
+				}
 				zipA.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -357,6 +379,7 @@ public class NewZp04TrimesterVisitSectionAtoDActivity extends AbstractAsyncActiv
 	// ***************************************
 	private void showResult(String resultado) {
 		Toast.makeText(getApplicationContext(),	resultado, Toast.LENGTH_LONG).show();
+		finish();
 	}	
 
 

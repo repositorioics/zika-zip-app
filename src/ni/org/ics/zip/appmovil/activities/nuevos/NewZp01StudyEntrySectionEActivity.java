@@ -22,7 +22,6 @@ import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
-import ni.org.ics.zip.appmovil.domain.Zp00Screening;
 import ni.org.ics.zip.appmovil.domain.Zp01StudyEntrySectionE;
 import ni.org.ics.zip.appmovil.parsers.Zp01StudyEntrySectionEXml;
 import ni.org.ics.zip.appmovil.preferences.PreferencesActivity;
@@ -40,15 +39,16 @@ public class NewZp01StudyEntrySectionEActivity extends AbstractAsyncActivity {
 	protected static final String TAG = NewZp01StudyEntrySectionEActivity.class.getSimpleName();
 	
 	private ZipAdapter zipA;
-	private static Zp01StudyEntrySectionE mIngreso = new Zp01StudyEntrySectionE();
+	private static Zp01StudyEntrySectionE mZp01E = null;
 	
-	public static final int ADD_TAMIZAJE_ODK = 1;
-	public static final int BARCODE_CAPTURE_TAM = 2;
+	public static final int ADD_ZP01E_ODK = 1;
+	public static final int EDIT_ZP01E_ODK = 2;
 
 	Dialog dialogInit;
 	private SharedPreferences settings;
 	private String username;
 	private String mRecordId = "";
+	private Integer accion = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +64,9 @@ public class NewZp01StudyEntrySectionEActivity extends AbstractAsyncActivity {
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
-		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
-		mIngreso = (Zp01StudyEntrySectionE) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP01E);
+		mZp01E = (Zp01StudyEntrySectionE) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP01E);
         mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
+        zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
 		createInitDialog();
 	}
 
@@ -81,11 +81,11 @@ public class NewZp01StudyEntrySectionEActivity extends AbstractAsyncActivity {
 
 		//to set the message
 		TextView message =(TextView) dialogInit.findViewById(R.id.yesnotext);
-		if (mIngreso!=null){
-			message.setText(getString(R.string.edit)+ " " + getString(R.string.main_maternal));
+		if (mZp01E!=null){
+			message.setText(getString(R.string.edit)+ " " + getString(R.string.maternal_b_2)+"?");
 		}
 		else{
-			message.setText(getString(R.string.add)+ " " + getString(R.string.main_maternal));
+			message.setText(getString(R.string.add)+ " " + getString(R.string.maternal_b_2)+"?");
 		}
 
 		//add some action to the buttons
@@ -140,7 +140,7 @@ public class NewZp01StudyEntrySectionEActivity extends AbstractAsyncActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
-		if(requestCode == ADD_TAMIZAJE_ODK) {
+		if(requestCode == ADD_ZP01E_ODK||requestCode == EDIT_ZP01E_ODK) {
 	        if(resultCode == RESULT_OK) {
 	        	Uri instanceUri = intent.getData();
 				//Busca la instancia resultado
@@ -159,14 +159,14 @@ public class NewZp01StudyEntrySectionEActivity extends AbstractAsyncActivity {
 				}
 				if (complete.matches("complete")){
 					//Parsear el resultado obteniendo un tamizaje si esta completo
-					parseStudyEntryE(idInstancia,instanceFilePath);
+					parseStudyEntryE(idInstancia,instanceFilePath,accion);
 				}
 				else{
 					Toast.makeText(getApplicationContext(),	getString(R.string.err_not_completed), Toast.LENGTH_LONG).show();
 				}
 	        }
 	        else{
-	        	
+	        	finish();
 	        }
 	    }
 		super.onActivityResult(requestCode, resultCode, intent);
@@ -177,240 +177,254 @@ public class NewZp01StudyEntrySectionEActivity extends AbstractAsyncActivity {
 	 */
 	private void addStudyEntryE() {
 		try{
-			//campos de proveedor de collect
-			String[] projection = new String[] {
-					"_id","jrFormId","displayName"};
-			//cursor que busca el formulario
-			Cursor c = getContentResolver().query(Constants.CONTENT_URI, projection,
-					"jrFormId = 'zp01_study_entry_e' and displayName = 'Estudio ZIP Visita inicial en el estudio 2'", null, null);
-			c.moveToFirst();
-			//captura el id del formulario
-			Integer id = Integer.parseInt(c.getString(0));
-			//cierra el cursor
-			if (c != null) {
-				c.close();
+			Uri formUri;
+			if(mZp01E==null){
+				//campos de proveedor de collect
+				String[] projection = new String[] {
+						"_id","jrFormId","displayName"};
+				//cursor que busca el formulario
+				Cursor c = getContentResolver().query(Constants.CONTENT_URI, projection,
+						"jrFormId = 'zp01_study_entry_e' and displayName = 'Estudio ZIP Visita inicial en el estudio_E'", null, null);
+				c.moveToFirst();
+				//captura el id del formulario
+				Integer id = Integer.parseInt(c.getString(0));
+				//cierra el cursor
+				if (c != null) {
+					c.close();
+				}
+				//forma el uri para ODK Collect
+				formUri = ContentUris.withAppendedId(Constants.CONTENT_URI,id);
+				accion = ADD_ZP01E_ODK;
 			}
-			//forma el uri para ODK Collect
-			Uri formUri = ContentUris.withAppendedId(Constants.CONTENT_URI,id);
-			//Arranca la actividad ODK Collect en busca de resultado
+			else{
+				//forma el uri para la instancia en ODK Collect
+				Integer id = mZp01E.getIdInstancia();
+				formUri = ContentUris.withAppendedId(Constants.CONTENT_URI_I,id);
+				accion = EDIT_ZP01E_ODK;
+			}
 			Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
-			startActivityForResult(odkA, ADD_TAMIZAJE_ODK);
+			//Arranca la actividad proveedor de instancias de ODK Collect en busca de resultado
+			startActivityForResult(odkA, accion);
 		}
 		catch(Exception e){
 			//No existe el formulario en el equipo
 			Log.e(TAG, e.getMessage(), e);
 			Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+			finish();
 		}
 	}
 	
-	private void parseStudyEntryE(Integer idInstancia, String instanceFilePath) {
+	private void parseStudyEntryE(Integer idInstancia, String instanceFilePath, Integer accion) {
 		Serializer serializer = new Persister(); 
 		File source = new File(instanceFilePath);
 		try {
 			Zp01StudyEntrySectionEXml zp01Xml = new Zp01StudyEntrySectionEXml();
 			zp01Xml = serializer.read(Zp01StudyEntrySectionEXml.class, source);
-			mIngreso.setRecordId(mRecordId);
-            mIngreso.setSeaDiseases(zp01Xml.getSeaDiseases());
-            mIngreso.setSeaOtherSpecify(zp01Xml.getSeaOtherSpecify());
-            mIngreso.setSeaHepatitis(zp01Xml.getSeaHepatitis());
-            mIngreso.setSeaHepatitisDate1(zp01Xml.getSeaHepatitisDate1());
-            mIngreso.setSeaHepatitisDate2(zp01Xml.getSeaHepatitisDate2());
-            mIngreso.setSeaHepatitisDate3(zp01Xml.getSeaHepatitisDate3());
-            mIngreso.setSeaMeasles(zp01Xml.getSeaMeasles());
-            mIngreso.setSeaMeaslesDate1(zp01Xml.getSeaMeaslesDate1());
-            mIngreso.setSeaMeaslesDate2(zp01Xml.getSeaMeaslesDate2());
-            mIngreso.setSeaMeaslesDate3(zp01Xml.getSeaMeaslesDate3());
-            mIngreso.setSeaChickenpox(zp01Xml.getSeaChickenpox());
-            mIngreso.setSeaChickenpoxDate1(zp01Xml.getSeaChickenpoxDate1());
-            mIngreso.setSeaChickenpoxDate2(zp01Xml.getSeaChickenpoxDate2());
-            mIngreso.setSeaChickenpoxDate3(zp01Xml.getSeaChickenpoxDate3());
-            mIngreso.setSeaInfluenza(zp01Xml.getSeaInfluenza());
-            mIngreso.setSeaInfluenzaDate1(zp01Xml.getSeaInfluenzaDate1());
-            mIngreso.setSeaInfluenzaDate2(zp01Xml.getSeaInfluenzaDate2());
-            mIngreso.setSeaInfluenzaDate3(zp01Xml.getSeaInfluenzaDate3());
-            mIngreso.setSeaYellow(zp01Xml.getSeaYellow());
-            mIngreso.setSeaYellowDate1(zp01Xml.getSeaYellowDate1());
-            mIngreso.setSeaYellowDate2(zp01Xml.getSeaYellowDate2());
-            mIngreso.setSeaYellowDate3(zp01Xml.getSeaYellowDate3());
-            mIngreso.setSeaDengue(zp01Xml.getSeaDengue());
-            mIngreso.setSeaDengueDate1(zp01Xml.getSeaDengueDate1());
-            mIngreso.setSeaDengueDate2(zp01Xml.getSeaDengueDate2());
-            mIngreso.setSeaDengueDate3(zp01Xml.getSeaDengueDate3());
-            mIngreso.setSeaVacOther(zp01Xml.getSeaVacOther());
-            mIngreso.setSeaVacotherSpecify(zp01Xml.getSeaVacotherSpecify());
-            mIngreso.setSeaOtherDate1(zp01Xml.getSeaOtherDate1());
-            mIngreso.setSeaOtherDate2(zp01Xml.getSeaOtherDate2());
-            mIngreso.setSeaOtherDate3(zp01Xml.getSeaOtherDate3());
-            mIngreso.setSeaRubella(zp01Xml.getSeaRubella());
-            mIngreso.setSeaRubellaDate1(zp01Xml.getSeaRubellaDate1());
-            mIngreso.setSeaRubellaDate2(zp01Xml.getSeaRubellaDate2());
-            mIngreso.setSeaRubellaDate3(zp01Xml.getSeaRubellaDate3());
-            mIngreso.setSeaRubellaDoc(zp01Xml.getSeaRubellaDoc());
-            mIngreso.setSeaCmv(zp01Xml.getSeaCmv());
-            mIngreso.setSeaCmvDate1(zp01Xml.getSeaCmvDate1());
-            mIngreso.setSeaCmvDate2(zp01Xml.getSeaCmvDate2());
-            mIngreso.setSeaCmvDate3(zp01Xml.getSeaCmvDate3());
-            mIngreso.setSeaCmvDoc(zp01Xml.getSeaCmvDoc());
-            mIngreso.setSeaHerpes(zp01Xml.getSeaHerpes());
-            mIngreso.setSeaHerpesDate1(zp01Xml.getSeaHerpesDate1());
-            mIngreso.setSeaHerpesDate2(zp01Xml.getSeaHerpesDate2());
-            mIngreso.setSeaHerpesDate3(zp01Xml.getSeaHerpesDate3());
-            mIngreso.setSeaHerpesDoc(zp01Xml.getSeaHerpesDoc());
-            mIngreso.setSeaParvovirus(zp01Xml.getSeaParvovirus());
-            mIngreso.setSeaParvovirusDate1(zp01Xml.getSeaParvovirusDate1());
-            mIngreso.setSeaParvovirusDate2(zp01Xml.getSeaParvovirusDate2());
-            mIngreso.setSeaParvovirusDate3(zp01Xml.getSeaParvovirusDate3());
-            mIngreso.setSeaParvovirusDoc(zp01Xml.getSeaParvovirusDoc());
-            mIngreso.setSeaToxoplasmosis(zp01Xml.getSeaToxoplasmosis());
-            mIngreso.setSeaToxoplasmosisDate1(zp01Xml.getSeaToxoplasmosisDate1());
-            mIngreso.setSeaToxoplasmosisDate2(zp01Xml.getSeaToxoplasmosisDate2());
-            mIngreso.setSeaToxoplasmosisDate3(zp01Xml.getSeaToxoplasmosisDate3());
-            mIngreso.setSeaToxoplasmosisDoc(zp01Xml.getSeaToxoplasmosisDoc());
-            mIngreso.setSeaSyphillis(zp01Xml.getSeaSyphillis());
-            mIngreso.setSeaSyphillisDate1(zp01Xml.getSeaSyphillisDate1());
-            mIngreso.setSeaSyphillisDate2(zp01Xml.getSeaSyphillisDate2());
-            mIngreso.setSeaSyphillisDate3(zp01Xml.getSeaSyphillisDate3());
-            mIngreso.setSeaSyphillisDoc(zp01Xml.getSeaSyphillisDoc());
-            mIngreso.setSeaHiv(zp01Xml.getSeaHiv());
-            mIngreso.setSeaHivDate1(zp01Xml.getSeaHivDate1());
-            mIngreso.setSeaHivDate2(zp01Xml.getSeaHivDate2());
-            mIngreso.setSeaHivDate3(zp01Xml.getSeaHivDate3());
-            mIngreso.setSeaHivDoc(zp01Xml.getSeaHivDoc());
-            mIngreso.setSeaZika(zp01Xml.getSeaZika());
-            mIngreso.setSeaZikaDate1(zp01Xml.getSeaZikaDate1());
-            mIngreso.setSeaZikaDate2(zp01Xml.getSeaZikaDate2());
-            mIngreso.setSeaZikaDate3(zp01Xml.getSeaZikaDate3());
-            mIngreso.setSeaZikaDoc(zp01Xml.getSeaZikaDoc());
-            mIngreso.setSeaChikung(zp01Xml.getSeaChikung());
-            mIngreso.setSeaChikungDate1(zp01Xml.getSeaChikungDate1());
-            mIngreso.setSeaChikungDate2(zp01Xml.getSeaChikungDate2());
-            mIngreso.setSeaChikungDate3(zp01Xml.getSeaChikungDate3());
-            mIngreso.setSeaChikungDoc(zp01Xml.getSeaChikungDoc());
-            mIngreso.setSeaInfluInfect(zp01Xml.getSeaInfluInfect());
-            mIngreso.setSeaInflueInfectDate1(zp01Xml.getSeaInflueInfectDate1());
-            mIngreso.setSeaInfluInfectDate2(zp01Xml.getSeaInfluInfectDate2());
-            mIngreso.setSeaInfluInfectDate3(zp01Xml.getSeaInfluInfectDate3());
-            mIngreso.setSeaInfluInfectDoc(zp01Xml.getSeaInfluInfectDoc());
-            mIngreso.setSeaDengueInfect(zp01Xml.getSeaDengueInfect());
-            mIngreso.setSeaDengueInfectDate1(zp01Xml.getSeaDengueInfectDate1());
-            mIngreso.setSeaDengueInfectDate2(zp01Xml.getSeaDengueInfectDate2());
-            mIngreso.setSeaDengueInfectDate3(zp01Xml.getSeaDengueInfectDate3());
-            mIngreso.setSeaDengueInfectDoc(zp01Xml.getSeaDengueInfectDoc());
-            mIngreso.setSeaFeverSymptom(zp01Xml.getSeaFeverSymptom());
-            mIngreso.setSeaRash(zp01Xml.getSeaRash());
-            mIngreso.setSeaItch(zp01Xml.getSeaItch());
-            mIngreso.setSeaRashFirst(zp01Xml.getSeaRashFirst());
-            mIngreso.setSeaRashDay(zp01Xml.getSeaRashDay());
-            mIngreso.setSeaRashMonth(zp01Xml.getSeaRashMonth());
-            mIngreso.setSeaRashYear(zp01Xml.getSeaRashYear());
-            mIngreso.setSeaRashDuration(zp01Xml.getSeaRashDuration());
-            mIngreso.setSeaRashSpread(zp01Xml.getSeaRashSpread());
-            mIngreso.setSeaSpreadPart(zp01Xml.getSeaSpreadPart());
-            mIngreso.setSeaFeverExperience(zp01Xml.getSeaFeverExperience());
-            mIngreso.setSeaTempMeasure(zp01Xml.getSeaTempMeasure());
-            mIngreso.setSeaHighTemp(zp01Xml.getSeaHighTemp());
-            mIngreso.setSeaHightemUnit(zp01Xml.getSeaHightemUnit());
-            mIngreso.setSeaTempunknown(zp01Xml.getSeaTempunknown());
-            mIngreso.setSeaFeverDay(zp01Xml.getSeaFeverDay());
-            mIngreso.setSeaFeverMonth(zp01Xml.getSeaFeverMonth());
-            mIngreso.setSeaFeverYear(zp01Xml.getSeaFeverYear());
-            mIngreso.setSeaFeverDuration(zp01Xml.getSeaFeverDuration());
-            mIngreso.setSeaRedeyes(zp01Xml.getSeaRedeyes());
-            mIngreso.setSeaRedeyesDay(zp01Xml.getSeaRedeyesDay());
-            mIngreso.setSeaRedeyesMonth(zp01Xml.getSeaRedeyesMonth());
-            mIngreso.setSeaRedeyesYear(zp01Xml.getSeaRedeyesYear());
-            mIngreso.setSeaRedeyesDuration(zp01Xml.getSeaRedeyesDuration());
-            mIngreso.setSeaOccurSame(zp01Xml.getSeaOccurSame());
-            mIngreso.setSeaSameSymptom(zp01Xml.getSeaSameSymptom());
-            mIngreso.setSeaJoint(zp01Xml.getSeaJoint());
-            mIngreso.setSeaJointDay(zp01Xml.getSeaJointDay());
-            mIngreso.setSeaJointMonth(zp01Xml.getSeaJointMonth());
-            mIngreso.setSeaJointYear(zp01Xml.getSeaJointYear());
-            mIngreso.setSeaJointDuration(zp01Xml.getSeaJointDuration());
-            mIngreso.setSeaHeadache(zp01Xml.getSeaHeadache());
-            mIngreso.setSeaHeadacheDay(zp01Xml.getSeaHeadacheDay());
-            mIngreso.setSeaHeadacheMonth(zp01Xml.getSeaHeadacheMonth());
-            mIngreso.setSeaHeadacheYear(zp01Xml.getSeaHeadacheYear());
-            mIngreso.setSeaHeadacheDuration(zp01Xml.getSeaHeadacheDuration());
-            mIngreso.setSeaSymptomOther(zp01Xml.getSeaSymptomOther());
-            mIngreso.setSeaSpecifySymptom(zp01Xml.getSeaSpecifySymptom());
-            mIngreso.setSeaOtherSymptom(zp01Xml.getSeaOtherSymptom());
-            mIngreso.setSeaMedicare(zp01Xml.getSeaMedicare());
-            mIngreso.setSeaCareDay(zp01Xml.getSeaCareDay());
-            mIngreso.setSeaCareMonth(zp01Xml.getSeaCareMonth());
-            mIngreso.setSeaCareYear(zp01Xml.getSeaCareYear());
-            mIngreso.setSeaCareFacility(zp01Xml.getSeaCareFacility());
-            mIngreso.setSeaHospitalized(zp01Xml.getSeaHospitalized());
-            mIngreso.setSeaHospital(zp01Xml.getSeaHospital());
-            mIngreso.setSeaDiagRubella(zp01Xml.getSeaDiagRubella());
-            mIngreso.setSeaDiagDengue(zp01Xml.getSeaDiagDengue());
-            mIngreso.setSeaDiagChikung(zp01Xml.getSeaDiagChikung());
-            mIngreso.setSeaDiagZika(zp01Xml.getSeaDiagZika());
-            mIngreso.setSeaDiagCytome(zp01Xml.getSeaDiagCytome());
-            mIngreso.setSeaMedicine(zp01Xml.getSeaMedicine());
-            mIngreso.setSeaMedcineName(zp01Xml.getSeaMedcineName());
-            mIngreso.setSeaGuillainbarre(zp01Xml.getSeaGuillainbarre());
-            mIngreso.setSeaTingling(zp01Xml.getSeaTingling());
-            mIngreso.setSeaTinglingArm(zp01Xml.getSeaTinglingArm());
-            mIngreso.setSeaTinglingLeg(zp01Xml.getSeaTinglingLeg());
-            mIngreso.setSeaTinglingHand(zp01Xml.getSeaTinglingHand());
-            mIngreso.setSeaTinglingFoot(zp01Xml.getSeaTinglingFoot());
-            mIngreso.setSeaTinglingFace(zp01Xml.getSeaTinglingFace());
-            mIngreso.setSeaTinglingOther(zp01Xml.getSeaTinglingOther());
-            mIngreso.setSeaSensationMin(zp01Xml.getSeaSensationMin());
-            mIngreso.setSeaSensationHr(zp01Xml.getSeaSensationHr());
-            mIngreso.setSeaSenstaionDay(zp01Xml.getSeaSenstaionDay());
-            mIngreso.setSeaInjury(zp01Xml.getSeaInjury());
-            mIngreso.setSeaTinglingDay(zp01Xml.getSeaTinglingDay());
-            mIngreso.setSeaTinglingMonth(zp01Xml.getSeaTinglingMonth());
-            mIngreso.setSeaTinglingYear(zp01Xml.getSeaTinglingYear());
-            mIngreso.setSeaTinglingDuration(zp01Xml.getSeaTinglingDuration());
-            mIngreso.setSeaNumbness(zp01Xml.getSeaNumbness());
-            mIngreso.setSeaNumbArm(zp01Xml.getSeaNumbArm());
-            mIngreso.setSeaNumbLeg(zp01Xml.getSeaNumbLeg());
-            mIngreso.setSeaNumbHand(zp01Xml.getSeaNumbHand());
-            mIngreso.setSeaNumbFoot(zp01Xml.getSeaNumbFoot());
-            mIngreso.setSeaNumbFace(zp01Xml.getSeaNumbFace());
-            mIngreso.setSeaNumbOther(zp01Xml.getSeaNumbOther());
-            mIngreso.setSeaNumbDay(zp01Xml.getSeaNumbDay());
-            mIngreso.setSeaNumbMonth(zp01Xml.getSeaNumbMonth());
-            mIngreso.setSeaNumbYear(zp01Xml.getSeaNumbYear());
-            mIngreso.setSeaNumbDuration(zp01Xml.getSeaNumbDuration());
-            mIngreso.setSeaParalysis(zp01Xml.getSeaParalysis());
-            mIngreso.setSeaParaArm(zp01Xml.getSeaParaArm());
-            mIngreso.setSeaParaLeg(zp01Xml.getSeaParaLeg());
-            mIngreso.setSeaParaHand(zp01Xml.getSeaParaHand());
-            mIngreso.setSeaParaFoot(zp01Xml.getSeaParaFoot());
-            mIngreso.setSeaParaFace(zp01Xml.getSeaParaFace());
-            mIngreso.setSeaParaOther(zp01Xml.getSeaParaOther());
-            mIngreso.setSeaParaDay(zp01Xml.getSeaParaDay());
-            mIngreso.setSeaParaMonth(zp01Xml.getSeaParaMonth());
-            mIngreso.setSeaParaYear(zp01Xml.getSeaParaYear());
-            mIngreso.setSeaParaDuration(zp01Xml.getSeaParaDuration());
-			mIngreso.setRecordDate(new Date());
-			mIngreso.setRecordUser(username);
-			mIngreso.setIdInstancia(idInstancia);
-			mIngreso.setInstancePath(instanceFilePath);
-			mIngreso.setEstado(Constants.STATUS_NOT_SUBMITTED);
-			mIngreso.setStart(zp01Xml.getStart());
-			mIngreso.setEnd(zp01Xml.getEnd());
-			mIngreso.setDeviceid(zp01Xml.getDeviceid());
-			mIngreso.setSimserial(zp01Xml.getSimserial());
-			mIngreso.setPhonenumber(zp01Xml.getPhonenumber());
-			mIngreso.setToday(zp01Xml.getToday());
-			new SaveDataTask().execute();
+			if (accion==ADD_ZP01E_ODK) mZp01E = new Zp01StudyEntrySectionE();
+			mZp01E.setRecordId(mRecordId);
+            mZp01E.setSeaDiseases(zp01Xml.getSeaDiseases());
+            mZp01E.setSeaOtherSpecify(zp01Xml.getSeaOtherSpecify());
+            mZp01E.setSeaHepatitis(zp01Xml.getSeaHepatitis());
+            mZp01E.setSeaHepatitisDate1(zp01Xml.getSeaHepatitisDate1());
+            mZp01E.setSeaHepatitisDate2(zp01Xml.getSeaHepatitisDate2());
+            mZp01E.setSeaHepatitisDate3(zp01Xml.getSeaHepatitisDate3());
+            mZp01E.setSeaMeasles(zp01Xml.getSeaMeasles());
+            mZp01E.setSeaMeaslesDate1(zp01Xml.getSeaMeaslesDate1());
+            mZp01E.setSeaMeaslesDate2(zp01Xml.getSeaMeaslesDate2());
+            mZp01E.setSeaMeaslesDate3(zp01Xml.getSeaMeaslesDate3());
+            mZp01E.setSeaChickenpox(zp01Xml.getSeaChickenpox());
+            mZp01E.setSeaChickenpoxDate1(zp01Xml.getSeaChickenpoxDate1());
+            mZp01E.setSeaChickenpoxDate2(zp01Xml.getSeaChickenpoxDate2());
+            mZp01E.setSeaChickenpoxDate3(zp01Xml.getSeaChickenpoxDate3());
+            mZp01E.setSeaInfluenza(zp01Xml.getSeaInfluenza());
+            mZp01E.setSeaInfluenzaDate1(zp01Xml.getSeaInfluenzaDate1());
+            mZp01E.setSeaInfluenzaDate2(zp01Xml.getSeaInfluenzaDate2());
+            mZp01E.setSeaInfluenzaDate3(zp01Xml.getSeaInfluenzaDate3());
+            mZp01E.setSeaYellow(zp01Xml.getSeaYellow());
+            mZp01E.setSeaYellowDate1(zp01Xml.getSeaYellowDate1());
+            mZp01E.setSeaYellowDate2(zp01Xml.getSeaYellowDate2());
+            mZp01E.setSeaYellowDate3(zp01Xml.getSeaYellowDate3());
+            mZp01E.setSeaDengue(zp01Xml.getSeaDengue());
+            mZp01E.setSeaDengueDate1(zp01Xml.getSeaDengueDate1());
+            mZp01E.setSeaDengueDate2(zp01Xml.getSeaDengueDate2());
+            mZp01E.setSeaDengueDate3(zp01Xml.getSeaDengueDate3());
+            mZp01E.setSeaVacOther(zp01Xml.getSeaVacOther());
+            mZp01E.setSeaVacotherSpecify(zp01Xml.getSeaVacotherSpecify());
+            mZp01E.setSeaOtherDate1(zp01Xml.getSeaOtherDate1());
+            mZp01E.setSeaOtherDate2(zp01Xml.getSeaOtherDate2());
+            mZp01E.setSeaOtherDate3(zp01Xml.getSeaOtherDate3());
+            mZp01E.setSeaRubella(zp01Xml.getSeaRubella());
+            mZp01E.setSeaRubellaDate1(zp01Xml.getSeaRubellaDate1());
+            mZp01E.setSeaRubellaDate2(zp01Xml.getSeaRubellaDate2());
+            mZp01E.setSeaRubellaDate3(zp01Xml.getSeaRubellaDate3());
+            mZp01E.setSeaRubellaDoc(zp01Xml.getSeaRubellaDoc());
+            mZp01E.setSeaCmv(zp01Xml.getSeaCmv());
+            mZp01E.setSeaCmvDate1(zp01Xml.getSeaCmvDate1());
+            mZp01E.setSeaCmvDate2(zp01Xml.getSeaCmvDate2());
+            mZp01E.setSeaCmvDate3(zp01Xml.getSeaCmvDate3());
+            mZp01E.setSeaCmvDoc(zp01Xml.getSeaCmvDoc());
+            mZp01E.setSeaHerpes(zp01Xml.getSeaHerpes());
+            mZp01E.setSeaHerpesDate1(zp01Xml.getSeaHerpesDate1());
+            mZp01E.setSeaHerpesDate2(zp01Xml.getSeaHerpesDate2());
+            mZp01E.setSeaHerpesDate3(zp01Xml.getSeaHerpesDate3());
+            mZp01E.setSeaHerpesDoc(zp01Xml.getSeaHerpesDoc());
+            mZp01E.setSeaParvovirus(zp01Xml.getSeaParvovirus());
+            mZp01E.setSeaParvovirusDate1(zp01Xml.getSeaParvovirusDate1());
+            mZp01E.setSeaParvovirusDate2(zp01Xml.getSeaParvovirusDate2());
+            mZp01E.setSeaParvovirusDate3(zp01Xml.getSeaParvovirusDate3());
+            mZp01E.setSeaParvovirusDoc(zp01Xml.getSeaParvovirusDoc());
+            mZp01E.setSeaToxoplasmosis(zp01Xml.getSeaToxoplasmosis());
+            mZp01E.setSeaToxoplasmosisDate1(zp01Xml.getSeaToxoplasmosisDate1());
+            mZp01E.setSeaToxoplasmosisDate2(zp01Xml.getSeaToxoplasmosisDate2());
+            mZp01E.setSeaToxoplasmosisDate3(zp01Xml.getSeaToxoplasmosisDate3());
+            mZp01E.setSeaToxoplasmosisDoc(zp01Xml.getSeaToxoplasmosisDoc());
+            mZp01E.setSeaSyphillis(zp01Xml.getSeaSyphillis());
+            mZp01E.setSeaSyphillisDate1(zp01Xml.getSeaSyphillisDate1());
+            mZp01E.setSeaSyphillisDate2(zp01Xml.getSeaSyphillisDate2());
+            mZp01E.setSeaSyphillisDate3(zp01Xml.getSeaSyphillisDate3());
+            mZp01E.setSeaSyphillisDoc(zp01Xml.getSeaSyphillisDoc());
+            mZp01E.setSeaHiv(zp01Xml.getSeaHiv());
+            mZp01E.setSeaHivDate1(zp01Xml.getSeaHivDate1());
+            mZp01E.setSeaHivDate2(zp01Xml.getSeaHivDate2());
+            mZp01E.setSeaHivDate3(zp01Xml.getSeaHivDate3());
+            mZp01E.setSeaHivDoc(zp01Xml.getSeaHivDoc());
+            mZp01E.setSeaZika(zp01Xml.getSeaZika());
+            mZp01E.setSeaZikaDate1(zp01Xml.getSeaZikaDate1());
+            mZp01E.setSeaZikaDate2(zp01Xml.getSeaZikaDate2());
+            mZp01E.setSeaZikaDate3(zp01Xml.getSeaZikaDate3());
+            mZp01E.setSeaZikaDoc(zp01Xml.getSeaZikaDoc());
+            mZp01E.setSeaChikung(zp01Xml.getSeaChikung());
+            mZp01E.setSeaChikungDate1(zp01Xml.getSeaChikungDate1());
+            mZp01E.setSeaChikungDate2(zp01Xml.getSeaChikungDate2());
+            mZp01E.setSeaChikungDate3(zp01Xml.getSeaChikungDate3());
+            mZp01E.setSeaChikungDoc(zp01Xml.getSeaChikungDoc());
+            mZp01E.setSeaInfluInfect(zp01Xml.getSeaInfluInfect());
+            mZp01E.setSeaInflueInfectDate1(zp01Xml.getSeaInflueInfectDate1());
+            mZp01E.setSeaInfluInfectDate2(zp01Xml.getSeaInfluInfectDate2());
+            mZp01E.setSeaInfluInfectDate3(zp01Xml.getSeaInfluInfectDate3());
+            mZp01E.setSeaInfluInfectDoc(zp01Xml.getSeaInfluInfectDoc());
+            mZp01E.setSeaDengueInfect(zp01Xml.getSeaDengueInfect());
+            mZp01E.setSeaDengueInfectDate1(zp01Xml.getSeaDengueInfectDate1());
+            mZp01E.setSeaDengueInfectDate2(zp01Xml.getSeaDengueInfectDate2());
+            mZp01E.setSeaDengueInfectDate3(zp01Xml.getSeaDengueInfectDate3());
+            mZp01E.setSeaDengueInfectDoc(zp01Xml.getSeaDengueInfectDoc());
+            mZp01E.setSeaFeverSymptom(zp01Xml.getSeaFeverSymptom());
+            mZp01E.setSeaRash(zp01Xml.getSeaRash());
+            mZp01E.setSeaItch(zp01Xml.getSeaItch());
+            mZp01E.setSeaRashFirst(zp01Xml.getSeaRashFirst());
+            mZp01E.setSeaRashDay(zp01Xml.getSeaRashDay());
+            mZp01E.setSeaRashMonth(zp01Xml.getSeaRashMonth());
+            mZp01E.setSeaRashYear(zp01Xml.getSeaRashYear());
+            mZp01E.setSeaRashDuration(zp01Xml.getSeaRashDuration());
+            mZp01E.setSeaRashSpread(zp01Xml.getSeaRashSpread());
+            mZp01E.setSeaSpreadPart(zp01Xml.getSeaSpreadPart());
+            mZp01E.setSeaFeverExperience(zp01Xml.getSeaFeverExperience());
+            mZp01E.setSeaTempMeasure(zp01Xml.getSeaTempMeasure());
+            mZp01E.setSeaHighTemp(zp01Xml.getSeaHighTemp());
+            mZp01E.setSeaHightemUnit(zp01Xml.getSeaHightemUnit());
+            mZp01E.setSeaTempunknown(zp01Xml.getSeaTempunknown());
+            mZp01E.setSeaFeverDay(zp01Xml.getSeaFeverDay());
+            mZp01E.setSeaFeverMonth(zp01Xml.getSeaFeverMonth());
+            mZp01E.setSeaFeverYear(zp01Xml.getSeaFeverYear());
+            mZp01E.setSeaFeverDuration(zp01Xml.getSeaFeverDuration());
+            mZp01E.setSeaRedeyes(zp01Xml.getSeaRedeyes());
+            mZp01E.setSeaRedeyesDay(zp01Xml.getSeaRedeyesDay());
+            mZp01E.setSeaRedeyesMonth(zp01Xml.getSeaRedeyesMonth());
+            mZp01E.setSeaRedeyesYear(zp01Xml.getSeaRedeyesYear());
+            mZp01E.setSeaRedeyesDuration(zp01Xml.getSeaRedeyesDuration());
+            mZp01E.setSeaOccurSame(zp01Xml.getSeaOccurSame());
+            mZp01E.setSeaSameSymptom(zp01Xml.getSeaSameSymptom());
+            mZp01E.setSeaJoint(zp01Xml.getSeaJoint());
+            mZp01E.setSeaJointDay(zp01Xml.getSeaJointDay());
+            mZp01E.setSeaJointMonth(zp01Xml.getSeaJointMonth());
+            mZp01E.setSeaJointYear(zp01Xml.getSeaJointYear());
+            mZp01E.setSeaJointDuration(zp01Xml.getSeaJointDuration());
+            mZp01E.setSeaHeadache(zp01Xml.getSeaHeadache());
+            mZp01E.setSeaHeadacheDay(zp01Xml.getSeaHeadacheDay());
+            mZp01E.setSeaHeadacheMonth(zp01Xml.getSeaHeadacheMonth());
+            mZp01E.setSeaHeadacheYear(zp01Xml.getSeaHeadacheYear());
+            mZp01E.setSeaHeadacheDuration(zp01Xml.getSeaHeadacheDuration());
+            mZp01E.setSeaSymptomOther(zp01Xml.getSeaSymptomOther());
+            mZp01E.setSeaSpecifySymptom(zp01Xml.getSeaSpecifySymptom());
+            mZp01E.setSeaOtherSymptom(zp01Xml.getSeaOtherSymptom());
+            mZp01E.setSeaMedicare(zp01Xml.getSeaMedicare());
+            mZp01E.setSeaCareDay(zp01Xml.getSeaCareDay());
+            mZp01E.setSeaCareMonth(zp01Xml.getSeaCareMonth());
+            mZp01E.setSeaCareYear(zp01Xml.getSeaCareYear());
+            mZp01E.setSeaCareFacility(zp01Xml.getSeaCareFacility());
+            mZp01E.setSeaHospitalized(zp01Xml.getSeaHospitalized());
+            mZp01E.setSeaHospital(zp01Xml.getSeaHospital());
+            mZp01E.setSeaDiagRubella(zp01Xml.getSeaDiagRubella());
+            mZp01E.setSeaDiagDengue(zp01Xml.getSeaDiagDengue());
+            mZp01E.setSeaDiagChikung(zp01Xml.getSeaDiagChikung());
+            mZp01E.setSeaDiagZika(zp01Xml.getSeaDiagZika());
+            mZp01E.setSeaDiagCytome(zp01Xml.getSeaDiagCytome());
+            mZp01E.setSeaMedicine(zp01Xml.getSeaMedicine());
+            mZp01E.setSeaMedcineName(zp01Xml.getSeaMedcineName());
+            mZp01E.setSeaGuillainbarre(zp01Xml.getSeaGuillainbarre());
+            mZp01E.setSeaTingling(zp01Xml.getSeaTingling());
+            mZp01E.setSeaTinglingArm(zp01Xml.getSeaTinglingArm());
+            mZp01E.setSeaTinglingLeg(zp01Xml.getSeaTinglingLeg());
+            mZp01E.setSeaTinglingHand(zp01Xml.getSeaTinglingHand());
+            mZp01E.setSeaTinglingFoot(zp01Xml.getSeaTinglingFoot());
+            mZp01E.setSeaTinglingFace(zp01Xml.getSeaTinglingFace());
+            mZp01E.setSeaTinglingOther(zp01Xml.getSeaTinglingOther());
+            mZp01E.setSeaSensationMin(zp01Xml.getSeaSensationMin());
+            mZp01E.setSeaSensationHr(zp01Xml.getSeaSensationHr());
+            mZp01E.setSeaSenstaionDay(zp01Xml.getSeaSenstaionDay());
+            mZp01E.setSeaInjury(zp01Xml.getSeaInjury());
+            mZp01E.setSeaTinglingDay(zp01Xml.getSeaTinglingDay());
+            mZp01E.setSeaTinglingMonth(zp01Xml.getSeaTinglingMonth());
+            mZp01E.setSeaTinglingYear(zp01Xml.getSeaTinglingYear());
+            mZp01E.setSeaTinglingDuration(zp01Xml.getSeaTinglingDuration());
+            mZp01E.setSeaNumbness(zp01Xml.getSeaNumbness());
+            mZp01E.setSeaNumbArm(zp01Xml.getSeaNumbArm());
+            mZp01E.setSeaNumbLeg(zp01Xml.getSeaNumbLeg());
+            mZp01E.setSeaNumbHand(zp01Xml.getSeaNumbHand());
+            mZp01E.setSeaNumbFoot(zp01Xml.getSeaNumbFoot());
+            mZp01E.setSeaNumbFace(zp01Xml.getSeaNumbFace());
+            mZp01E.setSeaNumbOther(zp01Xml.getSeaNumbOther());
+            mZp01E.setSeaNumbDay(zp01Xml.getSeaNumbDay());
+            mZp01E.setSeaNumbMonth(zp01Xml.getSeaNumbMonth());
+            mZp01E.setSeaNumbYear(zp01Xml.getSeaNumbYear());
+            mZp01E.setSeaNumbDuration(zp01Xml.getSeaNumbDuration());
+            mZp01E.setSeaParalysis(zp01Xml.getSeaParalysis());
+            mZp01E.setSeaParaArm(zp01Xml.getSeaParaArm());
+            mZp01E.setSeaParaLeg(zp01Xml.getSeaParaLeg());
+            mZp01E.setSeaParaHand(zp01Xml.getSeaParaHand());
+            mZp01E.setSeaParaFoot(zp01Xml.getSeaParaFoot());
+            mZp01E.setSeaParaFace(zp01Xml.getSeaParaFace());
+            mZp01E.setSeaParaOther(zp01Xml.getSeaParaOther());
+            mZp01E.setSeaParaDay(zp01Xml.getSeaParaDay());
+            mZp01E.setSeaParaMonth(zp01Xml.getSeaParaMonth());
+            mZp01E.setSeaParaYear(zp01Xml.getSeaParaYear());
+            mZp01E.setSeaParaDuration(zp01Xml.getSeaParaDuration());
+			mZp01E.setRecordDate(new Date());
+			mZp01E.setRecordUser(username);
+			mZp01E.setIdInstancia(idInstancia);
+			mZp01E.setInstancePath(instanceFilePath);
+			mZp01E.setEstado(Constants.STATUS_NOT_SUBMITTED);
+			mZp01E.setStart(zp01Xml.getStart());
+			mZp01E.setEnd(zp01Xml.getEnd());
+			mZp01E.setDeviceid(zp01Xml.getDeviceid());
+			mZp01E.setSimserial(zp01Xml.getSimserial());
+			mZp01E.setPhonenumber(zp01Xml.getPhonenumber());
+			mZp01E.setToday(zp01Xml.getToday());
+			new SaveDataTask().execute(accion);
 			
 		} catch (Exception e) {
 			// Presenta el error al parsear el xml
 			Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 			e.printStackTrace();
+			finish();
 		}		
 	}
 	
 	// ***************************************
 	// Private classes
 	// ***************************************
-	private class SaveDataTask extends AsyncTask<String, Void, String> {
+	private class SaveDataTask extends AsyncTask<Integer, Void, String> {
+		private Integer accionaRealizar = null;
 		@Override
 		protected void onPreExecute() {
 			// before the request begins, show a progress indicator
@@ -418,10 +432,16 @@ public class NewZp01StudyEntrySectionEActivity extends AbstractAsyncActivity {
 		}
 
 		@Override
-		protected String doInBackground(String... values) {
+		protected String doInBackground(Integer... values) {
+			accionaRealizar = values[0];
 			try {
 				zipA.open();
-				zipA.crearZp01StudyEntrySectionE(mIngreso);
+				if (accionaRealizar == ADD_ZP01E_ODK){
+					zipA.crearZp01StudyEntrySectionE(mZp01E);
+				}
+				else{
+					zipA.editarZp01StudyEntrySectionE(mZp01E);
+				}
 				zipA.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -443,6 +463,7 @@ public class NewZp01StudyEntrySectionEActivity extends AbstractAsyncActivity {
 	// ***************************************
 	private void showResult(String resultado) {
 		Toast.makeText(getApplicationContext(),	resultado, Toast.LENGTH_LONG).show();
+		finish();
 	}	
 
 

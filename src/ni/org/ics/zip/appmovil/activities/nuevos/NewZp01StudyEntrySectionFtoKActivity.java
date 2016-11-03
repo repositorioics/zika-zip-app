@@ -22,7 +22,6 @@ import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
-import ni.org.ics.zip.appmovil.domain.Zp00Screening;
 import ni.org.ics.zip.appmovil.domain.Zp01StudyEntrySectionFtoK;
 import ni.org.ics.zip.appmovil.parsers.Zp01StudyEntrySectionFtoKXml;
 import ni.org.ics.zip.appmovil.preferences.PreferencesActivity;
@@ -40,15 +39,16 @@ public class NewZp01StudyEntrySectionFtoKActivity extends AbstractAsyncActivity 
 	protected static final String TAG = NewZp01StudyEntrySectionFtoKActivity.class.getSimpleName();
 	
 	private ZipAdapter zipA;
-	private static Zp01StudyEntrySectionFtoK mIngreso = new Zp01StudyEntrySectionFtoK();
+	private static Zp01StudyEntrySectionFtoK mZp01F = null;
 	
-	public static final int ADD_TAMIZAJE_ODK = 1;
+	public static final int ADD_ZP01F_ODK = 1;
+	public static final int EDIT_ZP01F_ODK = 2;
 
 	Dialog dialogInit;
 	private SharedPreferences settings;
 	private String username;
 	private String mRecordId = "";
-	private boolean hecho =  false;
+	private Integer accion = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +64,9 @@ public class NewZp01StudyEntrySectionFtoKActivity extends AbstractAsyncActivity 
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
-		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
-		hecho = getIntent().getExtras().getBoolean(Constants.DONE);
-        Zp00Screening screening = (Zp00Screening) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZPEST);
-        mRecordId = screening.getRecordId();
+		mZp01F = (Zp01StudyEntrySectionFtoK) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP01F);
+        mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
+        zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
 		createInitDialog();
 	}
 
@@ -82,11 +81,11 @@ public class NewZp01StudyEntrySectionFtoKActivity extends AbstractAsyncActivity 
 
 		//to set the message
 		TextView message =(TextView) dialogInit.findViewById(R.id.yesnotext);
-		if (hecho){
-			message.setText(getString(R.string.edit)+ " " + getString(R.string.main_maternal));
+		if (mZp01F!=null){
+			message.setText(getString(R.string.edit)+ " " + getString(R.string.maternal_b_3)+"?");
 		}
 		else{
-			message.setText(getString(R.string.add)+ " " + getString(R.string.main_maternal));
+			message.setText(getString(R.string.add)+ " " + getString(R.string.maternal_b_3)+"?");
 		}
 
 		//add some action to the buttons
@@ -141,7 +140,7 @@ public class NewZp01StudyEntrySectionFtoKActivity extends AbstractAsyncActivity 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
-		if(requestCode == ADD_TAMIZAJE_ODK) {
+		if(requestCode == ADD_ZP01F_ODK||requestCode == EDIT_ZP01F_ODK) {
 	        if(resultCode == RESULT_OK) {
 	        	Uri instanceUri = intent.getData();
 				//Busca la instancia resultado
@@ -160,14 +159,14 @@ public class NewZp01StudyEntrySectionFtoKActivity extends AbstractAsyncActivity 
 				}
 				if (complete.matches("complete")){
 					//Parsear el resultado obteniendo un tamizaje si esta completo
-					parseZp01StudyEntryFtoK(idInstancia, instanceFilePath);
+					parseZp01StudyEntryFtoK(idInstancia, instanceFilePath,accion);
 				}
 				else{
 					Toast.makeText(getApplicationContext(),	getString(R.string.err_not_completed), Toast.LENGTH_LONG).show();
 				}
 	        }
 	        else{
-	        	
+	        	finish();
 	        }
 	    }
 		super.onActivityResult(requestCode, resultCode, intent);
@@ -178,139 +177,153 @@ public class NewZp01StudyEntrySectionFtoKActivity extends AbstractAsyncActivity 
 	 */
 	private void addZp01StudyEntryFtoK() {
 		try{
-			//campos de proveedor de collect
-			String[] projection = new String[] {
-					"_id","jrFormId","displayName"};
-			//cursor que busca el formulario
-			Cursor c = getContentResolver().query(Constants.CONTENT_URI, projection,
-					"jrFormId = 'zp01_study_entry_f_k' and displayName = 'Estudio ZIP Visita inicial en el estudio 3'", null, null);
-			c.moveToFirst();
-			//captura el id del formulario
-			Integer id = Integer.parseInt(c.getString(0));
-			//cierra el cursor
-			if (c != null) {
-				c.close();
+			Uri formUri;
+			if(mZp01F==null){
+				//campos de proveedor de collect
+				String[] projection = new String[] {
+						"_id","jrFormId","displayName"};
+				//cursor que busca el formulario
+				Cursor c = getContentResolver().query(Constants.CONTENT_URI, projection,
+						"jrFormId = 'zp01_study_entry_f_k' and displayName = 'Estudio ZIP Visita inicial en el estudio_F_K'", null, null);
+				c.moveToFirst();
+				//captura el id del formulario
+				Integer id = Integer.parseInt(c.getString(0));
+				//cierra el cursor
+				if (c != null) {
+					c.close();
+				}
+				//forma el uri para ODK Collect
+				formUri = ContentUris.withAppendedId(Constants.CONTENT_URI,id);
+				accion = ADD_ZP01F_ODK;
 			}
-			//forma el uri para ODK Collect
-			Uri formUri = ContentUris.withAppendedId(Constants.CONTENT_URI,id);
-			//Arranca la actividad ODK Collect en busca de resultado
+			else{
+				//forma el uri para la instancia en ODK Collect
+				Integer id = mZp01F.getIdInstancia();
+				formUri = ContentUris.withAppendedId(Constants.CONTENT_URI_I,id);
+				accion = EDIT_ZP01F_ODK;
+			}
 			Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
-			startActivityForResult(odkA, ADD_TAMIZAJE_ODK);
+			//Arranca la actividad proveedor de instancias de ODK Collect en busca de resultado
+			startActivityForResult(odkA, accion);
 		}
 		catch(Exception e){
 			//No existe el formulario en el equipo
 			Log.e(TAG, e.getMessage(), e);
 			Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+			finish();
 		}
 	}
 	
-	private void parseZp01StudyEntryFtoK(Integer idInstancia, String instanceFilePath) {
+	private void parseZp01StudyEntryFtoK(Integer idInstancia, String instanceFilePath, Integer accion) {
 		Serializer serializer = new Persister(); 
 		File source = new File(instanceFilePath);
 		try {
 			Zp01StudyEntrySectionFtoKXml zp01Xml = new Zp01StudyEntrySectionFtoKXml();
 			zp01Xml = serializer.read(Zp01StudyEntrySectionFtoKXml.class, source);
-			mIngreso.setRecordId(mRecordId);
-			mIngreso.setSeaPreg(zp01Xml.getSeaPreg());
-            mIngreso.setSeaFirstPreg(zp01Xml.getSeaFirstPreg());
-            mIngreso.setSeaAnemia(zp01Xml.getSeaAnemia());
-            mIngreso.setSeaVaginal(zp01Xml.getSeaVaginal());
-            mIngreso.setSeaUtiPrior(zp01Xml.getSeaUtiPrior());
-            mIngreso.setSeaSexually(zp01Xml.getSeaSexually());
-            mIngreso.setSeaPreterm(zp01Xml.getSeaPreterm());
-            mIngreso.setSeaPreeclampsia(zp01Xml.getSeaPreeclampsia());
-            mIngreso.setSeaEclampsia(zp01Xml.getSeaEclampsia());
-            mIngreso.setSeaHeart(zp01Xml.getSeaHeart());
-            mIngreso.setSeaNeuropathy(zp01Xml.getSeaNeuropathy());
-            mIngreso.setSeaGestational(zp01Xml.getSeaGestational());
-            mIngreso.setSeaTotalPreg(zp01Xml.getSeaTotalPreg());
-            mIngreso.setSeaDeliveryDate1(zp01Xml.getSeaDeliveryDate1());
-            mIngreso.setSeaGage1(zp01Xml.getSeaGage1());
-            mIngreso.setSeaOutcome1(zp01Xml.getSeaOutcome1());
-            mIngreso.setSeaBdefects1(zp01Xml.getSeaBdefects1());
-            mIngreso.setSeaDeliveryDate2(zp01Xml.getSeaDeliveryDate2());
-            mIngreso.setSeaGage2(zp01Xml.getSeaGage2());
-            mIngreso.setSeaOutcome2(zp01Xml.getSeaOutcome2());
-            mIngreso.setSeaBdefects2(zp01Xml.getSeaBdefects2());
-            mIngreso.setSeaDeliveryDate3(zp01Xml.getSeaDeliveryDate3());
-            mIngreso.setSeaGage3(zp01Xml.getSeaGage3());
-            mIngreso.setSeaOutcome3(zp01Xml.getSeaOutcome3());
-            mIngreso.setSeaBdefects3(zp01Xml.getSeaBdefects3());
-            mIngreso.setSeaDeliveryDate4(zp01Xml.getSeaDeliveryDate4());
-            mIngreso.setSeaGage4(zp01Xml.getSeaGage4());
-            mIngreso.setSeaOutcome4(zp01Xml.getSeaOutcome4());
-            mIngreso.setSeaBdefects4(zp01Xml.getSeaBdefects4());
-            mIngreso.setSeaDeliveryDate5(zp01Xml.getSeaDeliveryDate5());
-            mIngreso.setSeaGage5(zp01Xml.getSeaGage5());
-            mIngreso.setSeaOutcome5(zp01Xml.getSeaOutcome5());
-            mIngreso.setSeaBdefects5(zp01Xml.getSeaBdefects5());
-            mIngreso.setSeaDeliveryDate6(zp01Xml.getSeaDeliveryDate6());
-            mIngreso.setSeaGage6(zp01Xml.getSeaGage6());
-            mIngreso.setSeaOutcome6(zp01Xml.getSeaOutcome6());
-            mIngreso.setSeaBdefects6(zp01Xml.getSeaBdefects6());
-            mIngreso.setSeaPersisHeadache(zp01Xml.getSeaPersisHeadache());
-            mIngreso.setSeaDizziness(zp01Xml.getSeaDizziness());
-            mIngreso.setSeaNausea(zp01Xml.getSeaNausea());
-            mIngreso.setSeaVomiting(zp01Xml.getSeaVomiting());
-            mIngreso.setSeaSeeingLights(zp01Xml.getSeaSeeingLights());
-            mIngreso.setSeaSpecifyType(zp01Xml.getSeaSpecifyType());
-            mIngreso.setSeaSwelling(zp01Xml.getSeaSwelling());
-            mIngreso.setSeaFetalMov(zp01Xml.getSeaFetalMov());
-            mIngreso.setSeaMovUsual(zp01Xml.getSeaMovUsual());
-            mIngreso.setSeaMovDecreased(zp01Xml.getSeaMovDecreased());
-            mIngreso.setSeaContraction(zp01Xml.getSeaContraction());
-            mIngreso.setSeaFreqWeek(zp01Xml.getSeaFreqWeek());
-            mIngreso.setSeaFreqDay(zp01Xml.getSeaFreqDay());
-            mIngreso.setSeaFreqHour(zp01Xml.getSeaFreqHour());
-            mIngreso.setSeaFreqMin(zp01Xml.getSeaFreqMin());
-            mIngreso.setSeaVagiDischarge(zp01Xml.getSeaVagiDischarge());
-            mIngreso.setSeaCharacterDisch(zp01Xml.getSeaCharacterDisch());//multiple
-            mIngreso.setSeaBleeding(zp01Xml.getSeaBleeding());
-            mIngreso.setSeaYesBleeding(zp01Xml.getSeaYesBleeding());
-            mIngreso.setSeaUti(zp01Xml.getSeaUti());
-            mIngreso.setSeaPrenatalCare(zp01Xml.getSeaDateCompleted());
-            mIngreso.setSeaMutiv(zp01Xml.getSeaMutiv());
-            mIngreso.setSeaIron(zp01Xml.getSeaIron());
-            mIngreso.setSeaOften(zp01Xml.getSeaOften());
-            mIngreso.setSeaProvideSym(zp01Xml.getSeaProvideSym());
-            mIngreso.setSeaReminderPreg(zp01Xml.getSeaReminderPreg());
-            mIngreso.setSeaReminderProvided(zp01Xml.getSeaReminderProvided());
-            mIngreso.setSeaOneweekDate(zp01Xml.getSeaOneweekDate());
-            mIngreso.setSeaOneweekTime(zp01Xml.getSeaOneweekTime());
-            mIngreso.setSeaNextDate(zp01Xml.getSeaNextDate());
-            mIngreso.setSeaNextTime(zp01Xml.getSeaNextTime());
-            mIngreso.setSeaIdCompleting(username);
-            mIngreso.setSeaDateCompleted(new Date());
-            mIngreso.setSeaIdReviewer(username);
-            mIngreso.setSeaDateReviewed(new Date());
-            mIngreso.setSeaIdDataEntry(username);
-            mIngreso.setSeaDateEntered(new Date());
+			if (accion==ADD_ZP01F_ODK) mZp01F = new Zp01StudyEntrySectionFtoK();
+			mZp01F.setRecordId(mRecordId);
+			mZp01F.setSeaPreg(zp01Xml.getSeaPreg());
+            mZp01F.setSeaFirstPreg(zp01Xml.getSeaFirstPreg());
+            mZp01F.setSeaAnemia(zp01Xml.getSeaAnemia());
+            mZp01F.setSeaVaginal(zp01Xml.getSeaVaginal());
+            mZp01F.setSeaUtiPrior(zp01Xml.getSeaUtiPrior());
+            mZp01F.setSeaSexually(zp01Xml.getSeaSexually());
+            mZp01F.setSeaPreterm(zp01Xml.getSeaPreterm());
+            mZp01F.setSeaPreeclampsia(zp01Xml.getSeaPreeclampsia());
+            mZp01F.setSeaEclampsia(zp01Xml.getSeaEclampsia());
+            mZp01F.setSeaHeart(zp01Xml.getSeaHeart());
+            mZp01F.setSeaNeuropathy(zp01Xml.getSeaNeuropathy());
+            mZp01F.setSeaGestational(zp01Xml.getSeaGestational());
+            mZp01F.setSeaTotalPreg(zp01Xml.getSeaTotalPreg());
+            mZp01F.setSeaDeliveryDate1(zp01Xml.getSeaDeliveryDate1());
+            mZp01F.setSeaGage1(zp01Xml.getSeaGage1());
+            mZp01F.setSeaOutcome1(zp01Xml.getSeaOutcome1());
+            mZp01F.setSeaBdefects1(zp01Xml.getSeaBdefects1());
+            mZp01F.setSeaDeliveryDate2(zp01Xml.getSeaDeliveryDate2());
+            mZp01F.setSeaGage2(zp01Xml.getSeaGage2());
+            mZp01F.setSeaOutcome2(zp01Xml.getSeaOutcome2());
+            mZp01F.setSeaBdefects2(zp01Xml.getSeaBdefects2());
+            mZp01F.setSeaDeliveryDate3(zp01Xml.getSeaDeliveryDate3());
+            mZp01F.setSeaGage3(zp01Xml.getSeaGage3());
+            mZp01F.setSeaOutcome3(zp01Xml.getSeaOutcome3());
+            mZp01F.setSeaBdefects3(zp01Xml.getSeaBdefects3());
+            mZp01F.setSeaDeliveryDate4(zp01Xml.getSeaDeliveryDate4());
+            mZp01F.setSeaGage4(zp01Xml.getSeaGage4());
+            mZp01F.setSeaOutcome4(zp01Xml.getSeaOutcome4());
+            mZp01F.setSeaBdefects4(zp01Xml.getSeaBdefects4());
+            mZp01F.setSeaDeliveryDate5(zp01Xml.getSeaDeliveryDate5());
+            mZp01F.setSeaGage5(zp01Xml.getSeaGage5());
+            mZp01F.setSeaOutcome5(zp01Xml.getSeaOutcome5());
+            mZp01F.setSeaBdefects5(zp01Xml.getSeaBdefects5());
+            mZp01F.setSeaDeliveryDate6(zp01Xml.getSeaDeliveryDate6());
+            mZp01F.setSeaGage6(zp01Xml.getSeaGage6());
+            mZp01F.setSeaOutcome6(zp01Xml.getSeaOutcome6());
+            mZp01F.setSeaBdefects6(zp01Xml.getSeaBdefects6());
+            mZp01F.setSeaPersisHeadache(zp01Xml.getSeaPersisHeadache());
+            mZp01F.setSeaDizziness(zp01Xml.getSeaDizziness());
+            mZp01F.setSeaNausea(zp01Xml.getSeaNausea());
+            mZp01F.setSeaVomiting(zp01Xml.getSeaVomiting());
+            mZp01F.setSeaSeeingLights(zp01Xml.getSeaSeeingLights());
+            mZp01F.setSeaSpecifyType(zp01Xml.getSeaSpecifyType());
+            mZp01F.setSeaSwelling(zp01Xml.getSeaSwelling());
+            mZp01F.setSeaFetalMov(zp01Xml.getSeaFetalMov());
+            mZp01F.setSeaMovUsual(zp01Xml.getSeaMovUsual());
+            mZp01F.setSeaMovDecreased(zp01Xml.getSeaMovDecreased());
+            mZp01F.setSeaContraction(zp01Xml.getSeaContraction());
+            mZp01F.setSeaFreqWeek(zp01Xml.getSeaFreqWeek());
+            mZp01F.setSeaFreqDay(zp01Xml.getSeaFreqDay());
+            mZp01F.setSeaFreqHour(zp01Xml.getSeaFreqHour());
+            mZp01F.setSeaFreqMin(zp01Xml.getSeaFreqMin());
+            mZp01F.setSeaVagiDischarge(zp01Xml.getSeaVagiDischarge());
+            mZp01F.setSeaCharacterDisch(zp01Xml.getSeaCharacterDisch());//multiple
+            mZp01F.setSeaBleeding(zp01Xml.getSeaBleeding());
+            mZp01F.setSeaYesBleeding(zp01Xml.getSeaYesBleeding());
+            mZp01F.setSeaUti(zp01Xml.getSeaUti());
+            mZp01F.setSeaPrenatalCare(zp01Xml.getSeaDateCompleted());
+            mZp01F.setSeaMutiv(zp01Xml.getSeaMutiv());
+            mZp01F.setSeaIron(zp01Xml.getSeaIron());
+            mZp01F.setSeaOften(zp01Xml.getSeaOften());
+            mZp01F.setSeaProvideSym(zp01Xml.getSeaProvideSym());
+            mZp01F.setSeaReminderPreg(zp01Xml.getSeaReminderPreg());
+            mZp01F.setSeaReminderProvided(zp01Xml.getSeaReminderProvided());
+            mZp01F.setSeaOneweekDate(zp01Xml.getSeaOneweekDate());
+            mZp01F.setSeaOneweekTime(zp01Xml.getSeaOneweekTime());
+            mZp01F.setSeaNextDate(zp01Xml.getSeaNextDate());
+            mZp01F.setSeaNextTime(zp01Xml.getSeaNextTime());
+            mZp01F.setSeaIdCompleting(username);
+            mZp01F.setSeaDateCompleted(new Date());
+            mZp01F.setSeaIdReviewer(username);
+            mZp01F.setSeaDateReviewed(new Date());
+            mZp01F.setSeaIdDataEntry(username);
+            mZp01F.setSeaDateEntered(new Date());
 
-			mIngreso.setRecordDate(new Date());
-			mIngreso.setRecordUser(username);
-			mIngreso.setIdInstancia(idInstancia);
-			mIngreso.setInstancePath(instanceFilePath);
-			mIngreso.setEstado(Constants.STATUS_NOT_SUBMITTED);
-			mIngreso.setStart(zp01Xml.getStart());
-			mIngreso.setEnd(zp01Xml.getEnd());
-			mIngreso.setDeviceid(zp01Xml.getDeviceid());
-			mIngreso.setSimserial(zp01Xml.getSimserial());
-			mIngreso.setPhonenumber(zp01Xml.getPhonenumber());
-			mIngreso.setToday(zp01Xml.getToday());
+			mZp01F.setRecordDate(new Date());
+			mZp01F.setRecordUser(username);
+			mZp01F.setIdInstancia(idInstancia);
+			mZp01F.setInstancePath(instanceFilePath);
+			mZp01F.setEstado(Constants.STATUS_NOT_SUBMITTED);
+			mZp01F.setStart(zp01Xml.getStart());
+			mZp01F.setEnd(zp01Xml.getEnd());
+			mZp01F.setDeviceid(zp01Xml.getDeviceid());
+			mZp01F.setSimserial(zp01Xml.getSimserial());
+			mZp01F.setPhonenumber(zp01Xml.getPhonenumber());
+			mZp01F.setToday(zp01Xml.getToday());
 
-			new SaveDataTask().execute();
+			new SaveDataTask().execute(accion);
 			
 		} catch (Exception e) {
 			// Presenta el error al parsear el xml
 			Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 			e.printStackTrace();
+			finish();
 		}		
 	}
 	
 	// ***************************************
 	// Private classes
 	// ***************************************
-	private class SaveDataTask extends AsyncTask<String, Void, String> {
+	private class SaveDataTask extends AsyncTask<Integer, Void, String> {
+		private Integer accionaRealizar = null;
 		@Override
 		protected void onPreExecute() {
 			// before the request begins, show a progress indicator
@@ -318,10 +331,16 @@ public class NewZp01StudyEntrySectionFtoKActivity extends AbstractAsyncActivity 
 		}
 
 		@Override
-		protected String doInBackground(String... values) {
+		protected String doInBackground(Integer... values) {
+			accionaRealizar = values[0];
 			try {
 				zipA.open();
-				zipA.crearZp01StudyEntrySectionFtoK(mIngreso);
+				if (accionaRealizar == ADD_ZP01F_ODK){
+					zipA.crearZp01StudyEntrySectionFtoK(mZp01F);
+				}
+				else{
+					zipA.editarZp01StudyEntrySectionFtoK(mZp01F);
+				}
 				zipA.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -343,6 +362,7 @@ public class NewZp01StudyEntrySectionFtoKActivity extends AbstractAsyncActivity 
 	// ***************************************
 	private void showResult(String resultado) {
 		Toast.makeText(getApplicationContext(),	resultado, Toast.LENGTH_LONG).show();
+		finish();
 	}	
 
 

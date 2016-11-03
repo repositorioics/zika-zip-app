@@ -10,6 +10,7 @@ import ni.org.ics.zip.appmovil.AbstractAsyncActivity;
 import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
+import ni.org.ics.zip.appmovil.activities.paginas.MenuEmbarazadasActivity;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.domain.Zp00Screening;
 import ni.org.ics.zip.appmovil.domain.ZpEstadoEmbarazada;
@@ -17,6 +18,7 @@ import ni.org.ics.zip.appmovil.parsers.Zp00ScreeningXml;
 import ni.org.ics.zip.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.zip.appmovil.utils.Constants;
 import ni.org.ics.zip.appmovil.utils.FileUtils;
+import ni.org.ics.zip.appmovil.utils.MainDBConstants;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
@@ -47,8 +49,8 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 	protected static final String TAG = NewZp00ScreeningActivity.class.getSimpleName();
 	
 	private ZipAdapter zipA;
-	private static Zp00Screening mTamizaje = new Zp00Screening();
-	private static ZpEstadoEmbarazada mEstado = new ZpEstadoEmbarazada();
+	private static Zp00Screening mTamizaje = null;
+	private static ZpEstadoEmbarazada mEstado = null;
 	
 	public static final int ADD_TAMIZAJE_ODK = 1;
 	public static final int BARCODE_CAPTURE_TAM = 2;
@@ -93,7 +95,7 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 
 		//to set the message
 		TextView message =(TextView) dialogInit.findViewById(R.id.yesnotext);
-		message.setText(getString(R.string.add)+ " " + getString(R.string.main_maternal));
+		message.setText(getString(R.string.add)+ " " + getString(R.string.main_maternal)+"?");
 
 		//add some action to the buttons
 
@@ -206,7 +208,7 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 				}
 	        }
 	        else{
-	        	
+	        	finish();
 	        }
 	    }
 		super.onActivityResult(requestCode, resultCode, intent);
@@ -240,6 +242,7 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 			//No existe el formulario en el equipo
 			Log.e(TAG, e.getMessage(), e);
 			Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+			finish();
 		}
 	}
 	
@@ -247,6 +250,7 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 		Serializer serializer = new Persister(); 
 		File source = new File(instanceFilePath);
 		try {
+			mTamizaje = new Zp00Screening();
 			Zp00ScreeningXml zp00Xml = new Zp00ScreeningXml();
 			zp00Xml = serializer.read(Zp00ScreeningXml.class, source);
 			mTamizaje.setRecordId(mRecordId);
@@ -294,6 +298,7 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 			mTamizaje.setSimserial(zp00Xml.getSimserial());
 			mTamizaje.setPhonenumber(zp00Xml.getPhonenumber());
 			mTamizaje.setToday(zp00Xml.getToday());
+			mEstado = new ZpEstadoEmbarazada();
 			mEstado.setRecordId(mRecordId);
 			mEstado.setRecordDate(new Date());
 			mEstado.setRecordUser(username);
@@ -312,6 +317,7 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 			// Presenta el error al parsear el xml
 			Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 			e.printStackTrace();
+			finish();
 		}		
 	}
 	
@@ -356,7 +362,7 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 			builder.setPositiveButton(this.getString(R.string.ok), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
-					addTamizaje();
+					new FindDataTask().execute(mRecordId);
 				}
 			});
 			builder.setNegativeButton(this.getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -394,15 +400,22 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 				zipA.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
-				return "error";
+				return "Error";
 			}
-			return "exito";
+			return "Exito";
 		}
 
 		protected void onPostExecute(String resultado) {
 			// after the network request completes, hide the progress indicator
 			dismissProgressDialog();
 			showResult(resultado);
+			Bundle arguments = new Bundle();
+			if (mTamizaje!=null) arguments.putSerializable(Constants.OBJECTO_ZP00 , mTamizaje);
+			Intent i = new Intent(getApplicationContext(),
+					MenuEmbarazadasActivity.class);
+			i.putExtras(arguments);
+			startActivity(i);
+			finish();
 		}
 
 	}
@@ -412,6 +425,45 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 	// ***************************************
 	private void showResult(String resultado) {
 		Toast.makeText(getApplicationContext(),	resultado, Toast.LENGTH_LONG).show();
+	}	
+	
+	// ***************************************
+	// Private classes
+	// ***************************************
+	private class FindDataTask extends AsyncTask<String, Void, String> {
+		private String filtro = null;
+		@Override
+		protected void onPreExecute() {
+			// before the request begins, show a progress indicator
+			showLoadingProgressDialog();
+		}
+
+		@Override
+		protected String doInBackground(String... values) {
+			filtro = MainDBConstants.recordId + "='" + values[0] + "'";
+			try {
+				zipA.open();
+				mTamizaje = zipA.getZp00Screening(filtro, null);
+				zipA.close();
+			} catch (Exception e) {
+				Log.e(TAG, e.getLocalizedMessage(), e);
+				return "Error";
+			}
+			return "Exito";
+		}
+
+		protected void onPostExecute(String resultado) {
+			// after the network request completes, hide the progress indicator
+			dismissProgressDialog();
+			if(mTamizaje!=null){
+				Toast.makeText(getApplicationContext(),	getString(R.string.err_duplicated), Toast.LENGTH_LONG).show();
+				finish();
+			}
+			else{
+				addTamizaje();
+			}
+		}	
+
 	}	
 
 

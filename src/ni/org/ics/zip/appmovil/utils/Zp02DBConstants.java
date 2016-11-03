@@ -151,7 +151,7 @@ public class Zp02DBConstants {
             + bscMatBldTyp3 + " text, "
             + bscMatBldId3 + " text, "
             + bscMatBldVol3 + " integer, "
-            + bscMatBldTyp4 + " text "
+            + bscMatBldTyp4 + " text, "
             + bscMatBldId4 + " text, "
             + bscMatBldVol4 + " integer, "
             + bscMatBldTyp5 + " text, "
