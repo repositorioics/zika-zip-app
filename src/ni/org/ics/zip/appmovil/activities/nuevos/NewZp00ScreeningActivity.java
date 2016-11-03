@@ -409,10 +409,13 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 			// after the network request completes, hide the progress indicator
 			dismissProgressDialog();
 			showResult(resultado);
-			if (mTamizaje.getScrRemain().equals("0") || mTamizaje.getScrAge15().equals("0") || mTamizaje.getScrPregnant().equals("0") 
-					|| mTamizaje.getScrPregant13().equals("0") || mTamizaje.getScrZikaOther().equals("1") || mTamizaje.getScrMeetCriteria().equals("0")
-					|| mTamizaje.getScrConsentObta().equals("0") || mTamizaje.getScrObAssent().equals("0")){
+			if (mTamizaje.getScrRemain().equals("0") || mTamizaje.getScrAge15().equals("0") || mTamizaje.getScrPregnant().equals("0")
+					|| mTamizaje.getScrPregant13().equals("0")|| mTamizaje.getScrZikaOther().equals("1") || mTamizaje.getScrMeetCriteria().equals("0")
+					|| mTamizaje.getScrConsentObta().equals("0")){
 				Toast.makeText(getApplicationContext(),	getString(R.string.notelegible), Toast.LENGTH_LONG).show();
+			}
+			else if(mTamizaje.getScrConsentObta().equals("1") && mTamizaje.getScrObAge()<18){
+				if(mTamizaje.getScrObAssent().matches("0")) Toast.makeText(getApplicationContext(),	getString(R.string.notelegible), Toast.LENGTH_LONG).show();
 			}
 			else{
 				Bundle arguments = new Bundle();

@@ -179,10 +179,13 @@ public class BuscarEmbarazadaActivity extends AbstractAsyncListActivity {
 			long id) {
 
 		Zp00Screening mTamizaje = (Zp00Screening) getListAdapter().getItem(position);
-		if (mTamizaje.getScrRemain().equals("0") || mTamizaje.getScrAge15().equals("0") || mTamizaje.getScrPregnant().equals("0") 
-				|| mTamizaje.getScrPregant13().equals("0") || mTamizaje.getScrZikaOther().equals("1") || mTamizaje.getScrMeetCriteria().equals("0")
-				|| mTamizaje.getScrConsentObta().equals("0") || mTamizaje.getScrObAssent().equals("0")){
+		if (mTamizaje.getScrRemain().equals("0") || mTamizaje.getScrAge15().equals("0") || mTamizaje.getScrPregnant().equals("0")
+				|| mTamizaje.getScrPregant13().equals("0")|| mTamizaje.getScrZikaOther().equals("1") || mTamizaje.getScrMeetCriteria().equals("0")
+				|| mTamizaje.getScrConsentObta().equals("0")){
 			showToast(getString(R.string.notelegible));
+		}
+		else if(mTamizaje.getScrConsentObta().equals("1") && mTamizaje.getScrObAge()<18){
+			if(mTamizaje.getScrObAssent().matches("0")) showToast(getString(R.string.notelegible));
 		}
 		else{
 			Bundle arguments = new Bundle();
