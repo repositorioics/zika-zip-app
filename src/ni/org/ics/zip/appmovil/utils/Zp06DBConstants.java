@@ -286,7 +286,7 @@ public class Zp06DBConstants {
             + MainDBConstants.SIM_SERIAL + " text, "
             + MainDBConstants.PHONE_NUMBER  + " text, "
             + MainDBConstants.TODAY  + " date, "
-            + "primary key (" + recordId + "));";
+            + "primary key (" + recordId + ", "+redcapEventName+"));";
 
 
 }
