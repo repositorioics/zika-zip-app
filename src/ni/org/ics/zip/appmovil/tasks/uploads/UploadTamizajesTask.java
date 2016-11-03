@@ -35,9 +35,13 @@ public class UploadTamizajesTask extends UploadTask {
 	protected static final String TAG = UploadTamizajesTask.class.getSimpleName();
 	private List<Zp00Screening> mTamizajes = new ArrayList<Zp00Screening>();
     private List<Zp01StudyEntrySectionAtoD> mIngresosAD = new ArrayList<Zp01StudyEntrySectionAtoD>();
+    private List<Zp01StudyEntrySectionE> mIngresosE = new ArrayList<Zp01StudyEntrySectionE>();
     private List<Zp01StudyEntrySectionFtoK> mIngresosFK = new ArrayList<Zp01StudyEntrySectionFtoK>();
     private List<Zp02BiospecimenCollection> mCollections = new ArrayList<Zp02BiospecimenCollection>();
     private List<Zp03MonthlyVisit> mMonthlyVisits = new ArrayList<Zp03MonthlyVisit>();
+    private List<Zp04TrimesterVisitSectionAtoD> mTrimesterVisitAD = new ArrayList<>();
+    private List<Zp04TrimesterVisitSectionE> mTrimesterVisitE = new ArrayList<>();
+    private List<Zp04TrimesterVisitSectionFtoH> mTrimesterVisitFH = new ArrayList<>();
     private List<Zp05UltrasoundExam> mUltrasounds = new ArrayList<Zp05UltrasoundExam>();
     private List<Zp06DeliveryAnd6weekVisit> mDeliverys = new ArrayList<Zp06DeliveryAnd6weekVisit>();
     private List<Zp08StudyExit> mExits = new ArrayList<Zp08StudyExit>();
@@ -62,6 +66,10 @@ public class UploadTamizajesTask extends UploadTask {
             if (!error.matches("Datos recibidos!")){
                 return error;
             }
+            error = uploadEntrysZp01E(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                return error;
+            }
             error = uploadEntrysFK(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 return error;
@@ -71,6 +79,18 @@ public class UploadTamizajesTask extends UploadTask {
                 return error;
             }
             error = uploadMonthlyVisits(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                return error;
+            }
+            error = uploadTrimesterVisitAD(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                return error;
+            }
+            error = uploadTrimesterVisitE(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                return error;
+            }
+            error = uploadTrimesterVisitFH(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 return error;
             }
@@ -216,6 +236,70 @@ public class UploadTamizajesTask extends UploadTask {
     }
 
     /***************************************************/
+    /*************** Zp01 E ************************/
+    /***************************************************/
+    // url, username, password
+    protected String uploadEntrysZp01E(String url, String username,
+                                       String password) throws Exception {
+        try {
+            getEntryZp01E();
+            if(mIngresosE.size()>0){
+                saveEntryZp01E(Constants.STATUS_SUBMITTED);
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/zp01StudyEntrySectionEs";
+                Zp01StudyEntrySectionE[] envio = mIngresosE.toArray(new Zp01StudyEntrySectionE[mIngresosE.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<Zp01StudyEntrySectionE[]> requestEntity =
+                        new HttpEntity<>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                // Regresa la respuesta a mostrar al usuario
+                if (!response.getBody().matches("Datos recibidos!")) {
+                    saveEntryZp01E(Constants.STATUS_NOT_SUBMITTED);
+                }
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            saveEntryZp01E(Constants.STATUS_NOT_SUBMITTED);
+            return e.getMessage();
+        }
+
+    }
+
+    private void saveEntryZp01E(String estado) {
+        ZipAdapter zipA = new ZipAdapter(mContext, password, false);
+        zipA.open();
+        int c = mIngresosE.size();
+        for (Zp01StudyEntrySectionE ingreso : mIngresosE) {
+            ingreso.setEstado(estado);
+            zipA.editarZp01StudyEntrySectionE(ingreso);
+            publishProgress("Actualizando datos de ingreso (E)", Integer.valueOf(mIngresosE.indexOf(ingreso)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+        zipA.close();
+    }
+
+    private void getEntryZp01E() {
+        ZipAdapter zipA = new ZipAdapter(mContext, password, false);
+        zipA.open();
+        mIngresosE = zipA.getZp01StudyEntrySectionEs("", MainDBConstants.recordId);
+        zipA.close();
+    }
+
+
+
+    /***************************************************/
     /*************** Zp01 FtoK ************************/
     /***************************************************/
     // url, username, password
@@ -326,7 +410,7 @@ public class UploadTamizajesTask extends UploadTask {
         for (Zp02BiospecimenCollection collection : mCollections) {
             collection.setEstado(estado);
             zipA.editarZp02BiospecimenCollection(collection);
-            publishProgress("Actualizando recolección de muestras", Integer.valueOf(mCollections.indexOf(collection)).toString(), Integer
+            publishProgress("Actualizando recolecciï¿½n de muestras", Integer.valueOf(mCollections.indexOf(collection)).toString(), Integer
                     .valueOf(c).toString());
         }
         zipA.close();
@@ -402,6 +486,193 @@ public class UploadTamizajesTask extends UploadTask {
     }
 
     /***************************************************/
+    /********************* Zp04 AtoD ************************/
+    /***************************************************/
+    // url, username, password
+    protected String uploadTrimesterVisitAD(String url, String username,
+                                            String password) throws Exception {
+        try {
+            getTrimesterVisitAD();
+            if(mTrimesterVisitAD.size()>0){
+                saveTrimesterVisitAD(Constants.STATUS_SUBMITTED);
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/zp04TrimesterVisitSectionAtoDs";
+                Zp04TrimesterVisitSectionAtoD[] envio = mTrimesterVisitAD.toArray(new Zp04TrimesterVisitSectionAtoD[mTrimesterVisitAD.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<Zp04TrimesterVisitSectionAtoD[]> requestEntity =
+                        new HttpEntity<>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                // Regresa la respuesta a mostrar al usuario
+                if (!response.getBody().matches("Datos recibidos!")) {
+                    saveTrimesterVisitAD(Constants.STATUS_NOT_SUBMITTED);
+                }
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            saveTrimesterVisitAD(Constants.STATUS_NOT_SUBMITTED);
+            return e.getMessage();
+        }
+
+    }
+
+    private void saveTrimesterVisitAD(String estado) {
+        ZipAdapter zipA = new ZipAdapter(mContext, password, false);
+        zipA.open();
+        int c = mTrimesterVisitAD.size();
+        for (Zp04TrimesterVisitSectionAtoD trimesterVisitAD : mTrimesterVisitAD) {
+            trimesterVisitAD.setEstado(estado);
+            zipA.editarZp04TrimesterVisitSectionAtoD(trimesterVisitAD);
+            publishProgress("Actualizando Visita Trimestral (A-D)", Integer.valueOf(mTrimesterVisitAD.indexOf(trimesterVisitAD)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+        zipA.close();
+    }
+
+    private void getTrimesterVisitAD() {
+        ZipAdapter zipA = new ZipAdapter(mContext, password, false);
+        zipA.open();
+        mTrimesterVisitAD = zipA.getZp04TrimesterVisitSectionAtoDs("", MainDBConstants.recordId);
+        zipA.close();
+    }
+
+    /***************************************************/
+    /********************* Zp04 E ************************/
+    /***************************************************/
+    // url, username, password
+    protected String uploadTrimesterVisitE(String url, String username,
+                                           String password) throws Exception {
+        try {
+            getTrimesterVisitE();
+            if(mTrimesterVisitE.size()>0){
+                saveTrimesterVisitE(Constants.STATUS_SUBMITTED);
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/zp04TrimesterVisitSectionEs";
+                Zp04TrimesterVisitSectionE[] envio = mTrimesterVisitE.toArray(new Zp04TrimesterVisitSectionE[mTrimesterVisitE.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<Zp04TrimesterVisitSectionE[]> requestEntity =
+                        new HttpEntity<>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                // Regresa la respuesta a mostrar al usuario
+                if (!response.getBody().matches("Datos recibidos!")) {
+                    saveTrimesterVisitE(Constants.STATUS_NOT_SUBMITTED);
+                }
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            saveTrimesterVisitE(Constants.STATUS_NOT_SUBMITTED);
+            return e.getMessage();
+        }
+
+    }
+
+    private void saveTrimesterVisitE(String estado) {
+        ZipAdapter zipA = new ZipAdapter(mContext, password, false);
+        zipA.open();
+        int c = mTrimesterVisitE.size();
+        for (Zp04TrimesterVisitSectionE trimesterVisitE : mTrimesterVisitE) {
+            trimesterVisitE.setEstado(estado);
+            zipA.editarZp04TrimesterVisitSectionE(trimesterVisitE);
+            publishProgress("Actualizando Visita Trimestral (E)", Integer.valueOf(mTrimesterVisitE.indexOf(trimesterVisitE)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+        zipA.close();
+    }
+
+    private void getTrimesterVisitE() {
+        ZipAdapter zipA = new ZipAdapter(mContext, password, false);
+        zipA.open();
+        mTrimesterVisitE = zipA.getZp04TrimesterVisitSectionEs("", MainDBConstants.recordId);
+        zipA.close();
+    }
+
+    /***************************************************/
+    /********************* Zp04 FtoH ************************/
+    /***************************************************/
+    // url, username, password
+    protected String uploadTrimesterVisitFH(String url, String username,
+                                            String password) throws Exception {
+        try {
+            getTrimesterVisitFH();
+            if(mTrimesterVisitFH.size()>0){
+                saveTrimesterVisitFH(Constants.STATUS_SUBMITTED);
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/zp04TrimesterVisitSectionFtoHs";
+                Zp04TrimesterVisitSectionFtoH[] envio = mTrimesterVisitFH.toArray(new Zp04TrimesterVisitSectionFtoH[mTrimesterVisitFH.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<Zp04TrimesterVisitSectionFtoH[]> requestEntity =
+                        new HttpEntity<>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                // Regresa la respuesta a mostrar al usuario
+                if (!response.getBody().matches("Datos recibidos!")) {
+                    saveTrimesterVisitFH(Constants.STATUS_NOT_SUBMITTED);
+                }
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            saveTrimesterVisitFH(Constants.STATUS_NOT_SUBMITTED);
+            return e.getMessage();
+        }
+
+    }
+
+    private void saveTrimesterVisitFH(String estado) {
+        ZipAdapter zipA = new ZipAdapter(mContext, password, false);
+        zipA.open();
+        int c = mTrimesterVisitFH.size();
+        for (Zp04TrimesterVisitSectionFtoH trimesterVisitFH : mTrimesterVisitFH) {
+            trimesterVisitFH.setEstado(estado);
+            zipA.editarZp04TrimesterVisitSectionFtoH(trimesterVisitFH);
+            publishProgress("Actualizando Visita Trimestral (F-H)", Integer.valueOf(mTrimesterVisitFH.indexOf(trimesterVisitFH)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+        zipA.close();
+    }
+
+    private void getTrimesterVisitFH() {
+        ZipAdapter zipA = new ZipAdapter(mContext, password, false);
+        zipA.open();
+        mTrimesterVisitFH = zipA.getZp04TrimesterVisitSectionFtoHs("", MainDBConstants.recordId);
+        zipA.close();
+    }
+
+
+    /***************************************************/
     /********************* Zp05 ************************/
     /***************************************************/
     // url, username, password
@@ -450,7 +721,7 @@ public class UploadTamizajesTask extends UploadTask {
         for (Zp05UltrasoundExam ultrasoundExam : mUltrasounds) {
             ultrasoundExam.setEstado(estado);
             zipA.editarZp05UltrasoundExam(ultrasoundExam);
-            publishProgress("Actualizando exámenes de ultrasonido", Integer.valueOf(mUltrasounds.indexOf(ultrasoundExam)).toString(), Integer
+            publishProgress("Actualizando exï¿½menes de ultrasonido", Integer.valueOf(mUltrasounds.indexOf(ultrasoundExam)).toString(), Integer
                     .valueOf(c).toString());
         }
         zipA.close();

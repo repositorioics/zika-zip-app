@@ -442,6 +442,12 @@ public class Zp01StudyEntrySectionEXml{
     @Element(required=false)
     private String question37;
     @Element(required=false)
+    private String question38;
+    @Element(required=false)
+    private String question39;
+    @Element(required=false)
+    private String question40;
+    @Element(required=false)
     private String group1;
     @Element(required=false)
     private String group2;
@@ -499,56 +505,6 @@ public class Zp01StudyEntrySectionEXml{
     private String group28;
     @Element(required=false)
     private String group29;
-    @Element(required=false)
-    private String group30;
-    @Element(required=false)
-    private String group31;
-    @Element(required=false)
-    private String group32;
-    @Element(required=false)
-    private String group33;
-    @Element(required=false)
-    private String group34;
-    @Element(required=false)
-    private String group35;
-    @Element(required=false)
-    private String group36;
-    @Element(required=false)
-    private String group37;
-    @Element(required=false)
-    private String group38;
-    @Element(required=false)
-    private String group39;
-    @Element(required=false)
-    private String group40;
-    @Element(required=false)
-    private String group41;
-    @Element(required=false)
-    private String group42;
-    @Element(required=false)
-    private String group43;
-    @Element(required=false)
-    private String group44;
-    @Element(required=false)
-    private String group45;
-    @Element(required=false)
-    private String group46;
-    @Element(required=false)
-    private String group47;
-    @Element(required=false)
-    private String group48;
-    @Element(required=false)
-    private String group49;
-    @Element(required=false)
-    private String group50;
-    @Element(required=false)
-    private String group51;
-    @Element(required=false)
-    private String group52;
-    @Element(required=false)
-    private String group53;
-    @Element(required=false)
-    private String group54;
     @Element(required=false)
     private String note1;
     @Element(required=false)
