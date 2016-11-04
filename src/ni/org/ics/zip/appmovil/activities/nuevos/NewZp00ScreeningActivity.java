@@ -415,21 +415,27 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 				Toast.makeText(getApplicationContext(),	getString(R.string.notelegible), Toast.LENGTH_LONG).show();
 			}
 			else if(mTamizaje.getScrConsentObta().equals("1") && mTamizaje.getScrObAge()<18){
-				if(mTamizaje.getScrObAssent().matches("0")) Toast.makeText(getApplicationContext(),	getString(R.string.notelegible), Toast.LENGTH_LONG).show();
+				if(mTamizaje.getScrObAssent().matches("0"))
+                    Toast.makeText(getApplicationContext(),	getString(R.string.notelegible), Toast.LENGTH_LONG).show();
+                else
+                    cargarMenu();
 			}
 			else{
-				Bundle arguments = new Bundle();
-				if (mTamizaje!=null) arguments.putSerializable(Constants.OBJECTO_ZP00 , mTamizaje);
-				Intent i = new Intent(getApplicationContext(),
-						MenuEmbarazadasActivity.class);
-				i.putExtras(arguments);
-				startActivity(i);
+				cargarMenu();
 			}
 			finish();
 		}
 
 	}
 
+    private void cargarMenu(){
+        Bundle arguments = new Bundle();
+        if (mTamizaje!=null) arguments.putSerializable(Constants.OBJECTO_ZP00 , mTamizaje);
+        Intent i = new Intent(getApplicationContext(),
+                MenuEmbarazadasActivity.class);
+        i.putExtras(arguments);
+        startActivity(i);
+    }
 	// ***************************************
 	// Private methods
 	// ***************************************

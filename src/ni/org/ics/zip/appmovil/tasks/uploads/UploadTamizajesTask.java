@@ -415,7 +415,7 @@ public class UploadTamizajesTask extends UploadTask {
         for (Zp02BiospecimenCollection collection : mCollections) {
             collection.setEstado(estado);
             zipA.editarZp02BiospecimenCollection(collection);
-            publishProgress("Actualizando recolecciÛn de muestras", Integer.valueOf(mCollections.indexOf(collection)).toString(), Integer
+            publishProgress("Actualizando recolecci√≥n de muestras", Integer.valueOf(mCollections.indexOf(collection)).toString(), Integer
                     .valueOf(c).toString());
         }
         zipA.close();
@@ -726,7 +726,7 @@ public class UploadTamizajesTask extends UploadTask {
         for (Zp05UltrasoundExam ultrasoundExam : mUltrasounds) {
             ultrasoundExam.setEstado(estado);
             zipA.editarZp05UltrasoundExam(ultrasoundExam);
-            publishProgress("Actualizando ex·menes de ultrasonido", Integer.valueOf(mUltrasounds.indexOf(ultrasoundExam)).toString(), Integer
+            publishProgress("Actualizando ex√°menes de ultrasonido", Integer.valueOf(mUltrasounds.indexOf(ultrasoundExam)).toString(), Integer
                     .valueOf(c).toString());
         }
         zipA.close();

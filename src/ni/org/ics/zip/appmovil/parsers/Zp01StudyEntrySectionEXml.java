@@ -511,6 +511,8 @@ public class Zp01StudyEntrySectionEXml{
     private String note2;
     @Element(required=false)
     private String note3;
+    @Element(required=false)
+    private String moreSymptom;
 
     @Attribute
     private String id;
