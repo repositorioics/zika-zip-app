@@ -186,17 +186,21 @@ public class BuscarEmbarazadaActivity extends AbstractAsyncListActivity {
 		}
 		else if(mTamizaje.getScrConsentObta().equals("1") && mTamizaje.getScrObAge()<18){
 			if(mTamizaje.getScrObAssent().matches("0")) showToast(getString(R.string.notelegible));
+            else cargarMenu(mTamizaje);
 		}
 		else{
-			Bundle arguments = new Bundle();
-			if (mTamizaje!=null) arguments.putSerializable(Constants.OBJECTO_ZP00 , mTamizaje);
-			Intent i = new Intent(getApplicationContext(),
-					MenuEmbarazadasActivity.class);
-			i.putExtras(arguments);
-			startActivity(i);
+            cargarMenu(mTamizaje);
 		}
 	}
 
+    private void cargarMenu(Zp00Screening mTamizaje){
+        Bundle arguments = new Bundle();
+        if (mTamizaje!=null) arguments.putSerializable(Constants.OBJECTO_ZP00 , mTamizaje);
+        Intent i = new Intent(getApplicationContext(),
+                MenuEmbarazadasActivity.class);
+        i.putExtras(arguments);
+        startActivity(i);
+    }
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
