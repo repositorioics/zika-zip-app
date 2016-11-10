@@ -270,6 +270,8 @@ public class Zp04TrimesterVisitSectionAtoDXml {
     private String question11;
     @Element(required=false)
     private String question12;
+    @Element(required=false)
+    private String question13;
 
 
     @Attribute

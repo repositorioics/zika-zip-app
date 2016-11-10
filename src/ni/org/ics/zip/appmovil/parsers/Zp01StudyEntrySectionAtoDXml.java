@@ -136,6 +136,22 @@ public class Zp01StudyEntrySectionAtoDXml{
     private String group15;
     @Element(required=false)
     private String group16;
+    @Element(required=false)
+    private String calculate1;
+    @Element(required=false)
+    private String calculate2;
+    @Element(required=false)
+    private String calculate3;
+    @Element(required=false)
+    private String calculate4;
+    @Element(required=false)
+    private String calculate5;
+    @Element(required=false)
+    private String calculate6;
+    @Element(required=false)
+    private String calculate7;
+    @Element(required=false)
+    private String calculate8;
 
     @Attribute
     private String id;
