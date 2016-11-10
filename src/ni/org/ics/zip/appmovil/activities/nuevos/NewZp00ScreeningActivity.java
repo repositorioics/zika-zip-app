@@ -75,7 +75,7 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 		}
 		settings =
 				PreferenceManager.getDefaultSharedPreferences(this);
-		barcode = settings.getBoolean(PreferencesActivity.KEY_BARCODE, false);
+		barcode = settings.getBoolean(PreferencesActivity.KEY_BARCODE, true);
 		username =
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);

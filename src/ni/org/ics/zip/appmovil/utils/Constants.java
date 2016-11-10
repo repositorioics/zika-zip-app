@@ -40,6 +40,7 @@ public class Constants {
     public static final String OBJECTO_ZP08 = "zp08";
 
 	public static final String OBJECTO_ZPEST = "zpestado";
+	public static final String OBJECTO_ZPDATA = "zpdatos";
 	public static final String DONE = "hecho";
 	
 	//Eventos
@@ -49,6 +50,12 @@ public class Constants {
 	public static final String WEEK4 = "4_week_post_entry_arm_1";
 
     public static final String RECORDID = "recordId";
+    
+    //Form wizard
+    public static final String FORM_NAME = "form";
+	public static final String FORM_DATOS_EMB = "datos_embarazada";
+	public static final String ROJO = "#db0000";
+	public static final String WIZARD = "#ff0099cc";
 
 
 }

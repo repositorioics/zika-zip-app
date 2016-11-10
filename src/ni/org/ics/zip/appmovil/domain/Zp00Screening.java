@@ -13,6 +13,7 @@ public class Zp00Screening extends BaseMetaData{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String recordId;
+	private String redcapEventName;
     private Date scrVisitDate;
     private String scrRemain;
     private Integer scrAge;
@@ -55,7 +56,15 @@ public class Zp00Screening extends BaseMetaData{
         this.recordId = recordId;
     }
 
-    public Date getScrVisitDate() {
+    public String getRedcapEventName() {
+		return redcapEventName;
+	}
+
+	public void setRedcapEventName(String redcapEventName) {
+		this.redcapEventName = redcapEventName;
+	}
+
+	public Date getScrVisitDate() {
         return scrVisitDate;
     }
 

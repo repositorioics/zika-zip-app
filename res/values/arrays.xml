@@ -6,6 +6,7 @@
         <item>@string/main_infant</item>
         <item>@string/main_specimen</item>
         <item>@string/main_review</item>
+        <item>@string/main_reviewtest</item>
     </string-array>
     
     <string-array name="menu_maternal_a">
@@ -40,6 +41,7 @@
         <item>@string/maternal_b_7</item>
         <item>@string/maternal_b_8</item>
         <item>@string/maternal_b_9</item>
+        <item>@string/maternal_b_12</item>
     </string-array>
     
     <string-array name="menu_infant">

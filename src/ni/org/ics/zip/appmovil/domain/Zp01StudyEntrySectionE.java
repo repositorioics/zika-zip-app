@@ -11,6 +11,7 @@ public class Zp01StudyEntrySectionE extends BaseMetaData {
 
     private static final long serialVersionUID = 1L;
     private String recordId;
+    private String redcapEventName;
     private String seaDiseases; //multiple
     private String seaOtherSpecify;
     private String seaHepatitis;
@@ -198,7 +199,15 @@ public class Zp01StudyEntrySectionE extends BaseMetaData {
         this.recordId = recordId;
     }
 
-    public String getSeaDiseases() {
+    public String getRedcapEventName() {
+		return redcapEventName;
+	}
+
+	public void setRedcapEventName(String redcapEventName) {
+		this.redcapEventName = redcapEventName;
+	}
+
+	public String getSeaDiseases() {
         return seaDiseases;
     }
 

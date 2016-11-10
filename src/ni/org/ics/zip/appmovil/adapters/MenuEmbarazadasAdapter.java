@@ -62,7 +62,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		case 0:
         	fechaEvento = fechaIngreso.getTime();
         	diff = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
-        	if(diff>1) habilitado = false;
+        	if(diff>4) habilitado = false;
         	break;
 		case 1:
 			fechaIngreso.add(Calendar.DATE, 28);fechaEvento = fechaIngreso.getTime();fechaIngreso.add(Calendar.DATE, -28);
@@ -155,7 +155,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 			if(String.valueOf(mZpEstado.getIngreso()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
-				if(dif>1){
+				if(dif>4){
 					textView.setTextColor(Color.GRAY);
 					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
 				}

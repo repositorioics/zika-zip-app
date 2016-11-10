@@ -34,10 +34,12 @@
     <string name="maternal_b_8">Pesticidas e Insecticidas</string>
     <string name="maternal_b_9">Ultrasonidos</string>
     <string name="maternal_b_10">Parto</string>
-    <string name="maternal_b_11">Posparto</string>    
+    <string name="maternal_b_11">Posparto</string>
+    <string name="maternal_b_12">Datos Identificación</string>    
     
     
     <string name="mat_search">Buscar Embarazada</string>
+    <string name="mat_data">Datos Embarazada</string>
     <!-- Campos materna -->
     <string name="mat_id">Código de la participante</string>
     <string name="mat_ini">Iniciales de la participante</string>
@@ -46,4 +48,20 @@
     <string name="mat_exit">Fecha de salida</string>
     <string name="mat_retired">Retirada del estudio</string>
     <string name="mat_retire">Retirar a esta participante del estudio??</string>
+    <string name="cs">Centro de Salud *</string>
+    <string name="csHint">Requerido. Registrar la unidad de salud de la participante del estudio.</string>
+    <string name="nombre1">Nombre *</string>
+    <string name="nombre1Hint">Requerido. Registrar el nombre de la participante del estudio.</string>    
+	<string name="nombre2">Segundo Nombre</string>
+    <string name="nombre2Hint">No requerido. Registrar el segundo nombre de la participante del estudio.</string>    
+	<string name="apellido1">Apellido *</string>
+    <string name="apellido1Hint">Requerido. Registrar el apellido de la participante del estudio.</string>
+    <string name="apellido2">Segundo Apellido</string>
+    <string name="apellido2Hint">No requerido. Registrar el apellido de la participante del estudio.</string>
+    <string name="fechaNac">Fecha de Nacimiento</string>
+    <string name="fechaNacHint">No requerido. Registrar la fecha de nacimiento de la participante del estudio.</string>
+    <string name="direccion">Dirección *</string>
+    <string name="direccionHint">Requerido. Registrar la dirección de esta vivienda.</string>  
+    <string name="telefonoContacto">Teléfono</string>
+    <string name="telefonoContactoHint">No requerido. Registrar un teléfono de contacto para esta participante si está disponible.</string> 
 </resources>

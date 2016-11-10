@@ -45,4 +45,15 @@
     <string name="forms">Formularios a realizar en este evento</string>
     <string name="verify">Esta acción no se puede deshacer, desea proceder???</string>
     
+    <string name="next">Siguiente</string>
+    <string name="prev">Previo</string>
+    <string name="finish">Finalizar</string>
+    <string name="review">Revisar</string>
+    <string name="is_null">(Nulo)</string>
+    <string name="submit_confirm_message">Guardar la informacion en la base de datos?</string>
+    <string name="submit_confirm_button">Guardar</string>    
+    
+    <string name="gpstitle">Configuración GPS</string>
+    <string name="gpsquestion">El GPS no está habilitado. Quiere ir al menú de configuración y activarlo?</string>
+    
 </resources>

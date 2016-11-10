@@ -25,6 +25,7 @@ public class Zp01StudyEntryHelper {
         ContentValues cv = new ContentValues();
 
         cv.put(Zp01DBConstants.recordId, studyEntrySectionAtoD.getRecordId());
+        cv.put(Zp01DBConstants.redcapEventName, studyEntrySectionAtoD.getRedcapEventName());
         if (studyEntrySectionAtoD.getSeaVdate() != null) cv.put(Zp01DBConstants.seaVdate, studyEntrySectionAtoD.getSeaVdate().getTime());
         if (studyEntrySectionAtoD.getSeaPtdate() != null) cv.put(Zp01DBConstants.seaPtdate, studyEntrySectionAtoD.getSeaPtdate().getTime());
         cv.put(Zp01DBConstants.seaTresults, studyEntrySectionAtoD.getSeaTresults());
@@ -86,6 +87,7 @@ public class Zp01StudyEntryHelper {
     public static Zp01StudyEntrySectionAtoD crearZp01StudyEntrySectionAtoD(Cursor cursorAtoD){
         Zp01StudyEntrySectionAtoD studyEntrySectionAtoD = new Zp01StudyEntrySectionAtoD();
         studyEntrySectionAtoD.setRecordId(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.recordId)));
+        studyEntrySectionAtoD.setRedcapEventName(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.redcapEventName)));
         if (cursorAtoD.getLong(cursorAtoD.getColumnIndex(Zp01DBConstants.seaVdate))>0) studyEntrySectionAtoD.setSeaVdate(new Date(cursorAtoD.getLong(cursorAtoD.getColumnIndex(Zp01DBConstants.seaVdate))));
         if (cursorAtoD.getLong(cursorAtoD.getColumnIndex(Zp01DBConstants.seaPtdate))>0) studyEntrySectionAtoD.setSeaPtdate(new Date(cursorAtoD.getLong(cursorAtoD.getColumnIndex(Zp01DBConstants.seaPtdate))));
         studyEntrySectionAtoD.setSeaTresults(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaTresults)));
@@ -150,6 +152,7 @@ public class Zp01StudyEntryHelper {
     public static ContentValues crearZp01StudyEntrySectionEValues(Zp01StudyEntrySectionE studyEntrySectionE){
         ContentValues cv = new ContentValues();
         cv.put(Zp01DBConstants.recordId, studyEntrySectionE.getRecordId());
+        cv.put(Zp01DBConstants.redcapEventName, studyEntrySectionE.getRedcapEventName());
         cv.put(Zp01DBConstants.seaDiseases, studyEntrySectionE.getSeaDiseases());
         cv.put(Zp01DBConstants.seaOtherSpecify, studyEntrySectionE.getSeaOtherSpecify());
         cv.put(Zp01DBConstants.seaHepatitis, studyEntrySectionE.getSeaHepatitis());
@@ -347,6 +350,7 @@ public class Zp01StudyEntryHelper {
     public static Zp01StudyEntrySectionE crearZp01StudyEntrySectionE(Cursor cursorE){
         Zp01StudyEntrySectionE studyEntrySectionE = new Zp01StudyEntrySectionE();
         studyEntrySectionE.setRecordId(cursorE.getString(cursorE.getColumnIndex(Zp01DBConstants.recordId)));
+        studyEntrySectionE.setRedcapEventName(cursorE.getString(cursorE.getColumnIndex(Zp01DBConstants.redcapEventName)));
         studyEntrySectionE.setSeaDiseases(cursorE.getString(cursorE.getColumnIndex(Zp01DBConstants.seaDiseases)));
         studyEntrySectionE.setSeaOtherSpecify(cursorE.getString(cursorE.getColumnIndex(Zp01DBConstants.seaOtherSpecify)));
         studyEntrySectionE.setSeaHepatitis(cursorE.getString(cursorE.getColumnIndex(Zp01DBConstants.seaHepatitis)));
@@ -547,6 +551,7 @@ public class Zp01StudyEntryHelper {
     public static ContentValues crearZp01StudyEntrySectionFtoKValues(Zp01StudyEntrySectionFtoK studyEntrySectionFtoK){
         ContentValues cv = new ContentValues();
         cv.put(Zp01DBConstants.recordId,studyEntrySectionFtoK.getRecordId());
+        cv.put(Zp01DBConstants.redcapEventName, studyEntrySectionFtoK.getRedcapEventName());
         cv.put(Zp01DBConstants.seaPreg,studyEntrySectionFtoK.getSeaPreg());
         cv.put(Zp01DBConstants.seaFirstPreg,studyEntrySectionFtoK.getSeaFirstPreg());
         cv.put(Zp01DBConstants.seaAnemia,studyEntrySectionFtoK.getSeaAnemia());
@@ -640,7 +645,7 @@ public class Zp01StudyEntryHelper {
     public static Zp01StudyEntrySectionFtoK crearZp01StudyEntrySectionFtoK(Cursor cursorFtoK){
         Zp01StudyEntrySectionFtoK studyEntrySectionFtoK = new Zp01StudyEntrySectionFtoK();
         studyEntrySectionFtoK.setRecordId(cursorFtoK.getString(cursorFtoK.getColumnIndex(Zp01DBConstants.recordId)));
-
+        studyEntrySectionFtoK.setRedcapEventName(cursorFtoK.getString(cursorFtoK.getColumnIndex(Zp01DBConstants.redcapEventName)));
         studyEntrySectionFtoK.setSeaPreg(cursorFtoK.getString(cursorFtoK.getColumnIndex(Zp01DBConstants.seaPreg)));
         studyEntrySectionFtoK.setSeaFirstPreg(cursorFtoK.getString(cursorFtoK.getColumnIndex(Zp01DBConstants.seaFirstPreg)));
         studyEntrySectionFtoK.setSeaAnemia(cursorFtoK.getString(cursorFtoK.getColumnIndex(Zp01DBConstants.seaAnemia)));

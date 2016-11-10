@@ -100,6 +100,10 @@ public class MainActivity extends ListActivity {
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(i);
 			break;
+		case 4: 
+			showToast("que pasote con los elotes", 0);
+			Toast.makeText(getApplicationContext(),"que pasote con los elotes", Toast.LENGTH_SHORT).show();
+			break;
 		default: 
 			String s = (String) getListAdapter().getItem(position);
 			Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();

@@ -11,9 +11,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -36,6 +40,7 @@
             </intent-filter>
         </activity>
         <activity android:name="ni.org.ics.zip.appmovil.MainActivity" />
+        <activity android:name="ni.org.ics.zip.appmovil.activities.DataEnterActivity" />
         <activity android:name="ni.org.ics.zip.appmovil.activities.buscar.BuscarEmbarazadaActivity" />
         <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp00ScreeningActivity"
             android:screenOrientation="portrait"></activity>
@@ -66,6 +71,8 @@
         <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp06DeliveryAnd6weekVisitActivity"
                   android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp08StudyExitActivity"
+                  android:screenOrientation="portrait"></activity>
+       	<activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewDatosEmbarazadaActivity"
                   android:screenOrientation="portrait"></activity>
     </application>
 

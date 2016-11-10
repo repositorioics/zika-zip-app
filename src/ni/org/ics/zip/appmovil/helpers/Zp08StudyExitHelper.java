@@ -18,6 +18,7 @@ public class Zp08StudyExitHelper {
         ContentValues cv = new ContentValues();
 
         cv.put(Zp08DBConstants.recordId, studyExit.getRecordId());
+        cv.put(Zp08DBConstants.redcapEventName, studyExit.getRedcapEventName());
         if (studyExit.getExtStudyExitDate()!=null) cv.put(Zp08DBConstants.extStudyExitDate, studyExit.getExtStudyExitDate().getTime());
         cv.put(Zp08DBConstants.extSubjClass, studyExit.getExtSubjClass());
         cv.put(Zp08DBConstants.extStudyExitReason, studyExit.getExtStudyExitReason());
@@ -56,6 +57,7 @@ public class Zp08StudyExitHelper {
         Zp08StudyExit studyExit = new Zp08StudyExit();
 
         studyExit.setRecordId(cursor.getString(cursor.getColumnIndex(Zp08DBConstants.recordId)));
+        studyExit.setRedcapEventName(cursor.getString(cursor.getColumnIndex(Zp08DBConstants.redcapEventName)));
         if (cursor.getLong(cursor.getColumnIndex(Zp08DBConstants.extStudyExitDate))>0) studyExit.setExtStudyExitDate(new Date(cursor.getLong(cursor.getColumnIndex(Zp08DBConstants.extStudyExitDate))));
         studyExit.setExtSubjClass(cursor.getString(cursor.getColumnIndex(Zp08DBConstants.extSubjClass)));
         studyExit.setExtStudyExitReason(cursor.getString(cursor.getColumnIndex(Zp08DBConstants.extStudyExitReason)));

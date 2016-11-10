@@ -11,6 +11,7 @@ public class Zp08DBConstants {
 
     //Campos Zp08StudyExit
     public static final String recordId = "recordId";
+    public static final String redcapEventName = "redcapEventName";
     public static final String extStudyExitDate = "extStudyExitDate";
     public static final String extSubjClass = "extSubjClass";
     public static final String extStudyExitReason = "extStudyExitReason";
@@ -33,6 +34,7 @@ public class Zp08DBConstants {
     public static final String CREATE_STUDYEXIT_TABLE = "create table "
             + STUDYEXIT_TABLE + " ("
             + recordId + " text not null, "
+            + redcapEventName + " text, "
             + extStudyExitDate + " date, "
             + extSubjClass + " text, "
             + extStudyExitReason + " text, "

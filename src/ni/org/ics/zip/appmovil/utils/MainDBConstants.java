@@ -96,6 +96,7 @@ public class MainDBConstants {
 	public static final String SCREENING_TABLE = "zp00_screening";
 	//Campos usuarios
 	public static final String recordId = "recordId";
+	public static final String redcapEventName = "redcapEventName";
 	//public static final String numScreening = "numScreening";
 	public static final String scrVisitDate = "scrVisitDate";
 	public static final String scrRemain = "scrRemain";
@@ -135,6 +136,7 @@ public class MainDBConstants {
 	public static final String CREATE_SCREENING_TABLE = "create table "
 			+ SCREENING_TABLE + " ("
 			+ recordId + " text not null, "
+			+ redcapEventName + " text, "
 			+ scrVisitDate + " date, " 
 			+ scrRemain + " text, "
 			+ scrAge + " integer, "
@@ -231,5 +233,80 @@ public class MainDBConstants {
 				+ PHONE_NUMBER  + " text, "
 				+ TODAY  + " date, "
 				+ "primary key (" + recordId + "));";
+		
+		
+		//Tabla datos embarazada
+		public static final String DATA_PREG_TABLE = "datos_embarazada";
+		//Campos estado embarazada
+		public static final String cs = "cs";
+		public static final String barrio = "barrio";
+		public static final String nombre1 = "nombre1";
+		public static final String nombre2 = "nombre2";
+		public static final String apellido1 = "apellido1";
+		public static final String apellido2 = "apellido2";
+		public static final String fechaNac = "fechaNac";
+		public static final String direccion = "direccion";
+		public static final String latitud = "latitud";
+		public static final String longitud = "longitud";
+		public static final String telefonoContacto = "telefonoContacto";
+		
+		//Crear tabla datos embarazada
+		public static final String CREATE_DATA_PREG_TABLE = "create table "
+				+ DATA_PREG_TABLE + " ("
+				+ recordId + " text not null, "
+				+ cs + " text, "
+				+ barrio + " text, "
+				+ nombre1 + " text, "
+				+ nombre2 + " text, "
+				+ apellido1 + " text, "
+				+ apellido2 + " text, "
+				+ fechaNac + " date, "
+				+ direccion + " text, "
+				+ telefonoContacto + " text, "
+				+ latitud + " numeric, "
+				+ longitud + " numeric, "
+				+ recordDate + " date, " 
+				+ recordUser + " text, "
+				+ pasive + " text, "
+				+ ID_INSTANCIA + " integer," 
+				+ FILE_PATH + " text," 
+				+ STATUS + " text not null, "
+				+ START  + " text, "
+				+ END  + " text, "
+				+ DEVICE_ID  + " text, "
+				+ SIM_SERIAL + " text, "
+				+ PHONE_NUMBER  + " text, "
+				+ TODAY  + " date, "
+				+ "primary key (" + recordId + "));";
+
+		//Tabla datos prescreening
+		public static final String DATA_PRESCREEN_TABLE = "datos_prescreening";
+		//Campos prescreening
+		public static final String recId = "recId";
+		public static final String compId = "compId";
+		public static final String consecutive = "consecutive";
+		
+		//Crear tabla prescreening
+		public static final String CREATE_DATA_PRESCREEN_TABLE = "create table "
+				+ DATA_PRESCREEN_TABLE + " ("
+				+ recId + " text not null, "
+				+ cs + " text, "
+				+ compId + " text, "
+				+ consecutive + " integer, "
+				+ recordDate + " date, " 
+				+ recordUser + " text, "
+				+ pasive + " text, "
+				+ ID_INSTANCIA + " integer," 
+				+ FILE_PATH + " text," 
+				+ STATUS + " text not null, "
+				+ START  + " text, "
+				+ END  + " text, "
+				+ DEVICE_ID  + " text, "
+				+ SIM_SERIAL + " text, "
+				+ PHONE_NUMBER  + " text, "
+				+ TODAY  + " date, "
+				+ "primary key (" + recId + "));";		
+		
+		
 
 }

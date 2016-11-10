@@ -11,6 +11,7 @@ public class Zp01DBConstants {
 
     //Campos comunes
     public static final String recordId = "recordId";
+    public static final String redcapEventName = "redcapEventName";
 
     //Campos Zp01StudyEntrySectionAtoD
     public static final String seaVdate = "seaVdate";
@@ -60,6 +61,7 @@ public class Zp01DBConstants {
     public static final String CREATE_STUDYENTRY_AD_TABLE = "create table "
             + STUDYENTRY_AD_TABLE + " ("
             + recordId + " text not null, "
+            + redcapEventName + " text, "
             + seaVdate + " date, "
             + seaPtdate + " date, "
             + seaTresults + " text, "
@@ -301,6 +303,7 @@ public class Zp01DBConstants {
     public static final String CREATE_STUDYENTRY_E_TABLE = "create table "
             + STUDYENTRY_E_TABLE + " ("
             + recordId + " text not null, "
+            + redcapEventName + " text, "
             + seaDiseases + " text, "
             + seaOtherSpecify + " text, "
             + seaHepatitis + " text, "
@@ -576,6 +579,7 @@ public class Zp01DBConstants {
     public static final String CREATE_STUDYENTRY_FK_TABLE = "create table "
             + STUDYENTRY_FK_TABLE + " ("
             + recordId + " text not null, "
+            + redcapEventName + " text, "
             + seaPreg + " text, "
             + seaFirstPreg + " text, "
             + seaAnemia + " text, "

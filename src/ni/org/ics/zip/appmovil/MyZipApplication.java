@@ -1,10 +1,22 @@
 package ni.org.ics.zip.appmovil;
 
 import android.app.Application;
+import android.content.Context;
 
 public class MyZipApplication extends Application{
 	
 	private String passApp;
+	private static Context mContext;
+	
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		mContext = this;
+	}
+	
+	public static Context getContext(){
+        return mContext;
+    }
 
 	public String getPassApp() {
 		return passApp;

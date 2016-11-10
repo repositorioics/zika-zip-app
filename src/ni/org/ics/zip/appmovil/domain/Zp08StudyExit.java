@@ -11,6 +11,7 @@ public class Zp08StudyExit extends BaseMetaData{
 
     private static final long serialVersionUID = 1L;
     private String recordId;
+    private String redcapEventName;
     private Date extStudyExitDate;
     private String extSubjClass;
     private String extStudyExitReason;
@@ -37,8 +38,16 @@ public class Zp08StudyExit extends BaseMetaData{
     public void setRecordId(String recordId) {
         this.recordId = recordId;
     }
+    
+    public String getRedcapEventName() {
+		return redcapEventName;
+	}
 
-    public Date getExtStudyExitDate() {
+	public void setRedcapEventName(String redcapEventName) {
+		this.redcapEventName = redcapEventName;
+	}
+
+	public Date getExtStudyExitDate() {
         return extStudyExitDate;
     }
 

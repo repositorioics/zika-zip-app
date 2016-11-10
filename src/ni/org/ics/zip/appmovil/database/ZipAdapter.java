@@ -52,6 +52,8 @@ public class ZipAdapter {
 			db.execSQL(MainDBConstants.CREATE_ROLE_TABLE);
 			db.execSQL(MainDBConstants.CREATE_SCREENING_TABLE);
 			db.execSQL(MainDBConstants.CREATE_STATUS_PREG_TABLE);
+			db.execSQL(MainDBConstants.CREATE_DATA_PREG_TABLE);
+			db.execSQL(MainDBConstants.CREATE_DATA_PRESCREEN_TABLE);
 			db.execSQL(Zp01DBConstants.CREATE_STUDYENTRY_AD_TABLE);
             db.execSQL(Zp01DBConstants.CREATE_STUDYENTRY_E_TABLE);
             db.execSQL(Zp01DBConstants.CREATE_STUDYENTRY_FK_TABLE);
@@ -72,6 +74,8 @@ public class ZipAdapter {
 			db.execSQL("DROP TABLE IF EXISTS " + MainDBConstants.ROLE_TABLE);
 			db.execSQL("DROP TABLE IF EXISTS " + MainDBConstants.SCREENING_TABLE);
 			db.execSQL("DROP TABLE IF EXISTS " + MainDBConstants.STATUS_PREG_TABLE);
+			db.execSQL("DROP TABLE IF EXISTS " + MainDBConstants.DATA_PREG_TABLE);
+			db.execSQL("DROP TABLE IF EXISTS " + MainDBConstants.DATA_PRESCREEN_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + Zp01DBConstants.CREATE_STUDYENTRY_AD_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + Zp01DBConstants.CREATE_STUDYENTRY_E_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + Zp01DBConstants.CREATE_STUDYENTRY_FK_TABLE);
@@ -289,6 +293,58 @@ public class ZipAdapter {
         }
         if (!cursorStatus.isClosed()) cursorStatus.close();
         return zpEstadoEmbarazadas;
+    }
+    
+    
+    /**
+	 * Metodos para ZpDatosEmbarazada en la base de datos
+	 * 
+	 * @param datos
+	 *            Objeto ZpDatosEmbarazada que contiene la informacion
+	 *
+	 */
+	//Crear nuevo ZpDatosEmbarazada en la base de datos
+	public void crearZpDatosEmbarazada(ZpDatosEmbarazada datos) {
+		ContentValues cv = ZpDatosEmbarazadaHelper.crearZpDatosEmbarazadaValues(datos);
+		mDb.insert(MainDBConstants.DATA_PREG_TABLE, null, cv);
+	}
+	//Editar ZpDatosEmbarazada existente en la base de datos
+	public boolean editarZpDatosEmbarazada(ZpDatosEmbarazada datos) {
+		ContentValues cv = ZpDatosEmbarazadaHelper.crearZpDatosEmbarazadaValues(datos);
+		return mDb.update(MainDBConstants.DATA_PREG_TABLE, cv, MainDBConstants.recordId + "='" 
+				+ datos.getRecordId()+"'", null) > 0;
+	}
+	//Limpiar la tabla de ZpDatosEmbarazada de la base de datos
+	public boolean borrarZpDatosEmbarazada() {
+		return mDb.delete(MainDBConstants.DATA_PREG_TABLE, null, null) > 0;
+	}
+	//Obtener un ZpDatosEmbarazada de la base de datos
+	public ZpDatosEmbarazada getZpDatosEmbarazada(String filtro, String orden) throws SQLException {
+		ZpDatosEmbarazada mDatos = null;
+		Cursor cursorDatos = crearCursor(MainDBConstants.DATA_PREG_TABLE, filtro, null, orden);
+		if (cursorDatos != null && cursorDatos.getCount() > 0) {
+			cursorDatos.moveToFirst();
+			mDatos=ZpDatosEmbarazadaHelper.crearZpDatosEmbarazada(cursorDatos);
+		}
+		if (!cursorDatos.isClosed()) cursorDatos.close();
+		return mDatos;
+	}
+
+    //Obtener una lista de ZpDatosEmbarazada de la base de datos
+    public List<ZpDatosEmbarazada> getZpDatosEmbarazadas(String filtro, String orden) throws SQLException {
+        List<ZpDatosEmbarazada> zpDatosEmbarazadas = new ArrayList<ZpDatosEmbarazada>();
+        Cursor cursorStatus = crearCursor(MainDBConstants.DATA_PREG_TABLE, filtro, null, orden);
+        if (cursorStatus != null && cursorStatus.getCount() > 0) {
+            cursorStatus.moveToFirst();
+            zpDatosEmbarazadas.clear();
+            do{
+            	ZpDatosEmbarazada datosEmbarazada = null;
+                datosEmbarazada = ZpDatosEmbarazadaHelper.crearZpDatosEmbarazada(cursorStatus);
+                zpDatosEmbarazadas.add(datosEmbarazada);
+            } while (cursorStatus.moveToNext());
+        }
+        if (!cursorStatus.isClosed()) cursorStatus.close();
+        return zpDatosEmbarazadas;
     }
 
 

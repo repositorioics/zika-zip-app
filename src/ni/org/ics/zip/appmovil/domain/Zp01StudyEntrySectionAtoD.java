@@ -10,6 +10,7 @@ public class Zp01StudyEntrySectionAtoD extends BaseMetaData{
 
     private static final long serialVersionUID = 1L;
     private String recordId;
+    private String redcapEventName;
     private Date seaVdate;
     private Date seaPtdate;
     private String seaTresults;
@@ -59,8 +60,15 @@ public class Zp01StudyEntrySectionAtoD extends BaseMetaData{
     public void setRecordId(String recordId) {
         this.recordId = recordId;
     }
+    public String getRedcapEventName() {
+		return redcapEventName;
+	}
 
-    public Date getSeaVdate() {
+	public void setRedcapEventName(String redcapEventName) {
+		this.redcapEventName = redcapEventName;
+	}
+
+	public Date getSeaVdate() {
         return seaVdate;
     }
 

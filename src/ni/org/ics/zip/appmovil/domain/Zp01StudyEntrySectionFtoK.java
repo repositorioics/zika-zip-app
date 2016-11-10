@@ -10,6 +10,7 @@ public class Zp01StudyEntrySectionFtoK extends BaseMetaData {
 
     private static final long serialVersionUID = 1L;
     private String recordId;
+    private String redcapEventName;
     private String seaPreg;
     private String seaFirstPreg;
     private String seaAnemia;
@@ -93,7 +94,15 @@ public class Zp01StudyEntrySectionFtoK extends BaseMetaData {
         this.recordId = recordId;
     }
 
-    public String getSeaPreg() {
+    public String getRedcapEventName() {
+		return redcapEventName;
+	}
+
+	public void setRedcapEventName(String redcapEventName) {
+		this.redcapEventName = redcapEventName;
+	}
+
+	public String getSeaPreg() {
         return seaPreg;
     }
 
