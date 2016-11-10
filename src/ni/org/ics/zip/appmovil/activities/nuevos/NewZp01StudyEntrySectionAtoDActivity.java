@@ -224,6 +224,7 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 			zp01Xml = serializer.read(Zp01StudyEntrySectionAtoDXml.class, source);
 			if (accion==ADD_ZP01A_ODK) mZp01A = new Zp01StudyEntrySectionAtoD();
             mZp01A.setRecordId(mRecordId);
+            mZp01A.setRedcapEventName(Constants.ENTRY);
             mZp01A.setSeaVdate(zp01Xml.getSeaVdate());
             mZp01A.setSeaPtdate(zp01Xml.getSeaPtdate());
             mZp01A.setSeaTresults(zp01Xml.getSeaTresults());

@@ -328,7 +328,7 @@ public class MonthlyVisitActivity extends AbstractAsyncActivity {
 			protected void onPostExecute(String resultado) {
 				// after the network request completes, hide the progress indicator
 				gridView.setAdapter(new IngresoAdapter(getApplicationContext(), R.layout.menu_item_2, menu_maternal_info, zp01a, zp01e, zp01f,
-						zp02, zp04a, zp04e ,zp04f, zp05, null
+						zp02, zp04a, zp04e ,zp04f, zp05
 						));
 				dismissProgressDialog();
 			}

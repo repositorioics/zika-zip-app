@@ -20,14 +20,12 @@ import java.util.List;
 import java.util.Map;
 
 import ni.org.ics.zip.appmovil.R;
-import ni.org.ics.zip.appmovil.domain.ZpDatosEmbarazada;
 import ni.org.ics.zip.appmovil.forms.DatosEmbarazadaForm;
 import ni.org.ics.zip.appmovil.utils.Constants;
 import ni.org.ics.zip.appmovil.wizard.model.AbstractWizardModel;
 import ni.org.ics.zip.appmovil.wizard.model.ModelCallbacks;
 import ni.org.ics.zip.appmovil.wizard.model.NumberPage;
 import ni.org.ics.zip.appmovil.wizard.model.Page;
-import ni.org.ics.zip.appmovil.wizard.model.SingleFixedChoicePage;
 import ni.org.ics.zip.appmovil.wizard.model.TextPage;
 import ni.org.ics.zip.appmovil.wizard.ui.PageFragmentCallbacks;
 import ni.org.ics.zip.appmovil.wizard.ui.ReviewFragment;
@@ -43,7 +41,6 @@ public class DataEnterActivity extends FragmentActivity implements
     private boolean mEditingAfterReview;
 
     private AbstractWizardModel mWizardModel;
-    private ZpDatosEmbarazada mZpDatos = null;
 
     private boolean mConsumePageSelectedEvent;
 
@@ -60,13 +57,8 @@ public class DataEnterActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_enter);
         formName = getIntent().getExtras().getString(Constants.FORM_NAME);
-        if(formName.matches(Constants.FORM_DATOS_EMB)){
-        	mZpDatos = (ZpDatosEmbarazada) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZPDATA);
+        if(formName.matches(Constants.FORM_DATOS_EMB)){        	
         	mWizardModel = new DatosEmbarazadaForm(this.getApplicationContext());
-        	SingleFixedChoicePage pagtest = (SingleFixedChoicePage) mWizardModel.findByKey(this.getString(R.string.cs));
-        	if (mZpDatos.getCs()!= null) pagtest.setValue(mZpDatos.getCs());
-        	TextPage pagtest2 = (TextPage) mWizardModel.findByKey(this.getString(R.string.nombre1));
-        	if (mZpDatos.getNombre1()!= null) pagtest2.setValue(mZpDatos.getNombre1());
         }
         else{
         	finish();

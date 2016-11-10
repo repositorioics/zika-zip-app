@@ -222,6 +222,7 @@ public class NewZp01StudyEntrySectionFtoKActivity extends AbstractAsyncActivity 
 			zp01Xml = serializer.read(Zp01StudyEntrySectionFtoKXml.class, source);
 			if (accion==ADD_ZP01F_ODK) mZp01F = new Zp01StudyEntrySectionFtoK();
 			mZp01F.setRecordId(mRecordId);
+			mZp01F.setRedcapEventName(Constants.ENTRY);
 			mZp01F.setSeaPreg(zp01Xml.getSeaPreg());
             mZp01F.setSeaFirstPreg(zp01Xml.getSeaFirstPreg());
             mZp01F.setSeaAnemia(zp01Xml.getSeaAnemia());

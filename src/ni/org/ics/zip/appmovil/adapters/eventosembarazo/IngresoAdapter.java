@@ -9,7 +9,6 @@ import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionAtoD;
 import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionE;
 import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionFtoH;
 import ni.org.ics.zip.appmovil.domain.Zp05UltrasoundExam;
-import ni.org.ics.zip.appmovil.domain.ZpDatosEmbarazada;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -32,12 +31,11 @@ public class IngresoAdapter extends ArrayAdapter<String> {
 	private final Zp04TrimesterVisitSectionE mZp04e;
 	private final Zp04TrimesterVisitSectionFtoH mZp04f;
 	private final Zp05UltrasoundExam mZp05;
-	private final ZpDatosEmbarazada mZpDatos;
 	
 	public IngresoAdapter(Context context, int textViewResourceId,
 			String[] values, Zp01StudyEntrySectionAtoD zp01a, Zp01StudyEntrySectionE zp01e, Zp01StudyEntrySectionFtoK zp01f,
 			Zp02BiospecimenCollection zp02, Zp04TrimesterVisitSectionAtoD zp04a, Zp04TrimesterVisitSectionE zp04e, Zp04TrimesterVisitSectionFtoH zp04f,
-			Zp05UltrasoundExam zp05, ZpDatosEmbarazada zpDatos) {
+			Zp05UltrasoundExam zp05) {
 		super(context, textViewResourceId, values);
 		this.context = context;
 		this.values = values;
@@ -49,7 +47,6 @@ public class IngresoAdapter extends ArrayAdapter<String> {
 		this.mZp04e = zp04e;
 		this.mZp04f = zp04f;
 		this.mZp05 = zp05;
-		this.mZpDatos = zpDatos;
 	}
 
 	@Override
@@ -154,17 +151,6 @@ public class IngresoAdapter extends ArrayAdapter<String> {
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 			}
 			img=getContext().getResources().getDrawable( R.drawable.ic_us);
-			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-			break;
-		case 8: 
-			if(mZpDatos!=null){
-				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
-			}
-			else{
-				textView.setTextColor(Color.RED);
-				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
-			}
-			img=getContext().getResources().getDrawable( R.drawable.ic_edit);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
 		default:

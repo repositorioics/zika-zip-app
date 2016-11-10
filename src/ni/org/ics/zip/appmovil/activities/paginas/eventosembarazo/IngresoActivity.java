@@ -6,7 +6,6 @@ import ni.org.ics.zip.appmovil.AbstractAsyncActivity;
 import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
-import ni.org.ics.zip.appmovil.activities.nuevos.NewDatosEmbarazadaActivity;
 import ni.org.ics.zip.appmovil.activities.nuevos.NewZp01StudyEntrySectionAtoDActivity;
 import ni.org.ics.zip.appmovil.activities.nuevos.NewZp01StudyEntrySectionEActivity;
 import ni.org.ics.zip.appmovil.activities.nuevos.NewZp01StudyEntrySectionFtoKActivity;
@@ -26,7 +25,6 @@ import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionAtoD;
 import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionE;
 import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionFtoH;
 import ni.org.ics.zip.appmovil.domain.Zp05UltrasoundExam;
-import ni.org.ics.zip.appmovil.domain.ZpDatosEmbarazada;
 import ni.org.ics.zip.appmovil.domain.ZpEstadoEmbarazada;
 import ni.org.ics.zip.appmovil.utils.Constants;
 import ni.org.ics.zip.appmovil.utils.MainDBConstants;
@@ -52,7 +50,6 @@ public class IngresoActivity extends AbstractAsyncActivity {
 	private ZipAdapter zipA;
 	private static Zp00Screening zp00 = new Zp00Screening();
 	private static ZpEstadoEmbarazada zpEstado = new ZpEstadoEmbarazada();
-	private static ZpDatosEmbarazada zpDatos = null;
 	private static Zp01StudyEntrySectionAtoD zp01a = null;
 	private static Zp01StudyEntrySectionE zp01e = null;
 	private static Zp01StudyEntrySectionFtoK zp01f = null;
@@ -167,13 +164,6 @@ public class IngresoActivity extends AbstractAsyncActivity {
                     i = new Intent(getApplicationContext(),
                             NewZp05UltrasoundExamActivity.class);
                     if (zp05!=null) arguments.putSerializable(Constants.OBJECTO_ZP05 , zp05);
-                    i.putExtras(arguments);
-                    startActivity(i);
-                    break;
-                case 8: //DATOS GENERALES
-                    i = new Intent(getApplicationContext(),
-                            NewDatosEmbarazadaActivity.class);
-                    if (zpDatos!=null) arguments.putSerializable(Constants.OBJECTO_ZPDATA , zpDatos);
                     i.putExtras(arguments);
                     startActivity(i);
                     break;
@@ -316,7 +306,6 @@ public class IngresoActivity extends AbstractAsyncActivity {
 					zp01a = zipA.getZp01StudyEntrySectionAtoD(filtro, MainDBConstants.recordId);
 					zp01e = zipA.getZp01StudyEntrySectionE(filtro, null);
 					zp01f = zipA.getZp01StudyEntrySectionFtoK(filtro, null);
-					zpDatos = zipA.getZpDatosEmbarazada(filtro, MainDBConstants.recordId);
 					filtro = MainDBConstants.recordId + "='" + zp00.getRecordId() + "' and " + Zp02DBConstants.redcapEventName + "='" + eventoaFiltrar +"'";
 					zp02 = zipA.getZp02BiospecimenCollection(filtro, MainDBConstants.recordId);
 					zp04a = zipA.getZp04TrimesterVisitSectionAtoD(filtro, null);
@@ -339,7 +328,7 @@ public class IngresoActivity extends AbstractAsyncActivity {
 			protected void onPostExecute(String resultado) {
 				// after the network request completes, hide the progress indicator
 				gridView.setAdapter(new IngresoAdapter(getApplicationContext(), R.layout.menu_item_2, menu_maternal_info, zp01a, zp01e, zp01f,
-						zp02, zp04a, zp04e ,zp04f, zp05, zpDatos
+						zp02, zp04a, zp04e ,zp04f, zp05
 						));
 				dismissProgressDialog();
 			}

@@ -222,6 +222,7 @@ public class NewZp01StudyEntrySectionEActivity extends AbstractAsyncActivity {
 			zp01Xml = serializer.read(Zp01StudyEntrySectionEXml.class, source);
 			if (accion==ADD_ZP01E_ODK) mZp01E = new Zp01StudyEntrySectionE();
 			mZp01E.setRecordId(mRecordId);
+			mZp01E.setRedcapEventName(Constants.ENTRY);
             mZp01E.setSeaDiseases(zp01Xml.getSeaDiseases());
             mZp01E.setSeaOtherSpecify(zp01Xml.getSeaOtherSpecify());
             mZp01E.setSeaHepatitis(zp01Xml.getSeaHepatitis());

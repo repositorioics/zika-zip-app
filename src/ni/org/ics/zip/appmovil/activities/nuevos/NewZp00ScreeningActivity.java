@@ -182,6 +182,9 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 				}
 			}
 		}
+		else{
+			finish();
+		}
 		if(requestCode == ADD_TAMIZAJE_ODK) {
 	        if(resultCode == RESULT_OK) {
 	        	Uri instanceUri = intent.getData();
@@ -254,6 +257,7 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 			Zp00ScreeningXml zp00Xml = new Zp00ScreeningXml();
 			zp00Xml = serializer.read(Zp00ScreeningXml.class, source);
 			mTamizaje.setRecordId(mRecordId);
+			mTamizaje.setRedcapEventName(Constants.SCREENING);
 			mTamizaje.setScrVisitDate(zp00Xml.getScrVisitDate());
 			mTamizaje.setScrRemain(zp00Xml.getScrRemain());
 			mTamizaje.setScrAge(zp00Xml.getScrAge());

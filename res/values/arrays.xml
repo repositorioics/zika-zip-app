@@ -40,7 +40,6 @@
         <item>@string/maternal_b_7</item>
         <item>@string/maternal_b_8</item>
         <item>@string/maternal_b_9</item>
-        <item>@string/maternal_b_12</item>
     </string-array>
     
     <string-array name="menu_infant">
