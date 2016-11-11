@@ -50,6 +50,7 @@ public class Constants {
 	public static final String WEEK4 = "4_week_post_entry_arm_1";
 	public static final String EXIT = "study_exit_arm_1";
 
+	public static final String PRESCREENID = "preScreeningId";
     public static final String RECORDID = "recordId";
     
     //Form wizard

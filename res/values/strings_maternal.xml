@@ -40,14 +40,17 @@
     
     <string name="mat_search">Buscar Embarazada</string>
     <string name="mat_data">Datos Embarazada</string>
+    <string name="mat_tam">Tamizaje</string>
+    <string name="mat_cons_title">Consentimiento verbal embarazada</string>
     <!-- Campos materna -->
     <string name="mat_id">Código de la participante</string>
     <string name="mat_ini">Iniciales de la participante</string>
-    <string name="mat_tam">Número de tamizaje</string>
+    <string name="mat_numtam">Número de tamizaje</string>
     <string name="mat_fec">Fecha de ingreso</string>
     <string name="mat_exit">Fecha de salida</string>
     <string name="mat_retired">Retirada del estudio</string>
     <string name="mat_retire">Retirar a esta participante del estudio??</string>
+    <string name="mat_cons">La mujer dió consentimiento verbal para tamizaje? *</string>
     <string name="cs">Centro de Salud *</string>
     <string name="csHint">Requerido. Registrar la unidad de salud de la participante del estudio.</string>
     <string name="nombre1">Nombre *</string>

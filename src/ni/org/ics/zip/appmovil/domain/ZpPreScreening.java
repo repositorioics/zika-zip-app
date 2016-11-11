@@ -14,6 +14,7 @@ public class ZpPreScreening extends BaseMetaData{
 	private String compId;
 	private String cs;
 	private Integer consecutive;
+	private String verbalConsent;
 	
 	public String getRecId() {
 		return recId;
@@ -39,6 +40,11 @@ public class ZpPreScreening extends BaseMetaData{
 	public void setConsecutive(Integer consecutive) {
 		this.consecutive = consecutive;
 	}
-
+	public String getVerbalConsent() {
+		return verbalConsent;
+	}
+	public void setVerbalConsent(String verbalConsent) {
+		this.verbalConsent = verbalConsent;
+	}
 	
 }

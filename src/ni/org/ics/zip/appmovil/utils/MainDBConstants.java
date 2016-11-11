@@ -96,6 +96,7 @@ public class MainDBConstants {
 	public static final String SCREENING_TABLE = "zp00_screening";
 	//Campos usuarios
 	public static final String recordId = "recordId";
+	public static final String preScreenId = "preScreenId";
 	public static final String redcapEventName = "redcapEventName";
 	//public static final String numScreening = "numScreening";
 	public static final String scrVisitDate = "scrVisitDate";
@@ -136,7 +137,8 @@ public class MainDBConstants {
 	public static final String CREATE_SCREENING_TABLE = "create table "
 			+ SCREENING_TABLE + " ("
 			+ recordId + " text not null, "
-			+ redcapEventName + " text, "
+			+ preScreenId + " text not null, "
+			+ redcapEventName + " text not null, "
 			+ scrVisitDate + " date, " 
 			+ scrRemain + " text, "
 			+ scrAge + " integer, "
@@ -285,6 +287,7 @@ public class MainDBConstants {
 		public static final String recId = "recId";
 		public static final String compId = "compId";
 		public static final String consecutive = "consecutive";
+		public static final String verbalConsent = "verbalConsent";
 		
 		//Crear tabla prescreening
 		public static final String CREATE_DATA_PRESCREEN_TABLE = "create table "
@@ -293,6 +296,7 @@ public class MainDBConstants {
 				+ cs + " text, "
 				+ compId + " text, "
 				+ consecutive + " integer, "
+				+ verbalConsent + " verbalConsent, "
 				+ recordDate + " date, " 
 				+ recordUser + " text, "
 				+ pasive + " text, "

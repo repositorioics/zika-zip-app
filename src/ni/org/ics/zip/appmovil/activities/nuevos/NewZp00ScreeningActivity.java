@@ -64,6 +64,7 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 	private boolean barcode;
 	private String username;
 	private String mRecordId = "";
+	private String mPreScreenId = "";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,7 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 		username =
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
+		mPreScreenId = getIntent().getStringExtra(Constants.PRESCREENID);
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
 		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
 		createInitDialog();
@@ -95,7 +97,7 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 
 		//to set the message
 		TextView message =(TextView) dialogInit.findViewById(R.id.yesnotext);
-		message.setText(getString(R.string.add)+ " " + getString(R.string.main_maternal)+"?");
+		message.setText(getString(R.string.add)+ " " + getString(R.string.mat_tam)+"?");
 
 		//add some action to the buttons
 
@@ -257,6 +259,7 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 			Zp00ScreeningXml zp00Xml = new Zp00ScreeningXml();
 			zp00Xml = serializer.read(Zp00ScreeningXml.class, source);
 			mTamizaje.setRecordId(mRecordId);
+			mTamizaje.setPreScreenId(mPreScreenId);
 			mTamizaje.setRedcapEventName(Constants.SCREENING);
 			mTamizaje.setScrVisitDate(zp00Xml.getScrVisitDate());
 			mTamizaje.setScrRemain(zp00Xml.getScrRemain());

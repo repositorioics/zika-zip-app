@@ -33,6 +33,7 @@ public class UploadTamizajesTask extends UploadTask {
 	}
 
 	protected static final String TAG = UploadTamizajesTask.class.getSimpleName();
+	private List<ZpPreScreening> mPreTamizajes = new ArrayList<ZpPreScreening>();
 	private List<Zp00Screening> mTamizajes = new ArrayList<Zp00Screening>();
     private List<Zp01StudyEntrySectionAtoD> mIngresosAD = new ArrayList<Zp01StudyEntrySectionAtoD>();
     private List<Zp01StudyEntrySectionE> mIngresosE = new ArrayList<Zp01StudyEntrySectionE>();
@@ -59,7 +60,11 @@ public class UploadTamizajesTask extends UploadTask {
 		password = values[2];
 
 		try {
-			error = cargarParticipantes(url, username, password);
+			error = cargarPreTamizajes(url, username, password);
+			if (!error.matches("Datos recibidos!")){
+				return error;
+			}
+			error = cargarTamizajes(url, username, password);
 			if (!error.matches("Datos recibidos!")){
 				return error;
 			}
@@ -118,9 +123,69 @@ public class UploadTamizajesTask extends UploadTask {
 		}
 		return error;
 	}
+	
+	
+	// url, username, password
+		protected String cargarPreTamizajes(String url, String username, 
+				String password) throws Exception {
+			try {
+				getPreTamizajes();
+				if(mPreTamizajes.size()>0){
+					savePreTamizajes(Constants.STATUS_SUBMITTED);
+					// La URL de la solicitud POST
+					final String urlRequest = url + "/movil/zpPreScreening";
+					ZpPreScreening[] envio = mPreTamizajes.toArray(new ZpPreScreening[mPreTamizajes.size()]);
+					HttpHeaders requestHeaders = new HttpHeaders();
+					HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+					requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+					requestHeaders.setAuthorization(authHeader);
+					HttpEntity<ZpPreScreening[]> requestEntity = 
+							new HttpEntity<ZpPreScreening[]>(envio, requestHeaders);
+							RestTemplate restTemplate = new RestTemplate();
+							restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+							restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+							// Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+							ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+									String.class);
+							// Regresa la respuesta a mostrar al usuario
+							if (!response.getBody().matches("Datos recibidos!")) {
+								savePreTamizajes(Constants.STATUS_NOT_SUBMITTED);
+							}
+							return response.getBody();
+				}
+				else{
+					return "Datos recibidos!";
+				}
+			} catch (Exception e) {
+				Log.e(TAG, e.getMessage(), e);
+				savePreTamizajes(Constants.STATUS_NOT_SUBMITTED);
+				return e.getMessage();
+			}
+
+		}
+
+		private void savePreTamizajes(String estado) {
+			ZipAdapter zipA = new ZipAdapter(mContext, password, false);
+			zipA.open();
+			int c = mPreTamizajes.size();
+			for (ZpPreScreening pretamizaje : mPreTamizajes) {
+				pretamizaje.setEstado(estado);
+				zipA.editarZpPreScreening(pretamizaje);
+				publishProgress("Actualizando pre-tamizajes", Integer.valueOf(mPreTamizajes.indexOf(pretamizaje)).toString(), Integer
+						.valueOf(c).toString());
+			}
+			zipA.close();
+		}
+
+		private void getPreTamizajes() {
+			ZipAdapter zipA = new ZipAdapter(mContext, password, false);
+			zipA.open();
+			mPreTamizajes = zipA.getZpPreScreenings("", MainDBConstants.recId);
+			zipA.close();
+		}
 
 	// url, username, password
-	protected String cargarParticipantes(String url, String username, 
+	protected String cargarTamizajes(String url, String username, 
 			String password) throws Exception {
 		try {
 			getTamizajes();

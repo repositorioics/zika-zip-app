@@ -52,4 +52,17 @@
         <item>@string/specimen_2</item>
     </string-array>
     
+    <string-array name="list_cs">
+        <item>@string/select</item>
+        <item>Sócrates Flores</item>
+        <item>Julio Buitrago</item>
+        <item>Villa Libertad</item>
+    </string-array>
+    
+   	<string-array name="yes_no">
+   	    <item>@string/select</item>
+        <item>@string/yes</item>
+        <item>@string/no</item>
+    </string-array>
+    
 </resources>

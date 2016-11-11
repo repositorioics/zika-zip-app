@@ -56,4 +56,8 @@
     <string name="gpstitle">Configuración GPS</string>
     <string name="gpsquestion">El GPS no está habilitado. Quiere ir al menú de configuración y activarlo?</string>
     
+    <string name="error_cons">Debe contestar si dió consentimiento!</string>
+    <string name="error_cs">Centro de salud inválido!</string>
+    <string name="no_cons">La mujer no dió consentimiento!</string>
+    
 </resources>

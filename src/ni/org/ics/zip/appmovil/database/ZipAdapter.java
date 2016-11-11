@@ -346,8 +346,75 @@ public class ZipAdapter {
         if (!cursorStatus.isClosed()) cursorStatus.close();
         return zpDatosEmbarazadas;
     }
+    
+    
+    /**
+	 * Metodos para ZpPreScreening en la base de datos
+	 * 
+	 * @param datos
+	 *            Objeto ZpPreScreening que contiene la informacion
+	 *
+	 */
+	//Crear nuevo ZpPreScreening en la base de datos
+	public void crearZpPreScreening(ZpPreScreening datos) {
+		ContentValues cv = ZpPreScreeningHelper.crearZpPreScreeningValues(datos);
+		mDb.insert(MainDBConstants.DATA_PRESCREEN_TABLE, null, cv);
+	}
+	//Editar ZpPreScreening existente en la base de datos
+	public boolean editarZpPreScreening(ZpPreScreening datos) {
+		ContentValues cv = ZpPreScreeningHelper.crearZpPreScreeningValues(datos);
+		return mDb.update(MainDBConstants.DATA_PRESCREEN_TABLE, cv, MainDBConstants.recId + "='" 
+				+ datos.getRecId()+"'", null) > 0;
+	}
+	//Limpiar la tabla de ZpPreScreening de la base de datos
+	public boolean borrarZpPreScreening() {
+		return mDb.delete(MainDBConstants.DATA_PRESCREEN_TABLE, null, null) > 0;
+	}
+	//Obtener un ZpPreScreening de la base de datos
+	public ZpPreScreening getZpPreScreening(String filtro, String orden) throws SQLException {
+		ZpPreScreening mDatos = null;
+		Cursor cursorDatos = crearCursor(MainDBConstants.DATA_PRESCREEN_TABLE, filtro, null, orden);
+		if (cursorDatos != null && cursorDatos.getCount() > 0) {
+			cursorDatos.moveToFirst();
+			mDatos=ZpPreScreeningHelper.crearZpPreScreening(cursorDatos);
+		}
+		if (!cursorDatos.isClosed()) cursorDatos.close();
+		return mDatos;
+	}
+	
+	//Obtener last ZpPreScreening de la base de datos
+	public Integer getLastZpPreScreening(String cs) throws SQLException {
+		Integer lastConsecutive = null;
+		Cursor c = null;
+		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+		qb.setTables(MainDBConstants.DATA_PRESCREEN_TABLE);
+		c = qb.query(mDb,new String [] {"MAX(consecutive)"},"cs='"+cs+"'",null,null,null,null);
+		if (c != null && c.getCount() > 0) {
+			c.moveToFirst();
+			lastConsecutive=c.getInt(0);
+		}
+		if (!c.isClosed()) c.close();
+		return lastConsecutive;
+	}
 
-
+    //Obtener una lista de ZpPreScreening de la base de datos
+    public List<ZpPreScreening> getZpPreScreenings(String filtro, String orden) throws SQLException {
+        List<ZpPreScreening> zpPreScreening = new ArrayList<ZpPreScreening>();
+        Cursor cursorStatus = crearCursor(MainDBConstants.DATA_PRESCREEN_TABLE, filtro, null, orden);
+        if (cursorStatus != null && cursorStatus.getCount() > 0) {
+            cursorStatus.moveToFirst();
+            zpPreScreening.clear();
+            do{
+            	ZpPreScreening datosPreScreening = null;
+                datosPreScreening = ZpPreScreeningHelper.crearZpPreScreening(cursorStatus);
+                zpPreScreening.add(datosPreScreening);
+            } while (cursorStatus.moveToNext());
+        }
+        if (!cursorStatus.isClosed()) cursorStatus.close();
+        return zpPreScreening;
+    }
+    
+   
     /**
      * Metodos para Zp01StudyEntrySectionAtoD en la base de datos
      *
