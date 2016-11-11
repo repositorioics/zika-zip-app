@@ -99,6 +99,8 @@ public class Zp01StudyEntrySectionAtoDXml{
     @Element(required=false)
     private String question2;
     @Element(required=false)
+    private String question3;
+    @Element(required=false)
     private String note1;
     @Element(required=false)
     private String note2;

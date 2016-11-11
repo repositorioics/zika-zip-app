@@ -218,6 +218,12 @@ public class Zp05UltrasoundExamXml {
     private String question5;
     @Element(required=false)
     private String question6;
+    @Element(required=false)
+    private String question7;
+    @Element(required=false)
+    private String question8;
+    @Element(required=false)
+    private String question9;
 
 
     @Attribute
