@@ -97,9 +97,12 @@ public class Zp00ScreeningXml {
     private String question2;
 	@Element(required=false)
     private String question3;
+	@Element(required=false)
+	private String question4;
 
 
-    @Attribute
+
+	@Attribute
 	private String id;
 	@Element(required=false)
 	private Meta meta;
