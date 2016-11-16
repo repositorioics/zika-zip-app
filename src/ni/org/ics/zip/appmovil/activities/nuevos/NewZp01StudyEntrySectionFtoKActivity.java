@@ -280,7 +280,7 @@ public class NewZp01StudyEntrySectionFtoKActivity extends AbstractAsyncActivity 
             mZp01F.setSeaBleeding(zp01Xml.getSeaBleeding());
             mZp01F.setSeaYesBleeding(zp01Xml.getSeaYesBleeding());
             mZp01F.setSeaUti(zp01Xml.getSeaUti());
-            mZp01F.setSeaPrenatalCare(zp01Xml.getSeaDateCompleted());
+            mZp01F.setSeaPrenatalCare(zp01Xml.getSeaPrenatalCare());
             mZp01F.setSeaMutiv(zp01Xml.getSeaMutiv());
             mZp01F.setSeaIron(zp01Xml.getSeaIron());
             mZp01F.setSeaOften(zp01Xml.getSeaOften());

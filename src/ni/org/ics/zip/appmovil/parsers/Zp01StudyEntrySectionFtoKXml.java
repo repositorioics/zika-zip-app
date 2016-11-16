@@ -126,7 +126,7 @@ public class Zp01StudyEntrySectionFtoKXml{
     @Element(required=false)
     private String seaUti;
     @Element(required=false)
-    private String seaPrenatalCare;
+    private Date seaPrenatalCare;
     @Element(required=false)
     private String seaMutiv;
     @Element(required=false)
@@ -466,7 +466,7 @@ public class Zp01StudyEntrySectionFtoKXml{
         return seaUti;
     }
 
-    public String getSeaPrenatalCare() {
+    public Date getSeaPrenatalCare() {
         return seaPrenatalCare;
     }
 

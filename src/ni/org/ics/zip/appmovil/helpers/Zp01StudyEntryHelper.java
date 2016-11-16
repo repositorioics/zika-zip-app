@@ -111,7 +111,7 @@ public class Zp01StudyEntryHelper {
         studyEntrySectionAtoD.setSeaCurhtUnit(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaCurhtUnit)));
         studyEntrySectionAtoD.setSeaMotherWt(cursorAtoD.getFloat(cursorAtoD.getColumnIndex(Zp01DBConstants.seaMotherWt)));
         studyEntrySectionAtoD.setSeaMotherwtUnit(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaMotherwtUnit)));
-        studyEntrySectionAtoD.setSeaHem(cursorAtoD.getFloat(cursorAtoD.getColumnIndex(Zp01DBConstants.seaHem)));
+        if(cursorAtoD.getFloat(cursorAtoD.getColumnIndex(Zp01DBConstants.seaHem))>0) studyEntrySectionAtoD.setSeaHem(cursorAtoD.getFloat(cursorAtoD.getColumnIndex(Zp01DBConstants.seaHem)));
         if (cursorAtoD.getInt(cursorAtoD.getColumnIndex(Zp01DBConstants.seaSystolic))>0) studyEntrySectionAtoD.setSeaSystolic(cursorAtoD.getInt(cursorAtoD.getColumnIndex(Zp01DBConstants.seaSystolic)));
         if (cursorAtoD.getInt(cursorAtoD.getColumnIndex(Zp01DBConstants.seaDiastolic))>0) studyEntrySectionAtoD.setSeaDiastolic(cursorAtoD.getInt(cursorAtoD.getColumnIndex(Zp01DBConstants.seaDiastolic)));
         studyEntrySectionAtoD.setSeaTemp(cursorAtoD.getFloat(cursorAtoD.getColumnIndex(Zp01DBConstants.seaTemp)));
