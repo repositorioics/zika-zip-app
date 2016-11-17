@@ -6,6 +6,7 @@ import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionAtoD;
 import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionE;
 import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionFtoH;
 import ni.org.ics.zip.appmovil.utils.MainDBConstants;
+import ni.org.ics.zip.appmovil.utils.Zp01DBConstants;
 import ni.org.ics.zip.appmovil.utils.Zp04DBConstants;
 
 import java.util.Date;
@@ -202,11 +203,11 @@ public class Zp04TrimesterVisitHelper {
         trimesterVisitSectionAtoD.setTriAnimalsInd(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triAnimalsInd)));
         trimesterVisitSectionAtoD.setTriAnimalTyp(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triAnimalTyp)));
         trimesterVisitSectionAtoD.setTriAnimalSpecify(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triAnimalSpecify)));
-        trimesterVisitSectionAtoD.setTriNumOtherAnimal(cursorAD.getInt(cursorAD.getColumnIndex(Zp04DBConstants.triNumOtherAnimal)));
-        trimesterVisitSectionAtoD.setTriNumCattle(cursorAD.getInt(cursorAD.getColumnIndex(Zp04DBConstants.triNumCattle)));
-        trimesterVisitSectionAtoD.setTriNumPig(cursorAD.getInt(cursorAD.getColumnIndex(Zp04DBConstants.triNumPig)));
-        trimesterVisitSectionAtoD.setTriNumFowl(cursorAD.getInt(cursorAD.getColumnIndex(Zp04DBConstants.triNumFowl)));
-        trimesterVisitSectionAtoD.setTriNumGoatsSheep(cursorAD.getInt(cursorAD.getColumnIndex(Zp04DBConstants.triNumGoatsSheep)));
+        if(cursorAD.getInt(cursorAD.getColumnIndex(Zp04DBConstants.triNumOtherAnimal))>0) trimesterVisitSectionAtoD.setTriNumOtherAnimal(cursorAD.getInt(cursorAD.getColumnIndex(Zp04DBConstants.triNumOtherAnimal)));
+        if(cursorAD.getInt(cursorAD.getColumnIndex(Zp04DBConstants.triNumCattle))>0) trimesterVisitSectionAtoD.setTriNumCattle(cursorAD.getInt(cursorAD.getColumnIndex(Zp04DBConstants.triNumCattle)));
+        if(cursorAD.getInt(cursorAD.getColumnIndex(Zp04DBConstants.triNumPig))>0) trimesterVisitSectionAtoD.setTriNumPig(cursorAD.getInt(cursorAD.getColumnIndex(Zp04DBConstants.triNumPig)));
+        if(cursorAD.getInt(cursorAD.getColumnIndex(Zp04DBConstants.triNumFowl))>0) trimesterVisitSectionAtoD.setTriNumFowl(cursorAD.getInt(cursorAD.getColumnIndex(Zp04DBConstants.triNumFowl)));
+        if(cursorAD.getInt(cursorAD.getColumnIndex(Zp04DBConstants.triNumGoatsSheep))>0) trimesterVisitSectionAtoD.setTriNumGoatsSheep(cursorAD.getInt(cursorAD.getColumnIndex(Zp04DBConstants.triNumGoatsSheep)));
         trimesterVisitSectionAtoD.setTriDrugUseInd(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triDrugUseInd)));
         trimesterVisitSectionAtoD.setTriSmokeInd(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triSmokeInd)));
         trimesterVisitSectionAtoD.setTriSmokeEverInd(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triSmokeEverInd)));

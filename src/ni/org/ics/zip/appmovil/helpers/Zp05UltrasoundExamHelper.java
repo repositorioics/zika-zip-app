@@ -161,7 +161,7 @@ public class Zp05UltrasoundExamHelper {
         ultrasoundExam.setUltSfindingsSpecify1(cursor.getString(cursor.getColumnIndex(Zp05DBConstants.ultSfindingsSpecify1)));
         ultrasoundExam.setUltFurtherExamination1(cursor.getString(cursor.getColumnIndex(Zp05DBConstants.ultFurtherExamination1)));
         ultrasoundExam.setUltSplacental1(cursor.getString(cursor.getColumnIndex(Zp05DBConstants.ultSplacental1)));
-        ultrasoundExam.setUltSnumFetuses(cursor.getInt(cursor.getColumnIndex(Zp05DBConstants.ultSnumFetuses))); //permite 0
+        if(cursor.getInt(cursor.getColumnIndex(Zp05DBConstants.ultSnumFetuses))>0)  ultrasoundExam.setUltSnumFetuses(cursor.getInt(cursor.getColumnIndex(Zp05DBConstants.ultSnumFetuses)));
         ultrasoundExam.setUltSfetusViable1(cursor.getString(cursor.getColumnIndex(Zp05DBConstants.ultSfetusViable1)));
         ultrasoundExam.setUltSfetalCardia1(cursor.getString(cursor.getColumnIndex(Zp05DBConstants.ultSfetalCardia1)));
         if (cursor.getFloat(cursor.getColumnIndex(Zp05DBConstants.ultSfetalHeart1))>0) ultrasoundExam.setUltSfetalHeart1(cursor.getFloat(cursor.getColumnIndex(Zp05DBConstants.ultSfetalHeart1)));
