@@ -212,7 +212,7 @@ public class Zp02BiospecimenCollectionHelper {
         biospecimenCollection.setBscMatHomUrnCol(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatHomUrnCol)));
         biospecimenCollection.setBscMatHomUrnRsn(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatHomUrnRsn)));
         biospecimenCollection.setBscMatHomUrnSpecify(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatHomUrnSpecify)));
-        biospecimenCollection.setBscMatHomUrnNum(cursorBC.getInt(cursorBC.getColumnIndex(Zp02DBConstants.bscMatHomUrnNum)));//permite 0
+        if(cursorBC.getFloat(cursorBC.getColumnIndex(Zp02DBConstants.bscMatHomUrnNum))>0) biospecimenCollection.setBscMatHomUrnNum(cursorBC.getInt(cursorBC.getColumnIndex(Zp02DBConstants.bscMatHomUrnNum)));
         biospecimenCollection.setBscMatHomUrnId1(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatHomUrnId1)));
         if (cursorBC.getLong(cursorBC.getColumnIndex(Zp02DBConstants.bscMatHomUrnDat1))>0) biospecimenCollection.setBscMatHomUrnDat1(new Date(cursorBC.getLong(cursorBC.getColumnIndex(Zp02DBConstants.bscMatHomUrnDat1))));
         biospecimenCollection.setBscMatHomUrnTime1(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatHomUrnTime1)));
@@ -236,7 +236,7 @@ public class Zp02BiospecimenCollectionHelper {
         biospecimenCollection.setBscMatAmfRsn(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatAmfRsn)));
         biospecimenCollection.setBscMatAmfSpecify(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatAmfSpecify)));
         biospecimenCollection.setBscMatAmfId(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatAmfId)));
-        biospecimenCollection.setBscMatAmfAmount(cursorBC.getFloat(cursorBC.getColumnIndex(Zp02DBConstants.bscMatAmfAmount)));
+        if (cursorBC.getFloat(cursorBC.getColumnIndex(Zp02DBConstants.bscMatAmfAmount))>0) biospecimenCollection.setBscMatAmfAmount(cursorBC.getFloat(cursorBC.getColumnIndex(Zp02DBConstants.bscMatAmfAmount)));
         biospecimenCollection.setBscMatAmfTime(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatAmfTime)));
         biospecimenCollection.setBscMatAmfCom(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatAmfCom)));
         biospecimenCollection.setBscMatCordCol(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatCordCol)));
@@ -244,7 +244,7 @@ public class Zp02BiospecimenCollectionHelper {
         biospecimenCollection.setBscMatCordSpecify(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatCordSpecify)));
         biospecimenCollection.setBscMatCordId(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatCordId)));
         biospecimenCollection.setBscMatCordTime(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatCordTime)));
-        biospecimenCollection.setBscMatCordAmount(cursorBC.getFloat(cursorBC.getColumnIndex(Zp02DBConstants.bscMatCordAmount)));
+        if(cursorBC.getFloat(cursorBC.getColumnIndex(Zp02DBConstants.bscMatCordAmount))>0) biospecimenCollection.setBscMatCordAmount(cursorBC.getFloat(cursorBC.getColumnIndex(Zp02DBConstants.bscMatCordAmount)));
         biospecimenCollection.setBscMatCordCom(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatCordCom)));
         biospecimenCollection.setBscMatPlacenCol(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatPlacenCol)));
         biospecimenCollection.setBscMatPlacenRsn(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatPlacenRsn)));
@@ -258,7 +258,7 @@ public class Zp02BiospecimenCollectionHelper {
         biospecimenCollection.setBscMatBreastmSpecify(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatBreastmSpecify)));
         biospecimenCollection.setBscMatBreastmId(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatBreastmId)));
         biospecimenCollection.setBscMatBreastmTime(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatBreastmTime)));
-        biospecimenCollection.setBscMatBreastmAmount(cursorBC.getFloat(cursorBC.getColumnIndex(Zp02DBConstants.bscMatBreastmAmount)));
+        if(cursorBC.getFloat(cursorBC.getColumnIndex(Zp02DBConstants.bscMatBreastmAmount))>0) biospecimenCollection.setBscMatBreastmAmount(cursorBC.getFloat(cursorBC.getColumnIndex(Zp02DBConstants.bscMatBreastmAmount)));
         biospecimenCollection.setBscMatBreastmCom(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatBreastmCom)));
         biospecimenCollection.setBscMatMiscarr(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatMiscarr)));
         biospecimenCollection.setBscMatFetaltCol(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatFetaltCol)));
@@ -270,7 +270,7 @@ public class Zp02BiospecimenCollectionHelper {
         biospecimenCollection.setBscMatdBreastmSpecify(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatdBreastmSpecify)));
         biospecimenCollection.setBscMatdBreastmId(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatdBreastmId)));
         biospecimenCollection.setBscMatdBreastmTime(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatdBreastmTime)));
-        biospecimenCollection.setBscMatdBreastmAmou(cursorBC.getFloat(cursorBC.getColumnIndex(Zp02DBConstants.bscMatdBreastmAmou)));
+        if(cursorBC.getFloat(cursorBC.getColumnIndex(Zp02DBConstants.bscMatdBreastmAmou))>0) biospecimenCollection.setBscMatdBreastmAmou(cursorBC.getFloat(cursorBC.getColumnIndex(Zp02DBConstants.bscMatdBreastmAmou)));
         biospecimenCollection.setBscMatdBreastmCom(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatdBreastmCom)));
         biospecimenCollection.setBscPerson1(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscPerson1)));
         if (cursorBC.getLong(cursorBC.getColumnIndex(Zp02DBConstants.bscCompleteDate1))>0) biospecimenCollection.setBscCompleteDate1(new Date(cursorBC.getLong(cursorBC.getColumnIndex(Zp02DBConstants.bscCompleteDate1))));

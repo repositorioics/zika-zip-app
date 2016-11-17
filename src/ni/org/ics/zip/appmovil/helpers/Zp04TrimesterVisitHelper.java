@@ -325,8 +325,8 @@ public class Zp04TrimesterVisitHelper {
         cv.put(Zp04DBConstants.tri24HrsFleaTickPrev, trimesterVisitSectionE.getTri24HrsFleaTickPrev());
         cv.put(Zp04DBConstants.triBrandFleaTickPrev, trimesterVisitSectionE.getTriFleaTickPrev());
         cv.put(Zp04DBConstants.triFleaTickPrev, trimesterVisitSectionE.getTriFleaTickPrev());
-        cv.put(Zp04DBConstants.tri24HrsFleaTickSpry, trimesterVisitSectionE.getTriFleaTickSpry());
-        cv.put(Zp04DBConstants.triBrandFleaTickSpry, trimesterVisitSectionE.getTriFleaTickSpry());
+        cv.put(Zp04DBConstants.tri24HrsFleaTickSpry, trimesterVisitSectionE.getTri24HrsFleaTickSpry());
+        cv.put(Zp04DBConstants.triBrandFleaTickSpry, trimesterVisitSectionE.getTriBrandFleaTickSpry());
         cv.put(Zp04DBConstants.triFleaTickSpry, trimesterVisitSectionE.getTriFleaTickSpry());
         cv.put(Zp04DBConstants.tri24HrsCaritin, trimesterVisitSectionE.getTri24HrsCaritin());
         cv.put(Zp04DBConstants.triBrandCaritin, trimesterVisitSectionE.getTriBrandCaritin());
