@@ -8,6 +8,10 @@ import java.util.ListIterator;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.domain.Zp00Screening;
 import ni.org.ics.zip.appmovil.domain.Zp01StudyEntrySectionAtoD;
+import ni.org.ics.zip.appmovil.domain.Zp01StudyEntrySectionE;
+import ni.org.ics.zip.appmovil.domain.Zp01StudyEntrySectionFtoK;
+import ni.org.ics.zip.appmovil.domain.Zp02BiospecimenCollection;
+import ni.org.ics.zip.appmovil.domain.Zp03MonthlyVisit;
 import ni.org.ics.zip.appmovil.domain.ZpPreScreening;
 import ni.org.ics.zip.appmovil.tasks.DownloadTask;
 import org.springframework.http.HttpAuthentication;
@@ -38,6 +42,10 @@ public class DownloadAllTask extends DownloadTask {
 	private List<ZpPreScreening> mPreTamizajes = null;
 	private List<Zp00Screening> mTamizajes = null;
 	private List<Zp01StudyEntrySectionAtoD> mIngresosAD = null;
+	private List<Zp01StudyEntrySectionE> mIngresosE = null;
+	private List<Zp01StudyEntrySectionFtoK> mIngresosFK = null;
+	private List<Zp02BiospecimenCollection> mCollections = null;
+	private List<Zp03MonthlyVisit> mMonthlyVisits = null;
 
 	private String error = null;
 	private String url = null;
@@ -62,8 +70,14 @@ public class DownloadAllTask extends DownloadTask {
 		publishProgress("Abriendo base de datos...","1","1");
 		zipA = new ZipAdapter(mContext, password, false);
 		zipA.open();
+		//Borrar los datos de la base de datos
 		zipA.borrarZpPreScreening();
 		zipA.borrarZp00Screening();
+		zipA.borrarZp01StudyEntrySectionAtoD();
+		zipA.borrarZp01StudyEntrySectionE();
+		zipA.borrarZp01StudyEntrySectionFtoK();
+		zipA.borrarZp02BiospecimenCollection();
+		zipA.borrarZp03MonthlyVisit();
 		try {
 			if (mPreTamizajes != null){
 				v = mPreTamizajes.size();
@@ -89,6 +103,42 @@ public class DownloadAllTask extends DownloadTask {
 				while (iter.hasNext()){
 					zipA.crearZp01StudyEntrySectionAtoD(iter.next());
 					publishProgress("Insertando ingresos(1) en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+							.valueOf(v).toString());
+				}
+			}
+			if (mIngresosE != null){
+				v = mIngresosE.size();
+				ListIterator<Zp01StudyEntrySectionE> iter = mIngresosE.listIterator();
+				while (iter.hasNext()){
+					zipA.crearZp01StudyEntrySectionE(iter.next());
+					publishProgress("Insertando ingresos(2) en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+							.valueOf(v).toString());
+				}
+			}
+			if (mIngresosFK != null){
+				v = mIngresosFK.size();
+				ListIterator<Zp01StudyEntrySectionFtoK> iter = mIngresosFK.listIterator();
+				while (iter.hasNext()){
+					zipA.crearZp01StudyEntrySectionFtoK(iter.next());
+					publishProgress("Insertando ingresos(3) en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+							.valueOf(v).toString());
+				}
+			}
+			if (mCollections != null){
+				v = mCollections.size();
+				ListIterator<Zp02BiospecimenCollection> iter = mCollections.listIterator();
+				while (iter.hasNext()){
+					zipA.crearZp02BiospecimenCollection(iter.next());
+					publishProgress("Insertando muestras en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+							.valueOf(v).toString());
+				}
+			}
+			if (mMonthlyVisits != null){
+				v = mMonthlyVisits.size();
+				ListIterator<Zp03MonthlyVisit> iter = mMonthlyVisits.listIterator();
+				while (iter.hasNext()){
+					zipA.crearZp03MonthlyVisit(iter.next());
+					publishProgress("Insertando visitas mensuales en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
 							.valueOf(v).toString());
 				}
 			}
@@ -135,7 +185,7 @@ public class DownloadAllTask extends DownloadTask {
 					Zp00Screening[].class, username);
 			// convert the array to a list and return it
 			mTamizajes = Arrays.asList(responseEntityZp00Screening.getBody());
-			//Descargar tamizajes
+			//Descargar ingresos parte 1
 			urlRequest = url + "/movil/zp01StudyEntrySectionAtoDs/{username}";
 			publishProgress("Solicitando ingresos (1)","3","14");
 			// Perform the HTTP GET request
@@ -143,6 +193,38 @@ public class DownloadAllTask extends DownloadTask {
 					Zp01StudyEntrySectionAtoD[].class, username);
 			// convert the array to a list and return it
 			mIngresosAD = Arrays.asList(responseEntityZp01StudyEntrySectionAtoD.getBody());
+			//Descargar ingresos parte 2
+			urlRequest = url + "/movil/zp01StudyEntrySectionEs/{username}";
+			publishProgress("Solicitando ingresos (2)","4","14");
+			// Perform the HTTP GET request
+			ResponseEntity<Zp01StudyEntrySectionE[]> responseEntityZp01StudyEntrySectionE = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+					Zp01StudyEntrySectionE[].class, username);
+			// convert the array to a list and return it
+			mIngresosE = Arrays.asList(responseEntityZp01StudyEntrySectionE.getBody());
+			//Descargar ingresos parte 3
+			urlRequest = url + "/movil/zp01StudyEntrySectionFtoKs/{username}";
+			publishProgress("Solicitando ingresos (3)","5","14");
+			// Perform the HTTP GET request
+			ResponseEntity<Zp01StudyEntrySectionFtoK[]> responseZp01StudyEntrySectionFtoK = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+					Zp01StudyEntrySectionFtoK[].class, username);
+			// convert the array to a list and return it
+			mIngresosFK = Arrays.asList(responseZp01StudyEntrySectionFtoK.getBody());
+			//Descargar muestras
+			urlRequest = url + "/movil/zp02BiospecimenCollections/{username}";
+			publishProgress("Solicitando muestras","6","14");
+			// Perform the HTTP GET request
+			ResponseEntity<Zp02BiospecimenCollection[]> responseZp02BiospecimenCollection = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+					Zp02BiospecimenCollection[].class, username);
+			// convert the array to a list and return it
+			mCollections = Arrays.asList(responseZp02BiospecimenCollection.getBody());
+			//Descargar visitas mensuales
+			urlRequest = url + "/movil/zp03MonthlyVisits/{username}";
+			publishProgress("Solicitando visitas mensuales","7","14");
+			// Perform the HTTP GET request
+			ResponseEntity<Zp03MonthlyVisit[]> responseZp03MonthlyVisit = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+					Zp03MonthlyVisit[].class, username);
+			// convert the array to a list and return it
+			mMonthlyVisits = Arrays.asList(responseZp03MonthlyVisit.getBody());
 			return null;
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage(), e);
