@@ -5,7 +5,7 @@ import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.listeners.UploadListener;
 import ni.org.ics.zip.appmovil.preferences.PreferencesActivity;
-import ni.org.ics.zip.appmovil.tasks.uploads.UploadTamizajesTask;
+import ni.org.ics.zip.appmovil.tasks.uploads.UploadAllTask;
 import ni.org.ics.zip.appmovil.utils.FileUtils;
 import android.app.Activity;
 import android.app.Dialog;
@@ -19,15 +19,15 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 @SuppressWarnings("deprecation")
-public class EnviarEmbarazadasActivity extends Activity implements UploadListener{
+public class UploadAllActivity extends Activity implements UploadListener{
 
-	protected static final String TAG = EnviarEmbarazadasActivity.class.getSimpleName();
+	protected static final String TAG = UploadAllActivity.class.getSimpleName();
 
 	private String username;
 	private String password;
 	private String url;
 	private SharedPreferences settings;
-	private UploadTamizajesTask uploadAllTask;
+	private UploadAllTask uploadAllTask;
 
 	private final static int PROGRESS_DIALOG = 1;
 	private ProgressDialog mProgressDialog;
@@ -61,7 +61,7 @@ public class EnviarEmbarazadasActivity extends Activity implements UploadListene
 				((MyZipApplication) this.getApplication()).getPassApp();
 
 		// get the task if we've changed orientations. If it's null it's a new upload.
-		uploadAllTask = (UploadTamizajesTask) getLastNonConfigurationInstance();
+		uploadAllTask = (UploadAllTask) getLastNonConfigurationInstance();
 		if (uploadAllTask == null) {
 			uploadAll();
 		}
@@ -180,8 +180,8 @@ public class EnviarEmbarazadasActivity extends Activity implements UploadListene
 	}
 
 	private void uploadAll() {
-		uploadAllTask =  new UploadTamizajesTask(this.getApplicationContext());
-		uploadAllTask.setUploadListener(EnviarEmbarazadasActivity.this);
+		uploadAllTask =  new UploadAllTask(this.getApplicationContext());
+		uploadAllTask.setUploadListener(UploadAllActivity.this);
 		uploadAllTask.execute(url,username,password);
 		showDialog(PROGRESS_DIALOG);
 	} 

@@ -39,12 +39,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ni.org.ics.zip.appmovil.MainActivity" />
-        <activity android:name="ni.org.ics.zip.appmovil.activities.DataEnterActivity" />
-        <activity android:name="ni.org.ics.zip.appmovil.activities.buscar.BuscarEmbarazadaActivity" />
+        <activity android:name="ni.org.ics.zip.appmovil.MainActivity" 
+            android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.zip.appmovil.activities.DataEnterActivity" 
+            android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.zip.appmovil.activities.buscar.BuscarEmbarazadaActivity"
+            android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp00ScreeningActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name="ni.org.ics.zip.appmovil.activities.server.EnviarEmbarazadasActivity" />
+        <activity android:name="ni.org.ics.zip.appmovil.activities.server.UploadAllActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.zip.appmovil.activities.server.DownloadAllActivity"
+            android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.zip.appmovil.activities.paginas.MenuEmbarazadasActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.IngresoActivity"

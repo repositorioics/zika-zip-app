@@ -2,7 +2,8 @@ package ni.org.ics.zip.appmovil;
 
 
 import ni.org.ics.zip.appmovil.activities.buscar.BuscarEmbarazadaActivity;
-import ni.org.ics.zip.appmovil.activities.server.EnviarEmbarazadasActivity;
+import ni.org.ics.zip.appmovil.activities.server.DownloadAllActivity;
+import ni.org.ics.zip.appmovil.activities.server.UploadAllActivity;
 import ni.org.ics.zip.appmovil.adapters.MainActivityAdapter;
 import ni.org.ics.zip.appmovil.preferences.PreferencesActivity;
 import android.os.Bundle;
@@ -10,15 +11,10 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends ListActivity {
@@ -30,14 +26,6 @@ public class MainActivity extends ListActivity {
 	private static final int EXIT = 1;
 	private static final int DOWNLOAD = 2;
 	private static final int UPLOAD = 3;
-
-	private static final String EXIT_SHOWING = "exitshowing";
-	private static final String SEND_SHOWING = "sendshowing";
-	private static final String RECEIVE_SHOWING = "receiveshowing";
-	
-	private boolean mExitShowing;
-	private boolean mSendShowing;
-	private boolean mReceiveShowing;
 	
 	private AlertDialog alertDialog;
 
@@ -47,17 +35,6 @@ public class MainActivity extends ListActivity {
 		setContentView(R.layout.activity_main);
 		String[] menu_main = getResources().getStringArray(R.array.menu_main);
 		setListAdapter(new MainActivityAdapter(this, R.layout.menu_item, menu_main));
-		if (savedInstanceState != null) {
-			if (savedInstanceState.containsKey(EXIT_SHOWING)) {
-				mExitShowing = savedInstanceState.getBoolean(EXIT_SHOWING, false);
-			}
-			if (savedInstanceState.containsKey(SEND_SHOWING)) {
-				mSendShowing = savedInstanceState.getBoolean(SEND_SHOWING, false);
-			}
-			if (savedInstanceState.containsKey(RECEIVE_SHOWING)) {
-				mReceiveShowing = savedInstanceState.getBoolean(RECEIVE_SHOWING, false);
-			}
-		}
 	}
 
 	@Override
@@ -114,32 +91,17 @@ public class MainActivity extends ListActivity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putBoolean(EXIT_SHOWING, mExitShowing);
-		outState.putBoolean(SEND_SHOWING, mSendShowing);
-		outState.putBoolean(RECEIVE_SHOWING, mReceiveShowing);
 	}
 
 
 	@Override
 	protected void onResume() {
-		if (mExitShowing) {
-			createDialog(EXIT);
-		}
-		if (mSendShowing) {
-			createDialog(UPLOAD);
-		}
-		if (mReceiveShowing) {
-			createDialog(DOWNLOAD);
-		}
 		super.onResume();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if (alertDialog != null && alertDialog.isShowing()) {
-			alertDialog.dismiss();
-		}
 	}
 
 	@Override
@@ -157,7 +119,6 @@ public class MainActivity extends ListActivity {
 				public void onClick(DialogInterface dialog, int which) {
 					// Finish app
 					dialog.dismiss();
-					mExitShowing=false;
 					finish();
 				}
 			});
@@ -166,10 +127,8 @@ public class MainActivity extends ListActivity {
 				public void onClick(DialogInterface dialog, int which) {
 					// Do nothing
 					dialog.dismiss();
-					mExitShowing=false;
 				}
 			});
-			mExitShowing=true;
 			break;
 		case DOWNLOAD:
 			builder.setTitle(this.getString(R.string.confirm));
@@ -178,10 +137,8 @@ public class MainActivity extends ListActivity {
 			builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
-					mReceiveShowing=false;
-					//Intent ie = new Intent(getApplicationContext(), DownloadAllActivity.class);
-					//startActivityForResult(ie, UPDATE_EQUIPO);
-					showToast("Test", 0);
+					Intent ie = new Intent(getApplicationContext(), DownloadAllActivity.class);
+					startActivityForResult(ie, UPDATE_EQUIPO);
 				}
 			});
 			builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
@@ -189,10 +146,8 @@ public class MainActivity extends ListActivity {
 				public void onClick(DialogInterface dialog, int which) {
 					// Do nothing
 					dialog.dismiss();
-					mReceiveShowing=false;
 				}
 			});
-			mReceiveShowing=true;
 			break;
 		case UPLOAD:
 			builder.setTitle(this.getString(R.string.confirm));
@@ -201,8 +156,7 @@ public class MainActivity extends ListActivity {
 			builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
-					mSendShowing=false;
-					Intent ie = new Intent(getApplicationContext(), EnviarEmbarazadasActivity.class);
+					Intent ie = new Intent(getApplicationContext(), UploadAllActivity.class);
 					startActivityForResult(ie, UPDATE_SERVER);
 				}
 			});
@@ -211,10 +165,8 @@ public class MainActivity extends ListActivity {
 				public void onClick(DialogInterface dialog, int which) {
 					// Do nothing
 					dialog.dismiss();
-					mSendShowing=false;
 				}
 			});
-			mSendShowing=true;
 			break;
 		default:
 			break;
@@ -262,37 +214,5 @@ public class MainActivity extends ListActivity {
 			}
 			return;
 		}
-	}
-
-	private void showToast(String mensaje, int numImage){
-		LayoutInflater inflater = getLayoutInflater();
-
-		View layout = inflater.inflate(R.layout.toast,
-				(ViewGroup) findViewById(R.id.toast_layout_root));
-
-		ImageView image = (ImageView) layout.findViewById(R.id.image);
-
-		switch(numImage){
-		case 0:
-			image.setImageResource(R.drawable.ic_ok);
-			break;
-		case 1:
-			image.setImageResource(R.drawable.ic_error);
-			break;
-		default:
-			image.setImageResource(R.drawable.ic_launcher);
-			break;
-		}
-
-
-		TextView text = (TextView) layout.findViewById(R.id.text);
-		text.setText(mensaje);
-
-		Toast toast = new Toast(getApplicationContext());
-		toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-		toast.setDuration(Toast.LENGTH_SHORT);
-		toast.setView(layout);
-		toast.show();
-
 	}
 }

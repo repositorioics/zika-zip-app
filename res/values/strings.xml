@@ -33,6 +33,7 @@
     <string name="storage_error">Medio de almacenamiento no disponible!</string>
     <string name="err_not_completed">No ha completado el formulario</string>
     <string name="err_duplicated">Error! Codigo ya existe en la base de datos!</string>
+    <string name="err_cancel">Ha cancelado el proceso!</string>
     <string name="notelegible">Participante no es elegible para participar en el estudio!</string>
     <string name="study_id">Código del estudio</string>
     <string name="pending">Pendiente</string>
