@@ -272,7 +272,12 @@ public class Zp04TrimesterVisitSectionAtoDXml {
     private String question12;
     @Element(required=false)
     private String question13;
-
+    @Element(required=false)
+    private String question14;
+    @Element(required=false)
+    private String question15;
+    @Element(required=false)
+    private String question16;
 
     @Attribute
     private String id;

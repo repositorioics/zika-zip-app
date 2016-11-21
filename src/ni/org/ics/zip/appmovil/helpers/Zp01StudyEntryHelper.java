@@ -102,7 +102,7 @@ public class Zp01StudyEntryHelper {
         studyEntrySectionAtoD.setSeaUltraMonth(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaUltraMonth)));
         studyEntrySectionAtoD.setSeaUltraYear(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaUltraYear)));
         if (cursorAtoD.getInt(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAgweeks))>0) studyEntrySectionAtoD.setSeaAgweeks(cursorAtoD.getInt(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAgweeks)));
-        studyEntrySectionAtoD.setSeaAgdays(cursorAtoD.getInt(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAgdays))); //permite 0
+        if (cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaUltravailable))!= null && cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaUltravailable)).equalsIgnoreCase("1")) studyEntrySectionAtoD.setSeaAgdays(cursorAtoD.getInt(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAgdays))); //permite 0
         if (cursorAtoD.getLong(cursorAtoD.getColumnIndex(Zp01DBConstants.seaEdd))>0) studyEntrySectionAtoD.setSeaEdd(new Date(cursorAtoD.getLong(cursorAtoD.getColumnIndex(Zp01DBConstants.seaEdd))));
         studyEntrySectionAtoD.setSeaEddUsed(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaEddUsed)));
         studyEntrySectionAtoD.setSeaPreWt(cursorAtoD.getFloat(cursorAtoD.getColumnIndex(Zp01DBConstants.seaPreWt)));
@@ -111,7 +111,7 @@ public class Zp01StudyEntryHelper {
         studyEntrySectionAtoD.setSeaCurhtUnit(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaCurhtUnit)));
         studyEntrySectionAtoD.setSeaMotherWt(cursorAtoD.getFloat(cursorAtoD.getColumnIndex(Zp01DBConstants.seaMotherWt)));
         studyEntrySectionAtoD.setSeaMotherwtUnit(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaMotherwtUnit)));
-        studyEntrySectionAtoD.setSeaHem(cursorAtoD.getFloat(cursorAtoD.getColumnIndex(Zp01DBConstants.seaHem)));
+        if(cursorAtoD.getFloat(cursorAtoD.getColumnIndex(Zp01DBConstants.seaHem))>0) studyEntrySectionAtoD.setSeaHem(cursorAtoD.getFloat(cursorAtoD.getColumnIndex(Zp01DBConstants.seaHem)));
         if (cursorAtoD.getInt(cursorAtoD.getColumnIndex(Zp01DBConstants.seaSystolic))>0) studyEntrySectionAtoD.setSeaSystolic(cursorAtoD.getInt(cursorAtoD.getColumnIndex(Zp01DBConstants.seaSystolic)));
         if (cursorAtoD.getInt(cursorAtoD.getColumnIndex(Zp01DBConstants.seaDiastolic))>0) studyEntrySectionAtoD.setSeaDiastolic(cursorAtoD.getInt(cursorAtoD.getColumnIndex(Zp01DBConstants.seaDiastolic)));
         studyEntrySectionAtoD.setSeaTemp(cursorAtoD.getFloat(cursorAtoD.getColumnIndex(Zp01DBConstants.seaTemp)));
@@ -120,7 +120,7 @@ public class Zp01StudyEntryHelper {
         studyEntrySectionAtoD.setSeaState(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaState)));
         studyEntrySectionAtoD.setSeaCountry(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaCountry)));
         studyEntrySectionAtoD.setSeaLive(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaLive)));
-        studyEntrySectionAtoD.setSeaAgeLeave(cursorAtoD.getInt(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAgeLeave))); //permite 0
+        if(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaLive)) != null && cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaLive)).equals("0")) studyEntrySectionAtoD.setSeaAgeLeave(cursorAtoD.getInt(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAgeLeave)));
         studyEntrySectionAtoD.setSeaLeavena(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaLeavena)));
         studyEntrySectionAtoD.setSeaMstatus(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaMstatus)));
         studyEntrySectionAtoD.setSeaRace(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaRace)));
