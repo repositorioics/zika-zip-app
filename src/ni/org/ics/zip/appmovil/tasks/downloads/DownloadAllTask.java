@@ -6,13 +6,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
-import ni.org.ics.zip.appmovil.domain.Zp00Screening;
-import ni.org.ics.zip.appmovil.domain.Zp01StudyEntrySectionAtoD;
-import ni.org.ics.zip.appmovil.domain.Zp01StudyEntrySectionE;
-import ni.org.ics.zip.appmovil.domain.Zp01StudyEntrySectionFtoK;
-import ni.org.ics.zip.appmovil.domain.Zp02BiospecimenCollection;
-import ni.org.ics.zip.appmovil.domain.Zp03MonthlyVisit;
-import ni.org.ics.zip.appmovil.domain.ZpPreScreening;
+import ni.org.ics.zip.appmovil.domain.*;
 import ni.org.ics.zip.appmovil.tasks.DownloadTask;
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
@@ -46,6 +40,13 @@ public class DownloadAllTask extends DownloadTask {
 	private List<Zp01StudyEntrySectionFtoK> mIngresosFK = null;
 	private List<Zp02BiospecimenCollection> mCollections = null;
 	private List<Zp03MonthlyVisit> mMonthlyVisits = null;
+    private List<Zp04TrimesterVisitSectionAtoD> mTrimesterVisitAD = null;
+    private List<Zp04TrimesterVisitSectionE> mTrimesterVisitE = null;
+    private List<Zp04TrimesterVisitSectionFtoH> mTrimesterVisitFH = null;
+    private List<Zp05UltrasoundExam> mUltrasounds = null;
+    private List<Zp06DeliveryAnd6weekVisit> mDeliverys = null;
+    private List<Zp08StudyExit> mExits = null;
+    private List<ZpEstadoEmbarazada> mStatus = null;
 
 	private String error = null;
 	private String url = null;
@@ -78,6 +79,13 @@ public class DownloadAllTask extends DownloadTask {
 		zipA.borrarZp01StudyEntrySectionFtoK();
 		zipA.borrarZp02BiospecimenCollection();
 		zipA.borrarZp03MonthlyVisit();
+        zipA.borrarZp04TrimesterVisitSectionAtoD();
+        zipA.borrarZp04TrimesterVisitSectionE();
+        zipA.borrarZp04TrimesterVisitSectionFtoH();
+        zipA.borrarZp05UltrasoundExam();
+        zipA.borrarZp06DeliveryAnd6weekVisit();
+        zipA.borrarZp08StudyExit();
+        zipA.borrarZpEstadoEmbarazada();
 		try {
 			if (mPreTamizajes != null){
 				v = mPreTamizajes.size();
@@ -142,6 +150,69 @@ public class DownloadAllTask extends DownloadTask {
 							.valueOf(v).toString());
 				}
 			}
+            if (mTrimesterVisitAD != null){
+                v = mTrimesterVisitAD.size();
+                ListIterator<Zp04TrimesterVisitSectionAtoD> iter = mTrimesterVisitAD.listIterator();
+                while (iter.hasNext()){
+                    zipA.crearZp04TrimesterVisitSectionAtoD(iter.next());
+                    publishProgress("Insertando visitas trimestrales(1) en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+            }
+            if (mTrimesterVisitE != null){
+                v = mTrimesterVisitE.size();
+                ListIterator<Zp04TrimesterVisitSectionE> iter = mTrimesterVisitE.listIterator();
+                while (iter.hasNext()){
+                    zipA.crearZp04TrimesterVisitSectionE(iter.next());
+                    publishProgress("Insertando visitas trimestrales(2) en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+            }
+            if (mTrimesterVisitFH != null){
+                v = mTrimesterVisitFH.size();
+                ListIterator<Zp04TrimesterVisitSectionFtoH> iter = mTrimesterVisitFH.listIterator();
+                while (iter.hasNext()){
+                    zipA.crearZp04TrimesterVisitSectionFtoH(iter.next());
+                    publishProgress("Insertando visitas trimestrales(3) en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+            }
+            if (mUltrasounds != null){
+                v = mUltrasounds.size();
+                ListIterator<Zp05UltrasoundExam> iter = mUltrasounds.listIterator();
+                while (iter.hasNext()){
+                    zipA.crearZp05UltrasoundExam(iter.next());
+                    publishProgress("Insertando ultrasonidos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+            }
+            if (mDeliverys != null){
+                v = mDeliverys.size();
+                ListIterator<Zp06DeliveryAnd6weekVisit> iter = mDeliverys.listIterator();
+                while (iter.hasNext()){
+                    zipA.crearZp06DeliveryAnd6weekVisit(iter.next());
+                    publishProgress("Insertando partos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+            }
+            if (mExits != null){
+                v = mExits.size();
+                ListIterator<Zp08StudyExit> iter = mExits.listIterator();
+                while (iter.hasNext()){
+                    zipA.crearZp08StudyExit(iter.next());
+                    publishProgress("Insertando salidas del estudio en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+            }
+            if (mStatus != null){
+                v = mStatus.size();
+                ListIterator<ZpEstadoEmbarazada> iter = mStatus.listIterator();
+                while (iter.hasNext()){
+                    zipA.crearZpEstadoEmbarazada(iter.next());
+                    publishProgress("Insertando estado de embarazadas en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+            }
 		} catch (Exception e) {
 			// Regresa error al insertar
 			e.printStackTrace();
@@ -225,6 +296,63 @@ public class DownloadAllTask extends DownloadTask {
 					Zp03MonthlyVisit[].class, username);
 			// convert the array to a list and return it
 			mMonthlyVisits = Arrays.asList(responseZp03MonthlyVisit.getBody());
+            //Descargar visitas trimestrales parte 1
+            urlRequest = url + "/movil/zp04TrimesterVisitSectionAtoDs/{username}";
+            publishProgress("Solicitando visitas trimestrales (1)","8","14");
+            // Perform the HTTP GET request
+            ResponseEntity<Zp04TrimesterVisitSectionAtoD[]> responseZp04TrimesterVisitSectionAtoD = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    Zp04TrimesterVisitSectionAtoD[].class, username);
+            // convert the array to a list and return it
+            mTrimesterVisitAD = Arrays.asList(responseZp04TrimesterVisitSectionAtoD.getBody());
+            //Descargar visitas trimestrales parte 2
+            urlRequest = url + "/movil/zp04TrimesterVisitSectionEs/{username}";
+            publishProgress("Solicitando visitas trimestrales (2)","9","14");
+            // Perform the HTTP GET request
+            ResponseEntity<Zp04TrimesterVisitSectionE[]> responseZp04TrimesterVisitSectionE = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    Zp04TrimesterVisitSectionE[].class, username);
+            // convert the array to a list and return it
+            mTrimesterVisitE = Arrays.asList(responseZp04TrimesterVisitSectionE.getBody());
+            //Descargar visitas trimestrales parte 3
+            urlRequest = url + "/movil/zp04TrimesterVisitSectionFtoHs/{username}";
+            publishProgress("Solicitando visitas trimestrales (3)","10","14");
+            // Perform the HTTP GET request
+            ResponseEntity<Zp04TrimesterVisitSectionFtoH[]> responseZp04TrimesterVisitSectionFtoH = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    Zp04TrimesterVisitSectionFtoH[].class, username);
+            // convert the array to a list and return it
+            mTrimesterVisitFH = Arrays.asList(responseZp04TrimesterVisitSectionFtoH.getBody());
+            //Descargar ultrasonidos
+            urlRequest = url + "/movil/zp05UltrasoundExams/{username}";
+            publishProgress("Solicitando ultrasonidos","11","14");
+            // Perform the HTTP GET request
+            ResponseEntity<Zp05UltrasoundExam[]> responseZp05UltrasoundExam = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    Zp05UltrasoundExam[].class, username);
+            // convert the array to a list and return it
+            mUltrasounds = Arrays.asList(responseZp05UltrasoundExam.getBody());
+            //Descargar partos
+            urlRequest = url + "/movil/zp06DeliveryAnd6weekVisits/{username}";
+            publishProgress("Solicitando partos","12","14");
+            // Perform the HTTP GET request
+            ResponseEntity<Zp06DeliveryAnd6weekVisit[]> responseZp06DeliveryAnd6weekVisit = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    Zp06DeliveryAnd6weekVisit[].class, username);
+            // convert the array to a list and return it
+            mDeliverys = Arrays.asList(responseZp06DeliveryAnd6weekVisit.getBody());
+            //Descargar salidas del estudio
+            urlRequest = url + "/movil/zp08StudyExits/{username}";
+            publishProgress("Solicitando salidas del estudio","13","14");
+            // Perform the HTTP GET request
+            ResponseEntity<Zp08StudyExit[]> responseZp08StudyExit = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    Zp08StudyExit[].class, username);
+            // convert the array to a list and return it
+            mExits = Arrays.asList(responseZp08StudyExit.getBody());
+            //Descargar estado de embarazadas
+            urlRequest = url + "/movil/zpEstadoEmb/{username}";
+            publishProgress("Solicitando estado de embarazadas","14","14");
+            // Perform the HTTP GET request
+            ResponseEntity<ZpEstadoEmbarazada[]> responseZpEstadoEmbarazada = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    ZpEstadoEmbarazada[].class, username);
+            // convert the array to a list and return it
+            mStatus = Arrays.asList(responseZpEstadoEmbarazada.getBody());
+
 			return null;
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage(), e);
