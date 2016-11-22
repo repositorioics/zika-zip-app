@@ -8,11 +8,13 @@ import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.activities.nuevos.NewPreScreeningActivity;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.domain.ZpPreScreening;
+import ni.org.ics.zip.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.zip.appmovil.utils.Constants;
 import ni.org.ics.zip.appmovil.utils.DeviceInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -28,6 +30,7 @@ import android.widget.Toast;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 public class NewPreScreeningActivity extends AbstractAsyncActivity {
 
@@ -40,7 +43,8 @@ public class NewPreScreeningActivity extends AbstractAsyncActivity {
 
 	private ZipAdapter zipA;
 	private ZpPreScreening mPreScreening = null;
-	
+	private String username;
+	private SharedPreferences settings;
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -52,6 +56,13 @@ public class NewPreScreeningActivity extends AbstractAsyncActivity {
 			ActionBar actionBar = getActionBar();
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
+		
+		settings =
+				PreferenceManager.getDefaultSharedPreferences(this);
+		username =
+				settings.getString(PreferencesActivity.KEY_USERNAME,
+						null);
+		
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
 		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
 		
@@ -181,7 +192,7 @@ public class NewPreScreeningActivity extends AbstractAsyncActivity {
 				mPreScreening.setConsecutive(consecutivo);
 				mPreScreening.setVerbalConsent(cons);
 				mPreScreening.setRecordDate(fecha);
-				mPreScreening.setRecordUser("admin");
+				mPreScreening.setRecordUser(username);
 				mPreScreening.setDeviceid(new DeviceInfo(NewPreScreeningActivity.this).getDeviceId());
 				mPreScreening.setEstado(Constants.STATUS_NOT_SUBMITTED);
 				mPreScreening.setToday(fecha);
