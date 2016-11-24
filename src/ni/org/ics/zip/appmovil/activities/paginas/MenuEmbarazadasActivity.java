@@ -124,7 +124,7 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 					i.putExtras(arguments);
 					startActivity(i);
 					break;						
-				case 23:
+				case 25:
 					i = new Intent(getApplicationContext(),
 							NewZp08StudyExitActivity.class);
 					/*Aca se pasa evento, tamizaje y estado*/
