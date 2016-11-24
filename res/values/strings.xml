@@ -13,7 +13,7 @@
     <string name="no">No</string>
     <string name="confirm">Confirmar</string>
     <string name="exiting">Realmente desea Salir?</string>
-    <string name="downloading">Descargar toda la info del servidor?</string>
+    <string name="downloading">Descargar toda la info del servidor? Esta operacion descarta toda la informacion actual en el dispositivo</string>
     <string name="uploading">Enviar toda la info al servidor?</string>
     <string name="desc_barcode">Escanear código de barras</string>
     <string name="parametro">Parámetro de búsqueda</string>
