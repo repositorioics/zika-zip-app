@@ -8,6 +8,8 @@ import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.activities.nuevos.NewZp08StudyExitActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.IngresoActivity;
+import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.MonthlyVisitActivity;
+import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.TwoWeekVisitActivity;
 import ni.org.ics.zip.appmovil.adapters.MenuEmbarazadasAdapter;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.domain.Zp00Screening;
@@ -82,7 +84,47 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 					i.putExtras(arguments);
 					startActivity(i);
 					break;
-				case 14:
+				case 1: case 3:case 5:case 7:case 9:case 11:case 13:case 15:case 17:case 19:case 21:
+					i = new Intent(getApplicationContext(),
+							TwoWeekVisitActivity.class);
+					/*Aca se pasa evento, tamizaje y estado*/
+					if(position==1)	arguments.putString(Constants.EVENT, Constants.WEEK2);
+					if(position==3)	arguments.putString(Constants.EVENT, Constants.WEEK6);
+					if(position==5)	arguments.putString(Constants.EVENT, Constants.WEEK10);
+					if(position==7)	arguments.putString(Constants.EVENT, Constants.WEEK14);
+					if(position==9)	arguments.putString(Constants.EVENT, Constants.WEEK18);
+					if(position==11)	arguments.putString(Constants.EVENT, Constants.WEEK22);
+					if(position==13)	arguments.putString(Constants.EVENT, Constants.WEEK26);
+					if(position==15)	arguments.putString(Constants.EVENT, Constants.WEEK30);
+					if(position==17)	arguments.putString(Constants.EVENT, Constants.WEEK34);
+					if(position==19)	arguments.putString(Constants.EVENT, Constants.WEEK38);
+					if(position==21)	arguments.putString(Constants.EVENT, Constants.WEEK42);
+					if (zp00!=null) arguments.putSerializable(Constants.OBJECTO_ZP00 , zp00);
+					if (zpEstado!=null) arguments.putSerializable(Constants.OBJECTO_ZPEST , zpEstado);
+					i.putExtras(arguments);
+					startActivity(i);
+					break;		
+				case 2: case 4:case 6:case 8:case 10:case 12:case 14:case 16:case 18:case 20:case 22:
+					i = new Intent(getApplicationContext(),
+							MonthlyVisitActivity.class);
+					/*Aca se pasa evento, tamizaje y estado*/
+					if(position==2)	arguments.putString(Constants.EVENT, Constants.WEEK4);
+					if(position==4)	arguments.putString(Constants.EVENT, Constants.WEEK8);
+					if(position==6)	arguments.putString(Constants.EVENT, Constants.WEEK12);
+					if(position==8)	arguments.putString(Constants.EVENT, Constants.WEEK16);
+					if(position==10)	arguments.putString(Constants.EVENT, Constants.WEEK20);
+					if(position==12)	arguments.putString(Constants.EVENT, Constants.WEEK24);
+					if(position==14)	arguments.putString(Constants.EVENT, Constants.WEEK28);
+					if(position==16)	arguments.putString(Constants.EVENT, Constants.WEEK32);
+					if(position==18)	arguments.putString(Constants.EVENT, Constants.WEEK36);
+					if(position==20)	arguments.putString(Constants.EVENT, Constants.WEEK40);
+					if(position==22)	arguments.putString(Constants.EVENT, Constants.WEEK44);
+					if (zp00!=null) arguments.putSerializable(Constants.OBJECTO_ZP00 , zp00);
+					if (zpEstado!=null) arguments.putSerializable(Constants.OBJECTO_ZPEST , zpEstado);
+					i.putExtras(arguments);
+					startActivity(i);
+					break;						
+				case 23:
 					i = new Intent(getApplicationContext(),
 							NewZp08StudyExitActivity.class);
 					/*Aca se pasa evento, tamizaje y estado*/

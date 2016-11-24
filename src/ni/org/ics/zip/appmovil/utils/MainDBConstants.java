@@ -190,16 +190,27 @@ public class MainDBConstants {
 		public static final String STATUS_PREG_TABLE = "estado_embarazada";
 		//Campos estado embarazada
 		public static final String ingreso = "ingreso";
+		public static final String sem2 = "sem2";
 		public static final String sem4 = "sem4";
+		public static final String sem6 = "sem6";
 		public static final String sem8 = "sem8";
+		public static final String sem10 = "sem10";
 		public static final String sem12 = "sem12";
+		public static final String sem14 = "sem14";
 		public static final String sem16 = "sem16";
+		public static final String sem18 = "sem18";
 		public static final String sem20 = "sem20";
+		public static final String sem22 = "sem22";
 		public static final String sem24 = "sem24";
+		public static final String sem26 = "sem26";
 		public static final String sem28 = "sem28";
+		public static final String sem30 = "sem30";
 		public static final String sem32 = "sem32";
+		public static final String sem34 = "sem34";
 		public static final String sem36 = "sem36";
+		public static final String sem38 = "sem38";
 		public static final String sem40 = "sem40";
+		public static final String sem42 = "sem42";
 		public static final String sem44 = "sem44";
 		public static final String parto = "parto";
 		public static final String posparto = "posparto";
@@ -209,16 +220,27 @@ public class MainDBConstants {
 				+ STATUS_PREG_TABLE + " ("
 				+ recordId + " text not null, "
 				+ ingreso + " text, "
+				+ sem2 + " text, "
 				+ sem4 + " text, "
+				+ sem6 + " text, "
 				+ sem8 + " text, "
+				+ sem10 + " text, "
 				+ sem12 + " text, "
+				+ sem14 + " text, "
 				+ sem16 + " text, "
+				+ sem18 + " text, "
 				+ sem20 + " text, "
+				+ sem22 + " text, "
 				+ sem24 + " text, "
+				+ sem26 + " text, "
 				+ sem28 + " text, "
+				+ sem30 + " text, "
 				+ sem32 + " text, "
+				+ sem34 + " text, "
 				+ sem36 + " text, "
+				+ sem38 + " text, "
 				+ sem40 + " text, "
+				+ sem42 + " text, "
 				+ sem44 + " text, "
 				+ parto + " text, "
 				+ posparto + " text, "

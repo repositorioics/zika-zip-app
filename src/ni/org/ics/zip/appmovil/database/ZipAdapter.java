@@ -428,7 +428,7 @@ public class ZipAdapter {
     public boolean editarZp01StudyEntrySectionAtoD(Zp01StudyEntrySectionAtoD studyEntrySectionAtoD) {
         ContentValues cv = Zp01StudyEntryHelper.crearZp01StudyEntrySectionAtoDValues(studyEntrySectionAtoD);
         return mDb.update(Zp01DBConstants.STUDYENTRY_AD_TABLE, cv, Zp01DBConstants.recordId + "='"
-                + studyEntrySectionAtoD.getRecordId()+"'", null) > 0;
+                + studyEntrySectionAtoD.getRecordId()+ "' and " + Zp01DBConstants.redcapEventName + "='" + studyEntrySectionAtoD.getRedcapEventName() +"'", null) > 0;
     }
     //Limpiar la tabla de Zp01StudyEntrySectionAtoD de la base de datos
     public boolean borrarZp01StudyEntrySectionAtoD() {
@@ -475,7 +475,7 @@ public class ZipAdapter {
     public boolean editarZp01StudyEntrySectionE(Zp01StudyEntrySectionE studyEntrySectionE) {
         ContentValues cv = Zp01StudyEntryHelper.crearZp01StudyEntrySectionEValues(studyEntrySectionE);
         return mDb.update(Zp01DBConstants.STUDYENTRY_E_TABLE, cv, Zp01DBConstants.recordId + "='"
-                + studyEntrySectionE.getRecordId() + "'", null) > 0;
+                + studyEntrySectionE.getRecordId() + "' and " + Zp01DBConstants.redcapEventName + "='" + studyEntrySectionE.getRedcapEventName() +"'", null) > 0;
     }
     //Limpiar la tabla de Zp01StudyEntrySectionE de la base de datos
     public boolean borrarZp01StudyEntrySectionE() {
@@ -522,7 +522,7 @@ public class ZipAdapter {
     public boolean editarZp01StudyEntrySectionFtoK(Zp01StudyEntrySectionFtoK studyEntrySectionFtoK) {
         ContentValues cv = Zp01StudyEntryHelper.crearZp01StudyEntrySectionFtoKValues(studyEntrySectionFtoK);
         return mDb.update(Zp01DBConstants.STUDYENTRY_FK_TABLE, cv, Zp01DBConstants.recordId + "='"
-                + studyEntrySectionFtoK.getRecordId() + "'", null) > 0;
+                + studyEntrySectionFtoK.getRecordId() + "' and " + Zp01DBConstants.redcapEventName + "='" + studyEntrySectionFtoK.getRedcapEventName() +"'", null) > 0;
     }
     //Limpiar la tabla de Zp01StudyEntrySectionFtoK de la base de datos
     public boolean borrarZp01StudyEntrySectionFtoK() {
@@ -569,7 +569,7 @@ public class ZipAdapter {
     public boolean editarZp02BiospecimenCollection(Zp02BiospecimenCollection biospecimenCollection) {
         ContentValues cv = Zp02BiospecimenCollectionHelper.crearZp02BiospecimenCollection(biospecimenCollection);
         return mDb.update(Zp02DBConstants.BIOCOLLECTION_TABLE, cv, Zp02DBConstants.recordId + "='"
-                + biospecimenCollection.getRecordId() + "'", null) > 0;
+                + biospecimenCollection.getRecordId() + "' and " + Zp02DBConstants.redcapEventName + "='" + biospecimenCollection.getRedcapEventName() +"'", null) > 0;
     }
     //Limpiar la tabla de Zp02BiospecimenCollection de la base de datos
     public boolean borrarZp02BiospecimenCollection() {
@@ -616,7 +616,7 @@ public class ZipAdapter {
     public boolean editarZp03MonthlyVisit(Zp03MonthlyVisit monthlyVisit) {
         ContentValues cv = Zp03MonthlyVisitHelper.crearZp03MonthlyVisit(monthlyVisit);
         return mDb.update(Zp03DBConstants.MONTHLYVISIT_TABLE, cv, Zp03DBConstants.recordId + "='"
-                + monthlyVisit.getRecordId() + "'", null) > 0;
+                + monthlyVisit.getRecordId() + "' and " + Zp03DBConstants.redcapEventName + "='" + monthlyVisit.getRedcapEventName() +"'", null) > 0;
     }
     //Limpiar la tabla de Zp03MonthlyVisit de la base de datos
     public boolean borrarZp03MonthlyVisit() {
@@ -663,7 +663,7 @@ public class ZipAdapter {
     public boolean editarZp04TrimesterVisitSectionAtoD(Zp04TrimesterVisitSectionAtoD trimesterVisitSectionAtoD) {
         ContentValues cv = Zp04TrimesterVisitHelper.crearZp04TrimesterVisitSectionAtoD(trimesterVisitSectionAtoD);
         return mDb.update(Zp04DBConstants.TRIMESTERVISIT_AD_TABLE, cv, Zp04DBConstants.recordId + "='"
-                + trimesterVisitSectionAtoD.getRecordId() + "'", null) > 0;
+                + trimesterVisitSectionAtoD.getRecordId() + "' and " + Zp04DBConstants.redcapEventName + "='" + trimesterVisitSectionAtoD.getRedcapEventName() +"'", null) > 0;
     }
     //Limpiar la tabla de Zp04TrimesterVisitSectionAtoD de la base de datos
     public boolean borrarZp04TrimesterVisitSectionAtoD() {
@@ -710,7 +710,7 @@ public class ZipAdapter {
     public boolean editarZp04TrimesterVisitSectionE(Zp04TrimesterVisitSectionE trimesterVisitSectionE) {
         ContentValues cv = Zp04TrimesterVisitHelper.crearZp04TrimesterVisitSectionE(trimesterVisitSectionE);
         return mDb.update(Zp04DBConstants.TRIMESTERVISIT_E_TABLE, cv, Zp04DBConstants.recordId + "='"
-                + trimesterVisitSectionE.getRecordId() + "'", null) > 0;
+                + trimesterVisitSectionE.getRecordId() + "' and " + Zp04DBConstants.redcapEventName + "='" + trimesterVisitSectionE.getRedcapEventName() +"'", null) > 0;
     }
     //Limpiar la tabla de Zp04TrimesterVisitSectionE de la base de datos
     public boolean borrarZp04TrimesterVisitSectionE() {
@@ -757,7 +757,7 @@ public class ZipAdapter {
     public boolean editarZp04TrimesterVisitSectionFtoH(Zp04TrimesterVisitSectionFtoH trimesterVisitSectionFtoH) {
         ContentValues cv = Zp04TrimesterVisitHelper.crearZp04TrimesterVisitSectionFtoH(trimesterVisitSectionFtoH);
         return mDb.update(Zp04DBConstants.TRIMESTERVISIT_FH_TABLE, cv, Zp04DBConstants.recordId + "='"
-                + trimesterVisitSectionFtoH.getRecordId() + "'", null) > 0;
+                + trimesterVisitSectionFtoH.getRecordId() + "' and " + Zp04DBConstants.redcapEventName + "='" + trimesterVisitSectionFtoH.getRedcapEventName() +"'", null) > 0;
     }
     //Limpiar la tabla de Zp04TrimesterVisitSectionFtoH de la base de datos
     public boolean borrarZp04TrimesterVisitSectionFtoH() {
@@ -804,7 +804,7 @@ public class ZipAdapter {
     public boolean editarZp05UltrasoundExam(Zp05UltrasoundExam ultrasoundExam) {
         ContentValues cv = Zp05UltrasoundExamHelper.crearZp05UltrasoundExam(ultrasoundExam);
         return mDb.update(Zp05DBConstants.ULTRASOUNDEXAM_TABLE, cv, Zp05DBConstants.recordId + "='"
-                + ultrasoundExam.getRecordId() + "'", null) > 0;
+                + ultrasoundExam.getRecordId() + "' and " + Zp05DBConstants.redcapEventName + "='" + ultrasoundExam.getRedcapEventName() +"'", null) > 0;
     }
     //Limpiar la tabla de Zp05UltrasoundExam de la base de datos
     public boolean borrarZp05UltrasoundExam() {
@@ -851,7 +851,7 @@ public class ZipAdapter {
     public boolean editarZp06DeliveryAnd6weekVisit(Zp06DeliveryAnd6weekVisit deliveryAnd6weekVisit) {
         ContentValues cv = Zp06DeliveryAnd6weekVisitHelper.crearZp06DeliveryAnd6weekVisit(deliveryAnd6weekVisit);
         return mDb.update(Zp06DBConstants.DELIVERY6WVISIT_TABLE, cv, Zp06DBConstants.recordId + "='"
-                + deliveryAnd6weekVisit.getRecordId() + "'", null) > 0;
+                + deliveryAnd6weekVisit.getRecordId() + "' and " + Zp06DBConstants.redcapEventName + "='" + deliveryAnd6weekVisit.getRedcapEventName() +"'", null) > 0;
     }
     //Limpiar la tabla de Zp06DeliveryAnd6weekVisit de la base de datos
     public boolean borrarZp06DeliveryAnd6weekVisit() {
@@ -898,7 +898,7 @@ public class ZipAdapter {
     public boolean editarZp08StudyExit(Zp08StudyExit studyExit) {
         ContentValues cv = Zp08StudyExitHelper.crearZp08StudyExit(studyExit);
         return mDb.update(Zp08DBConstants.STUDYEXIT_TABLE, cv, Zp08DBConstants.recordId + "='"
-                + studyExit.getRecordId() + "'", null) > 0;
+                + studyExit.getRecordId() + "' and " + Zp08DBConstants.redcapEventName + "='" + studyExit.getRedcapEventName() +"'", null) > 0;
     }
     //Limpiar la tabla de Zp08StudyExit de la base de datos
     public boolean borrarZp08StudyExit() {

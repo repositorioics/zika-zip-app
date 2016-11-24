@@ -7,20 +7,10 @@ import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.activities.nuevos.NewZp02BiospecimenCollectionActivity;
-import ni.org.ics.zip.appmovil.activities.nuevos.NewZp03MonthlyVisitActivity;
-import ni.org.ics.zip.appmovil.activities.nuevos.NewZp04TrimesterVisitSectionAtoDActivity;
-import ni.org.ics.zip.appmovil.activities.nuevos.NewZp04TrimesterVisitSectionEActivity;
-import ni.org.ics.zip.appmovil.activities.nuevos.NewZp04TrimesterVisitSectionFtoHActivity;
-import ni.org.ics.zip.appmovil.activities.nuevos.NewZp05UltrasoundExamActivity;
-import ni.org.ics.zip.appmovil.adapters.eventosembarazo.MonthlyVisitAdapter;
+import ni.org.ics.zip.appmovil.adapters.eventosembarazo.TwoWeekVisitAdapter;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.domain.Zp00Screening;
 import ni.org.ics.zip.appmovil.domain.Zp02BiospecimenCollection;
-import ni.org.ics.zip.appmovil.domain.Zp03MonthlyVisit;
-import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionAtoD;
-import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionE;
-import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionFtoH;
-import ni.org.ics.zip.appmovil.domain.Zp05UltrasoundExam;
 import ni.org.ics.zip.appmovil.domain.ZpEstadoEmbarazada;
 import ni.org.ics.zip.appmovil.utils.Constants;
 import ni.org.ics.zip.appmovil.utils.MainDBConstants;
@@ -42,17 +32,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 
-public class MonthlyVisitActivity extends AbstractAsyncActivity {
+public class TwoWeekVisitActivity extends AbstractAsyncActivity {
 	private ZipAdapter zipA;
 	private static Zp00Screening zp00 = new Zp00Screening();
 	private static ZpEstadoEmbarazada zpEstado = new ZpEstadoEmbarazada();
 	private static Zp02BiospecimenCollection zp02 = null;
-	private static Zp03MonthlyVisit zp03 = null;
-	private static Zp04TrimesterVisitSectionAtoD zp04a = null;
-	private static Zp04TrimesterVisitSectionE zp04e = null;
-    private static Zp04TrimesterVisitSectionFtoH zp04f = null;
-    private static Zp05UltrasoundExam zp05 = null;
-
+	
 	
 	private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
 	private static String evento;
@@ -88,12 +73,12 @@ public class MonthlyVisitActivity extends AbstractAsyncActivity {
 		zp00 = (Zp00Screening) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP00);
 		zpEstado = (ZpEstadoEmbarazada) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZPEST);
 		//Aca se recupera los datos de los formularios para ver si estan realizados o no...
-		new FetchDataVisitaMensualTask().execute(evento);
+		new FetchDataVisitaQuincenalTask().execute(evento);
 		textView = (TextView) findViewById(R.id.label);
 		textView.setText(getString(R.string.forms)+"\n"+
 				getString(R.string.mat_id)+": "+zp00.getRecordId()+"\n"+
 						getString(R.string.mat_fec)+": "+ mDateFormat.format(zp00.getScrVisitDate()));
-		menu_maternal_info = getResources().getStringArray(R.array.menu_maternal_mensual);
+		menu_maternal_info = getResources().getStringArray(R.array.menu_maternal_quincenal);
 		gridView = (GridView) findViewById(R.id.gridView1);
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -108,41 +93,6 @@ public class MonthlyVisitActivity extends AbstractAsyncActivity {
                     i = new Intent(getApplicationContext(),
                             NewZp02BiospecimenCollectionActivity.class);
                     if (zp02!=null) arguments.putSerializable(Constants.OBJECTO_ZP02 , zp02);
-                    i.putExtras(arguments);
-                    startActivity(i);
-                    break;
-                case 1: //VISITA
-                    i = new Intent(getApplicationContext(),
-                    		NewZp03MonthlyVisitActivity.class);
-                    if (zp03!=null) arguments.putSerializable(Constants.OBJECTO_ZP03 , zp03);
-                    i.putExtras(arguments);
-                    startActivity(i);
-                    break;
-                case 2: //PROFESION
-                    i = new Intent(getApplicationContext(),
-                            NewZp04TrimesterVisitSectionAtoDActivity.class);
-                    if (zp04a!=null) arguments.putSerializable(Constants.OBJECTO_ZP04A , zp04a);
-                    i.putExtras(arguments);
-                    startActivity(i);
-                    break;
-                case 3: //EXPOSICION
-                    i = new Intent(getApplicationContext(),
-                            NewZp04TrimesterVisitSectionEActivity.class);
-                    if (zp04e!=null) arguments.putSerializable(Constants.OBJECTO_ZP04E , zp04e);
-                    i.putExtras(arguments);
-                    startActivity(i);
-                    break;
-                case 4: //PESTICIDAS
-                    i = new Intent(getApplicationContext(),
-                            NewZp04TrimesterVisitSectionFtoHActivity.class);
-                    if (zp04f!=null) arguments.putSerializable(Constants.OBJECTO_ZP04F , zp04f);
-                    i.putExtras(arguments);
-                    startActivity(i);
-                    break;
-                case 5: //ULTRASONIDOS
-                    i = new Intent(getApplicationContext(),
-                            NewZp05UltrasoundExamActivity.class);
-                    if (zp05!=null) arguments.putSerializable(Constants.OBJECTO_ZP05 , zp05);
                     i.putExtras(arguments);
                     startActivity(i);
                     break;
@@ -178,7 +128,7 @@ public class MonthlyVisitActivity extends AbstractAsyncActivity {
 		if (mExitShowing) {
 			createDialog(EXIT);
 		}
-		new FetchDataVisitaMensualTask().execute(evento);
+		new FetchDataVisitaQuincenalTask().execute(evento);
 		super.onResume();
 	}
 
@@ -266,7 +216,7 @@ public class MonthlyVisitActivity extends AbstractAsyncActivity {
 	// ***************************************
 		// Private classes
 		// ***************************************
-		private class FetchDataVisitaMensualTask extends AsyncTask<String, Void, String> {
+		private class FetchDataVisitaQuincenalTask extends AsyncTask<String, Void, String> {
 			private String eventoaFiltrar = null;
 			private String filtro = null;
 			@Override
@@ -282,45 +232,39 @@ public class MonthlyVisitActivity extends AbstractAsyncActivity {
 					zipA.open();
 					filtro = MainDBConstants.recordId + "='" + zp00.getRecordId() + "' and " + Zp02DBConstants.redcapEventName + "='" + eventoaFiltrar +"'";
 					zp02 = zipA.getZp02BiospecimenCollection(filtro, MainDBConstants.recordId);
-					zp03 = zipA.getZp03MonthlyVisit(filtro, MainDBConstants.recordId);
-					zp04a = zipA.getZp04TrimesterVisitSectionAtoD(filtro, null);
-					zp04e = zipA.getZp04TrimesterVisitSectionE(filtro, null);
-					zp04f = zipA.getZp04TrimesterVisitSectionFtoH(filtro, null);
-					zp05 = zipA.getZp05UltrasoundExam(filtro, null);
-					if (zp02!=null && zp03!=null &&
-							zp04a!=null && zp04e!=null && zp04f!=null && zp05!=null){
-						if(eventoaFiltrar.matches(Constants.WEEK4)){
-							zpEstado.setSem4('1');
+					if (zp02!=null){
+						if(eventoaFiltrar.matches(Constants.WEEK2)){
+							zpEstado.setSem2('1');
 						}
-						else if(eventoaFiltrar.matches(Constants.WEEK8)){
-							zpEstado.setSem8('1');
+						else if(eventoaFiltrar.matches(Constants.WEEK6)){
+							zpEstado.setSem6('1');
 						}
-						else if(eventoaFiltrar.matches(Constants.WEEK12)){
-							zpEstado.setSem12('1');
+						else if(eventoaFiltrar.matches(Constants.WEEK10)){
+							zpEstado.setSem10('1');
 						}
-						else if(eventoaFiltrar.matches(Constants.WEEK16)){
-							zpEstado.setSem16('1');
+						else if(eventoaFiltrar.matches(Constants.WEEK14)){
+							zpEstado.setSem14('1');
 						}
-						else if(eventoaFiltrar.matches(Constants.WEEK20)){
-							zpEstado.setSem20('1');
+						else if(eventoaFiltrar.matches(Constants.WEEK18)){
+							zpEstado.setSem18('1');
 						}
-						else if(eventoaFiltrar.matches(Constants.WEEK24)){
-							zpEstado.setSem24('1');
+						else if(eventoaFiltrar.matches(Constants.WEEK22)){
+							zpEstado.setSem22('1');
 						}
-						else if(eventoaFiltrar.matches(Constants.WEEK28)){
-							zpEstado.setSem28('1');
+						else if(eventoaFiltrar.matches(Constants.WEEK26)){
+							zpEstado.setSem26('1');
 						}
-						else if(eventoaFiltrar.matches(Constants.WEEK32)){
-							zpEstado.setSem32('1');
+						else if(eventoaFiltrar.matches(Constants.WEEK30)){
+							zpEstado.setSem30('1');
 						}
-						else if(eventoaFiltrar.matches(Constants.WEEK36)){
-							zpEstado.setSem36('1');
+						else if(eventoaFiltrar.matches(Constants.WEEK34)){
+							zpEstado.setSem34('1');
 						}
-						else if(eventoaFiltrar.matches(Constants.WEEK40)){
-							zpEstado.setSem40('1');
+						else if(eventoaFiltrar.matches(Constants.WEEK38)){
+							zpEstado.setSem38('1');
 						}
-						else if(eventoaFiltrar.matches(Constants.WEEK44)){
-							zpEstado.setSem44('1');
+						else if(eventoaFiltrar.matches(Constants.WEEK42)){
+							zpEstado.setSem42('1');
 						}
 						zipA.editarZpEstadoEmbarazada(zpEstado);
 					}
@@ -334,9 +278,7 @@ public class MonthlyVisitActivity extends AbstractAsyncActivity {
 
 			protected void onPostExecute(String resultado) {
 				// after the network request completes, hide the progress indicator
-				gridView.setAdapter(new MonthlyVisitAdapter(getApplicationContext(), R.layout.menu_item_2, menu_maternal_info, 
-						zp02, zp03, zp04a, zp04e ,zp04f, zp05
-						));
+				gridView.setAdapter(new TwoWeekVisitAdapter(getApplicationContext(), R.layout.menu_item_2, menu_maternal_info,zp02));
 				dismissProgressDialog();
 			}
 

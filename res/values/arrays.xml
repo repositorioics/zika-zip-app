@@ -10,16 +10,27 @@
     
     <string-array name="menu_maternal_a">
         <item>@string/maternal_a_1</item>
+        <item>@string/maternal_q_1</item>
         <item>@string/maternal_a_2</item>
+        <item>@string/maternal_q_2</item>
         <item>@string/maternal_a_3</item>
+        <item>@string/maternal_q_3</item>
         <item>@string/maternal_a_4</item>
+        <item>@string/maternal_q_4</item>
         <item>@string/maternal_a_5</item>
+        <item>@string/maternal_q_5</item>
         <item>@string/maternal_a_6</item>
+        <item>@string/maternal_q_6</item>
         <item>@string/maternal_a_7</item>
+        <item>@string/maternal_q_7</item>
         <item>@string/maternal_a_8</item>
+        <item>@string/maternal_q_8</item>
         <item>@string/maternal_a_9</item>
+        <item>@string/maternal_q_9</item>
         <item>@string/maternal_a_10</item>
+        <item>@string/maternal_q_10</item>
         <item>@string/maternal_a_11</item>
+        <item>@string/maternal_q_11</item>
         <item>@string/maternal_a_12</item>
         <item>@string/maternal_a_13</item>
         <item>@string/maternal_a_14</item>
@@ -40,6 +51,19 @@
         <item>@string/maternal_b_7</item>
         <item>@string/maternal_b_8</item>
         <item>@string/maternal_b_9</item>
+    </string-array>
+    
+    <string-array name="menu_maternal_mensual">
+        <item>@string/maternal_b_4</item>
+        <item>@string/maternal_b_5</item>
+        <item>@string/maternal_b_6</item>
+        <item>@string/maternal_b_7</item>
+        <item>@string/maternal_b_8</item>
+        <item>@string/maternal_b_9</item>
+    </string-array>
+    
+    <string-array name="menu_maternal_quincenal">
+        <item>@string/maternal_b_4</item>
     </string-array>
     
     <string-array name="menu_infant">
