@@ -313,7 +313,132 @@ public class Zp02BiospecimenCollectionXml{
     private String note5;
     @Element(required=false)
     private String question1;
-
+    @Element(required=false)
+    private String question2;
+    @Element(required=false)
+    private String question3;
+    @Element(required=false)
+    private String question4;
+    @Element(required=false)
+    private String question5;
+    @Element(required=false)
+    private String question6;
+    @Element(required=false)
+    private String question7;
+    @Element(required=false)
+    private String question8;
+    @Element(required=false)
+    private String question9;
+    @Element(required=false)
+    private String question10;
+    @Element(required=false)
+    private String question11;
+    @Element(required=false)
+    private String question12;
+    @Element(required=false)
+    private String question13;
+    @Element(required=false)
+    private String question14;
+    @Element(required=false)
+    private String question15;
+    @Element(required=false)
+    private String question16;
+    @Element(required=false)
+    private String question17;
+    @Element(required=false)
+    private String question18;
+    @Element(required=false)
+    private String question19;
+    @Element(required=false)
+    private String question20;
+    @Element(required=false)
+    private String question21;
+    @Element(required=false)
+    private String question22;
+    @Element(required=false)
+    private String text1;
+    @Element(required=false)
+    private String text2;
+    @Element(required=false)
+    private String text3;
+    @Element(required=false)
+    private String text4;
+    @Element(required=false)
+    private String text5;
+    @Element(required=false)
+    private String text6;
+    @Element(required=false)
+    private String text7;
+    @Element(required=false)
+    private String text8;
+    @Element(required=false)
+    private String text9;
+    @Element(required=false)
+    private String text10;
+    @Element(required=false)
+    private String text11;
+    @Element(required=false)
+    private String text12;
+    @Element(required=false)
+    private String text13;
+    @Element(required=false)
+    private String text14;
+    @Element(required=false)
+    private String text15;
+    @Element(required=false)
+    private String text16;
+    @Element(required=false)
+    private String text17;
+    @Element(required=false)
+    private String text18;
+    @Element(required=false)
+    private String text19;
+    @Element(required=false)
+    private String text20;
+    @Element(required=false)
+    private String text21;
+    @Element(required=false)
+    private String barcode1;
+    @Element(required=false)
+    private String barcode2;
+    @Element(required=false)
+    private String barcode3;
+    @Element(required=false)
+    private String barcode4;
+    @Element(required=false)
+    private String barcode5;
+    @Element(required=false)
+    private String barcode6;
+    @Element(required=false)
+    private String barcode7;
+    @Element(required=false)
+    private String barcode8;
+    @Element(required=false)
+    private String barcode9;
+    @Element(required=false)
+    private String barcode10;
+    @Element(required=false)
+    private String barcode11;
+    @Element(required=false)
+    private String barcode12;
+    @Element(required=false)
+    private String barcode13;
+    @Element(required=false)
+    private String barcode14;
+    @Element(required=false)
+    private String barcode15;
+    @Element(required=false)
+    private String barcode16;
+    @Element(required=false)
+    private String barcode17;
+    @Element(required=false)
+    private String barcode18;
+    @Element(required=false)
+    private String barcode19;
+    @Element(required=false)
+    private String barcode20;
+    @Element(required=false)
+    private String barcode21;
 
     @Attribute
     private String id;
