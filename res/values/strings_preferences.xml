@@ -7,6 +7,7 @@
     <string name="default_server_url">http://192.168.1.136:8080/zika-zip</string>
     <string name="server_url">URL de servidor</string>
     <string name="check_server">Verificar en el servidor</string>
+    <string name="check_wipe">Limpiar base de datos</string>
     <string name="url_error">Error en la dirección</string>
     <string name="change_server_url">Cambiar URL de servidor</string>
   

@@ -63,7 +63,7 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
                 settings.getString(PreferencesActivity.KEY_USERNAME,
                         null);
         String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
-        zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
+        zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
         mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
         createInitDialog();
     }

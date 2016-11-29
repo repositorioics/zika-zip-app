@@ -66,7 +66,7 @@ public class NewZp01StudyEntrySectionFtoKActivity extends AbstractAsyncActivity 
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
 		mZp01F = (Zp01StudyEntrySectionFtoK) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP01F);
         mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
-        zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
+        zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
 		createInitDialog();
 	}
 

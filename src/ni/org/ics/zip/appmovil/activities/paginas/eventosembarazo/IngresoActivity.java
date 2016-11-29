@@ -88,7 +88,7 @@ public class IngresoActivity extends AbstractAsyncActivity {
 			}
 		}
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
-		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
+		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
 		/*Aca se recupera evento, tamizaje y estado*/
 		evento = getIntent().getStringExtra(Constants.EVENT);
 		zp00 = (Zp00Screening) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP00);

@@ -69,7 +69,7 @@ public class DownloadAllTask extends DownloadTask {
 			return e.getLocalizedMessage();
 		}
 		publishProgress("Abriendo base de datos...","1","1");
-		zipA = new ZipAdapter(mContext, password, false);
+		zipA = new ZipAdapter(mContext, password, false,false);
 		zipA.open();
 		//Borrar los datos de la base de datos
 		zipA.borrarZpPreScreening();

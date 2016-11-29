@@ -67,6 +67,7 @@ public class LoginActivity extends Activity {
 	private EditText mPasswordView;
 	private EditText mUrlView;
 	private CheckBox chkServer;
+	private CheckBox chkWipe;
 	private View mLoginFormView;
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;
@@ -98,6 +99,7 @@ public class LoginActivity extends Activity {
 		});
 
 		chkServer = (CheckBox) findViewById(R.id.checkServer);
+		chkWipe = (CheckBox) findViewById(R.id.checkWipe);
 		mUrlView = (EditText) findViewById(R.id.url);
 		mUrlView.setVisibility(View.GONE);
 
@@ -181,6 +183,12 @@ public class LoginActivity extends Activity {
 
 		if (TextUtils.isEmpty(mUser)) {
 			mUserView.setError(getString(R.string.error_field_required));
+			focusView = mUserView;
+			cancel = true;
+		}
+		
+		if (chkWipe.isChecked() && !chkServer.isChecked()) {
+			mUserView.setError(getString(R.string.error_wipe_db));
 			focusView = mUserView;
 			cancel = true;
 		}
@@ -274,7 +282,7 @@ public class LoginActivity extends Activity {
 				List<Authority> uroles = Arrays.asList(userRolesFromServer.getBody());
 				
 				successLogin=true;	
-				ZipAdapter ca = new ZipAdapter(getApplicationContext(),mPassword,true);
+				ZipAdapter ca = new ZipAdapter(getApplicationContext(),mPassword,true, chkWipe.isChecked());
 				ca.open();
 				ca.borrarUsuarios();
 				ca.borrarRoles();
@@ -287,6 +295,7 @@ public class LoginActivity extends Activity {
 				ca.close();	
 				return getString(R.string.success);
 			} catch (Exception e) {
+				successLogin=false;
 				Log.e(TAG, e.getLocalizedMessage(), e);
 				return e.getLocalizedMessage();
 			}
@@ -341,7 +350,7 @@ public class LoginActivity extends Activity {
 
 	private void ingresarLocal() {
 		//Presenta la actividad principal si valida localmente
-		ZipAdapter ca = new ZipAdapter(getApplicationContext(),mPassword,false);
+		ZipAdapter ca = new ZipAdapter(getApplicationContext(),mPassword,false,chkWipe.isChecked());
 		try{
 			ca.open();
 			UserSistema usuarioActual = ca.getUsuario(MainDBConstants.username  + "='" + mUser + "'", null);

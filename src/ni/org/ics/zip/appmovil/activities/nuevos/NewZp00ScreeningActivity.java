@@ -82,7 +82,7 @@ public class NewZp00ScreeningActivity extends AbstractAsyncActivity {
 						null);
 		mPreScreenId = getIntent().getStringExtra(Constants.PRESCREENID);
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
-		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
+		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
 		createInitDialog();
 	}
 

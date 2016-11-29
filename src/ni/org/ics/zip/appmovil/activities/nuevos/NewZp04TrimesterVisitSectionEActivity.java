@@ -67,7 +67,7 @@ public class NewZp04TrimesterVisitSectionEActivity extends AbstractAsyncActivity
                 settings.getString(PreferencesActivity.KEY_USERNAME,
                         null);
         String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
-        zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
+        zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
         mZp04E = (Zp04TrimesterVisitSectionE) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP04E);
         mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
         event = getIntent().getExtras().getString(Constants.EVENT);

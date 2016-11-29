@@ -66,7 +66,7 @@ public class BuscarEmbarazadaActivity extends AbstractAsyncListActivity {
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
-		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
+		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
 		
 		mMetodoView = (Spinner) findViewById(R.id.metodo_busqueda);
 		List<String> list = new ArrayList<String>();

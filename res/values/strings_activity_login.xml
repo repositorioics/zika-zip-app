@@ -14,5 +14,6 @@
     <string name="error_field_required">Es requerido!</string>
     <string name="error_io_server">No puedo conectar al servidor!</string>
     <string name="error_notfound_server">No encontrado!</string>
+    <string name="error_wipe_db">Solamente es posible limpiar la base de datos si esta validando entrada desde el servidor!</string>
 
 </resources>

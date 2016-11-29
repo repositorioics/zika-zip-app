@@ -62,7 +62,7 @@ public class UploadAllTask extends UploadTask {
 
 		try {
 			publishProgress("Obteniendo registros de la base de datos", "1", "2");
-			zipA = new ZipAdapter(mContext, password, false);
+			zipA = new ZipAdapter(mContext, password, false,false);
 			zipA.open();
 			String filtro = MainDBConstants.STATUS + "='" + Constants.STATUS_NOT_SUBMITTED + "'";
 			mPreTamizajes = zipA.getZpPreScreenings(filtro, MainDBConstants.recId);
@@ -148,7 +148,7 @@ public class UploadAllTask extends UploadTask {
 	
 	private void actualizarBaseDatos(String estado) {
 		int c;
-		ZipAdapter zipA = new ZipAdapter(mContext, password, false);
+		ZipAdapter zipA = new ZipAdapter(mContext, password, false,false);
 		zipA.open();
 		c = mPreTamizajes.size();
 		if(c>0){

@@ -59,7 +59,7 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 		textView = (TextView) findViewById(R.id.label);
 		gridView = (GridView) findViewById(R.id.gridView1);
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
-		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
+		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
 		zp00 = (Zp00Screening) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP00);
 		filtro = MainDBConstants.recordId + "='" + zp00.getRecordId() + "'";
 		new FetchDataEmbarazadaTask().execute(filtro);

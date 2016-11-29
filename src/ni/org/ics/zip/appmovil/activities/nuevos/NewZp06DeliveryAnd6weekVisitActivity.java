@@ -64,7 +64,7 @@ public class NewZp06DeliveryAnd6weekVisitActivity extends AbstractAsyncActivity 
                 settings.getString(PreferencesActivity.KEY_USERNAME,
                         null);
         String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
-        zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
+        zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
         mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
         mDelivery = (Zp06DeliveryAnd6weekVisit) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP06);
         createInitDialog();

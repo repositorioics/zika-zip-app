@@ -67,7 +67,7 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
 		mZp01A = (Zp01StudyEntrySectionAtoD) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP01A);
         mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
-		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
+		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
 		createInitDialog();
 	}
 

@@ -67,7 +67,7 @@ public class NewZp02BiospecimenCollectionActivity extends AbstractAsyncActivity 
                 settings.getString(PreferencesActivity.KEY_USERNAME,
                         null);
         String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
-        zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
+        zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
         mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
         event = getIntent().getExtras().getString(Constants.EVENT);
         mZp02 = (Zp02BiospecimenCollection) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP02);

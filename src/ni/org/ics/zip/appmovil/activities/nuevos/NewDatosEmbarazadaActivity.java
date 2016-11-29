@@ -57,7 +57,7 @@ public class NewDatosEmbarazadaActivity extends AbstractAsyncActivity {
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
-		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
+		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
 		infoMovil = new DeviceInfo(NewDatosEmbarazadaActivity.this);
 		mRecordId = getIntent().getStringExtra(Constants.RECORDID);
 		mZpDatos = (ZpDatosEmbarazada) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZPDATA);

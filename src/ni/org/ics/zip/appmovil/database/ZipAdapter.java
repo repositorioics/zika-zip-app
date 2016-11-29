@@ -30,19 +30,21 @@ public class ZipAdapter {
 	private final Context mContext;
 	private final String mPassword;
 	private final boolean mFromServer;
+	private final boolean mCleanDb;
 	
 
-	public ZipAdapter(Context context, String password, boolean fromServer) {
+	public ZipAdapter(Context context, String password, boolean fromServer, boolean cleanDb) {
 		mContext = context;
 		mPassword = password;
 		mFromServer = fromServer;
+		mCleanDb = cleanDb;
 	}
 	
 	private static class DatabaseHelper extends ZipSQLiteOpenHelper {
 
-		DatabaseHelper(Context context, String password, boolean fromServer) {
+		DatabaseHelper(Context context, String password, boolean fromServer, boolean cleanDb) {
 			super(FileUtils.DATABASE_PATH, MainDBConstants.DATABASE_NAME, MainDBConstants.DATABASE_VERSION, context,
-					password, fromServer);
+					password, fromServer, cleanDb);
 			createStorage();
 		}
 
@@ -68,31 +70,13 @@ public class ZipAdapter {
 		}
 
 		@Override
-		// upgrading will destroy all old data
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			db.execSQL("DROP TABLE IF EXISTS " + MainDBConstants.USER_TABLE);
-			db.execSQL("DROP TABLE IF EXISTS " + MainDBConstants.ROLE_TABLE);
-			db.execSQL("DROP TABLE IF EXISTS " + MainDBConstants.SCREENING_TABLE);
-			db.execSQL("DROP TABLE IF EXISTS " + MainDBConstants.STATUS_PREG_TABLE);
-			db.execSQL("DROP TABLE IF EXISTS " + MainDBConstants.DATA_PREG_TABLE);
-			db.execSQL("DROP TABLE IF EXISTS " + MainDBConstants.DATA_PRESCREEN_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + Zp01DBConstants.CREATE_STUDYENTRY_AD_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + Zp01DBConstants.CREATE_STUDYENTRY_E_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + Zp01DBConstants.CREATE_STUDYENTRY_FK_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + Zp02DBConstants.CREATE_BIOCOLLECTION_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + Zp03DBConstants.CREATE_MONTHLYVISIT_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + Zp04DBConstants.CREATE_TRIMESTERVISIT_AD_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + Zp04DBConstants.CREATE_TRIMESTERVISIT_E_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + Zp04DBConstants.CREATE_TRIMESTERVISIT_FH_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + Zp05DBConstants.CREATE_ULTRASOUNDEXAM_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + Zp06DBConstants.CREATE_DELIVERY6WVISIT_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + Zp08DBConstants.CREATE_STUDYEXIT_TABLE);
-			onCreate(db);
+			
 		}
 	}
 
 	public ZipAdapter open() throws SQLException {
-		mDbHelper = new DatabaseHelper(mContext,mPassword,mFromServer);
+		mDbHelper = new DatabaseHelper(mContext,mPassword,mFromServer,mCleanDb);
 		mDb = mDbHelper.getWritableDatabase();
 		return this;
 	}

@@ -64,7 +64,7 @@ public class NewPreScreeningActivity extends AbstractAsyncActivity {
 						null);
 		
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
-		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
+		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
 		
 		mCsView = (Spinner) findViewById(R.id.cs);
 		mConsView = (Spinner) findViewById(R.id.cons);

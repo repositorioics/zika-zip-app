@@ -66,7 +66,7 @@ public class NewZp05UltrasoundExamActivity extends AbstractAsyncActivity {
                 settings.getString(PreferencesActivity.KEY_USERNAME,
                         null);
         String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
-        zipA = new ZipAdapter(this.getApplicationContext(),mPass,false);
+        zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
         mZp05 = (Zp05UltrasoundExam) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP05);
         mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
         event = getIntent().getExtras().getString(Constants.EVENT);

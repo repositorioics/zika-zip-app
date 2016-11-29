@@ -13,12 +13,13 @@ public abstract class ZipSQLiteOpenHelper {
     private final Context mContext;
 	private final String mPassword;
 	private final boolean mFromServer;
+	private final boolean mCleanDb;
 
     private SQLiteDatabase mDatabase = null;
     private boolean mIsInitializing = false;
 
     public ZipSQLiteOpenHelper(String path, String name, int version, Context context,
-    		String password, boolean fromServer) {
+    		String password, boolean fromServer, boolean cleanDb) {
         if (version < 1)
             throw new IllegalArgumentException("Version must be >= 1, was " + version);
 
@@ -28,6 +29,7 @@ public abstract class ZipSQLiteOpenHelper {
         mContext = context;
         mPassword = password;
         mFromServer = fromServer;
+        mCleanDb = cleanDb;
     }
 
     public synchronized SQLiteDatabase getWritableDatabase() {
@@ -43,6 +45,11 @@ public abstract class ZipSQLiteOpenHelper {
         	SQLiteDatabase.loadLibs(mContext);
             mIsInitializing = true;
             File databaseFile = new File(mPath + "/" + mName);
+            if (databaseFile.exists()&& mCleanDb && mFromServer) {
+            	databaseFile.delete();
+            }
+            
+            
             if (!databaseFile.exists()&& !mFromServer) {
             	throw new IllegalStateException(mContext.getString(R.string.errordb));
             }
