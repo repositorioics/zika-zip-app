@@ -10,6 +10,7 @@ import ni.org.ics.zip.appmovil.activities.nuevos.NewZp08StudyExitActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.IngresoActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.MonthlyVisitActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.TwoWeekVisitActivity;
+import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.UnscheduledVisitActivity;
 import ni.org.ics.zip.appmovil.adapters.MenuEmbarazadasAdapter;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.domain.Zp00Screening;
@@ -132,6 +133,19 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 					i.putExtras(arguments);
 					startActivity(i);
 					break;
+				case 26: case 27:case 28:case 29:case 30:
+					i = new Intent(getApplicationContext(),
+							UnscheduledVisitActivity.class);
+					/*Aca se pasa evento, tamizaje y estado*/
+					if(position==26)	arguments.putString(Constants.EVENT, Constants.UNSHED1);
+					if(position==27)	arguments.putString(Constants.EVENT, Constants.UNSHED2);
+					if(position==28)	arguments.putString(Constants.EVENT, Constants.UNSHED3);
+					if(position==29)	arguments.putString(Constants.EVENT, Constants.UNSHED4);
+					if(position==30)	arguments.putString(Constants.EVENT, Constants.UNSHED5);
+					if (zp00!=null) arguments.putSerializable(Constants.OBJECTO_ZP00 , zp00);
+					i.putExtras(arguments);
+					startActivity(i);
+					break;	
 				default:
 					break;
 				}

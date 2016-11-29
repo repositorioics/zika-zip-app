@@ -200,6 +200,13 @@ public class ZipAdapter {
 	public boolean borrarZp00Screening() {
 		return mDb.delete(MainDBConstants.SCREENING_TABLE, null, null) > 0;
 	}
+	//Actualizar el estado la tabla de Zp00Screening de la base de datos
+	public int actualizarEstadoZp00Screening(String filtro, String estado) {
+		ContentValues cv = new ContentValues();
+		cv.put(MainDBConstants.STATUS, estado);
+		int numRegistros = mDb.update(MainDBConstants.SCREENING_TABLE, cv,filtro, null);
+		return numRegistros;
+	}
 	//Obtener un Zp00Screening de la base de datos
 	public Zp00Screening getZp00Screening(String filtro, String orden) throws SQLException {
 		Zp00Screening mScreening = null;

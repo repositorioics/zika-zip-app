@@ -38,6 +38,7 @@
     <string name="study_id">Código del estudio</string>
     <string name="pending">Pendiente</string>
     <string name="done">Realizado</string>
+    <string name="notdone">No Realizado</string>
     <string name="ontime">(En tiempo)</string>
     <string name="delayed">(Con atraso)</string>
     <string name="notavailable">No disponible</string>

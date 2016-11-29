@@ -12,7 +12,7 @@ import ni.org.ics.zip.appmovil.activities.nuevos.NewZp04TrimesterVisitSectionAto
 import ni.org.ics.zip.appmovil.activities.nuevos.NewZp04TrimesterVisitSectionEActivity;
 import ni.org.ics.zip.appmovil.activities.nuevos.NewZp04TrimesterVisitSectionFtoHActivity;
 import ni.org.ics.zip.appmovil.activities.nuevos.NewZp05UltrasoundExamActivity;
-import ni.org.ics.zip.appmovil.adapters.eventosembarazo.MonthlyVisitAdapter;
+import ni.org.ics.zip.appmovil.adapters.eventosembarazo.UnscheduledVisitAdapter;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.domain.Zp00Screening;
 import ni.org.ics.zip.appmovil.domain.Zp02BiospecimenCollection;
@@ -21,7 +21,6 @@ import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionAtoD;
 import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionE;
 import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionFtoH;
 import ni.org.ics.zip.appmovil.domain.Zp05UltrasoundExam;
-import ni.org.ics.zip.appmovil.domain.ZpEstadoEmbarazada;
 import ni.org.ics.zip.appmovil.utils.Constants;
 import ni.org.ics.zip.appmovil.utils.MainDBConstants;
 import ni.org.ics.zip.appmovil.utils.Zp02DBConstants;
@@ -45,7 +44,6 @@ import android.widget.TextView;
 public class UnscheduledVisitActivity extends AbstractAsyncActivity {
 	private ZipAdapter zipA;
 	private static Zp00Screening zp00 = new Zp00Screening();
-	private static ZpEstadoEmbarazada zpEstado = new ZpEstadoEmbarazada();
 	private static Zp02BiospecimenCollection zp02 = null;
 	private static Zp03MonthlyVisit zp03 = null;
 	private static Zp04TrimesterVisitSectionAtoD zp04a = null;
@@ -86,7 +84,6 @@ public class UnscheduledVisitActivity extends AbstractAsyncActivity {
 		/*Aca se recupera evento, tamizaje y estado*/
 		evento = getIntent().getStringExtra(Constants.EVENT);
 		zp00 = (Zp00Screening) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP00);
-		zpEstado = (ZpEstadoEmbarazada) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZPEST);
 		//Aca se recupera los datos de los formularios para ver si estan realizados o no...
 		new FetchDataVisitaMensualTask().execute(evento);
 		textView = (TextView) findViewById(R.id.label);
@@ -287,43 +284,6 @@ public class UnscheduledVisitActivity extends AbstractAsyncActivity {
 					zp04e = zipA.getZp04TrimesterVisitSectionE(filtro, null);
 					zp04f = zipA.getZp04TrimesterVisitSectionFtoH(filtro, null);
 					zp05 = zipA.getZp05UltrasoundExam(filtro, null);
-					if (zp02!=null && zp03!=null &&
-							zp04a!=null && zp04e!=null && zp04f!=null && zp05!=null){
-						if(eventoaFiltrar.matches(Constants.WEEK4)){
-							zpEstado.setSem4('1');
-						}
-						else if(eventoaFiltrar.matches(Constants.WEEK8)){
-							zpEstado.setSem8('1');
-						}
-						else if(eventoaFiltrar.matches(Constants.WEEK12)){
-							zpEstado.setSem12('1');
-						}
-						else if(eventoaFiltrar.matches(Constants.WEEK16)){
-							zpEstado.setSem16('1');
-						}
-						else if(eventoaFiltrar.matches(Constants.WEEK20)){
-							zpEstado.setSem20('1');
-						}
-						else if(eventoaFiltrar.matches(Constants.WEEK24)){
-							zpEstado.setSem24('1');
-						}
-						else if(eventoaFiltrar.matches(Constants.WEEK28)){
-							zpEstado.setSem28('1');
-						}
-						else if(eventoaFiltrar.matches(Constants.WEEK32)){
-							zpEstado.setSem32('1');
-						}
-						else if(eventoaFiltrar.matches(Constants.WEEK36)){
-							zpEstado.setSem36('1');
-						}
-						else if(eventoaFiltrar.matches(Constants.WEEK40)){
-							zpEstado.setSem40('1');
-						}
-						else if(eventoaFiltrar.matches(Constants.WEEK44)){
-							zpEstado.setSem44('1');
-						}
-						zipA.editarZpEstadoEmbarazada(zpEstado);
-					}
 					zipA.close();
 				} catch (Exception e) {
 					Log.e(TAG, e.getLocalizedMessage(), e);
@@ -334,7 +294,7 @@ public class UnscheduledVisitActivity extends AbstractAsyncActivity {
 
 			protected void onPostExecute(String resultado) {
 				// after the network request completes, hide the progress indicator
-				gridView.setAdapter(new MonthlyVisitAdapter(getApplicationContext(), R.layout.menu_item_2, menu_maternal_info, 
+				gridView.setAdapter(new UnscheduledVisitAdapter(getApplicationContext(), R.layout.menu_item_2, menu_maternal_info, 
 						zp02, zp03, zp04a, zp04e ,zp04f, zp05
 						));
 				dismissProgressDialog();

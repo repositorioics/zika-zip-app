@@ -53,6 +53,21 @@ public class UploadAllTask extends UploadTask {
 	private String password = null;
 	private String error = null;
 	protected UploadListener mStateListener;
+	public static final int PRE_TAMIZAJE = 0;
+	public static final int TAMIZAJE = 1;
+	public static final int INGRESO1 = 2;
+	public static final int INGRESO2 = 3;
+	public static final int INGRESO3 = 4;
+	public static final int MUESTRAS = 5;
+	public static final int VISMENSUAL = 6;
+	public static final int TRIMESTRE1 = 7;
+	public static final int TRIMESTRE2 = 8;
+	public static final int TRIMESTRE3 = 9;
+	public static final int US = 10;
+	public static final int PARTO = 11;
+	public static final int SALIDA = 12;
+	public static final int ESTADO = 13;
+	
 
 	@Override
 	protected String doInBackground(String... values) {
@@ -79,204 +94,256 @@ public class UploadAllTask extends UploadTask {
 			mDeliverys = zipA.getZp06DeliveryAnd6weekVisits(filtro, MainDBConstants.recordId);
 			mExits = zipA.getZp08StudyExits(filtro, MainDBConstants.recordId);
 			mStatus = zipA.getZpEstadoEmbarazadas(filtro, MainDBConstants.recordId);
-			zipA.close();
 			publishProgress("Datos completos!", "2", "2");
+			actualizarBaseDatos(Constants.STATUS_SUBMITTED, PRE_TAMIZAJE);
 			error = cargarPreTamizajes(url, username, password);
 			if (!error.matches("Datos recibidos!")){
+				actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PRE_TAMIZAJE);
 				return error;
 			}
+			actualizarBaseDatos(Constants.STATUS_SUBMITTED, TAMIZAJE);
 			error = cargarTamizajes(url, username, password);
 			if (!error.matches("Datos recibidos!")){
+				actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TAMIZAJE);
 				return error;
 			}
+			actualizarBaseDatos(Constants.STATUS_SUBMITTED, INGRESO1);
             error = uploadEntrysAD(url, username, password);
             if (!error.matches("Datos recibidos!")){
+            	actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, INGRESO1);
                 return error;
             }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, INGRESO2);
             error = uploadEntrysZp01E(url, username, password);
             if (!error.matches("Datos recibidos!")){
+            	actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, INGRESO2);
                 return error;
             }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, INGRESO3);
             error = uploadEntrysFK(url, username, password);
             if (!error.matches("Datos recibidos!")){
+            	actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, INGRESO3);
                 return error;
             }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS);
             error = upLoadBioCollections(url, username, password);
             if (!error.matches("Datos recibidos!")){
+            	actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS);
                 return error;
             }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISMENSUAL);
             error = uploadMonthlyVisits(url, username, password);
             if (!error.matches("Datos recibidos!")){
+            	actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISMENSUAL);
                 return error;
             }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, TRIMESTRE1);
             error = uploadTrimesterVisitAD(url, username, password);
             if (!error.matches("Datos recibidos!")){
+            	actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TRIMESTRE1);
                 return error;
             }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, TRIMESTRE2);
             error = uploadTrimesterVisitE(url, username, password);
             if (!error.matches("Datos recibidos!")){
+            	actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TRIMESTRE2);
                 return error;
             }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, TRIMESTRE3);
             error = uploadTrimesterVisitFH(url, username, password);
             if (!error.matches("Datos recibidos!")){
+            	actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TRIMESTRE3);
                 return error;
             }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, US);
             error = uploadUltrasoundExams(url, username, password);
             if (!error.matches("Datos recibidos!")){
+            	actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, US);
                 return error;
             }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTO);
             error = uploadDeliverys(url, username, password);
             if (!error.matches("Datos recibidos!")){
+            	actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTO);
                 return error;
             }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, SALIDA);
             error = uploadExits(url, username, password);
             if (!error.matches("Datos recibidos!")){
+            	actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SALIDA);
                 return error;
             }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, ESTADO);
             error = uploadStatusPreg(url, username, password);
             if (!error.matches("Datos recibidos!")){
+            	actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ESTADO);
                 return error;
             }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED);
-
+            zipA.close();
 		} catch (Exception e1) {
+			zipA.close();
 			e1.printStackTrace();
 			return e1.getLocalizedMessage();
 		}
 		return error;
 	}
 	
-	private void actualizarBaseDatos(String estado) {
+	private void actualizarBaseDatos(String estado, int opcion) {
 		int c;
-		ZipAdapter zipA = new ZipAdapter(mContext, password, false,false);
-		zipA.open();
-		c = mPreTamizajes.size();
-		if(c>0){
-			for (ZpPreScreening pretamizaje : mPreTamizajes) {
-				pretamizaje.setEstado(estado);
-				zipA.editarZpPreScreening(pretamizaje);
-				publishProgress("Actualizando pre-tamizajes base de datos local", Integer.valueOf(mPreTamizajes.indexOf(pretamizaje)).toString(), Integer
-						.valueOf(c).toString());
+		if(opcion==PRE_TAMIZAJE){
+			c = mPreTamizajes.size();
+			if(c>0){
+				for (ZpPreScreening pretamizaje : mPreTamizajes) {
+					pretamizaje.setEstado(estado);
+					zipA.editarZpPreScreening(pretamizaje);
+					publishProgress("Actualizando pre-tamizajes base de datos local", Integer.valueOf(mPreTamizajes.indexOf(pretamizaje)).toString(), Integer
+							.valueOf(c).toString());
+				}
 			}
 		}
-		c = mTamizajes.size();
-		if(c>0){
-			for (Zp00Screening tamizaje : mTamizajes) {
-				tamizaje.setEstado(estado);
-				zipA.editarZp00Screening(tamizaje);
-				publishProgress("Actualizando tamizajes base de datos local", Integer.valueOf(mTamizajes.indexOf(tamizaje)).toString(), Integer
-						.valueOf(c).toString());
+		else if(opcion==TAMIZAJE){
+			c = mTamizajes.size();
+			if(c>0){
+				for (Zp00Screening tamizaje : mTamizajes) {
+					tamizaje.setEstado(estado);
+					zipA.editarZp00Screening(tamizaje);
+					publishProgress("Actualizando tamizajes base de datos local", Integer.valueOf(mTamizajes.indexOf(tamizaje)).toString(), Integer
+							.valueOf(c).toString());
+				}
 			}
 		}
-		c = mIngresosAD.size();
-		if(c>0){
-	        for (Zp01StudyEntrySectionAtoD ingreso : mIngresosAD) {
-	            ingreso.setEstado(estado);
-	            zipA.editarZp01StudyEntrySectionAtoD(ingreso);
-	            publishProgress("Actualizando datos de ingreso (A-D) base de datos local", Integer.valueOf(mIngresosAD.indexOf(ingreso)).toString(), Integer
-	                    .valueOf(c).toString());
+		else if(opcion==INGRESO1){
+			c = mIngresosAD.size();
+			if(c>0){
+		        for (Zp01StudyEntrySectionAtoD ingreso : mIngresosAD) {
+		            ingreso.setEstado(estado);
+		            zipA.editarZp01StudyEntrySectionAtoD(ingreso);
+		            publishProgress("Actualizando datos de ingreso (A-D) base de datos local", Integer.valueOf(mIngresosAD.indexOf(ingreso)).toString(), Integer
+		                    .valueOf(c).toString());
+		        }
+			}
+		}
+		else if(opcion==INGRESO2){
+			c = mIngresosE.size();
+			if(c>0){
+		        for (Zp01StudyEntrySectionE ingreso : mIngresosE) {
+		            ingreso.setEstado(estado);
+		            zipA.editarZp01StudyEntrySectionE(ingreso);
+		            publishProgress("Actualizando datos de ingreso (E) base de datos local", Integer.valueOf(mIngresosE.indexOf(ingreso)).toString(), Integer
+		                    .valueOf(c).toString());
+		        }
+			}
+		}
+		else if(opcion==INGRESO3){
+			c = mIngresosFK.size();
+			if(c>0){
+		        for (Zp01StudyEntrySectionFtoK ingreso : mIngresosFK) {
+		            ingreso.setEstado(estado);
+		            zipA.editarZp01StudyEntrySectionFtoK(ingreso);
+		            publishProgress("Actualizando datos de ingreso (F-K) base de datos local", Integer.valueOf(mIngresosFK.indexOf(ingreso)).toString(), Integer
+		                    .valueOf(c).toString());
+		        }
+			}
+		}
+		else if(opcion==MUESTRAS){
+			c = mCollections.size();
+			if(c>0){
+		        for (Zp02BiospecimenCollection collection : mCollections) {
+		            collection.setEstado(estado);
+		            zipA.editarZp02BiospecimenCollection(collection);
+		            publishProgress("Actualizando recoleccion de muestras base de datos local", Integer.valueOf(mCollections.indexOf(collection)).toString(), Integer
+		                    .valueOf(c).toString());
+		        }
+			}
+		}
+		else if(opcion==VISMENSUAL){
+			c = mMonthlyVisits.size();
+			if(c>0){
+		        for (Zp03MonthlyVisit monthlyVisit : mMonthlyVisits) {
+		            monthlyVisit.setEstado(estado);
+		            zipA.editarZp03MonthlyVisit(monthlyVisit);
+		            publishProgress("Actualizando visita mensual base de datos local", Integer.valueOf(mMonthlyVisits.indexOf(monthlyVisit)).toString(), Integer
+		                    .valueOf(c).toString());
+		        }
+			}
+		}
+		else if(opcion==TRIMESTRE1){
+			c = mTrimesterVisitAD.size();
+			if(c>0){
+		        for (Zp04TrimesterVisitSectionAtoD trimesterVisitAD : mTrimesterVisitAD) {
+		            trimesterVisitAD.setEstado(estado);
+		            zipA.editarZp04TrimesterVisitSectionAtoD(trimesterVisitAD);
+		            publishProgress("Actualizando Visita Trimestral (A-D) base de datos local", Integer.valueOf(mTrimesterVisitAD.indexOf(trimesterVisitAD)).toString(), Integer
+		                    .valueOf(c).toString());
+		        }
+			}
+		}
+		else if(opcion==TRIMESTRE2){
+			c = mTrimesterVisitE.size();
+			if(c>0){
+			    for (Zp04TrimesterVisitSectionE trimesterVisitE : mTrimesterVisitE) {
+			        trimesterVisitE.setEstado(estado);
+			        zipA.editarZp04TrimesterVisitSectionE(trimesterVisitE);
+			        publishProgress("Actualizando Visita Trimestral (E) base de datos local", Integer.valueOf(mTrimesterVisitE.indexOf(trimesterVisitE)).toString(), Integer
+			                .valueOf(c).toString());
+			    }
+			}
+		}
+		else if(opcion==TRIMESTRE3){
+			c = mTrimesterVisitFH.size();
+			if(c>0){
+		        for (Zp04TrimesterVisitSectionFtoH trimesterVisitFH : mTrimesterVisitFH) {
+		            trimesterVisitFH.setEstado(estado);
+		            zipA.editarZp04TrimesterVisitSectionFtoH(trimesterVisitFH);
+		            publishProgress("Actualizando Visita Trimestral (F-H) base de datos local", Integer.valueOf(mTrimesterVisitFH.indexOf(trimesterVisitFH)).toString(), Integer
+		                    .valueOf(c).toString());
+		        }
+			}
+		}
+		else if(opcion==US){
+			c = mUltrasounds.size();
+			if(c>0){
+		        for (Zp05UltrasoundExam ultrasoundExam : mUltrasounds) {
+		            ultrasoundExam.setEstado(estado);
+		            zipA.editarZp05UltrasoundExam(ultrasoundExam);
+		            publishProgress("Actualizando ultrasonidos base de datos local", Integer.valueOf(mUltrasounds.indexOf(ultrasoundExam)).toString(), Integer
+		                    .valueOf(c).toString());
+		        }
+			}
+		}
+		else if(opcion==PARTO){
+	        c = mDeliverys.size();
+	        if(c>0){
+		        for (Zp06DeliveryAnd6weekVisit deliveryAnd6weekVisit : mDeliverys) {
+		            deliveryAnd6weekVisit.setEstado(estado);
+		            zipA.editarZp06DeliveryAnd6weekVisit(deliveryAnd6weekVisit);
+		            publishProgress("Actualizando partos base de datos local", Integer.valueOf(mDeliverys.indexOf(deliveryAnd6weekVisit)).toString(), Integer
+		                    .valueOf(c).toString());
+		        }
 	        }
 		}
-		c = mIngresosE.size();
-		if(c>0){
-	        for (Zp01StudyEntrySectionE ingreso : mIngresosE) {
-	            ingreso.setEstado(estado);
-	            zipA.editarZp01StudyEntrySectionE(ingreso);
-	            publishProgress("Actualizando datos de ingreso (E) base de datos local", Integer.valueOf(mIngresosE.indexOf(ingreso)).toString(), Integer
-	                    .valueOf(c).toString());
+		else if(opcion==SALIDA){
+	        c = mExits.size();
+	        if(c>0){
+		        for (Zp08StudyExit studyExit : mExits) {
+		            studyExit.setEstado(estado);
+		            zipA.editarZp08StudyExit(studyExit);
+		            publishProgress("Actualizando salidas del estudio base de datos local", Integer.valueOf(mExits.indexOf(studyExit)).toString(), Integer
+		                    .valueOf(c).toString());
+		        }
 	        }
 		}
-		c = mIngresosFK.size();
-		if(c>0){
-	        for (Zp01StudyEntrySectionFtoK ingreso : mIngresosFK) {
-	            ingreso.setEstado(estado);
-	            zipA.editarZp01StudyEntrySectionFtoK(ingreso);
-	            publishProgress("Actualizando datos de ingreso (F-K) base de datos local", Integer.valueOf(mIngresosFK.indexOf(ingreso)).toString(), Integer
-	                    .valueOf(c).toString());
-	        }
-		}
-		c = mCollections.size();
-		if(c>0){
-	        for (Zp02BiospecimenCollection collection : mCollections) {
-	            collection.setEstado(estado);
-	            zipA.editarZp02BiospecimenCollection(collection);
-	            publishProgress("Actualizando recoleccion de muestras base de datos local", Integer.valueOf(mCollections.indexOf(collection)).toString(), Integer
-	                    .valueOf(c).toString());
-	        }
-		}
-		c = mMonthlyVisits.size();
-		if(c>0){
-	        for (Zp03MonthlyVisit monthlyVisit : mMonthlyVisits) {
-	            monthlyVisit.setEstado(estado);
-	            zipA.editarZp03MonthlyVisit(monthlyVisit);
-	            publishProgress("Actualizando visita mensual base de datos local", Integer.valueOf(mMonthlyVisits.indexOf(monthlyVisit)).toString(), Integer
-	                    .valueOf(c).toString());
-	        }
-		}
-		c = mTrimesterVisitAD.size();
-		if(c>0){
-	        for (Zp04TrimesterVisitSectionAtoD trimesterVisitAD : mTrimesterVisitAD) {
-	            trimesterVisitAD.setEstado(estado);
-	            zipA.editarZp04TrimesterVisitSectionAtoD(trimesterVisitAD);
-	            publishProgress("Actualizando Visita Trimestral (A-D) base de datos local", Integer.valueOf(mTrimesterVisitAD.indexOf(trimesterVisitAD)).toString(), Integer
-	                    .valueOf(c).toString());
-	        }
-		}
-		c = mTrimesterVisitE.size();
-		if(c>0){
-		    for (Zp04TrimesterVisitSectionE trimesterVisitE : mTrimesterVisitE) {
-		        trimesterVisitE.setEstado(estado);
-		        zipA.editarZp04TrimesterVisitSectionE(trimesterVisitE);
-		        publishProgress("Actualizando Visita Trimestral (E) base de datos local", Integer.valueOf(mTrimesterVisitE.indexOf(trimesterVisitE)).toString(), Integer
-		                .valueOf(c).toString());
-		    }
-		}
-		c = mTrimesterVisitFH.size();
-		if(c>0){
-	        for (Zp04TrimesterVisitSectionFtoH trimesterVisitFH : mTrimesterVisitFH) {
-	            trimesterVisitFH.setEstado(estado);
-	            zipA.editarZp04TrimesterVisitSectionFtoH(trimesterVisitFH);
-	            publishProgress("Actualizando Visita Trimestral (F-H) base de datos local", Integer.valueOf(mTrimesterVisitFH.indexOf(trimesterVisitFH)).toString(), Integer
-	                    .valueOf(c).toString());
-	        }
-		}
-		c = mUltrasounds.size();
-		if(c>0){
-	        for (Zp05UltrasoundExam ultrasoundExam : mUltrasounds) {
-	            ultrasoundExam.setEstado(estado);
-	            zipA.editarZp05UltrasoundExam(ultrasoundExam);
-	            publishProgress("Actualizando ultrasonidos base de datos local", Integer.valueOf(mUltrasounds.indexOf(ultrasoundExam)).toString(), Integer
-	                    .valueOf(c).toString());
-	        }
-		}
-        c = mDeliverys.size();
-        if(c>0){
-	        for (Zp06DeliveryAnd6weekVisit deliveryAnd6weekVisit : mDeliverys) {
-	            deliveryAnd6weekVisit.setEstado(estado);
-	            zipA.editarZp06DeliveryAnd6weekVisit(deliveryAnd6weekVisit);
-	            publishProgress("Actualizando partos base de datos local", Integer.valueOf(mDeliverys.indexOf(deliveryAnd6weekVisit)).toString(), Integer
-	                    .valueOf(c).toString());
+        else if(opcion==ESTADO){
+	        c = mStatus.size();
+	        if(c>0){
+		        for (ZpEstadoEmbarazada estadoEmbarazada : mStatus) {
+		            estadoEmbarazada.setEstado(estado);
+		            zipA.editarZpEstadoEmbarazada(estadoEmbarazada);
+		            publishProgress("Actualizando estado de embarazadas base de datos local", Integer.valueOf(mStatus.indexOf(estadoEmbarazada)).toString(), Integer
+		                    .valueOf(c).toString());
+		        }
 	        }
         }
-        c = mExits.size();
-        if(c>0){
-	        for (Zp08StudyExit studyExit : mExits) {
-	            studyExit.setEstado(estado);
-	            zipA.editarZp08StudyExit(studyExit);
-	            publishProgress("Actualizando salidas del estudio base de datos local", Integer.valueOf(mExits.indexOf(studyExit)).toString(), Integer
-	                    .valueOf(c).toString());
-	        }
-        }
-        c = mStatus.size();
-        if(c>0){
-	        for (ZpEstadoEmbarazada estadoEmbarazada : mStatus) {
-	            estadoEmbarazada.setEstado(estado);
-	            zipA.editarZpEstadoEmbarazada(estadoEmbarazada);
-	            publishProgress("Actualizando estado de embarazadas base de datos local", Integer.valueOf(mStatus.indexOf(estadoEmbarazada)).toString(), Integer
-	                    .valueOf(c).toString());
-	        }
-        }
-		zipA.close();
 	}
 
 	
