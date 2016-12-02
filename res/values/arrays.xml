@@ -5,7 +5,7 @@
         <item>@string/main_maternal</item>
         <item>@string/main_infant</item>
         <item>@string/main_specimen</item>
-        <item>@string/main_review</item>
+        <item>@string/main_consent</item>
     </string-array>
     
     <string-array name="menu_maternal_a">
@@ -76,6 +76,11 @@
         <item>@string/specimen_2</item>
     </string-array>
     
+    <string-array name="menu_consent">
+        <item>@string/consent_1</item>
+        <item>@string/consent_2</item>
+    </string-array>
+    
     <string-array name="list_cs">
         <item>@string/select</item>
         <item>Socrates Flores</item>
@@ -88,5 +93,21 @@
         <item>@string/yes</item>
         <item>@string/no</item>
     </string-array>
+    
+   	<string-array name="list_drivers">
+        <item>@string/select</item>
+        <item>Juan</item>
+        <item>Pedro</item>
+        <item>Miguel</item>
+    </string-array>
+    
+    <string-array name="list_lugares">
+        <item>@string/select</item>
+        <item>Socrates Flores</item>
+        <item>Francisco Buitrago</item>
+        <item>Villa Libertad</item>
+        <item>Oficina ICS</item>
+    </string-array>
+   	
     
 </resources>

@@ -88,6 +88,10 @@
                   android:screenOrientation="portrait"></activity>
        	<activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewPreScreeningActivity"
                   android:screenOrientation="portrait"></activity>
+       	<activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZpControlConsentimientosSalidaActivity"
+                  android:screenOrientation="portrait"></activity>
+       	<activity android:name="ni.org.ics.zip.appmovil.activities.paginas.MenuControlConsentimientosActivity"
+                  android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

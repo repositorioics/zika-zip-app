@@ -29,6 +29,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -73,6 +75,8 @@ public class LoginActivity extends Activity {
 	private TextView mLoginStatusMessageView;
 	private SharedPreferences settings;
 	private String url;
+	private AlertDialog alertDialog;
+	private static final int LIMPIAR = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +104,19 @@ public class LoginActivity extends Activity {
 
 		chkServer = (CheckBox) findViewById(R.id.checkServer);
 		chkWipe = (CheckBox) findViewById(R.id.checkWipe);
+		
+		chkWipe.setOnClickListener(new View.OnClickListener() {
+
+		    @Override
+		    public void onClick(View v) {
+
+		        if ( ((CheckBox)v).isChecked() ) {
+		            // perform logic
+		        	createDialog(LIMPIAR);
+		        }
+		    }
+		});
+		
 		mUrlView = (EditText) findViewById(R.id.url);
 		mUrlView.setVisibility(View.GONE);
 
@@ -385,4 +402,33 @@ public class LoginActivity extends Activity {
 			ca.close();
 		}
 	}
+	
+	private void createDialog(int dialog) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		switch(dialog){
+		case LIMPIAR:
+			builder.setTitle(this.getString(R.string.confirm));
+			builder.setMessage(this.getString(R.string.wipe_db_confirm));
+			builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					// Finish app
+					dialog.dismiss();
+				}
+			});
+			builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// Do nothing
+					chkWipe.setChecked(false);
+					dialog.dismiss();
+				}
+			});
+			break;
+		default:
+			break;
+		}
+		alertDialog = builder.create();
+		alertDialog.show();
+	}
+	
 }

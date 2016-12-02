@@ -26,7 +26,7 @@ public class MainDBConstants {
 
 	//Base de datos y tablas
 	public static final String DATABASE_NAME = "zikazipcryp.sqlite3";
-	public static final int DATABASE_VERSION = 1;
+	public static final int DATABASE_VERSION = 2;
 	
 	//Tabla usuarios
 	public static final String USER_TABLE = "users";
@@ -318,7 +318,7 @@ public class MainDBConstants {
 				+ cs + " text, "
 				+ compId + " text, "
 				+ consecutive + " integer, "
-				+ verbalConsent + " verbalConsent, "
+				+ verbalConsent + " text, "
 				+ recordDate + " date, " 
 				+ recordUser + " text, "
 				+ pasive + " text, "
@@ -331,7 +331,36 @@ public class MainDBConstants {
 				+ SIM_SERIAL + " text, "
 				+ PHONE_NUMBER  + " text, "
 				+ TODAY  + " date, "
-				+ "primary key (" + recId + "));";		
+				+ "primary key (" + recId + "));";	
+		
+		//Tabla datos salida consentimientos
+		public static final String DATA_CONSSAL_TABLE = "salidas_consentimiento";
+		//Campos prescreening
+		public static final String lugarSalida = "lugarSalida";
+		public static final String codigo = "codigo";
+		public static final String fechaHoraSalida = "fechaHoraSalida";
+		public static final String persona = "persona";
+		
+		//Crear tabla prescreening
+		public static final String CREATE_DATA_CONSSAL_TABLE = "create table if not exists "
+				+ DATA_CONSSAL_TABLE + " ("
+				+ lugarSalida + " text not null, "
+				+ codigo + " text not null, "
+				+ fechaHoraSalida + " date not null, " 
+				+ persona + " text not null, "
+				+ recordDate + " date, " 
+				+ recordUser + " text, "
+				+ pasive + " text, "
+				+ ID_INSTANCIA + " integer," 
+				+ FILE_PATH + " text," 
+				+ STATUS + " text not null, "
+				+ START  + " text, "
+				+ END  + " text, "
+				+ DEVICE_ID  + " text, "
+				+ SIM_SERIAL + " text, "
+				+ PHONE_NUMBER  + " text, "
+				+ TODAY  + " date, "
+				+ "primary key (" + codigo + "," + fechaHoraSalida +"));";			
 		
 		
 

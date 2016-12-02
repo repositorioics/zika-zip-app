@@ -2,9 +2,11 @@ package ni.org.ics.zip.appmovil;
 
 
 import ni.org.ics.zip.appmovil.activities.buscar.BuscarEmbarazadaActivity;
+import ni.org.ics.zip.appmovil.activities.paginas.MenuControlConsentimientosActivity;
 import ni.org.ics.zip.appmovil.activities.server.DownloadAllActivity;
 import ni.org.ics.zip.appmovil.activities.server.UploadAllActivity;
 import ni.org.ics.zip.appmovil.adapters.MainActivityAdapter;
+import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.preferences.PreferencesActivity;
 import android.os.Bundle;
 import android.app.AlertDialog;
@@ -19,15 +21,18 @@ import android.widget.Toast;
 
 public class MainActivity extends ListActivity {
 
-	private static final int UPDATE_EQUIPO = 1;
-	private static final int UPDATE_SERVER = 2;
+	private static final int UPDATE_EQUIPO = 11;
+	private static final int UPDATE_SERVER = 12;
 
 	
 	private static final int EXIT = 1;
 	private static final int DOWNLOAD = 2;
 	private static final int UPLOAD = 3;
+	private static final int VERIFY = 4;
 	
 	private AlertDialog alertDialog;
+	
+	private ZipAdapter zipA;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,8 @@ public class MainActivity extends ListActivity {
 		setContentView(R.layout.activity_main);
 		String[] menu_main = getResources().getStringArray(R.array.menu_main);
 		setListAdapter(new MainActivityAdapter(this, R.layout.menu_item, menu_main));
+		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
+		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
 	}
 
 	@Override
@@ -74,6 +81,12 @@ public class MainActivity extends ListActivity {
 		case 0: 
 			i = new Intent(getApplicationContext(),
 					BuscarEmbarazadaActivity.class);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(i);
+			break;
+		case 3: 
+			i = new Intent(getApplicationContext(),
+					MenuControlConsentimientosActivity.class);
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(i);
 			break;
@@ -137,8 +150,15 @@ public class MainActivity extends ListActivity {
 			builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
-					Intent ie = new Intent(getApplicationContext(), DownloadAllActivity.class);
-					startActivityForResult(ie, UPDATE_EQUIPO);
+					zipA.open();
+					if(zipA.verificarData()){
+						createDialog(VERIFY);
+					}
+					else{
+						Intent ie = new Intent(getApplicationContext(), DownloadAllActivity.class);
+						startActivityForResult(ie, UPDATE_EQUIPO);
+					}
+					zipA.close();
 				}
 			});
 			builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
@@ -168,6 +188,25 @@ public class MainActivity extends ListActivity {
 				}
 			});
 			break;
+		case VERIFY:
+			builder.setTitle(this.getString(R.string.confirm));
+			builder.setMessage(this.getString(R.string.data_not_sent));
+			builder.setIcon(android.R.drawable.ic_menu_help);
+			builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+					Intent ie = new Intent(getApplicationContext(), DownloadAllActivity.class);
+					startActivityForResult(ie, UPDATE_EQUIPO);
+				}
+			});
+			builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// Do nothing
+					dialog.dismiss();
+				}
+			});
+			break;			
 		default:
 			break;
 		}

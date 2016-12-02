@@ -67,11 +67,14 @@ public class ZipAdapter {
             db.execSQL(Zp05DBConstants.CREATE_ULTRASOUNDEXAM_TABLE);
             db.execSQL(Zp06DBConstants.CREATE_DELIVERY6WVISIT_TABLE);
             db.execSQL(Zp08DBConstants.CREATE_STUDYEXIT_TABLE);
+            db.execSQL(MainDBConstants.CREATE_DATA_CONSSAL_TABLE);
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			
+			if(newVersion==2){
+				db.execSQL(MainDBConstants.CREATE_DATA_CONSSAL_TABLE);
+			}
 		}
 	}
 
@@ -403,6 +406,57 @@ public class ZipAdapter {
         }
         if (!cursorStatus.isClosed()) cursorStatus.close();
         return zpPreScreening;
+    }
+    
+    
+    /**
+	 * Metodos para ZpControlConsentimientosSalida en la base de datos
+	 * 
+	 * @param datos
+	 *            Objeto ZpControlConsentimientosSalida que contiene la informacion
+	 *
+	 */
+	//Crear nuevo ZpControlConsentimientosSalida en la base de datos
+	public void crearZpControlConsentimientosSalida(ZpControlConsentimientosSalida datos) {
+		ContentValues cv = ZpControlConsentimientosSalidaHelper.crearZpControlConsentimientosSalida(datos);
+		mDb.insert(MainDBConstants.DATA_CONSSAL_TABLE, null, cv);
+	}
+	//Editar ZpControlConsentimientosSalida existente en la base de datos
+	public boolean editarZpControlConsentimientosSalida(ZpControlConsentimientosSalida datos) {
+		ContentValues cv = ZpControlConsentimientosSalidaHelper.crearZpControlConsentimientosSalida(datos);
+		return mDb.update(MainDBConstants.DATA_CONSSAL_TABLE, cv, MainDBConstants.codigo + "='" + datos.getCodigo() + "' and " + 
+					MainDBConstants.fechaHoraSalida + "=" + datos.getFechaHoraSalida().getTime(), null) > 0;
+	}	
+	//Limpiar la tabla de ZpControlConsentimientosSalida de la base de datos
+	public boolean borrarZpControlConsentimientosSalida() {
+		return mDb.delete(MainDBConstants.DATA_CONSSAL_TABLE, null, null) > 0;
+	}
+	//Obtener un ZpControlConsentimientosSalida de la base de datos
+	public ZpControlConsentimientosSalida getZpControlConsentimientosSalida(String filtro, String orden) throws SQLException {
+		ZpControlConsentimientosSalida mDatos = null;
+		Cursor cursorDatos = crearCursor(MainDBConstants.DATA_CONSSAL_TABLE, filtro, null, orden);
+		if (cursorDatos != null && cursorDatos.getCount() > 0) {
+			cursorDatos.moveToFirst();
+			mDatos=ZpControlConsentimientosSalidaHelper.crearZpControlConsentimientosSalida(cursorDatos);
+		}
+		if (!cursorDatos.isClosed()) cursorDatos.close();
+		return mDatos;
+	}
+    //Obtener una lista de ZpControlConsentimientosSalida de la base de datos
+    public List<ZpControlConsentimientosSalida> getZpZpControlConsentimientosSalida(String filtro, String orden) throws SQLException {
+        List<ZpControlConsentimientosSalida> zpControlConsentimientosSalida = new ArrayList<ZpControlConsentimientosSalida>();
+        Cursor cursorStatus = crearCursor(MainDBConstants.DATA_CONSSAL_TABLE, filtro, null, orden);
+        if (cursorStatus != null && cursorStatus.getCount() > 0) {
+            cursorStatus.moveToFirst();
+            zpControlConsentimientosSalida.clear();
+            do{
+            	ZpControlConsentimientosSalida datosSalida = null;
+                datosSalida = ZpControlConsentimientosSalidaHelper.crearZpControlConsentimientosSalida(cursorStatus);
+                zpControlConsentimientosSalida.add(datosSalida);
+            } while (cursorStatus.moveToNext());
+        }
+        if (!cursorStatus.isClosed()) cursorStatus.close();
+        return zpControlConsentimientosSalida;
     }
     
    
@@ -922,4 +976,42 @@ public class ZipAdapter {
         if (!cursor.isClosed()) cursor.close();
         return zp08StudyExits;
     }
+
+    public Boolean verificarData() throws SQLException{
+		Cursor c = null;
+		c = crearCursor(MainDBConstants.SCREENING_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MainDBConstants.DATA_PREG_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MainDBConstants.STATUS_PREG_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MainDBConstants.DATA_PRESCREEN_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(Zp01DBConstants.STUDYENTRY_AD_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(Zp01DBConstants.STUDYENTRY_E_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(Zp01DBConstants.STUDYENTRY_FK_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(Zp02DBConstants.BIOCOLLECTION_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(Zp03DBConstants.MONTHLYVISIT_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(Zp04DBConstants.TRIMESTERVISIT_AD_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(Zp04DBConstants.TRIMESTERVISIT_E_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(Zp04DBConstants.TRIMESTERVISIT_FH_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(Zp05DBConstants.ULTRASOUNDEXAM_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(Zp06DBConstants.DELIVERY6WVISIT_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(Zp08DBConstants.STUDYEXIT_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MainDBConstants.DATA_CONSSAL_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c.close();
+		return false;
+	}
 }
