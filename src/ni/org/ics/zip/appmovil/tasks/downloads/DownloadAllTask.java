@@ -86,6 +86,8 @@ public class DownloadAllTask extends DownloadTask {
         zipA.borrarZp06DeliveryAnd6weekVisit();
         zipA.borrarZp08StudyExit();
         zipA.borrarZpEstadoEmbarazada();
+        zipA.borrarZpControlConsentimientosSalida();
+        zipA.borrarZpControlConsentimientosRecepcion();
 		try {
 			if (mPreTamizajes != null){
 				v = mPreTamizajes.size();

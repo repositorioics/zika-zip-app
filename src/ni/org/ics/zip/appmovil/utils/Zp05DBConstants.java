@@ -94,7 +94,7 @@ public class Zp05DBConstants {
     public static final String ultDateEntered = "ultDateEntered";
 
     //Crear tabla Zp05UltrasoundExam
-    public static final String CREATE_ULTRASOUNDEXAM_TABLE = "create table "
+    public static final String CREATE_ULTRASOUNDEXAM_TABLE = "create table if not exists "
             + ULTRASOUNDEXAM_TABLE + " ("
             + recordId + " text not null, "
             + redcapEventName + " text, "

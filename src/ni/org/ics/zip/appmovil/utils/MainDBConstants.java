@@ -46,7 +46,7 @@ public class MainDBConstants {
 	public static final String createdBy = "createdby";
 	public static final String modifiedBy = "modifiedby";
 	//Crear tabla usuarios
-	public static final String CREATE_USER_TABLE = "create table "
+	public static final String CREATE_USER_TABLE = "create table if not exists "
 			+ USER_TABLE + " ("
 			+ username + " text not null, "  
 			+ created + " date, " 
@@ -69,7 +69,7 @@ public class MainDBConstants {
 	//Campos roles
 	public static final String role = "role";
 	//Crear tabla roles
-	public static final String CREATE_ROLE_TABLE = "create table "
+	public static final String CREATE_ROLE_TABLE = "create table if not exists "
 			+ ROLE_TABLE + " ("
 			+ username + " text not null, "  
 			+ role + " text not null, "
@@ -134,7 +134,7 @@ public class MainDBConstants {
 	public static final String scrDateEntered = "scrDateEntered";
 
 	//Crear tabla usuarios
-	public static final String CREATE_SCREENING_TABLE = "create table "
+	public static final String CREATE_SCREENING_TABLE = "create table if not exists "
 			+ SCREENING_TABLE + " ("
 			+ recordId + " text not null, "
 			+ preScreenId + " text not null, "
@@ -216,7 +216,7 @@ public class MainDBConstants {
 		public static final String posparto = "posparto";
 		
 		//Crear tabla estado embarazada
-		public static final String CREATE_STATUS_PREG_TABLE = "create table "
+		public static final String CREATE_STATUS_PREG_TABLE = "create table if not exists "
 				+ STATUS_PREG_TABLE + " ("
 				+ recordId + " text not null, "
 				+ ingreso + " text, "
@@ -275,7 +275,7 @@ public class MainDBConstants {
 		public static final String telefonoContacto = "telefonoContacto";
 		
 		//Crear tabla datos embarazada
-		public static final String CREATE_DATA_PREG_TABLE = "create table "
+		public static final String CREATE_DATA_PREG_TABLE = "create table if not exists "
 				+ DATA_PREG_TABLE + " ("
 				+ recordId + " text not null, "
 				+ cs + " text, "
@@ -312,7 +312,7 @@ public class MainDBConstants {
 		public static final String verbalConsent = "verbalConsent";
 		
 		//Crear tabla prescreening
-		public static final String CREATE_DATA_PRESCREEN_TABLE = "create table "
+		public static final String CREATE_DATA_PRESCREEN_TABLE = "create table if not exists "
 				+ DATA_PRESCREEN_TABLE + " ("
 				+ recId + " text not null, "
 				+ cs + " text, "
@@ -335,13 +335,13 @@ public class MainDBConstants {
 		
 		//Tabla datos salida consentimientos
 		public static final String DATA_CONSSAL_TABLE = "salidas_consentimiento";
-		//Campos prescreening
+		//Campos salida consentimientos
 		public static final String lugarSalida = "lugarSalida";
 		public static final String codigo = "codigo";
 		public static final String fechaHoraSalida = "fechaHoraSalida";
 		public static final String persona = "persona";
 		
-		//Crear tabla prescreening
+		//Crear tabla salida consentimientos
 		public static final String CREATE_DATA_CONSSAL_TABLE = "create table if not exists "
 				+ DATA_CONSSAL_TABLE + " ("
 				+ lugarSalida + " text not null, "
@@ -360,8 +360,84 @@ public class MainDBConstants {
 				+ SIM_SERIAL + " text, "
 				+ PHONE_NUMBER  + " text, "
 				+ TODAY  + " date, "
-				+ "primary key (" + codigo + "," + fechaHoraSalida +"));";			
+				+ "primary key (" + codigo + "," + fechaHoraSalida +"));";	
 		
+		//Tabla datos recepcion consentimientos
+		public static final String DATA_CONSREC_TABLE = "recepcion_consentimiento";
+		//Campos recepcion consentimientos
+		public static final String lugarLlegada = "lugarLlegada";
+		public static final String fechaHoraLLegada = "fechaHoraLLegada";
+		
+		//Crear tabla recepcion consentimientos
+		public static final String CREATE_DATA_CONSREC_TABLE = "create table if not exists "
+				+ DATA_CONSREC_TABLE + " ("
+				+ lugarLlegada + " text not null, "
+				+ codigo + " text not null, "
+				+ fechaHoraLLegada + " date not null, " 
+				+ persona + " text not null, "
+				+ recordDate + " date, " 
+				+ recordUser + " text, "
+				+ pasive + " text, "
+				+ ID_INSTANCIA + " integer," 
+				+ FILE_PATH + " text," 
+				+ STATUS + " text not null, "
+				+ START  + " text, "
+				+ END  + " text, "
+				+ DEVICE_ID  + " text, "
+				+ SIM_SERIAL + " text, "
+				+ PHONE_NUMBER  + " text, "
+				+ TODAY  + " date, "
+				+ "primary key (" + codigo + "," + fechaHoraLLegada +"));";
+		
+		//Tabla datos salida reportes us
+		public static final String DATA_USSAL_TABLE = "salidas_us";
+		//Campos salida reportes us
+		
+		//Crear tabla salida reportes us
+		public static final String CREATE_DATA_USSAL_TABLE = "create table if not exists "
+				+ DATA_USSAL_TABLE + " ("
+				+ lugarSalida + " text not null, "
+				+ codigo + " text not null, "
+				+ fechaHoraSalida + " date not null, " 
+				+ persona + " text not null, "
+				+ recordDate + " date, " 
+				+ recordUser + " text, "
+				+ pasive + " text, "
+				+ ID_INSTANCIA + " integer," 
+				+ FILE_PATH + " text," 
+				+ STATUS + " text not null, "
+				+ START  + " text, "
+				+ END  + " text, "
+				+ DEVICE_ID  + " text, "
+				+ SIM_SERIAL + " text, "
+				+ PHONE_NUMBER  + " text, "
+				+ TODAY  + " date, "
+				+ "primary key (" + codigo + "," + fechaHoraSalida +"));";
+		
+		//Tabla datos recepcion reportes us
+		public static final String DATA_USREC_TABLE = "recepcion_us";
+		//Campos recepcion reportes us
+		
+		//Crear tabla recepcion reportes us
+		public static final String CREATE_DATA_USREC_TABLE = "create table if not exists "
+				+ DATA_USREC_TABLE + " ("
+				+ lugarLlegada + " text not null, "
+				+ codigo + " text not null, "
+				+ fechaHoraLLegada + " date not null, " 
+				+ persona + " text not null, "
+				+ recordDate + " date, " 
+				+ recordUser + " text, "
+				+ pasive + " text, "
+				+ ID_INSTANCIA + " integer," 
+				+ FILE_PATH + " text," 
+				+ STATUS + " text not null, "
+				+ START  + " text, "
+				+ END  + " text, "
+				+ DEVICE_ID  + " text, "
+				+ SIM_SERIAL + " text, "
+				+ PHONE_NUMBER  + " text, "
+				+ TODAY  + " date, "
+				+ "primary key (" + codigo + "," + fechaHoraLLegada +"));";
 		
 
 }

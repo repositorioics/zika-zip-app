@@ -107,7 +107,7 @@ public class Zp04DBConstants {
     public static final String triOtherDrugs4 = "triOtherDrugs4";
 
     //Crear tabla Zp04TrimesterVisitSectionAtoD
-    public static final String CREATE_TRIMESTERVISIT_AD_TABLE = "create table "
+    public static final String CREATE_TRIMESTERVISIT_AD_TABLE = "create table if not exists "
             + TRIMESTERVISIT_AD_TABLE + " ("
             + recordId + " text not null, "
             + redcapEventName + " text, "
@@ -328,7 +328,7 @@ public class Zp04DBConstants {
 
     //Crear tablaZp04TrimesterVisitSectionE
 
-    public static final String CREATE_TRIMESTERVISIT_E_TABLE = "create table "
+    public static final String CREATE_TRIMESTERVISIT_E_TABLE = "create table if not exists "
             + TRIMESTERVISIT_E_TABLE + " ("
             + recordId + " text not null, "
             + redcapEventName + " text, "
@@ -499,7 +499,7 @@ public class Zp04DBConstants {
 
     //Crear tabla Zp04TrimesterVisitSectionFtoH
 
-    public static final String CREATE_TRIMESTERVISIT_FH_TABLE = "create table "
+    public static final String CREATE_TRIMESTERVISIT_FH_TABLE = "create table if not exists "
             + TRIMESTERVISIT_FH_TABLE + " ("
             + recordId + " text not null, "
             + redcapEventName + " text, "

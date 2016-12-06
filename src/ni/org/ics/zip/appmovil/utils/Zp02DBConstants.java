@@ -133,7 +133,7 @@ public class Zp02DBConstants {
     public static final String bscCompleteDate3 = "bscCompleteDate3";
 
     //Crear tabla Zp02BiospecimenCollection
-    public static final String CREATE_BIOCOLLECTION_TABLE = "create table "
+    public static final String CREATE_BIOCOLLECTION_TABLE = "create table if not exists "
             + BIOCOLLECTION_TABLE + " ("
             + recordId + " text not null, "
             + redcapEventName + " text, "

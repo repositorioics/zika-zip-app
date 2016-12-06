@@ -58,7 +58,7 @@ public class Zp01DBConstants {
 
     //Crear tabla Zp01StudyEntrySectionAtoD
 
-    public static final String CREATE_STUDYENTRY_AD_TABLE = "create table "
+    public static final String CREATE_STUDYENTRY_AD_TABLE = "create table if not exists "
             + STUDYENTRY_AD_TABLE + " ("
             + recordId + " text not null, "
             + redcapEventName + " text, "
@@ -300,7 +300,7 @@ public class Zp01DBConstants {
     public static final String seaParaDuration = "seaParaDuration";
 
     //Crar tabla Zp01StudyEntrySectionE
-    public static final String CREATE_STUDYENTRY_E_TABLE = "create table "
+    public static final String CREATE_STUDYENTRY_E_TABLE = "create table if not exists "
             + STUDYENTRY_E_TABLE + " ("
             + recordId + " text not null, "
             + redcapEventName + " text, "
@@ -576,7 +576,7 @@ public class Zp01DBConstants {
 
     //Crear tabla Zp01StudyEntrySectionFtoK
 
-    public static final String CREATE_STUDYENTRY_FK_TABLE = "create table "
+    public static final String CREATE_STUDYENTRY_FK_TABLE = "create table if not exists "
             + STUDYENTRY_FK_TABLE + " ("
             + recordId + " text not null, "
             + redcapEventName + " text, "

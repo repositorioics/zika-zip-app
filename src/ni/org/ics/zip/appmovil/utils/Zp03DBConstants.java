@@ -157,7 +157,7 @@ public class Zp03DBConstants {
     public static final String monDateEntered = "monDateEntered";
 
     //Crear tabla Zp03MonthlyVisit
-    public static final String CREATE_MONTHLYVISIT_TABLE = "create table "
+    public static final String CREATE_MONTHLYVISIT_TABLE = "create table if not exists "
             + MONTHLYVISIT_TABLE + " ("
             + recordId + " text not null, "
             + redcapEventName + " text, "

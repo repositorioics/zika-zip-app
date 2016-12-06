@@ -31,7 +31,7 @@ public class Zp08DBConstants {
     public static final String extDateEntered = "extDateEntered";
 
     //Crear tabla Zp08StudyExit
-    public static final String CREATE_STUDYEXIT_TABLE = "create table "
+    public static final String CREATE_STUDYEXIT_TABLE = "create table if not exists "
             + STUDYEXIT_TABLE + " ("
             + recordId + " text not null, "
             + redcapEventName + " text, "

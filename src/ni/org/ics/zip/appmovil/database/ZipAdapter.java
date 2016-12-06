@@ -68,14 +68,19 @@ public class ZipAdapter {
             db.execSQL(Zp06DBConstants.CREATE_DELIVERY6WVISIT_TABLE);
             db.execSQL(Zp08DBConstants.CREATE_STUDYEXIT_TABLE);
             db.execSQL(MainDBConstants.CREATE_DATA_CONSSAL_TABLE);
+            db.execSQL(MainDBConstants.CREATE_DATA_CONSREC_TABLE);
+            db.execSQL(MainDBConstants.CREATE_DATA_USSAL_TABLE);
+            db.execSQL(MainDBConstants.CREATE_DATA_USREC_TABLE);
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			if(newVersion==2){
-				db.execSQL(MainDBConstants.CREATE_DATA_CONSSAL_TABLE);
+			onCreate(db);
+			if(oldVersion==0) return;
+			if(oldVersion==1){
+				//db.execSQL("ALTER TABLE " + Zp01DBConstants.CREATE_STUDYENTRY_AD_TABLE + " ADD COLUMN " );
 			}
-		}
+		}	
 	}
 
 	public ZipAdapter open() throws SQLException {
@@ -443,7 +448,7 @@ public class ZipAdapter {
 		return mDatos;
 	}
     //Obtener una lista de ZpControlConsentimientosSalida de la base de datos
-    public List<ZpControlConsentimientosSalida> getZpZpControlConsentimientosSalida(String filtro, String orden) throws SQLException {
+    public List<ZpControlConsentimientosSalida> getZpControlConsentimientosSalidas(String filtro, String orden) throws SQLException {
         List<ZpControlConsentimientosSalida> zpControlConsentimientosSalida = new ArrayList<ZpControlConsentimientosSalida>();
         Cursor cursorStatus = crearCursor(MainDBConstants.DATA_CONSSAL_TABLE, filtro, null, orden);
         if (cursorStatus != null && cursorStatus.getCount() > 0) {
@@ -459,6 +464,155 @@ public class ZipAdapter {
         return zpControlConsentimientosSalida;
     }
     
+    /**
+	 * Metodos para ZpControlConsentimientosRecepcion en la base de datos
+	 * 
+	 * @param datos
+	 *            Objeto ZpControlConsentimientosRecepcion que contiene la informacion
+	 *
+	 */
+	//Crear nuevo ZpControlConsentimientosRecepcion en la base de datos
+	public void crearZpControlConsentimientosRecepcion(ZpControlConsentimientosRecepcion datos) {
+		ContentValues cv = ZpControlConsentimientosRecepcionHelper.crearZpControlConsentimientosRecepcion(datos);
+		mDb.insert(MainDBConstants.DATA_CONSREC_TABLE, null, cv);
+	}
+	//Editar ZpControlConsentimientosRecepcion existente en la base de datos
+	public boolean editarZpControlConsentimientosRecepcion(ZpControlConsentimientosRecepcion datos) {
+		ContentValues cv = ZpControlConsentimientosRecepcionHelper.crearZpControlConsentimientosRecepcion(datos);
+		return mDb.update(MainDBConstants.DATA_CONSREC_TABLE, cv, MainDBConstants.codigo + "='" + datos.getCodigo() + "' and " + 
+					MainDBConstants.fechaHoraLLegada + "=" + datos.getFechaHoraLLegada().getTime(), null) > 0;
+	}	
+	//Limpiar la tabla de ZpControlConsentimientosRecepcion de la base de datos
+	public boolean borrarZpControlConsentimientosRecepcion() {
+		return mDb.delete(MainDBConstants.DATA_CONSREC_TABLE, null, null) > 0;
+	}
+	//Obtener un ZpControlConsentimientosRecepcion de la base de datos
+	public ZpControlConsentimientosRecepcion getZpControlConsentimientosRecepcion(String filtro, String orden) throws SQLException {
+		ZpControlConsentimientosRecepcion mDatos = null;
+		Cursor cursorDatos = crearCursor(MainDBConstants.DATA_CONSREC_TABLE, filtro, null, orden);
+		if (cursorDatos != null && cursorDatos.getCount() > 0) {
+			cursorDatos.moveToFirst();
+			mDatos=ZpControlConsentimientosRecepcionHelper.crearZpControlConsentimientosRecepcion(cursorDatos);
+		}
+		if (!cursorDatos.isClosed()) cursorDatos.close();
+		return mDatos;
+	}
+    //Obtener una lista de ZpControlConsentimientosRecepcion de la base de datos
+    public List<ZpControlConsentimientosRecepcion> getZpControlConsentimientosRecepciones(String filtro, String orden) throws SQLException {
+        List<ZpControlConsentimientosRecepcion> zpControlConsentimientosRecepcion = new ArrayList<ZpControlConsentimientosRecepcion>();
+        Cursor cursorStatus = crearCursor(MainDBConstants.DATA_CONSREC_TABLE, filtro, null, orden);
+        if (cursorStatus != null && cursorStatus.getCount() > 0) {
+            cursorStatus.moveToFirst();
+            zpControlConsentimientosRecepcion.clear();
+            do{
+            	ZpControlConsentimientosRecepcion datosRecepcion = null;
+                datosRecepcion = ZpControlConsentimientosRecepcionHelper.crearZpControlConsentimientosRecepcion(cursorStatus);
+                zpControlConsentimientosRecepcion.add(datosRecepcion);
+            } while (cursorStatus.moveToNext());
+        }
+        if (!cursorStatus.isClosed()) cursorStatus.close();
+        return zpControlConsentimientosRecepcion;
+    }
+    
+    /**
+	 * Metodos para ZpControlReporteUSSalida en la base de datos
+	 * 
+	 * @param datos
+	 *            Objeto ZpControlReporteUSSalida que contiene la informacion
+	 *
+	 */
+	//Crear nuevo ZpControlReporteUSSalida en la base de datos
+	public void crearZpControlReporteUSSalida(ZpControlReporteUSSalida datos) {
+		ContentValues cv = ZpControlUSSalidaHelper.crearZpControlReporteUSSalida(datos);
+		mDb.insert(MainDBConstants.DATA_USSAL_TABLE, null, cv);
+	}
+	//Editar ZpControlReporteUSSalida existente en la base de datos
+	public boolean editarZpControlReporteUSSalida(ZpControlReporteUSSalida datos) {
+		ContentValues cv = ZpControlUSSalidaHelper.crearZpControlReporteUSSalida(datos);
+		return mDb.update(MainDBConstants.DATA_USSAL_TABLE, cv, MainDBConstants.codigo + "='" + datos.getCodigo() + "' and " + 
+					MainDBConstants.fechaHoraSalida + "=" + datos.getFechaHoraSalida().getTime(), null) > 0;
+	}	
+	//Limpiar la tabla de ZpControlReporteUSSalida de la base de datos
+	public boolean borrarZpControlReporteUSSalida() {
+		return mDb.delete(MainDBConstants.DATA_USSAL_TABLE, null, null) > 0;
+	}
+	//Obtener un ZpControlReporteUSSalida de la base de datos
+	public ZpControlReporteUSSalida getZpControlReporteUSSalida(String filtro, String orden) throws SQLException {
+		ZpControlReporteUSSalida mDatos = null;
+		Cursor cursorDatos = crearCursor(MainDBConstants.DATA_USSAL_TABLE, filtro, null, orden);
+		if (cursorDatos != null && cursorDatos.getCount() > 0) {
+			cursorDatos.moveToFirst();
+			mDatos=ZpControlUSSalidaHelper.crearZpControlReporteUSSalida(cursorDatos);
+		}
+		if (!cursorDatos.isClosed()) cursorDatos.close();
+		return mDatos;
+	}
+    //Obtener una lista de ZpControlReporteUSSalida de la base de datos
+    public List<ZpControlReporteUSSalida> getZpControlReporteUSSalidas(String filtro, String orden) throws SQLException {
+        List<ZpControlReporteUSSalida> zpControlReporteUSSalida = new ArrayList<ZpControlReporteUSSalida>();
+        Cursor cursorStatus = crearCursor(MainDBConstants.DATA_USSAL_TABLE, filtro, null, orden);
+        if (cursorStatus != null && cursorStatus.getCount() > 0) {
+            cursorStatus.moveToFirst();
+            zpControlReporteUSSalida.clear();
+            do{
+            	ZpControlReporteUSSalida datosSalida = null;
+                datosSalida = ZpControlUSSalidaHelper.crearZpControlReporteUSSalida(cursorStatus);
+                zpControlReporteUSSalida.add(datosSalida);
+            } while (cursorStatus.moveToNext());
+        }
+        if (!cursorStatus.isClosed()) cursorStatus.close();
+        return zpControlReporteUSSalida;
+    }
+    
+    /**
+	 * Metodos para ZpControlReporteUSRecepcion en la base de datos
+	 * 
+	 * @param datos
+	 *            Objeto ZpControlReporteUSRecepcion que contiene la informacion
+	 *
+	 */
+	//Crear nuevo ZpControlReporteUSRecepcion en la base de datos
+	public void crearZpControlReporteUSRecepcion(ZpControlReporteUSRecepcion datos) {
+		ContentValues cv = ZpControlUSRecepcionHelper.crearZpControlReporteUSRecepcion(datos);
+		mDb.insert(MainDBConstants.DATA_USREC_TABLE, null, cv);
+	}
+	//Editar ZpControlReporteUSRecepcion existente en la base de datos
+	public boolean editarZpControlReporteUSRecepcion(ZpControlReporteUSRecepcion datos) {
+		ContentValues cv = ZpControlUSRecepcionHelper.crearZpControlReporteUSRecepcion(datos);
+		return mDb.update(MainDBConstants.DATA_USREC_TABLE, cv, MainDBConstants.codigo + "='" + datos.getCodigo() + "' and " + 
+					MainDBConstants.fechaHoraLLegada + "=" + datos.getFechaHoraLLegada().getTime(), null) > 0;
+	}	
+	//Limpiar la tabla de ZpControlReporteUSRecepcion de la base de datos
+	public boolean borrarZpControlReporteUSRecepcion() {
+		return mDb.delete(MainDBConstants.DATA_USREC_TABLE, null, null) > 0;
+	}
+	//Obtener un ZpControlReporteUSRecepcion de la base de datos
+	public ZpControlReporteUSRecepcion getZpControlReporteUSRecepcion(String filtro, String orden) throws SQLException {
+		ZpControlReporteUSRecepcion mDatos = null;
+		Cursor cursorDatos = crearCursor(MainDBConstants.DATA_USREC_TABLE, filtro, null, orden);
+		if (cursorDatos != null && cursorDatos.getCount() > 0) {
+			cursorDatos.moveToFirst();
+			mDatos=ZpControlUSRecepcionHelper.crearZpControlReporteUSRecepcion(cursorDatos);
+		}
+		if (!cursorDatos.isClosed()) cursorDatos.close();
+		return mDatos;
+	}
+    //Obtener una lista de ZpControlReporteUSRecepcion de la base de datos
+    public List<ZpControlReporteUSRecepcion> getZpControlReporteUSRecepciones(String filtro, String orden) throws SQLException {
+        List<ZpControlReporteUSRecepcion> zpControlReporteUSRecepcion = new ArrayList<ZpControlReporteUSRecepcion>();
+        Cursor cursorStatus = crearCursor(MainDBConstants.DATA_USREC_TABLE, filtro, null, orden);
+        if (cursorStatus != null && cursorStatus.getCount() > 0) {
+            cursorStatus.moveToFirst();
+            zpControlReporteUSRecepcion.clear();
+            do{
+            	ZpControlReporteUSRecepcion datosRecepcion = null;
+                datosRecepcion = ZpControlUSRecepcionHelper.crearZpControlReporteUSRecepcion(cursorStatus);
+                zpControlReporteUSRecepcion.add(datosRecepcion);
+            } while (cursorStatus.moveToNext());
+        }
+        if (!cursorStatus.isClosed()) cursorStatus.close();
+        return zpControlReporteUSRecepcion;
+    }    
    
     /**
      * Metodos para Zp01StudyEntrySectionAtoD en la base de datos
@@ -1010,6 +1164,12 @@ public class ZipAdapter {
 		c = crearCursor(Zp08DBConstants.STUDYEXIT_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c = crearCursor(MainDBConstants.DATA_CONSSAL_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MainDBConstants.DATA_CONSREC_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MainDBConstants.DATA_USSAL_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MainDBConstants.DATA_USREC_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
 		return false;

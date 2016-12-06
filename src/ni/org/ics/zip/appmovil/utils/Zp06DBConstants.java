@@ -142,7 +142,7 @@ public class Zp06DBConstants {
     public static final String deliDateEntered = "deliDateEntered";
 
     //Crear tabla Zp06DeliveryAnd6weekVisit
-    public static final String CREATE_DELIVERY6WVISIT_TABLE = "create table "
+    public static final String CREATE_DELIVERY6WVISIT_TABLE = "create table if not exists "
             + DELIVERY6WVISIT_TABLE + " ("
             + recordId + " text not null, "
             + redcapEventName + " text, "

@@ -6,6 +6,7 @@
         <item>@string/main_infant</item>
         <item>@string/main_specimen</item>
         <item>@string/main_consent</item>
+        <item>@string/main_us</item>
     </string-array>
     
     <string-array name="menu_maternal_a">
@@ -80,6 +81,11 @@
         <item>@string/consent_1</item>
         <item>@string/consent_2</item>
     </string-array>
+    
+    <string-array name="menu_us">
+        <item>@string/us_1</item>
+        <item>@string/us_2</item>
+    </string-array>    
     
     <string-array name="list_cs">
         <item>@string/select</item>
