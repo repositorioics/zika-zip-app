@@ -105,7 +105,7 @@ public class UploadAllTask extends UploadTask {
 			mSalidasCons = zipA.getZpControlConsentimientosSalidas(filtro, null);
 			mRecepcionesCons = zipA.getZpControlConsentimientosRecepciones(filtro, null);
 			mSalidasUS = zipA.getZpControlReporteUSSalidas(filtro, null);
-			mRecepcionUS = zipA.getZpControlReporteUSRecepciones("", null);
+			mRecepcionUS = zipA.getZpControlReporteUSRecepciones(filtro, null);
 			publishProgress("Datos completos!", "2", "2");
 			actualizarBaseDatos(Constants.STATUS_SUBMITTED, PRE_TAMIZAJE);
 			error = cargarPreTamizajes(url, username, password);
