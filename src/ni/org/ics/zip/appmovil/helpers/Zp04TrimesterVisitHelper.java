@@ -6,6 +6,7 @@ import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionAtoD;
 import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionE;
 import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionFtoH;
 import ni.org.ics.zip.appmovil.utils.MainDBConstants;
+import ni.org.ics.zip.appmovil.utils.Zp02DBConstants;
 import ni.org.ics.zip.appmovil.utils.Zp04DBConstants;
 
 import java.util.Date;
@@ -115,6 +116,18 @@ public class Zp04TrimesterVisitHelper {
         cv.put(Zp04DBConstants.triOtherDrugs2, trimesterVisitSectionAtoD.getTriOtherDrugs2());
         cv.put(Zp04DBConstants.triOtherDrugs3, trimesterVisitSectionAtoD.getTriOtherDrugs3());
         cv.put(Zp04DBConstants.triOtherDrugs4, trimesterVisitSectionAtoD.getTriOtherDrugs4());
+        cv.put(Zp04DBConstants.triAddtMedicines, trimesterVisitSectionAtoD.getTriAddtMedicines());
+        cv.put(Zp04DBConstants.triAddtDrugsType, trimesterVisitSectionAtoD.getTriAddtDrugsType());
+        cv.put(Zp04DBConstants.triAddtOthDrugsType1, trimesterVisitSectionAtoD.getTriAddtOthDrugsType1());
+        cv.put(Zp04DBConstants.triAddtOthDrugsBrand1, trimesterVisitSectionAtoD.getTriAddtOthDrugsBrand1());
+        cv.put(Zp04DBConstants.triAddtOthDrugsType2, trimesterVisitSectionAtoD.getTriAddtOthDrugsType2());
+        cv.put(Zp04DBConstants.triAddtOthDrugsBrand2, trimesterVisitSectionAtoD.getTriAddtOthDrugsBrand2());
+        cv.put(Zp04DBConstants.triAddtOthDrugsType3, trimesterVisitSectionAtoD.getTriAddtOthDrugsType3());
+        cv.put(Zp04DBConstants.triAddtOthDrugsBrand3, trimesterVisitSectionAtoD.getTriAddtOthDrugsBrand3());
+        cv.put(Zp04DBConstants.triAddtOthDrugsType4, trimesterVisitSectionAtoD.getTriAddtOthDrugsType4());
+        cv.put(Zp04DBConstants.triAddtOthDrugsBrand4, trimesterVisitSectionAtoD.getTriAddtOthDrugsBrand4());
+        cv.put(Zp04DBConstants.triAddtOthDrugsType5, trimesterVisitSectionAtoD.getTriAddtOthDrugsType5());
+        cv.put(Zp04DBConstants.triAddtOthDrugsBrand5, trimesterVisitSectionAtoD.getTriAddtOthDrugsBrand5());
 
         if (trimesterVisitSectionAtoD.getRecordDate() != null) cv.put(MainDBConstants.recordDate, trimesterVisitSectionAtoD.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, trimesterVisitSectionAtoD.getRecordUser());
@@ -228,6 +241,20 @@ public class Zp04TrimesterVisitHelper {
         trimesterVisitSectionAtoD.setTriOtherDrugs2(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triOtherDrugs2)));
         trimesterVisitSectionAtoD.setTriOtherDrugs3(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triOtherDrugs3)));
         trimesterVisitSectionAtoD.setTriOtherDrugs4(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triOtherDrugs4)));
+        trimesterVisitSectionAtoD.setTriAddtMedicines(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triAddtMedicines)));
+        trimesterVisitSectionAtoD.setTriAddtDrugsType(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triAddtDrugsType)));
+        trimesterVisitSectionAtoD.setTriAddtOthDrugsType1(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triAddtOthDrugsType1)));
+        trimesterVisitSectionAtoD.setTriAddtOthDrugsBrand1(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triAddtOthDrugsBrand1)));
+        trimesterVisitSectionAtoD.setTriAddtOthDrugsType2(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triAddtOthDrugsType2)));
+        trimesterVisitSectionAtoD.setTriAddtOthDrugsBrand2(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triAddtOthDrugsBrand2)));
+        trimesterVisitSectionAtoD.setTriAddtOthDrugsType3(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triAddtOthDrugsType3)));
+        trimesterVisitSectionAtoD.setTriAddtOthDrugsBrand3(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triAddtOthDrugsBrand3)));
+        trimesterVisitSectionAtoD.setTriAddtOthDrugsType4(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triAddtOthDrugsType4)));
+        trimesterVisitSectionAtoD.setTriAddtOthDrugsBrand4(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triAddtOthDrugsBrand4)));
+        trimesterVisitSectionAtoD.setTriAddtOthDrugsType5(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triAddtOthDrugsType5)));
+        trimesterVisitSectionAtoD.setTriAddtOthDrugsBrand5(cursorAD.getString(cursorAD.getColumnIndex(Zp04DBConstants.triAddtOthDrugsBrand5)));
+
+
 
         //Movil y Metadata
         if(cursorAD.getLong(cursorAD.getColumnIndex(MainDBConstants.recordDate))>0) trimesterVisitSectionAtoD.setRecordDate(new Date(cursorAD.getLong(cursorAD.getColumnIndex(MainDBConstants.recordDate))));
