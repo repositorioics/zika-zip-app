@@ -93,6 +93,38 @@ public class Zp01StudyEntrySectionAtoDXml{
     private String seaDegreeSpouse;
     @Element(required=false)
     private Float seaSdegreeYears;
+    @Element(required=false)
+    private String seaAddtChronicDiseases;
+    @Element(required=false)
+    private String seaAddtChronicDiseases1;
+    @Element(required=false)
+    private String seaAddtChronicDiseases2;
+    @Element(required=false)
+    private String seaAddtChronicDiseases3;
+    @Element(required=false)
+    private String seaAddtMedicines;
+    @Element(required=false)
+    private String seaAddtDrugsType;
+    @Element(required=false)
+    private String seaAddtOthDrugsType1;
+    @Element(required=false)
+    private String seaAddtOthDrugsBrand1;
+    @Element(required=false)
+    private String seaAddtOthDrugsType2;
+    @Element(required=false)
+    private String seaAddtOthDrugsBrand2;
+    @Element(required=false)
+    private String seaAddtOthDrugsType3;
+    @Element(required=false)
+    private String seaAddtOthDrugsBrand3;
+    @Element(required=false)
+    private String seaAddtOthDrugsType4;
+    @Element(required=false)
+    private String seaAddtOthDrugsBrand4;
+    @Element(required=false)
+    private String seaAddtOthDrugsType5;
+    @Element(required=false)
+    private String seaAddtOthDrugsBrand5;
 
     @Element(required=false)
     private String question1;

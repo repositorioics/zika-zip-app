@@ -297,6 +297,30 @@ public class Zp03MonthlyVisitXml {
     private String monIdDataEntry;
     @Element(required=false)
     private Date monDateEntered;
+    @Element(required=false)
+    private String monAddtMedicines;
+    @Element(required=false)
+    private String monAddtDrugsType;
+    @Element(required=false)
+    private String monAddtOthDrugsType1;
+    @Element(required=false)
+    private String monAddtOthDrugsBrand1;
+    @Element(required=false)
+    private String monAddtOthDrugsType2;
+    @Element(required=false)
+    private String monAddtOthDrugsBrand2;
+    @Element(required=false)
+    private String monAddtOthDrugsType3;
+    @Element(required=false)
+    private String monAddtOthDrugsBrand3;
+    @Element(required=false)
+    private String monAddtOthDrugsType4;
+    @Element(required=false)
+    private String monAddtOthDrugsBrand4;
+    @Element(required=false)
+    private String monAddtOthDrugsType5;
+    @Element(required=false)
+    private String monAddtOthDrugsBrand5;
 
     @Element(required=false)
     private String group1;

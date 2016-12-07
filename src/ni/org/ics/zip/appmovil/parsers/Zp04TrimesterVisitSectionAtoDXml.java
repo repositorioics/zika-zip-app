@@ -193,6 +193,31 @@ public class Zp04TrimesterVisitSectionAtoDXml {
     private String triOtherDrugs3;
     @Element(required=false)
     private String triOtherDrugs4;
+    @Element(required=false)
+    private String triAddtMedicines;
+    @Element(required=false)
+    private String triAddtDrugsType;
+    @Element(required=false)
+    private String triAddtOthDrugsType1;
+    @Element(required=false)
+    private String triAddtOthDrugsBrand1;
+    @Element(required=false)
+    private String triAddtOthDrugsType2;
+    @Element(required=false)
+    private String triAddtOthDrugsBrand2;
+    @Element(required=false)
+    private String triAddtOthDrugsType3;
+    @Element(required=false)
+    private String triAddtOthDrugsBrand3;
+    @Element(required=false)
+    private String triAddtOthDrugsType4;
+    @Element(required=false)
+    private String triAddtOthDrugsBrand4;
+    @Element(required=false)
+    private String triAddtOthDrugsType5;
+    @Element(required=false)
+    private String triAddtOthDrugsBrand5;
+
 
     @Element(required=false)
     private String group1;

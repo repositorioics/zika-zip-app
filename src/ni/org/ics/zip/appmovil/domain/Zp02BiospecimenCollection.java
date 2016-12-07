@@ -134,8 +134,8 @@ public class Zp02BiospecimenCollection extends BaseMetaData{
     private Date addtLastAnemiaTest;
     private String addtLastAnemiaTestUk;
     private String addtAnemiaTestAv;
-    private Integer addtHematocrit;
-    private Integer addtHemoglobin;
+    private Float addtHematocrit;
+    private Float addtHemoglobin;
 
 
     public String getRecordId() {
@@ -1138,19 +1138,19 @@ public class Zp02BiospecimenCollection extends BaseMetaData{
         this.addtAnemiaTestAv = addtAnemiaTestAv;
     }
 
-    public Integer getAddtHematocrit() {
+    public Float getAddtHematocrit() {
         return addtHematocrit;
     }
 
-    public void setAddtHematocrit(Integer addtHematocrit) {
+    public void setAddtHematocrit(Float addtHematocrit) {
         this.addtHematocrit = addtHematocrit;
     }
 
-    public Integer getAddtHemoglobin() {
+    public Float getAddtHemoglobin() {
         return addtHemoglobin;
     }
 
-    public void setAddtHemoglobin(Integer addtHemoglobin) {
+    public void setAddtHemoglobin(Float addtHemoglobin) {
         this.addtHemoglobin = addtHemoglobin;
     }
 }

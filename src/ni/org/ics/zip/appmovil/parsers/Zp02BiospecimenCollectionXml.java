@@ -249,6 +249,18 @@ public class Zp02BiospecimenCollectionXml{
     private String bscPerson3;
     @Element(required=false)
     private Date bscCompleteDate3;
+    @Element(required=false)
+    private String addtAnemiaTest;
+    @Element(required=false)
+    private Date addtLastAnemiaTest;
+    @Element(required=false)
+    private String addtLastAnemiaTestUk;
+    @Element(required=false)
+    private String addtAnemiaTestAv;
+    @Element(required=false)
+    private Float addtHematocrit;
+    @Element(required=false)
+    private Float addtHemoglobin;
 
     @Element(required=false)
     private String group1;
@@ -311,6 +323,8 @@ public class Zp02BiospecimenCollectionXml{
     private String note4;
     @Element(required=false)
     private String note5;
+    @Element(required=false)
+    private String question0;
     @Element(required=false)
     private String question1;
     @Element(required=false)
