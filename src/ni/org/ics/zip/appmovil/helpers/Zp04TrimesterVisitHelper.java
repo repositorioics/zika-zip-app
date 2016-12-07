@@ -6,7 +6,6 @@ import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionAtoD;
 import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionE;
 import ni.org.ics.zip.appmovil.domain.Zp04TrimesterVisitSectionFtoH;
 import ni.org.ics.zip.appmovil.utils.MainDBConstants;
-import ni.org.ics.zip.appmovil.utils.Zp02DBConstants;
 import ni.org.ics.zip.appmovil.utils.Zp04DBConstants;
 
 import java.util.Date;
