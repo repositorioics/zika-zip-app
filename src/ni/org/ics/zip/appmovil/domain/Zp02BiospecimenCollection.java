@@ -130,6 +130,13 @@ public class Zp02BiospecimenCollection extends BaseMetaData{
     private Date bscCompleteDate2;
     private String bscPerson3;
     private Date bscCompleteDate3;
+    private String addtAnemiaTest;
+    private Date addtLastAnemiaTest;
+    private String addtLastAnemiaTestUk;
+    private String addtAnemiaTestAv;
+    private Integer addtHematocrit;
+    private Integer addtHemoglobin;
+
 
     public String getRecordId() {
         return recordId;
@@ -1097,5 +1104,53 @@ public class Zp02BiospecimenCollection extends BaseMetaData{
 
     public void setBscCompleteDate3(Date bscCompleteDate3) {
         this.bscCompleteDate3 = bscCompleteDate3;
+    }
+
+    public String getAddtAnemiaTest() {
+        return addtAnemiaTest;
+    }
+
+    public void setAddtAnemiaTest(String addtAnemiaTest) {
+        this.addtAnemiaTest = addtAnemiaTest;
+    }
+
+    public Date getAddtLastAnemiaTest() {
+        return addtLastAnemiaTest;
+    }
+
+    public void setAddtLastAnemiaTest(Date addtLastAnemiaTest) {
+        this.addtLastAnemiaTest = addtLastAnemiaTest;
+    }
+
+    public String getAddtLastAnemiaTestUk() {
+        return addtLastAnemiaTestUk;
+    }
+
+    public void setAddtLastAnemiaTestUk(String addtLastAnemiaTestUk) {
+        this.addtLastAnemiaTestUk = addtLastAnemiaTestUk;
+    }
+
+    public String getAddtAnemiaTestAv() {
+        return addtAnemiaTestAv;
+    }
+
+    public void setAddtAnemiaTestAv(String addtAnemiaTestAv) {
+        this.addtAnemiaTestAv = addtAnemiaTestAv;
+    }
+
+    public Integer getAddtHematocrit() {
+        return addtHematocrit;
+    }
+
+    public void setAddtHematocrit(Integer addtHematocrit) {
+        this.addtHematocrit = addtHematocrit;
+    }
+
+    public Integer getAddtHemoglobin() {
+        return addtHemoglobin;
+    }
+
+    public void setAddtHemoglobin(Integer addtHemoglobin) {
+        this.addtHemoglobin = addtHemoglobin;
     }
 }

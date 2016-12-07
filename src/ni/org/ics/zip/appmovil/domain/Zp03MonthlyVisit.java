@@ -154,6 +154,19 @@ public class Zp03MonthlyVisit extends BaseMetaData{
     private Date monDateReviewed;
     private String monIdDataEntry;
     private Date monDateEntered;
+    private String monAddtMedicines;
+    private String monAddtDrugsType;
+    private String monAddtOthDrugsType1;
+    private String monAddtOthDrugsBrand1;
+    private String monAddtOthDrugsType2;
+    private String monAddtOthDrugsBrand2;
+    private String monAddtOthDrugsType3;
+    private String monAddtOthDrugsBrand3;
+    private String monAddtOthDrugsType4;
+    private String monAddtOthDrugsBrand4;
+    private String monAddtOthDrugsType5;
+    private String monAddtOthDrugsBrand5;
+
 
     public String getRecordId() {
         return recordId;
@@ -1313,5 +1326,101 @@ public class Zp03MonthlyVisit extends BaseMetaData{
 
     public void setMonDateEntered(Date monDateEntered) {
         this.monDateEntered = monDateEntered;
+    }
+
+    public String getMonAddtMedicines() {
+        return monAddtMedicines;
+    }
+
+    public void setMonAddtMedicines(String monAddtMedicines) {
+        this.monAddtMedicines = monAddtMedicines;
+    }
+
+    public String getMonAddtDrugsType() {
+        return monAddtDrugsType;
+    }
+
+    public void setMonAddtDrugsType(String monAddtDrugsType) {
+        this.monAddtDrugsType = monAddtDrugsType;
+    }
+
+    public String getMonAddtOthDrugsType1() {
+        return monAddtOthDrugsType1;
+    }
+
+    public void setMonAddtOthDrugsType1(String monAddtOthDrugsType1) {
+        this.monAddtOthDrugsType1 = monAddtOthDrugsType1;
+    }
+
+    public String getMonAddtOthDrugsBrand1() {
+        return monAddtOthDrugsBrand1;
+    }
+
+    public void setMonAddtOthDrugsBrand1(String monAddtOthDrugsBrand1) {
+        this.monAddtOthDrugsBrand1 = monAddtOthDrugsBrand1;
+    }
+
+    public String getMonAddtOthDrugsType2() {
+        return monAddtOthDrugsType2;
+    }
+
+    public void setMonAddtOthDrugsType2(String monAddtOthDrugsType2) {
+        this.monAddtOthDrugsType2 = monAddtOthDrugsType2;
+    }
+
+    public String getMonAddtOthDrugsBrand2() {
+        return monAddtOthDrugsBrand2;
+    }
+
+    public void setMonAddtOthDrugsBrand2(String monAddtOthDrugsBrand2) {
+        this.monAddtOthDrugsBrand2 = monAddtOthDrugsBrand2;
+    }
+
+    public String getMonAddtOthDrugsType3() {
+        return monAddtOthDrugsType3;
+    }
+
+    public void setMonAddtOthDrugsType3(String monAddtOthDrugsType3) {
+        this.monAddtOthDrugsType3 = monAddtOthDrugsType3;
+    }
+
+    public String getMonAddtOthDrugsBrand3() {
+        return monAddtOthDrugsBrand3;
+    }
+
+    public void setMonAddtOthDrugsBrand3(String monAddtOthDrugsBrand3) {
+        this.monAddtOthDrugsBrand3 = monAddtOthDrugsBrand3;
+    }
+
+    public String getMonAddtOthDrugsType4() {
+        return monAddtOthDrugsType4;
+    }
+
+    public void setMonAddtOthDrugsType4(String monAddtOthDrugsType4) {
+        this.monAddtOthDrugsType4 = monAddtOthDrugsType4;
+    }
+
+    public String getMonAddtOthDrugsBrand4() {
+        return monAddtOthDrugsBrand4;
+    }
+
+    public void setMonAddtOthDrugsBrand4(String monAddtOthDrugsBrand4) {
+        this.monAddtOthDrugsBrand4 = monAddtOthDrugsBrand4;
+    }
+
+    public String getMonAddtOthDrugsType5() {
+        return monAddtOthDrugsType5;
+    }
+
+    public void setMonAddtOthDrugsType5(String monAddtOthDrugsType5) {
+        this.monAddtOthDrugsType5 = monAddtOthDrugsType5;
+    }
+
+    public String getMonAddtOthDrugsBrand5() {
+        return monAddtOthDrugsBrand5;
+    }
+
+    public void setMonAddtOthDrugsBrand5(String monAddtOthDrugsBrand5) {
+        this.monAddtOthDrugsBrand5 = monAddtOthDrugsBrand5;
     }
 }

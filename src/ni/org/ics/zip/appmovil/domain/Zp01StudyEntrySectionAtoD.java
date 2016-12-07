@@ -52,6 +52,23 @@ public class Zp01StudyEntrySectionAtoD extends BaseMetaData{
     private Float seaYdegreeYears;
     private String seaDegreeSpouse;
     private Float seaSdegreeYears;
+    private String seaAddtChronicDiseases;
+    private String seaAddtChronicDiseases1;
+    private String seaAddtChronicDiseases2;
+    private String seaAddtChronicDiseases3;
+    private String seaAddtMedicines;
+    private String seaAddtDrugsType;
+    private String seaAddtOthDrugsType1;
+    private String seaAddtOthDrugsBrand1;
+    private String seaAddtOthDrugsType2;
+    private String seaAddtOthDrugsBrand2;
+    private String seaAddtOthDrugsType3;
+    private String seaAddtOthDrugsBrand3;
+    private String seaAddtOthDrugsType4;
+    private String seaAddtOthDrugsBrand4;
+    private String seaAddtOthDrugsType5;
+    private String seaAddtOthDrugsBrand5;
+
 
     public String getRecordId() {
         return recordId;
@@ -394,5 +411,133 @@ public class Zp01StudyEntrySectionAtoD extends BaseMetaData{
 
     public void setSeaSdegreeYears(Float seaSdegreeYears) {
         this.seaSdegreeYears = seaSdegreeYears;
+    }
+
+    public String getSeaAddtChronicDiseases() {
+        return seaAddtChronicDiseases;
+    }
+
+    public void setSeaAddtChronicDiseases(String seaAddtChronicDiseases) {
+        this.seaAddtChronicDiseases = seaAddtChronicDiseases;
+    }
+
+    public String getSeaAddtChronicDiseases1() {
+        return seaAddtChronicDiseases1;
+    }
+
+    public void setSeaAddtChronicDiseases1(String seaAddtChronicDiseases1) {
+        this.seaAddtChronicDiseases1 = seaAddtChronicDiseases1;
+    }
+
+    public String getSeaAddtChronicDiseases2() {
+        return seaAddtChronicDiseases2;
+    }
+
+    public void setSeaAddtChronicDiseases2(String seaAddtChronicDiseases2) {
+        this.seaAddtChronicDiseases2 = seaAddtChronicDiseases2;
+    }
+
+    public String getSeaAddtChronicDiseases3() {
+        return seaAddtChronicDiseases3;
+    }
+
+    public void setSeaAddtChronicDiseases3(String seaAddtChronicDiseases3) {
+        this.seaAddtChronicDiseases3 = seaAddtChronicDiseases3;
+    }
+
+    public String getSeaAddtMedicines() {
+        return seaAddtMedicines;
+    }
+
+    public void setSeaAddtMedicines(String seaAddtMedicines) {
+        this.seaAddtMedicines = seaAddtMedicines;
+    }
+
+    public String getSeaAddtDrugsType() {
+        return seaAddtDrugsType;
+    }
+
+    public void setSeaAddtDrugsType(String seaAddtDrugsType) {
+        this.seaAddtDrugsType = seaAddtDrugsType;
+    }
+
+    public String getSeaAddtOthDrugsType1() {
+        return seaAddtOthDrugsType1;
+    }
+
+    public void setSeaAddtOthDrugsType1(String seaAddtOthDrugsType1) {
+        this.seaAddtOthDrugsType1 = seaAddtOthDrugsType1;
+    }
+
+    public String getSeaAddtOthDrugsBrand1() {
+        return seaAddtOthDrugsBrand1;
+    }
+
+    public void setSeaAddtOthDrugsBrand1(String seaAddtOthDrugsBrand1) {
+        this.seaAddtOthDrugsBrand1 = seaAddtOthDrugsBrand1;
+    }
+
+    public String getSeaAddtOthDrugsType2() {
+        return seaAddtOthDrugsType2;
+    }
+
+    public void setSeaAddtOthDrugsType2(String seaAddtOthDrugsType2) {
+        this.seaAddtOthDrugsType2 = seaAddtOthDrugsType2;
+    }
+
+    public String getSeaAddtOthDrugsBrand2() {
+        return seaAddtOthDrugsBrand2;
+    }
+
+    public void setSeaAddtOthDrugsBrand2(String seaAddtOthDrugsBrand2) {
+        this.seaAddtOthDrugsBrand2 = seaAddtOthDrugsBrand2;
+    }
+
+    public String getSeaAddtOthDrugsType3() {
+        return seaAddtOthDrugsType3;
+    }
+
+    public void setSeaAddtOthDrugsType3(String seaAddtOthDrugsType3) {
+        this.seaAddtOthDrugsType3 = seaAddtOthDrugsType3;
+    }
+
+    public String getSeaAddtOthDrugsBrand3() {
+        return seaAddtOthDrugsBrand3;
+    }
+
+    public void setSeaAddtOthDrugsBrand3(String seaAddtOthDrugsBrand3) {
+        this.seaAddtOthDrugsBrand3 = seaAddtOthDrugsBrand3;
+    }
+
+    public String getSeaAddtOthDrugsType4() {
+        return seaAddtOthDrugsType4;
+    }
+
+    public void setSeaAddtOthDrugsType4(String seaAddtOthDrugsType4) {
+        this.seaAddtOthDrugsType4 = seaAddtOthDrugsType4;
+    }
+
+    public String getSeaAddtOthDrugsBrand4() {
+        return seaAddtOthDrugsBrand4;
+    }
+
+    public void setSeaAddtOthDrugsBrand4(String seaAddtOthDrugsBrand4) {
+        this.seaAddtOthDrugsBrand4 = seaAddtOthDrugsBrand4;
+    }
+
+    public String getSeaAddtOthDrugsType5() {
+        return seaAddtOthDrugsType5;
+    }
+
+    public void setSeaAddtOthDrugsType5(String seaAddtOthDrugsType5) {
+        this.seaAddtOthDrugsType5 = seaAddtOthDrugsType5;
+    }
+
+    public String getSeaAddtOthDrugsBrand5() {
+        return seaAddtOthDrugsBrand5;
+    }
+
+    public void setSeaAddtOthDrugsBrand5(String seaAddtOthDrugsBrand5) {
+        this.seaAddtOthDrugsBrand5 = seaAddtOthDrugsBrand5;
     }
 }
