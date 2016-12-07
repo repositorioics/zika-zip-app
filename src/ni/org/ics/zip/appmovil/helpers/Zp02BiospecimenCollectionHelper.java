@@ -132,6 +132,14 @@ public class Zp02BiospecimenCollectionHelper {
         cv.put(Zp02DBConstants.bscMatdBreastmTime, biospecimenCollection.getBscMatdBreastmTime());
         cv.put(Zp02DBConstants.bscMatdBreastmAmou, biospecimenCollection.getBscMatdBreastmAmou());
         cv.put(Zp02DBConstants.bscMatdBreastmCom, biospecimenCollection.getBscMatdBreastmCom());
+        cv.put(Zp02DBConstants.addtAnemiaTest, biospecimenCollection.getAddtAnemiaTest());
+        if (biospecimenCollection.getAddtLastAnemiaTest()!=null) cv.put(Zp02DBConstants.addtLastAnemiaTest, biospecimenCollection.getAddtLastAnemiaTest().getTime());
+        cv.put(Zp02DBConstants.addtLastAnemiaTestUk, biospecimenCollection.getAddtLastAnemiaTestUk());
+        cv.put(Zp02DBConstants.addtAnemiaTestAv, biospecimenCollection.getAddtAnemiaTestAv());
+        cv.put(Zp02DBConstants.addtHematocrit, biospecimenCollection.getAddtHematocrit());
+        cv.put(Zp02DBConstants.addtHemoglobin, biospecimenCollection.getAddtHemoglobin());
+
+
         cv.put(Zp02DBConstants.bscPerson1, biospecimenCollection.getBscPerson1());
         if (biospecimenCollection.getBscCompleteDate1()!=null)cv.put(Zp02DBConstants.bscCompleteDate1, biospecimenCollection.getBscCompleteDate1().getTime());
         cv.put(Zp02DBConstants.bscPerson2, biospecimenCollection.getBscPerson2());
@@ -272,6 +280,13 @@ public class Zp02BiospecimenCollectionHelper {
         biospecimenCollection.setBscMatdBreastmTime(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatdBreastmTime)));
         if(cursorBC.getFloat(cursorBC.getColumnIndex(Zp02DBConstants.bscMatdBreastmAmou))>0) biospecimenCollection.setBscMatdBreastmAmou(cursorBC.getFloat(cursorBC.getColumnIndex(Zp02DBConstants.bscMatdBreastmAmou)));
         biospecimenCollection.setBscMatdBreastmCom(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscMatdBreastmCom)));
+        biospecimenCollection.setAddtAnemiaTest(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.addtAnemiaTest)));
+        if (cursorBC.getLong(cursorBC.getColumnIndex(Zp02DBConstants.addtLastAnemiaTest))>0) biospecimenCollection.setAddtLastAnemiaTest(new Date(cursorBC.getLong(cursorBC.getColumnIndex(Zp02DBConstants.addtLastAnemiaTest))));
+        biospecimenCollection.setAddtLastAnemiaTestUk(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.addtLastAnemiaTestUk)));
+        biospecimenCollection.setAddtAnemiaTestAv(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.addtLastAnemiaTestUk)));
+        biospecimenCollection.setAddtHematocrit(cursorBC.getFloat(cursorBC.getColumnIndex(Zp02DBConstants.addtHematocrit)));
+        biospecimenCollection.setAddtHemoglobin(cursorBC.getFloat(cursorBC.getColumnIndex(Zp02DBConstants.addtHemoglobin)));
+
         biospecimenCollection.setBscPerson1(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscPerson1)));
         if (cursorBC.getLong(cursorBC.getColumnIndex(Zp02DBConstants.bscCompleteDate1))>0) biospecimenCollection.setBscCompleteDate1(new Date(cursorBC.getLong(cursorBC.getColumnIndex(Zp02DBConstants.bscCompleteDate1))));
         biospecimenCollection.setBscPerson2(cursorBC.getString(cursorBC.getColumnIndex(Zp02DBConstants.bscPerson2)));
