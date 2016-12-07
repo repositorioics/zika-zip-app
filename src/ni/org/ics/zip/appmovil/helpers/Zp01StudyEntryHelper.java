@@ -67,6 +67,23 @@ public class Zp01StudyEntryHelper {
         cv.put(Zp01DBConstants.seaYdegreeYears, studyEntrySectionAtoD.getSeaYdegreeYears());
         cv.put(Zp01DBConstants.seaDegreeSpouse, studyEntrySectionAtoD.getSeaDegreeSpouse());
         cv.put(Zp01DBConstants.seaSdegreeYears, studyEntrySectionAtoD.getSeaSdegreeYears());
+        //Cambios version 2
+        cv.put(Zp01DBConstants.seaAddtChronicDiseases, studyEntrySectionAtoD.getSeaAddtChronicDiseases());
+        cv.put(Zp01DBConstants.seaAddtChronicDiseases1, studyEntrySectionAtoD.getSeaAddtChronicDiseases1());
+        cv.put(Zp01DBConstants.seaAddtChronicDiseases2, studyEntrySectionAtoD.getSeaAddtChronicDiseases2());
+        cv.put(Zp01DBConstants.seaAddtChronicDiseases3, studyEntrySectionAtoD.getSeaAddtChronicDiseases3());
+        cv.put(Zp01DBConstants.seaAddtMedicines, studyEntrySectionAtoD.getSeaAddtMedicines());
+        cv.put(Zp01DBConstants.seaAddtDrugsType, studyEntrySectionAtoD.getSeaAddtDrugsType());
+        cv.put(Zp01DBConstants.seaAddtOthDrugsType1, studyEntrySectionAtoD.getSeaAddtOthDrugsType1());
+        cv.put(Zp01DBConstants.seaAddtOthDrugsBrand1, studyEntrySectionAtoD.getSeaAddtOthDrugsBrand1());
+        cv.put(Zp01DBConstants.seaAddtOthDrugsType2, studyEntrySectionAtoD.getSeaAddtOthDrugsType2());
+        cv.put(Zp01DBConstants.seaAddtOthDrugsBrand2, studyEntrySectionAtoD.getSeaAddtOthDrugsBrand2());
+        cv.put(Zp01DBConstants.seaAddtOthDrugsType3, studyEntrySectionAtoD.getSeaAddtOthDrugsType3());
+        cv.put(Zp01DBConstants.seaAddtOthDrugsBrand3, studyEntrySectionAtoD.getSeaAddtOthDrugsBrand3());
+        cv.put(Zp01DBConstants.seaAddtOthDrugsType4, studyEntrySectionAtoD.getSeaAddtOthDrugsType4());
+        cv.put(Zp01DBConstants.seaAddtOthDrugsBrand4, studyEntrySectionAtoD.getSeaAddtOthDrugsBrand4());
+        cv.put(Zp01DBConstants.seaAddtOthDrugsType5, studyEntrySectionAtoD.getSeaAddtOthDrugsType5());
+        cv.put(Zp01DBConstants.seaAddtOthDrugsBrand5, studyEntrySectionAtoD.getSeaAddtOthDrugsBrand5());
 
         if (studyEntrySectionAtoD.getRecordDate() != null) cv.put(MainDBConstants.recordDate, studyEntrySectionAtoD.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, studyEntrySectionAtoD.getRecordUser());
@@ -129,6 +146,24 @@ public class Zp01StudyEntryHelper {
         studyEntrySectionAtoD.setSeaYdegreeYears(cursorAtoD.getFloat(cursorAtoD.getColumnIndex(Zp01DBConstants.seaYdegreeYears)));
         studyEntrySectionAtoD.setSeaDegreeSpouse(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaDegreeSpouse)));
         studyEntrySectionAtoD.setSeaSdegreeYears(cursorAtoD.getFloat(cursorAtoD.getColumnIndex(Zp01DBConstants.seaSdegreeYears)));
+        //Cambios version 2
+        studyEntrySectionAtoD.setSeaAddtChronicDiseases(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAddtChronicDiseases)));
+        studyEntrySectionAtoD.setSeaAddtChronicDiseases1(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAddtChronicDiseases1)));
+        studyEntrySectionAtoD.setSeaAddtChronicDiseases2(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAddtChronicDiseases2)));
+        studyEntrySectionAtoD.setSeaAddtChronicDiseases3(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAddtChronicDiseases3)));
+        studyEntrySectionAtoD.setSeaAddtMedicines(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAddtMedicines)));
+        studyEntrySectionAtoD.setSeaAddtDrugsType(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAddtDrugsType)));
+        studyEntrySectionAtoD.setSeaAddtOthDrugsType1(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAddtOthDrugsType1)));
+        studyEntrySectionAtoD.setSeaAddtOthDrugsBrand1(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAddtOthDrugsBrand1)));
+        studyEntrySectionAtoD.setSeaAddtOthDrugsType2(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAddtOthDrugsType2)));
+        studyEntrySectionAtoD.setSeaAddtOthDrugsBrand2(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAddtOthDrugsBrand2)));
+        studyEntrySectionAtoD.setSeaAddtOthDrugsType3(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAddtOthDrugsType3)));
+        studyEntrySectionAtoD.setSeaAddtOthDrugsBrand3(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAddtOthDrugsBrand3)));
+        studyEntrySectionAtoD.setSeaAddtOthDrugsType4(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAddtOthDrugsType4)));
+        studyEntrySectionAtoD.setSeaAddtOthDrugsBrand4(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAddtOthDrugsBrand4)));
+        studyEntrySectionAtoD.setSeaAddtOthDrugsType5(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAddtOthDrugsType5)));
+        studyEntrySectionAtoD.setSeaAddtOthDrugsBrand5(cursorAtoD.getString(cursorAtoD.getColumnIndex(Zp01DBConstants.seaAddtOthDrugsBrand5)));
+
         //Movil y Metadata
         if(cursorAtoD.getLong(cursorAtoD.getColumnIndex(MainDBConstants.recordDate))>0) studyEntrySectionAtoD.setRecordDate(new Date(cursorAtoD.getLong(cursorAtoD.getColumnIndex(MainDBConstants.recordDate))));
         studyEntrySectionAtoD.setRecordUser(cursorAtoD.getString(cursorAtoD.getColumnIndex(MainDBConstants.recordUser)));

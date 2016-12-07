@@ -163,6 +163,19 @@ public class Zp03MonthlyVisitHelper {
         if (monthlyVisit.getMonDateReviewed()!=null) cv.put(Zp03DBConstants.monDateReviewed, monthlyVisit.getMonDateReviewed().getTime());
         cv.put(Zp03DBConstants.monIdDataEntry, monthlyVisit.getMonIdDataEntry());
         if (monthlyVisit.getMonDateEntered()!=null) cv.put(Zp03DBConstants.monDateEntered, monthlyVisit.getMonDateEntered().getTime());
+        //Cambios version 2
+        cv.put(Zp03DBConstants.monAddtMedicines, monthlyVisit.getMonAddtMedicines());
+        cv.put(Zp03DBConstants.monAddtDrugsType, monthlyVisit.getMonAddtDrugsType());
+        cv.put(Zp03DBConstants.monAddtOthDrugsType1, monthlyVisit.getMonAddtOthDrugsType1());
+        cv.put(Zp03DBConstants.monAddtOthDrugsBrand1, monthlyVisit.getMonAddtOthDrugsBrand1());
+        cv.put(Zp03DBConstants.monAddtOthDrugsType2, monthlyVisit.getMonAddtOthDrugsType2());
+        cv.put(Zp03DBConstants.monAddtOthDrugsBrand2, monthlyVisit.getMonAddtOthDrugsBrand2());
+        cv.put(Zp03DBConstants.monAddtOthDrugsType3, monthlyVisit.getMonAddtOthDrugsType3());
+        cv.put(Zp03DBConstants.monAddtOthDrugsBrand3, monthlyVisit.getMonAddtOthDrugsBrand3());
+        cv.put(Zp03DBConstants.monAddtOthDrugsType4, monthlyVisit.getMonAddtOthDrugsType4());
+        cv.put(Zp03DBConstants.monAddtOthDrugsBrand4, monthlyVisit.getMonAddtOthDrugsBrand4());
+        cv.put(Zp03DBConstants.monAddtOthDrugsType5, monthlyVisit.getMonAddtOthDrugsType5());
+        cv.put(Zp03DBConstants.monAddtOthDrugsBrand5, monthlyVisit.getMonAddtOthDrugsBrand5());
 
         if (monthlyVisit.getRecordDate() != null) cv.put(MainDBConstants.recordDate, monthlyVisit.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, monthlyVisit.getRecordUser());
@@ -328,6 +341,19 @@ public class Zp03MonthlyVisitHelper {
         if (cursorMV.getLong(cursorMV.getColumnIndex(Zp03DBConstants.monDateReviewed))>0) monthlyVisit.setMonDateReviewed(new Date(cursorMV.getLong(cursorMV.getColumnIndex(Zp03DBConstants.monDateReviewed))));
         monthlyVisit.setMonIdDataEntry(cursorMV.getString(cursorMV.getColumnIndex(Zp03DBConstants.monIdDataEntry)));
         if (cursorMV.getLong(cursorMV.getColumnIndex(Zp03DBConstants.monDateEntered))>0) monthlyVisit.setMonDateEntered(new Date(cursorMV.getLong(cursorMV.getColumnIndex(Zp03DBConstants.monDateEntered))));
+        //Cambios version 2
+        monthlyVisit.setMonAddtMedicines(cursorMV.getString(cursorMV.getColumnIndex(Zp03DBConstants.monAddtMedicines)));
+        monthlyVisit.setMonAddtDrugsType(cursorMV.getString(cursorMV.getColumnIndex(Zp03DBConstants.monAddtDrugsType)));
+        monthlyVisit.setMonAddtOthDrugsType1(cursorMV.getString(cursorMV.getColumnIndex(Zp03DBConstants.monAddtOthDrugsType1)));
+        monthlyVisit.setMonAddtOthDrugsBrand1(cursorMV.getString(cursorMV.getColumnIndex(Zp03DBConstants.monAddtOthDrugsBrand1)));
+        monthlyVisit.setMonAddtOthDrugsType2(cursorMV.getString(cursorMV.getColumnIndex(Zp03DBConstants.monAddtOthDrugsType2)));
+        monthlyVisit.setMonAddtOthDrugsBrand2(cursorMV.getString(cursorMV.getColumnIndex(Zp03DBConstants.monAddtOthDrugsBrand2)));
+        monthlyVisit.setMonAddtOthDrugsType3(cursorMV.getString(cursorMV.getColumnIndex(Zp03DBConstants.monAddtOthDrugsType3)));
+        monthlyVisit.setMonAddtOthDrugsBrand3(cursorMV.getString(cursorMV.getColumnIndex(Zp03DBConstants.monAddtOthDrugsBrand3)));
+        monthlyVisit.setMonAddtOthDrugsType4(cursorMV.getString(cursorMV.getColumnIndex(Zp03DBConstants.monAddtOthDrugsType4)));
+        monthlyVisit.setMonAddtOthDrugsBrand4(cursorMV.getString(cursorMV.getColumnIndex(Zp03DBConstants.monAddtOthDrugsBrand4)));
+        monthlyVisit.setMonAddtOthDrugsType5(cursorMV.getString(cursorMV.getColumnIndex(Zp03DBConstants.monAddtOthDrugsType5)));
+        monthlyVisit.setMonAddtOthDrugsBrand5(cursorMV.getString(cursorMV.getColumnIndex(Zp03DBConstants.monAddtOthDrugsBrand5)));
 
         if(cursorMV.getLong(cursorMV.getColumnIndex(MainDBConstants.recordDate))>0) monthlyVisit.setRecordDate(new Date(cursorMV.getLong(cursorMV.getColumnIndex(MainDBConstants.recordDate))));
         monthlyVisit.setRecordUser(cursorMV.getString(cursorMV.getColumnIndex(MainDBConstants.recordUser)));
