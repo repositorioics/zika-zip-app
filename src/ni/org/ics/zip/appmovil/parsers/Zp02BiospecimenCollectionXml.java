@@ -1005,4 +1005,410 @@ public class Zp02BiospecimenCollectionXml{
         this.today = today;
     }
 
+	public String getAddtAnemiaTest() {
+		return addtAnemiaTest;
+	}
+
+	public Date getAddtLastAnemiaTest() {
+		return addtLastAnemiaTest;
+	}
+
+	public String getAddtLastAnemiaTestUk() {
+		return addtLastAnemiaTestUk;
+	}
+
+	public String getAddtAnemiaTestAv() {
+		return addtAnemiaTestAv;
+	}
+
+	public Float getAddtHematocrit() {
+		return addtHematocrit;
+	}
+
+	public Float getAddtHemoglobin() {
+		return addtHemoglobin;
+	}
+
+	public String getGroup1() {
+		return group1;
+	}
+
+	public String getGroup2() {
+		return group2;
+	}
+
+	public String getGroup3() {
+		return group3;
+	}
+
+	public String getGroup4() {
+		return group4;
+	}
+
+	public String getGroup5() {
+		return group5;
+	}
+
+	public String getGroup6() {
+		return group6;
+	}
+
+	public String getGroup7() {
+		return group7;
+	}
+
+	public String getGroup8() {
+		return group8;
+	}
+
+	public String getGroup9() {
+		return group9;
+	}
+
+	public String getGroup10() {
+		return group10;
+	}
+
+	public String getGroup11() {
+		return group11;
+	}
+
+	public String getGroup12() {
+		return group12;
+	}
+
+	public String getGroup13() {
+		return group13;
+	}
+
+	public String getGroup14() {
+		return group14;
+	}
+
+	public String getGroup15() {
+		return group15;
+	}
+
+	public String getGroup16() {
+		return group16;
+	}
+
+	public String getGroup17() {
+		return group17;
+	}
+
+	public String getGroup18() {
+		return group18;
+	}
+
+	public String getGroup19() {
+		return group19;
+	}
+
+	public String getGroup20() {
+		return group20;
+	}
+
+	public String getGroup21() {
+		return group21;
+	}
+
+	public String getGroup22() {
+		return group22;
+	}
+
+	public String getGroup23() {
+		return group23;
+	}
+
+	public String getGroup24() {
+		return group24;
+	}
+
+	public String getGroup25() {
+		return group25;
+	}
+
+	public String getNote1() {
+		return note1;
+	}
+
+	public String getNote2() {
+		return note2;
+	}
+
+	public String getNote3() {
+		return note3;
+	}
+
+	public String getNote4() {
+		return note4;
+	}
+
+	public String getNote5() {
+		return note5;
+	}
+
+	public String getQuestion0() {
+		return question0;
+	}
+
+	public String getQuestion1() {
+		return question1;
+	}
+
+	public String getQuestion2() {
+		return question2;
+	}
+
+	public String getQuestion3() {
+		return question3;
+	}
+
+	public String getQuestion4() {
+		return question4;
+	}
+
+	public String getQuestion5() {
+		return question5;
+	}
+
+	public String getQuestion6() {
+		return question6;
+	}
+
+	public String getQuestion7() {
+		return question7;
+	}
+
+	public String getQuestion8() {
+		return question8;
+	}
+
+	public String getQuestion9() {
+		return question9;
+	}
+
+	public String getQuestion10() {
+		return question10;
+	}
+
+	public String getQuestion11() {
+		return question11;
+	}
+
+	public String getQuestion12() {
+		return question12;
+	}
+
+	public String getQuestion13() {
+		return question13;
+	}
+
+	public String getQuestion14() {
+		return question14;
+	}
+
+	public String getQuestion15() {
+		return question15;
+	}
+
+	public String getQuestion16() {
+		return question16;
+	}
+
+	public String getQuestion17() {
+		return question17;
+	}
+
+	public String getQuestion18() {
+		return question18;
+	}
+
+	public String getQuestion19() {
+		return question19;
+	}
+
+	public String getQuestion20() {
+		return question20;
+	}
+
+	public String getQuestion21() {
+		return question21;
+	}
+
+	public String getQuestion22() {
+		return question22;
+	}
+
+	public String getText1() {
+		return text1;
+	}
+
+	public String getText2() {
+		return text2;
+	}
+
+	public String getText3() {
+		return text3;
+	}
+
+	public String getText4() {
+		return text4;
+	}
+
+	public String getText5() {
+		return text5;
+	}
+
+	public String getText6() {
+		return text6;
+	}
+
+	public String getText7() {
+		return text7;
+	}
+
+	public String getText8() {
+		return text8;
+	}
+
+	public String getText9() {
+		return text9;
+	}
+
+	public String getText10() {
+		return text10;
+	}
+
+	public String getText11() {
+		return text11;
+	}
+
+	public String getText12() {
+		return text12;
+	}
+
+	public String getText13() {
+		return text13;
+	}
+
+	public String getText14() {
+		return text14;
+	}
+
+	public String getText15() {
+		return text15;
+	}
+
+	public String getText16() {
+		return text16;
+	}
+
+	public String getText17() {
+		return text17;
+	}
+
+	public String getText18() {
+		return text18;
+	}
+
+	public String getText19() {
+		return text19;
+	}
+
+	public String getText20() {
+		return text20;
+	}
+
+	public String getText21() {
+		return text21;
+	}
+
+	public String getBarcode1() {
+		return barcode1;
+	}
+
+	public String getBarcode2() {
+		return barcode2;
+	}
+
+	public String getBarcode3() {
+		return barcode3;
+	}
+
+	public String getBarcode4() {
+		return barcode4;
+	}
+
+	public String getBarcode5() {
+		return barcode5;
+	}
+
+	public String getBarcode6() {
+		return barcode6;
+	}
+
+	public String getBarcode7() {
+		return barcode7;
+	}
+
+	public String getBarcode8() {
+		return barcode8;
+	}
+
+	public String getBarcode9() {
+		return barcode9;
+	}
+
+	public String getBarcode10() {
+		return barcode10;
+	}
+
+	public String getBarcode11() {
+		return barcode11;
+	}
+
+	public String getBarcode12() {
+		return barcode12;
+	}
+
+	public String getBarcode13() {
+		return barcode13;
+	}
+
+	public String getBarcode14() {
+		return barcode14;
+	}
+
+	public String getBarcode15() {
+		return barcode15;
+	}
+
+	public String getBarcode16() {
+		return barcode16;
+	}
+
+	public String getBarcode17() {
+		return barcode17;
+	}
+
+	public String getBarcode18() {
+		return barcode18;
+	}
+
+	public String getBarcode19() {
+		return barcode19;
+	}
+
+	public String getBarcode20() {
+		return barcode20;
+	}
+
+	public String getBarcode21() {
+		return barcode21;
+	}
+    
+    
+
 }

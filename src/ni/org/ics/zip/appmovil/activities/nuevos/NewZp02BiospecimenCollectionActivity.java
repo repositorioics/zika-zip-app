@@ -340,6 +340,15 @@ public class NewZp02BiospecimenCollectionActivity extends AbstractAsyncActivity 
             mZp02.setBscCompleteDate2(new Date());
             mZp02.setBscPerson3(username);
             mZp02.setBscCompleteDate3(new Date());
+            
+            //Version 2
+            mZp02.setAddtAnemiaTest(zp02Xml.getAddtAnemiaTest());
+            mZp02.setAddtLastAnemiaTest(zp02Xml.getAddtLastAnemiaTest());
+            mZp02.setAddtLastAnemiaTestUk(zp02Xml.getAddtLastAnemiaTestUk());
+            mZp02.setAddtAnemiaTestAv(zp02Xml.getAddtAnemiaTestAv());
+            mZp02.setAddtHematocrit(zp02Xml.getAddtHematocrit());
+            mZp02.setAddtHemoglobin(zp02Xml.getAddtHemoglobin());
+            //Termina version 2
 
             mZp02.setRecordDate(new Date());
             mZp02.setRecordUser(username);

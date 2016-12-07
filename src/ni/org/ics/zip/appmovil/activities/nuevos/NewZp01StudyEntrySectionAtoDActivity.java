@@ -266,6 +266,25 @@ public class NewZp01StudyEntrySectionAtoDActivity extends AbstractAsyncActivity 
             mZp01A.setSeaYdegreeYears(zp01Xml.getSeaYdegreeYears());
             mZp01A.setSeaDegreeSpouse(zp01Xml.getSeaDegreeSpouse());
             mZp01A.setSeaSdegreeYears(zp01Xml.getSeaSdegreeYears());
+            //Version 2
+            mZp01A.setSeaAddtChronicDiseases(zp01Xml.getSeaAddtChronicDiseases());
+            mZp01A.setSeaAddtChronicDiseases1(zp01Xml.getSeaAddtChronicDiseases1());
+            mZp01A.setSeaAddtChronicDiseases2(zp01Xml.getSeaAddtChronicDiseases2());
+            mZp01A.setSeaAddtChronicDiseases3(zp01Xml.getSeaAddtChronicDiseases3());
+            mZp01A.setSeaAddtMedicines(zp01Xml.getSeaAddtMedicines());
+            mZp01A.setSeaAddtDrugsType(zp01Xml.getSeaAddtDrugsType());
+            mZp01A.setSeaAddtOthDrugsType1(zp01Xml.getSeaAddtOthDrugsType1());
+            mZp01A.setSeaAddtOthDrugsBrand1(zp01Xml.getSeaAddtOthDrugsBrand1());
+            mZp01A.setSeaAddtOthDrugsType2(zp01Xml.getSeaAddtOthDrugsType2());
+            mZp01A.setSeaAddtOthDrugsBrand2(zp01Xml.getSeaAddtOthDrugsBrand2());
+            mZp01A.setSeaAddtOthDrugsType3(zp01Xml.getSeaAddtOthDrugsType3());
+            mZp01A.setSeaAddtOthDrugsBrand3(zp01Xml.getSeaAddtOthDrugsBrand3());
+            mZp01A.setSeaAddtOthDrugsType4(zp01Xml.getSeaAddtOthDrugsType4());
+            mZp01A.setSeaAddtOthDrugsBrand4(zp01Xml.getSeaAddtOthDrugsBrand4());
+            mZp01A.setSeaAddtOthDrugsType5(zp01Xml.getSeaAddtOthDrugsType5());
+            mZp01A.setSeaAddtOthDrugsBrand5(zp01Xml.getSeaAddtOthDrugsBrand5());
+            // termina Version2
+            
 			mZp01A.setRecordDate(new Date());
 			mZp01A.setRecordUser(username);
 			mZp01A.setIdInstancia(idInstancia);

@@ -1076,4 +1076,266 @@ public class Zp03MonthlyVisitXml {
     public void setToday(Date today) {
         this.today = today;
     }
+
+	public String getMonAddtMedicines() {
+		return monAddtMedicines;
+	}
+
+	public String getMonAddtDrugsType() {
+		return monAddtDrugsType;
+	}
+
+	public String getMonAddtOthDrugsType1() {
+		return monAddtOthDrugsType1;
+	}
+
+	public String getMonAddtOthDrugsBrand1() {
+		return monAddtOthDrugsBrand1;
+	}
+
+	public String getMonAddtOthDrugsType2() {
+		return monAddtOthDrugsType2;
+	}
+
+	public String getMonAddtOthDrugsBrand2() {
+		return monAddtOthDrugsBrand2;
+	}
+
+	public String getMonAddtOthDrugsType3() {
+		return monAddtOthDrugsType3;
+	}
+
+	public String getMonAddtOthDrugsBrand3() {
+		return monAddtOthDrugsBrand3;
+	}
+
+	public String getMonAddtOthDrugsType4() {
+		return monAddtOthDrugsType4;
+	}
+
+	public String getMonAddtOthDrugsBrand4() {
+		return monAddtOthDrugsBrand4;
+	}
+
+	public String getMonAddtOthDrugsType5() {
+		return monAddtOthDrugsType5;
+	}
+
+	public String getMonAddtOthDrugsBrand5() {
+		return monAddtOthDrugsBrand5;
+	}
+
+	public String getGroup1() {
+		return group1;
+	}
+
+	public String getGroup2() {
+		return group2;
+	}
+
+	public String getGroup3() {
+		return group3;
+	}
+
+	public String getGroup4() {
+		return group4;
+	}
+
+	public String getGroup5() {
+		return group5;
+	}
+
+	public String getGroup6() {
+		return group6;
+	}
+
+	public String getGroup7() {
+		return group7;
+	}
+
+	public String getGroup8() {
+		return group8;
+	}
+
+	public String getGroup9() {
+		return group9;
+	}
+
+	public String getGroup10() {
+		return group10;
+	}
+
+	public String getGroup11() {
+		return group11;
+	}
+
+	public String getGroup12() {
+		return group12;
+	}
+
+	public String getGroup13() {
+		return group13;
+	}
+
+	public String getGroup14() {
+		return group14;
+	}
+
+	public String getGroup15() {
+		return group15;
+	}
+
+	public String getGroup16() {
+		return group16;
+	}
+
+	public String getGroup17() {
+		return group17;
+	}
+
+	public String getGroup18() {
+		return group18;
+	}
+
+	public String getGroup19() {
+		return group19;
+	}
+
+	public String getGroup20() {
+		return group20;
+	}
+
+	public String getGroup21() {
+		return group21;
+	}
+
+	public String getGroup22() {
+		return group22;
+	}
+
+	public String getGroup23() {
+		return group23;
+	}
+
+	public String getGroup24() {
+		return group24;
+	}
+
+	public String getGroup25() {
+		return group25;
+	}
+
+	public String getGroup26() {
+		return group26;
+	}
+
+	public String getGroup27() {
+		return group27;
+	}
+
+	public String getGroup28() {
+		return group28;
+	}
+
+	public String getGroup29() {
+		return group29;
+	}
+
+	public String getGroup30() {
+		return group30;
+	}
+
+	public String getGroup31() {
+		return group31;
+	}
+
+	public String getGroup32() {
+		return group32;
+	}
+
+	public String getGroup33() {
+		return group33;
+	}
+
+	public String getGroup34() {
+		return group34;
+	}
+
+	public String getGroup35() {
+		return group35;
+	}
+
+	public String getGroup36() {
+		return group36;
+	}
+
+	public String getGroup37() {
+		return group37;
+	}
+
+	public String getGroup38() {
+		return group38;
+	}
+
+	public String getGroup39() {
+		return group39;
+	}
+
+	public String getGroup40() {
+		return group40;
+	}
+
+	public String getGroup41() {
+		return group41;
+	}
+
+	public String getGroup42() {
+		return group42;
+	}
+
+	public String getGroup43() {
+		return group43;
+	}
+
+	public String getGroup44() {
+		return group44;
+	}
+
+	public String getGroup45() {
+		return group45;
+	}
+
+	public String getGroup46() {
+		return group46;
+	}
+
+	public String getNote1() {
+		return note1;
+	}
+
+	public String getNote2() {
+		return note2;
+	}
+
+	public String getNote3() {
+		return note3;
+	}
+
+	public String getNote4() {
+		return note4;
+	}
+
+	public String getNote5() {
+		return note5;
+	}
+
+	public String getNote6() {
+		return note6;
+	}
+
+	public String getQuestion1() {
+		return question1;
+	}
+    
+    
 }

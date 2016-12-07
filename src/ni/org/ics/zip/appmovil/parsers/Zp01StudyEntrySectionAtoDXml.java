@@ -426,4 +426,70 @@ public class Zp01StudyEntrySectionAtoDXml{
     public void setToday(Date today) {
         this.today = today;
     }
+
+	public String getSeaAddtChronicDiseases() {
+		return seaAddtChronicDiseases;
+	}
+
+	public String getSeaAddtChronicDiseases1() {
+		return seaAddtChronicDiseases1;
+	}
+
+	public String getSeaAddtChronicDiseases2() {
+		return seaAddtChronicDiseases2;
+	}
+
+	public String getSeaAddtChronicDiseases3() {
+		return seaAddtChronicDiseases3;
+	}
+
+	public String getSeaAddtMedicines() {
+		return seaAddtMedicines;
+	}
+
+	public String getSeaAddtDrugsType() {
+		return seaAddtDrugsType;
+	}
+
+	public String getSeaAddtOthDrugsType1() {
+		return seaAddtOthDrugsType1;
+	}
+
+	public String getSeaAddtOthDrugsBrand1() {
+		return seaAddtOthDrugsBrand1;
+	}
+
+	public String getSeaAddtOthDrugsType2() {
+		return seaAddtOthDrugsType2;
+	}
+
+	public String getSeaAddtOthDrugsBrand2() {
+		return seaAddtOthDrugsBrand2;
+	}
+
+	public String getSeaAddtOthDrugsType3() {
+		return seaAddtOthDrugsType3;
+	}
+
+	public String getSeaAddtOthDrugsBrand3() {
+		return seaAddtOthDrugsBrand3;
+	}
+
+	public String getSeaAddtOthDrugsType4() {
+		return seaAddtOthDrugsType4;
+	}
+
+	public String getSeaAddtOthDrugsBrand4() {
+		return seaAddtOthDrugsBrand4;
+	}
+
+	public String getSeaAddtOthDrugsType5() {
+		return seaAddtOthDrugsType5;
+	}
+
+	public String getSeaAddtOthDrugsBrand5() {
+		return seaAddtOthDrugsBrand5;
+	}
+    
+    
 }

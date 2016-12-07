@@ -10,5 +10,8 @@
     <string name="check_wipe">Limpiar base de datos</string>
     <string name="url_error">Error en la dirección</string>
     <string name="change_server_url">Cambiar URL de servidor</string>
+    
+    <string name="app_preferences">Configuración Aplicación</string>
+    <string name="update_app_preferences">Actualizar Aplicación</string>
   
 </resources>

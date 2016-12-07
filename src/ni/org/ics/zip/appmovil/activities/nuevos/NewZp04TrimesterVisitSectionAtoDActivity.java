@@ -315,6 +315,22 @@ public class NewZp04TrimesterVisitSectionAtoDActivity extends AbstractAsyncActiv
 			mZp04A.setTriOtherDrugs2(zp04Xml.getTriOtherDrugs2());
 			mZp04A.setTriOtherDrugs3(zp04Xml.getTriOtherDrugs3());
 			mZp04A.setTriOtherDrugs4(zp04Xml.getTriOtherDrugs4());
+			
+            //Version 2
+            mZp04A.setTriAddtMedicines(zp04Xml.getTriAddtMedicines());
+            mZp04A.setTriAddtDrugsType(zp04Xml.getTriAddtDrugsType());
+            mZp04A.setTriAddtOthDrugsType1(zp04Xml.getTriAddtOthDrugsType1());
+            mZp04A.setTriAddtOthDrugsBrand1(zp04Xml.getTriAddtOthDrugsBrand1());
+            mZp04A.setTriAddtOthDrugsType2(zp04Xml.getTriAddtOthDrugsType2());
+            mZp04A.setTriAddtOthDrugsBrand2(zp04Xml.getTriAddtOthDrugsBrand2());
+            mZp04A.setTriAddtOthDrugsType3(zp04Xml.getTriAddtOthDrugsType3());
+            mZp04A.setTriAddtOthDrugsBrand3(zp04Xml.getTriAddtOthDrugsBrand3());
+            mZp04A.setTriAddtOthDrugsType4(zp04Xml.getTriAddtOthDrugsType4());
+            mZp04A.setTriAddtOthDrugsBrand4(zp04Xml.getTriAddtOthDrugsBrand4());
+            mZp04A.setTriAddtOthDrugsType5(zp04Xml.getTriAddtOthDrugsType5());
+            mZp04A.setTriAddtOthDrugsBrand5(zp04Xml.getTriAddtOthDrugsBrand5());
+            // termina Version2
+            
 			mZp04A.setRecordDate(new Date());
 			mZp04A.setRecordUser(username);
 			mZp04A.setIdInstancia(idInstancia);

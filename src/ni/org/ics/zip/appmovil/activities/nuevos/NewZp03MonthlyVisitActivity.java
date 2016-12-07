@@ -365,6 +365,21 @@ public class NewZp03MonthlyVisitActivity extends AbstractAsyncActivity {
             mZp03.setMonIdDataEntry(username);
             mZp03.setMonDateEntered(new Date());
 
+            //Version 2
+            mZp03.setMonAddtMedicines(zp03Xml.getMonAddtMedicines());
+            mZp03.setMonAddtDrugsType(zp03Xml.getMonAddtDrugsType());
+            mZp03.setMonAddtOthDrugsType1(zp03Xml.getMonAddtOthDrugsType1());
+            mZp03.setMonAddtOthDrugsBrand1(zp03Xml.getMonAddtOthDrugsBrand1());
+            mZp03.setMonAddtOthDrugsType2(zp03Xml.getMonAddtOthDrugsType2());
+            mZp03.setMonAddtOthDrugsBrand2(zp03Xml.getMonAddtOthDrugsBrand2());
+            mZp03.setMonAddtOthDrugsType3(zp03Xml.getMonAddtOthDrugsType3());
+            mZp03.setMonAddtOthDrugsBrand3(zp03Xml.getMonAddtOthDrugsBrand3());
+            mZp03.setMonAddtOthDrugsType4(zp03Xml.getMonAddtOthDrugsType4());
+            mZp03.setMonAddtOthDrugsBrand4(zp03Xml.getMonAddtOthDrugsBrand4());
+            mZp03.setMonAddtOthDrugsType5(zp03Xml.getMonAddtOthDrugsType5());
+            mZp03.setMonAddtOthDrugsBrand5(zp03Xml.getMonAddtOthDrugsBrand5());
+            // termina Version2
+            
             mZp03.setRecordDate(new Date());
             mZp03.setRecordUser(username);
             mZp03.setIdInstancia(idInstancia);
