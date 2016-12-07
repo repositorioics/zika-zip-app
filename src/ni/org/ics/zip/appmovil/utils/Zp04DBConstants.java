@@ -105,6 +105,19 @@ public class Zp04DBConstants {
     public static final String triOtherDrugs2 = "triOtherDrugs2";
     public static final String triOtherDrugs3 = "triOtherDrugs3";
     public static final String triOtherDrugs4 = "triOtherDrugs4";
+    //Cambios version 2
+    public static final String triAddtMedicines = "triAddtMedicines";
+    public static final String triAddtDrugsType = "triAddtDrugsType";
+    public static final String triAddtOthDrugsType1 = "triAddtOthDrugsType1";
+    public static final String triAddtOthDrugsBrand1 = "triAddtOthDrugsBrand1";
+    public static final String triAddtOthDrugsType2 = "triAddtOthDrugsType2";
+    public static final String triAddtOthDrugsBrand2 = "triAddtOthDrugsBrand2";
+    public static final String triAddtOthDrugsType3 = "triAddtOthDrugsType3";
+    public static final String triAddtOthDrugsBrand3 = "triAddtOthDrugsBrand3";
+    public static final String triAddtOthDrugsType4 = "triAddtOthDrugsType4";
+    public static final String triAddtOthDrugsBrand4 = "triAddtOthDrugsBrand4";
+    public static final String triAddtOthDrugsType5 = "triAddtOthDrugsType5";
+    public static final String triAddtOthDrugsBrand5 = "triAddtOthDrugsBrand5";
 
     //Crear tabla Zp04TrimesterVisitSectionAtoD
     public static final String CREATE_TRIMESTERVISIT_AD_TABLE = "create table if not exists "
@@ -202,6 +215,18 @@ public class Zp04DBConstants {
             + triOtherDrugs2 + " text, "
             + triOtherDrugs3 + " text, "
             + triOtherDrugs4 + " text, "
+            + triAddtMedicines + " text, "
+            + triAddtDrugsType + " text, "
+            + triAddtOthDrugsType1 + " text, "
+            + triAddtOthDrugsBrand1 + " text, "
+            + triAddtOthDrugsType2 + " text, "
+            + triAddtOthDrugsBrand2 + " text, "
+            + triAddtOthDrugsType3 + " text, "
+            + triAddtOthDrugsBrand3 + " text, "
+            + triAddtOthDrugsType4 + " text, "
+            + triAddtOthDrugsBrand4 + " text, "
+            + triAddtOthDrugsType5 + " text, "
+            + triAddtOthDrugsBrand5 + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "

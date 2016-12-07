@@ -131,6 +131,12 @@ public class Zp02DBConstants {
     public static final String bscCompleteDate2 = "bscCompleteDate2";
     public static final String bscPerson3 = "bscPerson3";
     public static final String bscCompleteDate3 = "bscCompleteDate3";
+    public static final String addtAnemiaTest = "addtAnemiaTest";
+    public static final String addtLastAnemiaTest = "addtLastAnemiaTest";
+    public static final String addtLastAnemiaTestUk = "addtLastAnemiaTestUk";
+    public static final String addtAnemiaTestAv = "addtAnemiaTestAv";
+    public static final String addtHematocrit = "addtHematocrit";
+    public static final String addtHemoglobin = "addtHemoglobin";
 
     //Crear tabla Zp02BiospecimenCollection
     public static final String CREATE_BIOCOLLECTION_TABLE = "create table if not exists "
@@ -256,6 +262,12 @@ public class Zp02DBConstants {
             + bscCompleteDate2 + " date, "
             + bscPerson3 + " text, "
             + bscCompleteDate3 + " date, "
+            + addtAnemiaTest + " text, "
+            + addtLastAnemiaTest + " date, "
+            + addtLastAnemiaTestUk + " text, "
+            + addtAnemiaTestAv + " text, "
+            + addtHematocrit + " real, "
+            + addtHemoglobin + " real, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "

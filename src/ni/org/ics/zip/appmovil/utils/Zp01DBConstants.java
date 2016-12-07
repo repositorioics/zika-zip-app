@@ -55,6 +55,23 @@ public class Zp01DBConstants {
     public static final String seaYdegreeYears = "seaYdegreeYears";
     public static final String seaDegreeSpouse = "seaDegreeSpouse";
     public static final String seaSdegreeYears = "seaSdegreeYears";
+    //Cambios version 2
+    public static final String seaAddtChronicDiseases = "seaAddtChronicDiseases";
+    public static final String seaAddtChronicDiseases1 = "seaAddtChronicDiseases1";
+    public static final String seaAddtChronicDiseases2 = "seaAddtChronicDiseases2";
+    public static final String seaAddtChronicDiseases3 = "seaAddtChronicDiseases3";
+    public static final String seaAddtMedicines = "seaAddtMedicines";
+    public static final String seaAddtDrugsType = "seaAddtDrugsType";
+    public static final String seaAddtOthDrugsType1 = "seaAddtOthDrugsType1";
+    public static final String seaAddtOthDrugsBrand1 = "seaAddtOthDrugsBrand1";
+    public static final String seaAddtOthDrugsType2 = "seaAddtOthDrugsType2";
+    public static final String seaAddtOthDrugsBrand2 = "seaAddtOthDrugsBrand2";
+    public static final String seaAddtOthDrugsType3 = "seaAddtOthDrugsType3";
+    public static final String seaAddtOthDrugsBrand3 = "seaAddtOthDrugsBrand3";
+    public static final String seaAddtOthDrugsType4 = "seaAddtOthDrugsType4";
+    public static final String seaAddtOthDrugsBrand4 = "seaAddtOthDrugsBrand4";
+    public static final String seaAddtOthDrugsType5 = "seaAddtOthDrugsType5";
+    public static final String seaAddtOthDrugsBrand5 = "seaAddtOthDrugsBrand5";
 
     //Crear tabla Zp01StudyEntrySectionAtoD
 
@@ -103,6 +120,22 @@ public class Zp01DBConstants {
             + seaYdegreeYears + " real, "
             + seaDegreeSpouse + " text, "
             + seaSdegreeYears + " real, "
+            + seaAddtChronicDiseases + " text, "
+            + seaAddtChronicDiseases1 + " text, "
+            + seaAddtChronicDiseases2 + " text, "
+            + seaAddtChronicDiseases3 + " text, "
+            + seaAddtMedicines + " text, "
+            + seaAddtDrugsType + " text, "
+            + seaAddtOthDrugsType1 + " text, "
+            + seaAddtOthDrugsBrand1 + " text, "
+            + seaAddtOthDrugsType2 + " text, "
+            + seaAddtOthDrugsBrand2 + " text, "
+            + seaAddtOthDrugsType3 + " text, "
+            + seaAddtOthDrugsBrand3 + " text, "
+            + seaAddtOthDrugsType4 + " text, "
+            + seaAddtOthDrugsBrand4 + " text, "
+            + seaAddtOthDrugsType5 + " text, "
+            + seaAddtOthDrugsBrand5 + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "

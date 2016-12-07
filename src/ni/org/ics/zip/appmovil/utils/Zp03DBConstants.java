@@ -155,6 +155,19 @@ public class Zp03DBConstants {
     public static final String monDateReviewed = "monDateReviewed";
     public static final String monIdDataEntry = "monIdDataEntry";
     public static final String monDateEntered = "monDateEntered";
+    //Cambios version 2
+    public static final String monAddtMedicines = "monAddtMedicines";
+    public static final String monAddtDrugsType = "monAddtDrugsType";
+    public static final String monAddtOthDrugsType1 = "monAddtOthDrugsType1";
+    public static final String monAddtOthDrugsBrand1 = "monAddtOthDrugsBrand1";
+    public static final String monAddtOthDrugsType2 = "monAddtOthDrugsType2";
+    public static final String monAddtOthDrugsBrand2 = "monAddtOthDrugsBrand2";
+    public static final String monAddtOthDrugsType3 = "monAddtOthDrugsType3";
+    public static final String monAddtOthDrugsBrand3 = "monAddtOthDrugsBrand3";
+    public static final String monAddtOthDrugsType4 = "monAddtOthDrugsType4";
+    public static final String monAddtOthDrugsBrand4 = "monAddtOthDrugsBrand4";
+    public static final String monAddtOthDrugsType5 = "monAddtOthDrugsType5";
+    public static final String monAddtOthDrugsBrand5 = "monAddtOthDrugsBrand5";
 
     //Crear tabla Zp03MonthlyVisit
     public static final String CREATE_MONTHLYVISIT_TABLE = "create table if not exists "
@@ -304,6 +317,18 @@ public class Zp03DBConstants {
             + monDateReviewed + " date, "
             + monIdDataEntry + " text, "
             + monDateEntered + " date, "
+            + monAddtMedicines + " text, "
+            + monAddtDrugsType + " text, "
+            + monAddtOthDrugsType1 + " text, "
+            + monAddtOthDrugsBrand1 + " text, "
+            + monAddtOthDrugsType2 + " text, "
+            + monAddtOthDrugsBrand2 + " text, "
+            + monAddtOthDrugsType3 + " text, "
+            + monAddtOthDrugsBrand3 + " text, "
+            + monAddtOthDrugsType4 + " text, "
+            + monAddtOthDrugsBrand4 + " text, "
+            + monAddtOthDrugsType5 + " text, "
+            + monAddtOthDrugsBrand5 + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "
