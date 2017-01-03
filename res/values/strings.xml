@@ -16,6 +16,7 @@
     <string name="downloading">Descargar toda la info del servidor? Esta operacion descarta toda la informacion actual en el dispositivo</string>
     <string name="uploading">Enviar toda la info al servidor?</string>
     <string name="desc_barcode">Escanear código de barras</string>
+    <string name="out_of_time">Este evento se encuentra fuera de calendario!!! Realmente desea ingresar información?</string>
     <string name="parametro">Parámetro de búsqueda</string>
     <string name="method">Método de ingreso</string>
     <string name="ok">Aceptar</string>

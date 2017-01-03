@@ -50,6 +50,8 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		fechaIngreso.setTime(mZp00.getScrVisitDate());
 	}
 	
+	
+	/* Ya no se va a bloquear las opciones en la pantalla por fecha solo si esta fuera del estudio
 	@Override
     public boolean isEnabled(int position) {
         // Disable the first item of GridView
@@ -189,8 +191,19 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 			break;
         }
         return habilitado;
-    }
+    }*/
 
+	
+	@Override
+    public boolean isEnabled(int position) {
+        // Disable the first item of GridView
+		boolean habilitado = true;
+		if(mZpSalida!= null){
+			return false;
+		}
+        return habilitado;
+    }
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
