@@ -92,6 +92,7 @@
         <item>Socrates Flores</item>
         <item>Francisco Buitrago</item>
         <item>Villa Libertad</item>
+        <item>Edgard Lang</item>
     </string-array>
     
    	<string-array name="yes_no">
@@ -149,6 +150,7 @@
         <item>Socrates Flores</item>
         <item>Francisco Buitrago</item>
         <item>Villa Libertad</item>
+        <item>Edgard Lang</item>
     </string-array>
 
     <string-array name="list_lugares_llegada">
@@ -156,6 +158,7 @@
         <item>Socrates Flores</item>
         <item>Francisco Buitrago</item>
         <item>Villa Libertad</item>
+        <item>Edgard Lang</item>
         <item>Oficina ICS</item>
     </string-array>    
    	
