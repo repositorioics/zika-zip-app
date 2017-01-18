@@ -46,7 +46,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 public class DeliveryVisitActivity extends AbstractAsyncActivity {
-	private ZipAdapter zikaPosA;
+	private ZipAdapter zipA;
 	private static Zp00Screening zp00 = new Zp00Screening();
 	private static ZpEstadoEmbarazada zpEstado = new ZpEstadoEmbarazada();
 	private static Zp02BiospecimenCollection zp02 = null;
@@ -86,7 +86,7 @@ public class DeliveryVisitActivity extends AbstractAsyncActivity {
 			}
 		}
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
-		zikaPosA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
+		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
 		/*Aca se recupera evento, tamizaje y estado*/
 		evento = getIntent().getStringExtra(Constants.EVENT);
 		zp00 = (Zp00Screening) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP00);
@@ -290,21 +290,21 @@ public class DeliveryVisitActivity extends AbstractAsyncActivity {
 			protected String doInBackground(String... values) {
 				eventoaFiltrar = values[0];
 				try {
-					zikaPosA.open();
+					zipA.open();
 					filtro = MainDBConstants.recordId + "='" + zp00.getRecordId() + "' and " + Zp02DBConstants.redcapEventName + "='" + eventoaFiltrar +"'";
-					zp02 = zikaPosA.getZp02BiospecimenCollection(filtro, MainDBConstants.recordId);
-					zp03 = zikaPosA.getZp03MonthlyVisit(filtro, MainDBConstants.recordId);
-					zp04a = zikaPosA.getZp04TrimesterVisitSectionAtoD(filtro, null);
-					zp04e = zikaPosA.getZp04TrimesterVisitSectionE(filtro, null);
-					zp04f = zikaPosA.getZp04TrimesterVisitSectionFtoH(filtro, null);
-					zp05 = zikaPosA.getZp05UltrasoundExam(filtro, null);
-					zp06 = zikaPosA.getZp06DeliveryAnd6weekVisit(filtro, null);
+					zp02 = zipA.getZp02BiospecimenCollection(filtro, MainDBConstants.recordId);
+					zp03 = zipA.getZp03MonthlyVisit(filtro, MainDBConstants.recordId);
+					zp04a = zipA.getZp04TrimesterVisitSectionAtoD(filtro, null);
+					zp04e = zipA.getZp04TrimesterVisitSectionE(filtro, null);
+					zp04f = zipA.getZp04TrimesterVisitSectionFtoH(filtro, null);
+					zp05 = zipA.getZp05UltrasoundExam(filtro, null);
+					zp06 = zipA.getZp06DeliveryAnd6weekVisit(filtro, null);
 					if (zp02!=null && zp03!=null &&
 							zp04a!=null && zp04e!=null && zp04f!=null && zp05!=null && zp05!=null){
 						zpEstado.setParto('1');
-						zikaPosA.editarZpEstadoEmbarazada(zpEstado);
+						zipA.editarZpEstadoEmbarazada(zpEstado);
 					}
-					zikaPosA.close();
+					zipA.close();
 				} catch (Exception e) {
 					Log.e(TAG, e.getLocalizedMessage(), e);
 					return "Error";
