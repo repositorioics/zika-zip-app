@@ -11,8 +11,10 @@ import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.activities.nuevos.NewZp08StudyExitActivity;
+import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.DeliveryVisitActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.IngresoActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.MonthlyVisitActivity;
+import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.PostPartumVisitActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.TwoWeekVisitActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.UnscheduledVisitActivity;
 import ni.org.ics.zip.appmovil.adapters.MenuEmbarazadasAdapter;
@@ -363,7 +365,27 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 			if (zpEstado!=null) arguments.putSerializable(Constants.OBJECTO_ZPEST , zpEstado);
 			i.putExtras(arguments);
 			startActivity(i);
-			break;						
+			break;	
+		case 23:
+			i = new Intent(getApplicationContext(),
+					DeliveryVisitActivity.class);
+			//Aca se pasa evento, tamizaje y estado
+			arguments.putString(Constants.EVENT, Constants.DELIVERY);
+			if (zp00!=null) arguments.putSerializable(Constants.OBJECTO_ZP00 , zp00);
+			if (zpEstado!=null) arguments.putSerializable(Constants.OBJECTO_ZPEST , zpEstado);
+			i.putExtras(arguments);
+			startActivity(i);
+			break;
+		case 24:
+			i = new Intent(getApplicationContext(),
+					PostPartumVisitActivity.class);
+			//Aca se pasa evento, tamizaje y estado
+			arguments.putString(Constants.EVENT, Constants.AFTERDELIVERY);
+			if (zp00!=null) arguments.putSerializable(Constants.OBJECTO_ZP00 , zp00);
+			if (zpEstado!=null) arguments.putSerializable(Constants.OBJECTO_ZPEST , zpEstado);
+			i.putExtras(arguments);
+			startActivity(i);
+			break;
 		case 25:
 			i = new Intent(getApplicationContext(),
 					NewZp08StudyExitActivity.class);
