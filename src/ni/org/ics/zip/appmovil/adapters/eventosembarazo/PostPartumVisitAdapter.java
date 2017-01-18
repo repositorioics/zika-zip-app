@@ -1,4 +1,4 @@
-package ni.org.ics.zip.appmovil.adapters;
+package ni.org.ics.zip.appmovil.adapters.eventosembarazo;
 
 import ni.org.ics.zip.appmovil.domain.Zp02BiospecimenCollection;
 import ni.org.ics.zip.appmovil.domain.Zp03MonthlyVisit;
@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class DeliveryVisitAdapter extends ArrayAdapter<String> {
+public class PostPartumVisitAdapter extends ArrayAdapter<String> {
 
 	private final Context context;
 	private final String[] values;
@@ -30,7 +30,7 @@ public class DeliveryVisitAdapter extends ArrayAdapter<String> {
 	private final Zp05UltrasoundExam mZp05;
 	private final Zp06DeliveryAnd6weekVisit mZp06;
 	
-	public DeliveryVisitAdapter(Context context, int textViewResourceId,
+	public PostPartumVisitAdapter(Context context, int textViewResourceId,
 			String[] values, Zp02BiospecimenCollection zp02, Zp03MonthlyVisit zp03, Zp04TrimesterVisitSectionAtoD zp04a, Zp04TrimesterVisitSectionE zp04e, Zp04TrimesterVisitSectionFtoH zp04f,
 			Zp05UltrasoundExam zp05, Zp06DeliveryAnd6weekVisit zp06) {
 		super(context, textViewResourceId, values);
@@ -135,7 +135,7 @@ public class DeliveryVisitAdapter extends ArrayAdapter<String> {
 				textView.setTextColor(Color.RED);
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 			}
-			img=getContext().getResources().getDrawable( R.drawable.ic_parto);
+			img=getContext().getResources().getDrawable( R.drawable.ic_post);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
 		default:

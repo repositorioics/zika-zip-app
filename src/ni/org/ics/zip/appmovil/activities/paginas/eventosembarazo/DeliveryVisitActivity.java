@@ -13,7 +13,7 @@ import ni.org.ics.zip.appmovil.activities.nuevos.NewZp04TrimesterVisitSectionEAc
 import ni.org.ics.zip.appmovil.activities.nuevos.NewZp04TrimesterVisitSectionFtoHActivity;
 import ni.org.ics.zip.appmovil.activities.nuevos.NewZp05UltrasoundExamActivity;
 import ni.org.ics.zip.appmovil.activities.nuevos.NewZp06DeliveryAnd6weekVisitActivity;
-import ni.org.ics.zip.appmovil.adapters.DeliveryVisitAdapter;
+import ni.org.ics.zip.appmovil.adapters.eventosembarazo.DeliveryVisitAdapter;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.domain.Zp00Screening;
 import ni.org.ics.zip.appmovil.domain.Zp02BiospecimenCollection;
