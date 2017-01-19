@@ -244,7 +244,7 @@ public class Zp04TrimesterVisitSectionEXml {
     private String imei;
     @Element(required=false)
     private Date today;
-    @Attribute
+    @Attribute(required = false)
     private String version;
 
     public String getTri24HrsDeodorant() {
@@ -669,6 +669,12 @@ public class Zp04TrimesterVisitSectionEXml {
     }
     public void setId(String id) {
         this.id = id;
+    }
+    public String getVersion() {
+        return version;
+    }
+    public void setVersion(String version) {
+        this.version = version;
     }
     public Meta getMeta() {
         return meta;

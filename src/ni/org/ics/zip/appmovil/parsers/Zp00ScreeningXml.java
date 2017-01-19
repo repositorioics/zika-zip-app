@@ -121,7 +121,7 @@ public class Zp00ScreeningXml {
 	private String imei;
 	@Element(required=false)
 	private Date today;
-	@Attribute
+	@Attribute(required = false)
 	private String version;
 	
 	
@@ -213,7 +213,13 @@ public class Zp00ScreeningXml {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public Meta getMeta() {
+    public String getVersion() {
+        return version;
+    }
+    public void setVersion(String version) {
+        this.version = version;
+    }
+    public Meta getMeta() {
 		return meta;
 	}
 	public void setMeta(Meta meta) {
