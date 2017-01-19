@@ -72,7 +72,7 @@ public class Zp08StudyExitXml {
     private String imei;
     @Element(required=false)
     private Date today;
-    @Element(required=false)
+    @Attribute
     private String version;
 
     public Date getExtStudyExitDate() {

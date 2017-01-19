@@ -473,7 +473,7 @@ public class Zp02BiospecimenCollectionXml{
     private String imei;
     @Element(required=false)
     private Date today;
-    @Element(required=false)
+    @Attribute
     private String version;
 
     public Date getBscDov() {

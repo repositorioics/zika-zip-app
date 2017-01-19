@@ -323,7 +323,7 @@ public class Zp04TrimesterVisitSectionAtoDXml {
     private String imei;
     @Element(required=false)
     private Date today;
-    @Element(required=false)
+    @Attribute
     private String version;
 
 

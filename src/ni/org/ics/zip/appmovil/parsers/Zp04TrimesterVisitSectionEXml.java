@@ -244,7 +244,7 @@ public class Zp04TrimesterVisitSectionEXml {
     private String imei;
     @Element(required=false)
     private Date today;
-    @Element(required=false)
+    @Attribute
     private String version;
 
     public String getTri24HrsDeodorant() {

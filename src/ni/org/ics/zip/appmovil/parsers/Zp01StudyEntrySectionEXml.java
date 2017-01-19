@@ -533,7 +533,7 @@ public class Zp01StudyEntrySectionEXml{
     private String imei;
     @Element(required=false)
     private Date today;
-    @Element(required=false)
+    @Attribute
     private String version;
 
     public String getSeaDiseases() {
