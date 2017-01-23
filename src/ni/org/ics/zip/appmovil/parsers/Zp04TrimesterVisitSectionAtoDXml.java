@@ -323,6 +323,8 @@ public class Zp04TrimesterVisitSectionAtoDXml {
     private String imei;
     @Element(required=false)
     private Date today;
+    @Attribute(required = false)
+    private String version;
 
 
     public Date getTriDov() {
@@ -701,6 +703,12 @@ public class Zp04TrimesterVisitSectionAtoDXml {
     }
     public void setMeta(Meta meta) {
         this.meta = meta;
+    }
+    public String getVersion() {
+        return version;
+    }
+    public void setVersion(String version) {
+        this.version = version;
     }
     public String getStart() {
         return start;

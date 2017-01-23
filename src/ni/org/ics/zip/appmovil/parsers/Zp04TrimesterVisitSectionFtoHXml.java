@@ -148,6 +148,8 @@ public class Zp04TrimesterVisitSectionFtoHXml {
     private String imei;
     @Element(required=false)
     private Date today;
+    @Attribute(required = false)
+    private String version;
 
 
     public String getTriBugNuisInd() {
@@ -312,6 +314,12 @@ public class Zp04TrimesterVisitSectionFtoHXml {
     }
     public void setId(String id) {
         this.id = id;
+    }
+    public String getVersion() {
+        return version;
+    }
+    public void setVersion(String version) {
+        this.version = version;
     }
     public Meta getMeta() {
         return meta;

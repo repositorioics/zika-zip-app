@@ -449,6 +449,8 @@ public class Zp03MonthlyVisitXml {
     private String imei;
     @Element(required=false)
     private Date today;
+    @Attribute(required = false)
+    private String version;
 
     public Date getMonVisitDate() {
         return monVisitDate;
@@ -1027,6 +1029,12 @@ public class Zp03MonthlyVisitXml {
     }
     public void setId(String id) {
         this.id = id;
+    }
+    public String getVersion() {
+        return version;
+    }
+    public void setVersion(String version) {
+        this.version = version;
     }
     public Meta getMeta() {
         return meta;
