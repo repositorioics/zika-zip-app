@@ -181,6 +181,12 @@
         <item>Edgard Lang</item>
         <item>Oficina ICS</item>
     </string-array>    
+    
+    <string-array name="list_estados">
+        <item>@string/inm</item>
+        <item>@string/noimn</item>
+        <item>@string/no_def</item>
+    </string-array>
    	
     
 </resources>

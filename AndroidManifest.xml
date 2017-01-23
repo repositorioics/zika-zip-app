@@ -103,6 +103,8 @@
        	<activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZpControlUSRecepcionActivity"
                   android:screenOrientation="portrait"></activity>
 		<activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZpControlUSSalidaActivity"
+                  android:screenOrientation="portrait"></activity>   
+        <activity android:name="ni.org.ics.zip.appmovil.activities.edit.UpdateEstadoActivity"
                   android:screenOrientation="portrait"></activity>       	
     </application>
 

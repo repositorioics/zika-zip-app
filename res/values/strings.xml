@@ -68,4 +68,10 @@
     <string name="error_cs">Centro de salud inválido!</string>
     <string name="no_cons">La mujer no dió consentimiento!</string>
     
+    <string name="status">Estado</string>
+    <string name="inm">Inmunológico</string>
+    <string name="noimn">No inmunológico</string>
+    <string name="no_def">No definido!</string>
+    <string name="label_status">Definir estado de la participante</string>
+    
 </resources>

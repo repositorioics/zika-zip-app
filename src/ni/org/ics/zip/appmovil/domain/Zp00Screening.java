@@ -48,6 +48,7 @@ public class Zp00Screening extends BaseMetaData{
     private Date scrDateReviewed;
     private String scrIdDataEntry;
     private Date scrDateEntered;
+    private char studyInm = '0';
     
     public String getRecordId() {
         return recordId;
@@ -336,4 +337,14 @@ public class Zp00Screening extends BaseMetaData{
     public void setScrDateEntered(Date scrDateEntered) {
         this.scrDateEntered = scrDateEntered;
     }
+
+	public char getStudyInm() {
+		return studyInm;
+	}
+
+	public void setStudyInm(char studyInm) {
+		this.studyInm = studyInm;
+	}
+    
+    
 }

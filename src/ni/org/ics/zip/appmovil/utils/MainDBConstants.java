@@ -26,7 +26,7 @@ public class MainDBConstants {
 
 	//Base de datos y tablas
 	public static final String DATABASE_NAME = "zikazipcryp.sqlite3";
-	public static final int DATABASE_VERSION = 2;
+	public static final int DATABASE_VERSION = 3;
 	
 	//Tabla usuarios
 	public static final String USER_TABLE = "users";
@@ -132,6 +132,7 @@ public class MainDBConstants {
 	public static final String scrDateReviewed = "scrDateReviewed";
 	public static final String scrIdDataEntry = "scrIdDataEntry";
 	public static final String scrDateEntered = "scrDateEntered";
+	public static final String studyInm = "studyInm";
 
 	//Crear tabla usuarios
 	public static final String CREATE_SCREENING_TABLE = "create table if not exists "
@@ -172,6 +173,7 @@ public class MainDBConstants {
 			+ scrDateReviewed + " date, "
 			+ scrIdDataEntry + " text, "
 			+ scrDateEntered + " date, "
+			+ studyInm + " text, "
 			+ recordDate + " date, " 
 			+ recordUser + " text, "
 			+ pasive + " text, "

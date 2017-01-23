@@ -43,6 +43,19 @@ public class ScreeningAdapter extends ArrayAdapter<Zp00Screening> {
 				textView.setText(this.getContext().getString(R.string.mat_fec) + ": " + mDateFormat.format(p.getScrVisitDate()));
 			}
 			
+			textView = (TextView) v.findViewById(R.id.infoc_text);
+			if (textView != null) {
+				if(p.getStudyInm()=='0'){
+					textView.setText(this.getContext().getString(R.string.noimn));
+				}
+				else if(p.getStudyInm()=='1'){
+					textView.setText(this.getContext().getString(R.string.inm));
+				}
+				else if(p.getStudyInm()=='2'){
+					textView.setText(this.getContext().getString(R.string.no_def));
+				}
+			}
+			
 			ImageView imageView = (ImageView) v.findViewById(R.id.image);
 			if (imageView != null) {
 				imageView.setImageResource(R.drawable.ic_pregnant);

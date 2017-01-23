@@ -1,0 +1,73 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".UpdateEstadoActivity" >
+
+    <TextView
+        android:id="@+id/label_header"
+        style="?android:textAppearanceLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_launcher"
+        android:drawableStart="@drawable/ic_launcher"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:text="@string/status"
+        android:textStyle="bold" />
+    
+	<TextView
+        android:id="@+id/label_status"
+        style="?android:textAppearanceLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dip"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:text="@string/label_status"
+        android:textStyle="bold" />
+	
+    <RadioGroup
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical">
+	    <RadioButton android:id="@+id/radio_nodef"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/no_def"
+	        android:onClick="onRadioButtonClicked"/>
+	    <RadioButton android:id="@+id/radio_inm"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/inm"
+	        android:onClick="onRadioButtonClicked"/>
+	    <RadioButton android:id="@+id/radio_noinm"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/noimn"
+	        android:onClick="onRadioButtonClicked"/>
+	</RadioGroup>
+    
+	<TextView android:layout_height="0dip" 
+          android:layout_width="fill_parent"
+          android:layout_weight="1" />
+
+	<LinearLayout android:id="@+id/footer" android:layout_width="fill_parent"
+    android:layout_height="wrap_content" android:orientation="horizontal"
+    style="@android:style/ButtonBar">
+
+	    <Button android:id="@+id/saveButton" android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" android:layout_weight="1"
+	        android:text="@string/save" android:drawableLeft="@drawable/ic_ok"
+        	android:drawableStart="@drawable/ic_ok" style="?android:attr/button"/>
+	
+	    <Button android:id="@+id/cancelButton" android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" android:layout_weight="1"
+	        android:text="@string/finish" android:drawableLeft="@drawable/ic_error"
+        	android:drawableStart="@drawable/ic_error" style="?android:attr/button"/>
+	</LinearLayout>    
+    
+</LinearLayout>

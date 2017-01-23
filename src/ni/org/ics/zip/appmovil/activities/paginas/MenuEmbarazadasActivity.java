@@ -10,6 +10,7 @@ import ni.org.ics.zip.appmovil.AbstractAsyncActivity;
 import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
+import ni.org.ics.zip.appmovil.activities.edit.UpdateEstadoActivity;
 import ni.org.ics.zip.appmovil.activities.nuevos.NewZp08StudyExitActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.DeliveryVisitActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.IngresoActivity;
@@ -238,7 +239,7 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		getMenuInflater().inflate(R.menu.general, menu);
+		getMenuInflater().inflate(R.menu.embarazo, menu);
 		return true;
 	}
 
@@ -277,6 +278,16 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 			i = new Intent(getApplicationContext(),
 					MainActivity.class);
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(i);
+			finish();
+			return true;
+		case R.id.MENU_ADDSTATUS:
+			Bundle arguments = new Bundle();
+			if (zp00!=null) arguments.putSerializable(Constants.OBJECTO_ZP00 , zp00);
+			i = new Intent(getApplicationContext(),
+					UpdateEstadoActivity.class);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			i.putExtras(arguments);
 			startActivity(i);
 			finish();
 			return true;
@@ -452,11 +463,22 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 
 		protected void onPostExecute(String resultado) {
 			// after the network request completes, hide the progress indicator
+			String idest = "";
+			if(zp00.getStudyInm()=='0'){
+				idest = getString(R.string.noimn);
+			}
+			else if(zp00.getStudyInm()=='1'){
+				idest = getString(R.string.inm);
+			}
+			else if(zp00.getStudyInm()=='2'){
+				idest = getString(R.string.no_def);
+			}
 			textView.setText("");
 			textView.setTextColor(Color.BLUE);
 			textView.setText(getString(R.string.maternal_events)+"\n"+
 								getString(R.string.mat_id)+": "+zp00.getRecordId()+"\n"+
-										getString(R.string.mat_fec)+": "+ mDateFormat.format(zp00.getScrVisitDate()));
+										getString(R.string.mat_fec)+": "+ mDateFormat.format(zp00.getScrVisitDate())+"\n"+
+								idest);
 			gridView.setAdapter(new MenuEmbarazadasAdapter(getApplicationContext(), R.layout.menu_item_2, menu_maternal_info, zp00, zpEstado, zpSalida));
 			if (zpSalida != null){
 				textView.setTextColor(Color.RED);

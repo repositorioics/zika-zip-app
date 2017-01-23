@@ -199,6 +199,7 @@ public class BuscarEmbarazadaActivity extends AbstractAsyncListActivity {
         Intent i = new Intent(getApplicationContext(),
                 MenuEmbarazadasActivity.class);
         i.putExtras(arguments);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
 	@Override
