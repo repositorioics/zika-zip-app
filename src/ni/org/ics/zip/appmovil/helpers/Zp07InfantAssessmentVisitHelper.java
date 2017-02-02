@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class Zp07InfantAssessmentVisitHelper {
 
-    public static ContentValues createZp07InfantAssessmentVisit(Zp07InfantAssessmentVisit zp07InfantAssessmentVisit){
+    public static ContentValues crearZp07InfantAssessmentVisit(Zp07InfantAssessmentVisit zp07InfantAssessmentVisit){
         ContentValues cv = new ContentValues();
         cv.put(Zp07DBConstants.recordId, zp07InfantAssessmentVisit.getRecordId());
         cv.put(Zp07DBConstants.redcapEventName, zp07InfantAssessmentVisit.getRedcapEventName());
@@ -115,7 +115,7 @@ public class Zp07InfantAssessmentVisitHelper {
         return cv;
     }
 
-    public static Zp07InfantAssessmentVisit createZp07InfantAssessmentVisit(Cursor cursorIA){
+    public static Zp07InfantAssessmentVisit crearZp07InfantAssessmentVisit(Cursor cursorIA){
         Zp07InfantAssessmentVisit infantAssessmentVisit = new Zp07InfantAssessmentVisit();
         infantAssessmentVisit.setRecordId(cursorIA.getString(cursorIA.getColumnIndex(Zp07DBConstants.recordId)));
         infantAssessmentVisit.setRedcapEventName(cursorIA.getString(cursorIA.getColumnIndex(Zp07DBConstants.redcapEventName)));
