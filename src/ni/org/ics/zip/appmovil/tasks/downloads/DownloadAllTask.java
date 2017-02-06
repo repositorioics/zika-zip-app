@@ -47,11 +47,17 @@ public class DownloadAllTask extends DownloadTask {
     private List<Zp06DeliveryAnd6weekVisit> mDeliverys = null;
     private List<Zp08StudyExit> mExits = null;
     private List<ZpEstadoEmbarazada> mStatus = null;
+<<<<<<< .merge_file_a07812
     private List<ZpControlConsentimientosSalida> mZpControlConsentimientosSalida = null;
     private List<ZpControlConsentimientosRecepcion> mZpControlConsentimientosRecepcion = null;
     private List<ZpControlReporteUSSalida> mZpControlReporteUSSalida = null;
     private List<ZpControlReporteUSRecepcion> mZpControlReporteUSRecepcion = null;
     
+=======
+    private List<Zp02dInfantBiospecimenCollection> mInfantCollections = null;
+    private List<Zp07InfantAssessmentVisit> mInfantAssessment = null;
+
+>>>>>>> .merge_file_a04196
 	private String error = null;
 	private String url = null;
 	private String username = null;
@@ -92,10 +98,15 @@ public class DownloadAllTask extends DownloadTask {
         zipA.borrarZpEstadoEmbarazada();
         zipA.borrarZpControlConsentimientosSalida();
         zipA.borrarZpControlConsentimientosRecepcion();
+<<<<<<< .merge_file_a07812
         zipA.borrarZpControlConsentimientosSalida();
         zipA.borrarZpControlConsentimientosRecepcion();
         zipA.borrarZpControlReporteUSSalida();
         zipA.borrarZpControlReporteUSRecepcion();
+=======
+        zipA.borrarZp02dInfantBiospecimenCollection();
+        zipA.borrarZp07InfantAssessmentVisit();
+>>>>>>> .merge_file_a04196
 		try {
 			if (mPreTamizajes != null){
 				v = mPreTamizajes.size();
@@ -223,6 +234,7 @@ public class DownloadAllTask extends DownloadTask {
                             .valueOf(v).toString());
                 }
             }
+<<<<<<< .merge_file_a07812
             if (mZpControlConsentimientosSalida != null){
                 v = mZpControlConsentimientosSalida.size();
                 ListIterator<ZpControlConsentimientosSalida> iter = mZpControlConsentimientosSalida.listIterator();
@@ -259,6 +271,28 @@ public class DownloadAllTask extends DownloadTask {
                             .valueOf(v).toString());
                 }
             }
+=======
+            /**************INFANTES*****/
+            if (mInfantCollections != null){
+                v = mInfantCollections.size();
+                ListIterator<Zp02dInfantBiospecimenCollection> iter = mInfantCollections.listIterator();
+                while (iter.hasNext()){
+                    zipA.crearZp02dInfantBiospecimenCollection(iter.next());
+                    publishProgress("Insertando muestras de infantes en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+            }
+            if (mInfantAssessment != null){
+                v = mInfantAssessment.size();
+                ListIterator<Zp07InfantAssessmentVisit> iter = mInfantAssessment.listIterator();
+                while (iter.hasNext()){
+                    zipA.crearZp07InfantAssessmentVisit(iter.next());
+                    publishProgress("Insertando evaluaciones de infantes en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+            }
+
+>>>>>>> .merge_file_a04196
 		} catch (Exception e) {
 			// Regresa error al insertar
 			e.printStackTrace();
@@ -288,7 +322,11 @@ public class DownloadAllTask extends DownloadTask {
 			restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
 			//Descargar pretamizajes
 			urlRequest = url + "/movil/zpPreScreening/{username}";
+<<<<<<< .merge_file_a07812
 			publishProgress("Solicitando pretamizajes","1","18");
+=======
+			publishProgress("Solicitando pretamizajes","1","16");
+>>>>>>> .merge_file_a04196
 			// Perform the HTTP GET request
 			ResponseEntity<ZpPreScreening[]> responseEntityZpPreScreening = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
 					ZpPreScreening[].class, username);
@@ -296,7 +334,11 @@ public class DownloadAllTask extends DownloadTask {
 			mPreTamizajes = Arrays.asList(responseEntityZpPreScreening.getBody());
 			//Descargar tamizajes
 			urlRequest = url + "/movil/zp00Screenings/{username}";
+<<<<<<< .merge_file_a07812
 			publishProgress("Solicitando tamizajes","2","18");
+=======
+			publishProgress("Solicitando tamizajes","2","16");
+>>>>>>> .merge_file_a04196
 			// Perform the HTTP GET request
 			ResponseEntity<Zp00Screening[]> responseEntityZp00Screening = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
 					Zp00Screening[].class, username);
@@ -304,7 +346,11 @@ public class DownloadAllTask extends DownloadTask {
 			mTamizajes = Arrays.asList(responseEntityZp00Screening.getBody());
 			//Descargar ingresos parte 1
 			urlRequest = url + "/movil/zp01StudyEntrySectionAtoDs/{username}";
+<<<<<<< .merge_file_a07812
 			publishProgress("Solicitando ingresos (1)","3","18");
+=======
+			publishProgress("Solicitando ingresos (1)","3","16");
+>>>>>>> .merge_file_a04196
 			// Perform the HTTP GET request
 			ResponseEntity<Zp01StudyEntrySectionAtoD[]> responseEntityZp01StudyEntrySectionAtoD = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
 					Zp01StudyEntrySectionAtoD[].class, username);
@@ -312,7 +358,11 @@ public class DownloadAllTask extends DownloadTask {
 			mIngresosAD = Arrays.asList(responseEntityZp01StudyEntrySectionAtoD.getBody());
 			//Descargar ingresos parte 2
 			urlRequest = url + "/movil/zp01StudyEntrySectionEs/{username}";
+<<<<<<< .merge_file_a07812
 			publishProgress("Solicitando ingresos (2)","4","18");
+=======
+			publishProgress("Solicitando ingresos (2)","4","16");
+>>>>>>> .merge_file_a04196
 			// Perform the HTTP GET request
 			ResponseEntity<Zp01StudyEntrySectionE[]> responseEntityZp01StudyEntrySectionE = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
 					Zp01StudyEntrySectionE[].class, username);
@@ -320,7 +370,11 @@ public class DownloadAllTask extends DownloadTask {
 			mIngresosE = Arrays.asList(responseEntityZp01StudyEntrySectionE.getBody());
 			//Descargar ingresos parte 3
 			urlRequest = url + "/movil/zp01StudyEntrySectionFtoKs/{username}";
+<<<<<<< .merge_file_a07812
 			publishProgress("Solicitando ingresos (3)","5","18");
+=======
+			publishProgress("Solicitando ingresos (3)","5","16");
+>>>>>>> .merge_file_a04196
 			// Perform the HTTP GET request
 			ResponseEntity<Zp01StudyEntrySectionFtoK[]> responseZp01StudyEntrySectionFtoK = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
 					Zp01StudyEntrySectionFtoK[].class, username);
@@ -328,7 +382,11 @@ public class DownloadAllTask extends DownloadTask {
 			mIngresosFK = Arrays.asList(responseZp01StudyEntrySectionFtoK.getBody());
 			//Descargar muestras
 			urlRequest = url + "/movil/zp02BiospecimenCollections/{username}";
+<<<<<<< .merge_file_a07812
 			publishProgress("Solicitando muestras","6","18");
+=======
+			publishProgress("Solicitando muestras","6","16");
+>>>>>>> .merge_file_a04196
 			// Perform the HTTP GET request
 			ResponseEntity<Zp02BiospecimenCollection[]> responseZp02BiospecimenCollection = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
 					Zp02BiospecimenCollection[].class, username);
@@ -336,7 +394,11 @@ public class DownloadAllTask extends DownloadTask {
 			mCollections = Arrays.asList(responseZp02BiospecimenCollection.getBody());
 			//Descargar visitas mensuales
 			urlRequest = url + "/movil/zp03MonthlyVisits/{username}";
+<<<<<<< .merge_file_a07812
 			publishProgress("Solicitando visitas mensuales","7","18");
+=======
+			publishProgress("Solicitando visitas mensuales","7","16");
+>>>>>>> .merge_file_a04196
 			// Perform the HTTP GET request
 			ResponseEntity<Zp03MonthlyVisit[]> responseZp03MonthlyVisit = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
 					Zp03MonthlyVisit[].class, username);
@@ -344,7 +406,11 @@ public class DownloadAllTask extends DownloadTask {
 			mMonthlyVisits = Arrays.asList(responseZp03MonthlyVisit.getBody());
             //Descargar visitas trimestrales parte 1
             urlRequest = url + "/movil/zp04TrimesterVisitSectionAtoDs/{username}";
+<<<<<<< .merge_file_a07812
             publishProgress("Solicitando visitas trimestrales (1)","8","18");
+=======
+            publishProgress("Solicitando visitas trimestrales (1)","8","16");
+>>>>>>> .merge_file_a04196
             // Perform the HTTP GET request
             ResponseEntity<Zp04TrimesterVisitSectionAtoD[]> responseZp04TrimesterVisitSectionAtoD = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     Zp04TrimesterVisitSectionAtoD[].class, username);
@@ -352,7 +418,11 @@ public class DownloadAllTask extends DownloadTask {
             mTrimesterVisitAD = Arrays.asList(responseZp04TrimesterVisitSectionAtoD.getBody());
             //Descargar visitas trimestrales parte 2
             urlRequest = url + "/movil/zp04TrimesterVisitSectionEs/{username}";
+<<<<<<< .merge_file_a07812
             publishProgress("Solicitando visitas trimestrales (2)","9","18");
+=======
+            publishProgress("Solicitando visitas trimestrales (2)","9","16");
+>>>>>>> .merge_file_a04196
             // Perform the HTTP GET request
             ResponseEntity<Zp04TrimesterVisitSectionE[]> responseZp04TrimesterVisitSectionE = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     Zp04TrimesterVisitSectionE[].class, username);
@@ -360,7 +430,11 @@ public class DownloadAllTask extends DownloadTask {
             mTrimesterVisitE = Arrays.asList(responseZp04TrimesterVisitSectionE.getBody());
             //Descargar visitas trimestrales parte 3
             urlRequest = url + "/movil/zp04TrimesterVisitSectionFtoHs/{username}";
+<<<<<<< .merge_file_a07812
             publishProgress("Solicitando visitas trimestrales (3)","10","18");
+=======
+            publishProgress("Solicitando visitas trimestrales (3)","10","16");
+>>>>>>> .merge_file_a04196
             // Perform the HTTP GET request
             ResponseEntity<Zp04TrimesterVisitSectionFtoH[]> responseZp04TrimesterVisitSectionFtoH = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     Zp04TrimesterVisitSectionFtoH[].class, username);
@@ -368,7 +442,11 @@ public class DownloadAllTask extends DownloadTask {
             mTrimesterVisitFH = Arrays.asList(responseZp04TrimesterVisitSectionFtoH.getBody());
             //Descargar ultrasonidos
             urlRequest = url + "/movil/zp05UltrasoundExams/{username}";
+<<<<<<< .merge_file_a07812
             publishProgress("Solicitando ultrasonidos","11","18");
+=======
+            publishProgress("Solicitando ultrasonidos","11","16");
+>>>>>>> .merge_file_a04196
             // Perform the HTTP GET request
             ResponseEntity<Zp05UltrasoundExam[]> responseZp05UltrasoundExam = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     Zp05UltrasoundExam[].class, username);
@@ -376,7 +454,11 @@ public class DownloadAllTask extends DownloadTask {
             mUltrasounds = Arrays.asList(responseZp05UltrasoundExam.getBody());
             //Descargar partos
             urlRequest = url + "/movil/zp06DeliveryAnd6weekVisits/{username}";
+<<<<<<< .merge_file_a07812
             publishProgress("Solicitando partos","12","18");
+=======
+            publishProgress("Solicitando partos","12","16");
+>>>>>>> .merge_file_a04196
             // Perform the HTTP GET request
             ResponseEntity<Zp06DeliveryAnd6weekVisit[]> responseZp06DeliveryAnd6weekVisit = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     Zp06DeliveryAnd6weekVisit[].class, username);
@@ -384,7 +466,11 @@ public class DownloadAllTask extends DownloadTask {
             mDeliverys = Arrays.asList(responseZp06DeliveryAnd6weekVisit.getBody());
             //Descargar salidas del estudio
             urlRequest = url + "/movil/zp08StudyExits/{username}";
+<<<<<<< .merge_file_a07812
             publishProgress("Solicitando salidas del estudio","13","18");
+=======
+            publishProgress("Solicitando salidas del estudio","13","16");
+>>>>>>> .merge_file_a04196
             // Perform the HTTP GET request
             ResponseEntity<Zp08StudyExit[]> responseZp08StudyExit = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     Zp08StudyExit[].class, username);
@@ -392,7 +478,11 @@ public class DownloadAllTask extends DownloadTask {
             mExits = Arrays.asList(responseZp08StudyExit.getBody());
             //Descargar estado de embarazadas
             urlRequest = url + "/movil/zpEstadoEmb/{username}";
+<<<<<<< .merge_file_a07812
             publishProgress("Solicitando estado de embarazadas","14","18");
+=======
+            publishProgress("Solicitando estado de embarazadas","14","16");
+>>>>>>> .merge_file_a04196
             // Perform the HTTP GET request
             ResponseEntity<ZpEstadoEmbarazada[]> responseZpEstadoEmbarazada = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     ZpEstadoEmbarazada[].class, username);
@@ -431,7 +521,30 @@ public class DownloadAllTask extends DownloadTask {
             // convert the array to a list and return it
             mZpControlReporteUSRecepcion = Arrays.asList(responseZpControlReporteUSRecepcion.getBody());            
 
+<<<<<<< .merge_file_a07812
             return null;
+=======
+            /***********INFANTES***********/
+            //Descargar muestras de infantes
+            urlRequest = url + "/movil/zp02dInfantBiospecimenCollections/{username}";
+            publishProgress("Solicitando muestras de infantes","15","16");
+            // Perform the HTTP GET request
+            ResponseEntity<Zp02dInfantBiospecimenCollection[]> responseZp02dInfantBiospecimenCollection = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    Zp02dInfantBiospecimenCollection[].class, username);
+            // convert the array to a list and return it
+            mInfantCollections = Arrays.asList(responseZp02dInfantBiospecimenCollection.getBody());
+
+            //Descargar evaluaciones de infantes
+            urlRequest = url + "/movil/zp07InfantAssessmentVisits/{username}";
+            publishProgress("Solicitando evaluaciones de infantes","16","16");
+            // Perform the HTTP GET request
+            ResponseEntity<Zp07InfantAssessmentVisit[]> responseZp07InfantAssessmentVisit = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    Zp07InfantAssessmentVisit[].class, username);
+            // convert the array to a list and return it
+            mInfantAssessment = Arrays.asList(responseZp07InfantAssessmentVisit.getBody());
+
+			return null;
+>>>>>>> .merge_file_a04196
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage(), e);
 			return e.getLocalizedMessage();	

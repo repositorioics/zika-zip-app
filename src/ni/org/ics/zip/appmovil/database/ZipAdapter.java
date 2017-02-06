@@ -71,6 +71,8 @@ public class ZipAdapter {
             db.execSQL(MainDBConstants.CREATE_DATA_CONSREC_TABLE);
             db.execSQL(MainDBConstants.CREATE_DATA_USSAL_TABLE);
             db.execSQL(MainDBConstants.CREATE_DATA_USREC_TABLE);
+            db.execSQL(Zp02DBConstants.CREATE_INFANTBIOCOLLECTION_TABLE);
+            db.execSQL(Zp07DBConstants.CREATE_INFANTASSESSMENT_TABLE);
 		}
 
 		@Override
@@ -1206,6 +1208,100 @@ public class ZipAdapter {
         return zp08StudyExits;
     }
 
+    /**
+     * Metodos para Zp07InfantAssessmentVisit en la base de datos
+     *
+     */
+    //Crear nuevo Zp07InfantAssessmentVisit en la base de datos
+    public void crearZp07InfantAssessmentVisit(Zp07InfantAssessmentVisit infantAssessmentVisit) {
+        ContentValues cv = Zp07InfantAssessmentVisitHelper.crearZp07InfantAssessmentVisit(infantAssessmentVisit);
+        mDb.insert(Zp07DBConstants.INFANTASSESSMENT_TABLE, null, cv);
+    }
+    //Editar Zp07InfantAssessmentVisit existente en la base de datos
+    public boolean editarZp07InfantAssessmentVisit(Zp07InfantAssessmentVisit infantAssessmentVisit) {
+        ContentValues cv = Zp07InfantAssessmentVisitHelper.crearZp07InfantAssessmentVisit(infantAssessmentVisit);
+        return mDb.update(Zp07DBConstants.INFANTASSESSMENT_TABLE, cv, Zp07DBConstants.recordId + "='"
+                + infantAssessmentVisit.getRecordId() + "' and " + Zp07DBConstants.redcapEventName + "='" + infantAssessmentVisit.getRedcapEventName() +"'", null) > 0;
+    }
+    //Limpiar la tabla de Zp07InfantAssessmentVisit de la base de datos
+    public boolean borrarZp07InfantAssessmentVisit() {
+        return mDb.delete(Zp07DBConstants.INFANTASSESSMENT_TABLE, null, null) > 0;
+    }
+    //Obtener un Zp07InfantAssessmentVisit de la base de datos
+    public Zp07InfantAssessmentVisit getZp07InfantAssessmentVisit(String filtro, String orden) throws SQLException {
+        Zp07InfantAssessmentVisit infantAssessmentVisit = null;
+        Cursor cursor = crearCursor(Zp07DBConstants.INFANTASSESSMENT_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            infantAssessmentVisit=Zp07InfantAssessmentVisitHelper.crearZp07InfantAssessmentVisit(cursor);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return infantAssessmentVisit;
+    }
+    //Obtener una lista de Zp07InfantAssessmentVisit de la base de datos
+    public List<Zp07InfantAssessmentVisit> getZp07InfantAssessmentVisits(String filtro, String orden) throws SQLException {
+        List<Zp07InfantAssessmentVisit> infantAssessmentVisits = new ArrayList<Zp07InfantAssessmentVisit>();
+        Cursor cursor = crearCursor(Zp07DBConstants.INFANTASSESSMENT_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            infantAssessmentVisits.clear();
+            do{
+                Zp07InfantAssessmentVisit infantAssessmentVisit = null;
+                infantAssessmentVisit = Zp07InfantAssessmentVisitHelper.crearZp07InfantAssessmentVisit(cursor);
+                infantAssessmentVisits.add(infantAssessmentVisit);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return infantAssessmentVisits;
+    }
+
+    /**
+     * Metodos para Zp02dInfantBiospecimenCollection en la base de datos
+     *
+     */
+    //Crear nuevo Zp02dInfantBiospecimenCollection en la base de datos
+    public void crearZp02dInfantBiospecimenCollection(Zp02dInfantBiospecimenCollection dInfantBiospecimenCollection) {
+        ContentValues cv = Zp02BiospecimenCollectionHelper.crearZp02dInfantBiospecimenCollection(dInfantBiospecimenCollection);
+        mDb.insert(Zp02DBConstants.INFANT_BIOCOLLECTION_TABLE, null, cv);
+    }
+    //Editar Zp02dInfantBiospecimenCollection existente en la base de datos
+    public boolean editarZp02dInfantBiospecimenCollection(Zp02dInfantBiospecimenCollection dInfantBiospecimenCollection) {
+        ContentValues cv = Zp02BiospecimenCollectionHelper.crearZp02dInfantBiospecimenCollection(dInfantBiospecimenCollection);
+        return mDb.update(Zp02DBConstants.INFANT_BIOCOLLECTION_TABLE, cv, Zp02DBConstants.recordId + "='"
+                + dInfantBiospecimenCollection.getRecordId() + "' and " + Zp02DBConstants.redcapEventName + "='" + dInfantBiospecimenCollection.getRedcapEventName() +"'", null) > 0;
+    }
+    //Limpiar la tabla de Zp02dInfantBiospecimenCollection de la base de datos
+    public boolean borrarZp02dInfantBiospecimenCollection() {
+        return mDb.delete(Zp02DBConstants.INFANT_BIOCOLLECTION_TABLE, null, null) > 0;
+    }
+    //Obtener un Zp02dInfantBiospecimenCollection de la base de datos
+    public Zp02dInfantBiospecimenCollection getZp02dInfantBiospecimenCollection(String filtro, String orden) throws SQLException {
+        Zp02dInfantBiospecimenCollection dInfantBiospecimenCollection = null;
+        Cursor cursor = crearCursor(Zp02DBConstants.INFANT_BIOCOLLECTION_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            dInfantBiospecimenCollection=Zp02BiospecimenCollectionHelper.crearZp02dInfantBiospecimenCollection(cursor);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return dInfantBiospecimenCollection;
+    }
+    //Obtener una lista de Zp02dInfantBiospecimenCollection de la base de datos
+    public List<Zp02dInfantBiospecimenCollection> getZp02dInfantBiospecimenCollections(String filtro, String orden) throws SQLException {
+        List<Zp02dInfantBiospecimenCollection> dInfantBiospecimenCollections = new ArrayList<Zp02dInfantBiospecimenCollection>();
+        Cursor cursor = crearCursor(Zp02DBConstants.INFANT_BIOCOLLECTION_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            dInfantBiospecimenCollections.clear();
+            do{
+                Zp02dInfantBiospecimenCollection dInfantBiospecimenCollection = null;
+                dInfantBiospecimenCollection = Zp02BiospecimenCollectionHelper.crearZp02dInfantBiospecimenCollection(cursor);
+                dInfantBiospecimenCollections.add(dInfantBiospecimenCollection);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return dInfantBiospecimenCollections;
+    }
+
     public Boolean verificarData() throws SQLException{
 		Cursor c = null;
 		c = crearCursor(MainDBConstants.SCREENING_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
@@ -1245,6 +1341,10 @@ public class ZipAdapter {
 		c = crearCursor(MainDBConstants.DATA_USSAL_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c = crearCursor(MainDBConstants.DATA_USREC_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c = crearCursor(Zp07DBConstants.INFANTASSESSMENT_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c = crearCursor(Zp02DBConstants.INFANT_BIOCOLLECTION_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
 		return false;
