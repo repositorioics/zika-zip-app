@@ -14,6 +14,8 @@ public class ZpControlReporteUSRecepcion extends BaseMetaData{
 	private static final long serialVersionUID = 1L;
 	private String lugarLlegada;
 	private String codigo;
+	private String evento;
+	private Date fechaDato;
 	private Date fechaHoraLLegada;	
 	private String persona;
 	
@@ -41,5 +43,18 @@ public class ZpControlReporteUSRecepcion extends BaseMetaData{
 	public void setPersona(String persona) {
 		this.persona = persona;
 	}
+	public String getEvento() {
+		return evento;
+	}
+	public void setEvento(String evento) {
+		this.evento = evento;
+	}
+	public Date getFechaDato() {
+		return fechaDato;
+	}
+	public void setFechaDato(Date fechaDato) {
+		this.fechaDato = fechaDato;
+	}
+	
 	
 }

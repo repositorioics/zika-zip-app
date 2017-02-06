@@ -391,14 +391,14 @@ public class NewZpControlConsentimientosRecepcionActivity extends AbstractAsyncA
 				mRecepcionCons.setDeviceid(new DeviceInfo(NewZpControlConsentimientosRecepcionActivity.this).getDeviceId());
 				mRecepcionCons.setEstado(Constants.STATUS_NOT_SUBMITTED);
 				mRecepcionCons.setToday(fecha);
-				zpVerificacion = zipA.getZpControlConsentimientosRecepcion(MainDBConstants.codigo + "='" + mRecepcionCons.getCodigo() + "' and " + MainDBConstants.fechaHoraLLegada + "=" + mRecepcionCons.getFechaHoraLLegada().getTime(), null);
+				zpVerificacion = zipA.getZpControlConsentimientosRecepcion(MainDBConstants.codigo + "='" + mRecepcionCons.getCodigo() + "'", null);
 				if(zpVerificacion!=null){
-					return "Código ya fue ingresado hoy";
+					return "Código ya fue ingresado";
 				}
 				else{
 					zipA.crearZpControlConsentimientosRecepcion(mRecepcionCons);
 				}
-				zpVerificacion = zipA.getZpControlConsentimientosRecepcion(MainDBConstants.codigo + "='" + mRecepcionCons.getCodigo() + "' and " + MainDBConstants.fechaHoraLLegada + "=" + mRecepcionCons.getFechaHoraLLegada().getTime(), null);
+				zpVerificacion = zipA.getZpControlConsentimientosRecepcion(MainDBConstants.codigo + "='" + mRecepcionCons.getCodigo()+ "'" , null);
 				if(zpVerificacion!=null){
 					return "exito";
 				}

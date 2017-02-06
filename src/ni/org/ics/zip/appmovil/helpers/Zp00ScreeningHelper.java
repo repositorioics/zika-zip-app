@@ -60,6 +60,7 @@ public class Zp00ScreeningHelper {
 		cv.put(MainDBConstants.DEVICE_ID, screening.getDeviceid());
 		cv.put(MainDBConstants.SIM_SERIAL, screening.getSimserial());
 		cv.put(MainDBConstants.PHONE_NUMBER, screening.getPhonenumber());
+		cv.put(MainDBConstants.studyInm, "2");
 		if (screening.getToday() != null) cv.put(MainDBConstants.TODAY, screening.getToday().getTime());
 		return cv; 
 	}	

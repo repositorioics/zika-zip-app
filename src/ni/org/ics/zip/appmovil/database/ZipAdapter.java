@@ -124,10 +124,38 @@ public class ZipAdapter {
 				db.execSQL("ALTER TABLE " + Zp02DBConstants.BIOCOLLECTION_TABLE + " ADD COLUMN " + Zp02DBConstants.addtAnemiaTestAv + " text");
 				db.execSQL("ALTER TABLE " + Zp02DBConstants.BIOCOLLECTION_TABLE + " ADD COLUMN " + Zp02DBConstants.addtHematocrit + " real");
 				db.execSQL("ALTER TABLE " + Zp02DBConstants.BIOCOLLECTION_TABLE + " ADD COLUMN " + Zp02DBConstants.addtHemoglobin + " real");
+				db.execSQL("ALTER TABLE " + MainDBConstants.SCREENING_TABLE + " ADD COLUMN " + MainDBConstants.studyInm + " text");
+				db.execSQL("UPDATE " + MainDBConstants.SCREENING_TABLE + " SET " + MainDBConstants.studyInm + "='2'");
+				db.execSQL("DROP TABLE " + MainDBConstants.DATA_USREC_TABLE);
+				db.execSQL("DROP TABLE " + MainDBConstants.DATA_USSAL_TABLE);
+				db.execSQL("DROP TABLE " + MainDBConstants.DATA_CONSSAL_TABLE);
+				db.execSQL("DROP TABLE " + MainDBConstants.DATA_CONSREC_TABLE);
+	            db.execSQL(MainDBConstants.CREATE_DATA_USSAL_TABLE);
+	            db.execSQL(MainDBConstants.CREATE_DATA_USREC_TABLE);
+	            db.execSQL(MainDBConstants.CREATE_DATA_CONSSAL_TABLE);
+	            db.execSQL(MainDBConstants.CREATE_DATA_CONSREC_TABLE);
 			}
 			if(oldVersion==2){
 				db.execSQL("ALTER TABLE " + MainDBConstants.SCREENING_TABLE + " ADD COLUMN " + MainDBConstants.studyInm + " text");
 				db.execSQL("UPDATE " + MainDBConstants.SCREENING_TABLE + " SET " + MainDBConstants.studyInm + "='2'");
+				db.execSQL("DROP TABLE " + MainDBConstants.DATA_USREC_TABLE);
+				db.execSQL("DROP TABLE " + MainDBConstants.DATA_USSAL_TABLE);
+				db.execSQL("DROP TABLE " + MainDBConstants.DATA_CONSSAL_TABLE);
+				db.execSQL("DROP TABLE " + MainDBConstants.DATA_CONSREC_TABLE);
+	            db.execSQL(MainDBConstants.CREATE_DATA_USSAL_TABLE);
+	            db.execSQL(MainDBConstants.CREATE_DATA_USREC_TABLE);
+	            db.execSQL(MainDBConstants.CREATE_DATA_CONSSAL_TABLE);
+	            db.execSQL(MainDBConstants.CREATE_DATA_CONSREC_TABLE);
+			}
+			if(oldVersion==3){
+				db.execSQL("DROP TABLE " + MainDBConstants.DATA_USREC_TABLE);
+				db.execSQL("DROP TABLE " + MainDBConstants.DATA_USSAL_TABLE);
+				db.execSQL("DROP TABLE " + MainDBConstants.DATA_CONSSAL_TABLE);
+				db.execSQL("DROP TABLE " + MainDBConstants.DATA_CONSREC_TABLE);
+	            db.execSQL(MainDBConstants.CREATE_DATA_USSAL_TABLE);
+	            db.execSQL(MainDBConstants.CREATE_DATA_USREC_TABLE);
+	            db.execSQL(MainDBConstants.CREATE_DATA_CONSSAL_TABLE);
+	            db.execSQL(MainDBConstants.CREATE_DATA_CONSREC_TABLE);
 			}
 		}	
 	}
@@ -478,8 +506,7 @@ public class ZipAdapter {
 	//Editar ZpControlConsentimientosSalida existente en la base de datos
 	public boolean editarZpControlConsentimientosSalida(ZpControlConsentimientosSalida datos) {
 		ContentValues cv = ZpControlConsentimientosSalidaHelper.crearZpControlConsentimientosSalida(datos);
-		return mDb.update(MainDBConstants.DATA_CONSSAL_TABLE, cv, MainDBConstants.codigo + "='" + datos.getCodigo() + "' and " + 
-					MainDBConstants.fechaHoraSalida + "=" + datos.getFechaHoraSalida().getTime(), null) > 0;
+		return mDb.update(MainDBConstants.DATA_CONSSAL_TABLE, cv, MainDBConstants.codigo + "='" + datos.getCodigo() +"'", null) > 0;
 	}	
 	//Limpiar la tabla de ZpControlConsentimientosSalida de la base de datos
 	public boolean borrarZpControlConsentimientosSalida() {
@@ -528,8 +555,7 @@ public class ZipAdapter {
 	//Editar ZpControlConsentimientosRecepcion existente en la base de datos
 	public boolean editarZpControlConsentimientosRecepcion(ZpControlConsentimientosRecepcion datos) {
 		ContentValues cv = ZpControlConsentimientosRecepcionHelper.crearZpControlConsentimientosRecepcion(datos);
-		return mDb.update(MainDBConstants.DATA_CONSREC_TABLE, cv, MainDBConstants.codigo + "='" + datos.getCodigo() + "' and " + 
-					MainDBConstants.fechaHoraLLegada + "=" + datos.getFechaHoraLLegada().getTime(), null) > 0;
+		return mDb.update(MainDBConstants.DATA_CONSREC_TABLE, cv, MainDBConstants.codigo + "='" + datos.getCodigo() +"'", null) > 0;
 	}	
 	//Limpiar la tabla de ZpControlConsentimientosRecepcion de la base de datos
 	public boolean borrarZpControlConsentimientosRecepcion() {
@@ -579,7 +605,7 @@ public class ZipAdapter {
 	public boolean editarZpControlReporteUSSalida(ZpControlReporteUSSalida datos) {
 		ContentValues cv = ZpControlUSSalidaHelper.crearZpControlReporteUSSalida(datos);
 		return mDb.update(MainDBConstants.DATA_USSAL_TABLE, cv, MainDBConstants.codigo + "='" + datos.getCodigo() + "' and " + 
-					MainDBConstants.fechaHoraSalida + "=" + datos.getFechaHoraSalida().getTime(), null) > 0;
+					MainDBConstants.fechaDato + "=" + datos.getFechaDato().getTime(), null) > 0;
 	}	
 	//Limpiar la tabla de ZpControlReporteUSSalida de la base de datos
 	public boolean borrarZpControlReporteUSSalida() {
@@ -629,7 +655,7 @@ public class ZipAdapter {
 	public boolean editarZpControlReporteUSRecepcion(ZpControlReporteUSRecepcion datos) {
 		ContentValues cv = ZpControlUSRecepcionHelper.crearZpControlReporteUSRecepcion(datos);
 		return mDb.update(MainDBConstants.DATA_USREC_TABLE, cv, MainDBConstants.codigo + "='" + datos.getCodigo() + "' and " + 
-					MainDBConstants.fechaHoraLLegada + "=" + datos.getFechaHoraLLegada().getTime(), null) > 0;
+				MainDBConstants.fechaDato + "=" + datos.getFechaDato().getTime(), null) > 0;
 	}	
 	//Limpiar la tabla de ZpControlReporteUSRecepcion de la base de datos
 	public boolean borrarZpControlReporteUSRecepcion() {
