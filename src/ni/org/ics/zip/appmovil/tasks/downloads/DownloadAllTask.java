@@ -93,8 +93,6 @@ public class DownloadAllTask extends DownloadTask {
         zipA.borrarZp06DeliveryAnd6weekVisit();
         zipA.borrarZp08StudyExit();
         zipA.borrarZpEstadoEmbarazada();
-        zipA.borrarZpControlConsentimientosSalida();
-        zipA.borrarZpControlConsentimientosRecepcion();
 
         zipA.borrarZpControlConsentimientosSalida();
         zipA.borrarZpControlConsentimientosRecepcion();
@@ -294,83 +292,83 @@ public class DownloadAllTask extends DownloadTask {
 		zipA.close();
 		return error;
 	}
-	
-	// url, username, password
-	protected String descargarDatos() throws Exception {
-		try {
-			// The URL for making the GET request
-			String urlRequest;
-			// Set the Accept header for "application/json"
-			HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
-			HttpHeaders requestHeaders = new HttpHeaders();
-			List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
-			acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
-			requestHeaders.setAccept(acceptableMediaTypes);
-			requestHeaders.setAuthorization(authHeader);
-			// Populate the headers in an HttpEntity object to use for the request
-			HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
-			// Create a new RestTemplate instance
-			RestTemplate restTemplate = new RestTemplate();
-			restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-			//Descargar pretamizajes
-			urlRequest = url + "/movil/zpPreScreening/{username}";
-			publishProgress("Solicitando pretamizajes","1","18");
-			// Perform the HTTP GET request
-			ResponseEntity<ZpPreScreening[]> responseEntityZpPreScreening = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-					ZpPreScreening[].class, username);
-			// convert the array to a list and return it
-			mPreTamizajes = Arrays.asList(responseEntityZpPreScreening.getBody());
-			//Descargar tamizajes
-			urlRequest = url + "/movil/zp00Screenings/{username}";
-			publishProgress("Solicitando tamizajes","2","18");
-			// Perform the HTTP GET request
-			ResponseEntity<Zp00Screening[]> responseEntityZp00Screening = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-					Zp00Screening[].class, username);
-			// convert the array to a list and return it
-			mTamizajes = Arrays.asList(responseEntityZp00Screening.getBody());
-			//Descargar ingresos parte 1
-			urlRequest = url + "/movil/zp01StudyEntrySectionAtoDs/{username}";
-			publishProgress("Solicitando ingresos (1)","3","18");
-			// Perform the HTTP GET request
-			ResponseEntity<Zp01StudyEntrySectionAtoD[]> responseEntityZp01StudyEntrySectionAtoD = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-					Zp01StudyEntrySectionAtoD[].class, username);
-			// convert the array to a list and return it
-			mIngresosAD = Arrays.asList(responseEntityZp01StudyEntrySectionAtoD.getBody());
-			//Descargar ingresos parte 2
-			urlRequest = url + "/movil/zp01StudyEntrySectionEs/{username}";
-			publishProgress("Solicitando ingresos (2)","4","18");
-			// Perform the HTTP GET request
-			ResponseEntity<Zp01StudyEntrySectionE[]> responseEntityZp01StudyEntrySectionE = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-					Zp01StudyEntrySectionE[].class, username);
-			// convert the array to a list and return it
-			mIngresosE = Arrays.asList(responseEntityZp01StudyEntrySectionE.getBody());
-			//Descargar ingresos parte 3
-			urlRequest = url + "/movil/zp01StudyEntrySectionFtoKs/{username}";
-			publishProgress("Solicitando ingresos (3)","5","18");
-			// Perform the HTTP GET request
-			ResponseEntity<Zp01StudyEntrySectionFtoK[]> responseZp01StudyEntrySectionFtoK = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-					Zp01StudyEntrySectionFtoK[].class, username);
-			// convert the array to a list and return it
-			mIngresosFK = Arrays.asList(responseZp01StudyEntrySectionFtoK.getBody());
-			//Descargar muestras
-			urlRequest = url + "/movil/zp02BiospecimenCollections/{username}";
-			publishProgress("Solicitando muestras","6","18");
-			// Perform the HTTP GET request
-			ResponseEntity<Zp02BiospecimenCollection[]> responseZp02BiospecimenCollection = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-					Zp02BiospecimenCollection[].class, username);
-			// convert the array to a list and return it
-			mCollections = Arrays.asList(responseZp02BiospecimenCollection.getBody());
-			//Descargar visitas mensuales
-			urlRequest = url + "/movil/zp03MonthlyVisits/{username}";
-			publishProgress("Solicitando visitas mensuales","7","18");
-			// Perform the HTTP GET request
-			ResponseEntity<Zp03MonthlyVisit[]> responseZp03MonthlyVisit = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-					Zp03MonthlyVisit[].class, username);
-			// convert the array to a list and return it
-			mMonthlyVisits = Arrays.asList(responseZp03MonthlyVisit.getBody());
+
+    // url, username, password
+    protected String descargarDatos() throws Exception {
+        try {
+            // The URL for making the GET request
+            String urlRequest;
+            // Set the Accept header for "application/json"
+            HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+            HttpHeaders requestHeaders = new HttpHeaders();
+            List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+            requestHeaders.setAccept(acceptableMediaTypes);
+            requestHeaders.setAuthorization(authHeader);
+            // Populate the headers in an HttpEntity object to use for the request
+            HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
+            // Create a new RestTemplate instance
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+            //Descargar pretamizajes
+            urlRequest = url + "/movil/zpPreScreening/{username}";
+            publishProgress("Solicitando pretamizajes","1","20");
+            // Perform the HTTP GET request
+            ResponseEntity<ZpPreScreening[]> responseEntityZpPreScreening = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    ZpPreScreening[].class, username);
+            // convert the array to a list and return it
+            mPreTamizajes = Arrays.asList(responseEntityZpPreScreening.getBody());
+            //Descargar tamizajes
+            urlRequest = url + "/movil/zp00Screenings/{username}";
+            publishProgress("Solicitando tamizajes","2","20");
+            // Perform the HTTP GET request
+            ResponseEntity<Zp00Screening[]> responseEntityZp00Screening = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    Zp00Screening[].class, username);
+            // convert the array to a list and return it
+            mTamizajes = Arrays.asList(responseEntityZp00Screening.getBody());
+            //Descargar ingresos parte 1
+            urlRequest = url + "/movil/zp01StudyEntrySectionAtoDs/{username}";
+            publishProgress("Solicitando ingresos (1)","3","20");
+            // Perform the HTTP GET request
+            ResponseEntity<Zp01StudyEntrySectionAtoD[]> responseEntityZp01StudyEntrySectionAtoD = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    Zp01StudyEntrySectionAtoD[].class, username);
+            // convert the array to a list and return it
+            mIngresosAD = Arrays.asList(responseEntityZp01StudyEntrySectionAtoD.getBody());
+            //Descargar ingresos parte 2
+            urlRequest = url + "/movil/zp01StudyEntrySectionEs/{username}";
+            publishProgress("Solicitando ingresos (2)","4","20");
+            // Perform the HTTP GET request
+            ResponseEntity<Zp01StudyEntrySectionE[]> responseEntityZp01StudyEntrySectionE = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    Zp01StudyEntrySectionE[].class, username);
+            // convert the array to a list and return it
+            mIngresosE = Arrays.asList(responseEntityZp01StudyEntrySectionE.getBody());
+            //Descargar ingresos parte 3
+            urlRequest = url + "/movil/zp01StudyEntrySectionFtoKs/{username}";
+            publishProgress("Solicitando ingresos (3)","5","20");
+            // Perform the HTTP GET request
+            ResponseEntity<Zp01StudyEntrySectionFtoK[]> responseZp01StudyEntrySectionFtoK = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    Zp01StudyEntrySectionFtoK[].class, username);
+            // convert the array to a list and return it
+            mIngresosFK = Arrays.asList(responseZp01StudyEntrySectionFtoK.getBody());
+            //Descargar muestras
+            urlRequest = url + "/movil/zp02BiospecimenCollections/{username}";
+            publishProgress("Solicitando muestras","6","20");
+            // Perform the HTTP GET request
+            ResponseEntity<Zp02BiospecimenCollection[]> responseZp02BiospecimenCollection = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    Zp02BiospecimenCollection[].class, username);
+            // convert the array to a list and return it
+            mCollections = Arrays.asList(responseZp02BiospecimenCollection.getBody());
+            //Descargar visitas mensuales
+            urlRequest = url + "/movil/zp03MonthlyVisits/{username}";
+            publishProgress("Solicitando visitas mensuales","7","20");
+            // Perform the HTTP GET request
+            ResponseEntity<Zp03MonthlyVisit[]> responseZp03MonthlyVisit = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    Zp03MonthlyVisit[].class, username);
+            // convert the array to a list and return it
+            mMonthlyVisits = Arrays.asList(responseZp03MonthlyVisit.getBody());
             //Descargar visitas trimestrales parte 1
             urlRequest = url + "/movil/zp04TrimesterVisitSectionAtoDs/{username}";
-            publishProgress("Solicitando visitas trimestrales (1)","8","18");
+            publishProgress("Solicitando visitas trimestrales (1)","8","20");
             // Perform the HTTP GET request
             ResponseEntity<Zp04TrimesterVisitSectionAtoD[]> responseZp04TrimesterVisitSectionAtoD = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     Zp04TrimesterVisitSectionAtoD[].class, username);
@@ -378,7 +376,7 @@ public class DownloadAllTask extends DownloadTask {
             mTrimesterVisitAD = Arrays.asList(responseZp04TrimesterVisitSectionAtoD.getBody());
             //Descargar visitas trimestrales parte 2
             urlRequest = url + "/movil/zp04TrimesterVisitSectionEs/{username}";
-            publishProgress("Solicitando visitas trimestrales (2)","9","18");
+            publishProgress("Solicitando visitas trimestrales (2)","9","20");
             // Perform the HTTP GET request
             ResponseEntity<Zp04TrimesterVisitSectionE[]> responseZp04TrimesterVisitSectionE = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     Zp04TrimesterVisitSectionE[].class, username);
@@ -386,7 +384,7 @@ public class DownloadAllTask extends DownloadTask {
             mTrimesterVisitE = Arrays.asList(responseZp04TrimesterVisitSectionE.getBody());
             //Descargar visitas trimestrales parte 3
             urlRequest = url + "/movil/zp04TrimesterVisitSectionFtoHs/{username}";
-            publishProgress("Solicitando visitas trimestrales (3)","10","18");
+            publishProgress("Solicitando visitas trimestrales (3)","10","20");
             // Perform the HTTP GET request
             ResponseEntity<Zp04TrimesterVisitSectionFtoH[]> responseZp04TrimesterVisitSectionFtoH = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     Zp04TrimesterVisitSectionFtoH[].class, username);
@@ -394,7 +392,7 @@ public class DownloadAllTask extends DownloadTask {
             mTrimesterVisitFH = Arrays.asList(responseZp04TrimesterVisitSectionFtoH.getBody());
             //Descargar ultrasonidos
             urlRequest = url + "/movil/zp05UltrasoundExams/{username}";
-            publishProgress("Solicitando ultrasonidos","11","18");
+            publishProgress("Solicitando ultrasonidos","11","20");
             // Perform the HTTP GET request
             ResponseEntity<Zp05UltrasoundExam[]> responseZp05UltrasoundExam = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     Zp05UltrasoundExam[].class, username);
@@ -402,7 +400,7 @@ public class DownloadAllTask extends DownloadTask {
             mUltrasounds = Arrays.asList(responseZp05UltrasoundExam.getBody());
             //Descargar partos
             urlRequest = url + "/movil/zp06DeliveryAnd6weekVisits/{username}";
-            publishProgress("Solicitando partos","12","18");
+            publishProgress("Solicitando partos","12","20");
             // Perform the HTTP GET request
             ResponseEntity<Zp06DeliveryAnd6weekVisit[]> responseZp06DeliveryAnd6weekVisit = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     Zp06DeliveryAnd6weekVisit[].class, username);
@@ -410,7 +408,7 @@ public class DownloadAllTask extends DownloadTask {
             mDeliverys = Arrays.asList(responseZp06DeliveryAnd6weekVisit.getBody());
             //Descargar salidas del estudio
             urlRequest = url + "/movil/zp08StudyExits/{username}";
-            publishProgress("Solicitando salidas del estudio","13","16");
+            publishProgress("Solicitando salidas del estudio","13","20");
             // Perform the HTTP GET request
             ResponseEntity<Zp08StudyExit[]> responseZp08StudyExit = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     Zp08StudyExit[].class, username);
@@ -418,7 +416,7 @@ public class DownloadAllTask extends DownloadTask {
             mExits = Arrays.asList(responseZp08StudyExit.getBody());
             //Descargar estado de embarazadas
             urlRequest = url + "/movil/zpEstadoEmb/{username}";
-            publishProgress("Solicitando estado de embarazadas","14","16");
+            publishProgress("Solicitando estado de embarazadas","14","20");
             // Perform the HTTP GET request
             ResponseEntity<ZpEstadoEmbarazada[]> responseZpEstadoEmbarazada = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     ZpEstadoEmbarazada[].class, username);
@@ -426,40 +424,40 @@ public class DownloadAllTask extends DownloadTask {
             mStatus = Arrays.asList(responseZpEstadoEmbarazada.getBody());
             //Descargar salidas de consentimientos
             urlRequest = url + "/movil/zpSalidaCons";
-            publishProgress("Solicitando ZpControlConsentimientosSalida","15","18");
+            publishProgress("Solicitando ZpControlConsentimientosSalida","15","20");
             // Perform the HTTP GET request
             ResponseEntity<ZpControlConsentimientosSalida[]> responseZpControlConsentimientosSalida = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-            		ZpControlConsentimientosSalida[].class, username);
+                    ZpControlConsentimientosSalida[].class, username);
             // convert the array to a list and return it
             mZpControlConsentimientosSalida = Arrays.asList(responseZpControlConsentimientosSalida.getBody());
             //Descargar recepcion de consentimientos
             urlRequest = url + "/movil/zpRecepcionCons";
-            publishProgress("Solicitando ZpControlConsentimientosRecepcion","16","18");
+            publishProgress("Solicitando ZpControlConsentimientosRecepcion","16","20");
             // Perform the HTTP GET request
             ResponseEntity<ZpControlConsentimientosRecepcion[]> responseZpControlConsentimientosRecepcion = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-            		ZpControlConsentimientosRecepcion[].class, username);
+                    ZpControlConsentimientosRecepcion[].class, username);
             // convert the array to a list and return it
-            mZpControlConsentimientosRecepcion = Arrays.asList(responseZpControlConsentimientosRecepcion.getBody());            
+            mZpControlConsentimientosRecepcion = Arrays.asList(responseZpControlConsentimientosRecepcion.getBody());
             //Descargar salida de us
             urlRequest = url + "/movil/zpSalidaUS";
-            publishProgress("Solicitando ZpControlReporteUSSalida","17","18");
+            publishProgress("Solicitando ZpControlReporteUSSalida","17","20");
             // Perform the HTTP GET request
             ResponseEntity<ZpControlReporteUSSalida[]> responseZpControlReporteUSSalida = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-            		ZpControlReporteUSSalida[].class, username);
+                    ZpControlReporteUSSalida[].class, username);
             // convert the array to a list and return it
-            mZpControlReporteUSSalida = Arrays.asList(responseZpControlReporteUSSalida.getBody());            
+            mZpControlReporteUSSalida = Arrays.asList(responseZpControlReporteUSSalida.getBody());
             //Descargar recepcion de us
             urlRequest = url + "/movil/zpRecepcionUS";
-            publishProgress("Solicitando ZpControlReporteUSRecepcion","18","18");
+            publishProgress("Solicitando ZpControlReporteUSRecepcion","18","20");
             // Perform the HTTP GET request
             ResponseEntity<ZpControlReporteUSRecepcion[]> responseZpControlReporteUSRecepcion = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-            		ZpControlReporteUSRecepcion[].class, username);
+                    ZpControlReporteUSRecepcion[].class, username);
             // convert the array to a list and return it
-            mZpControlReporteUSRecepcion = Arrays.asList(responseZpControlReporteUSRecepcion.getBody());            
+            mZpControlReporteUSRecepcion = Arrays.asList(responseZpControlReporteUSRecepcion.getBody());
             /***********INFANTES***********/
             //Descargar muestras de infantes
             urlRequest = url + "/movil/zp02dInfantBiospecimenCollections/{username}";
-            publishProgress("Solicitando muestras de infantes","15","16");
+            publishProgress("Solicitando muestras de infantes","19","20");
             // Perform the HTTP GET request
             ResponseEntity<Zp02dInfantBiospecimenCollection[]> responseZp02dInfantBiospecimenCollection = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     Zp02dInfantBiospecimenCollection[].class, username);
@@ -468,16 +466,16 @@ public class DownloadAllTask extends DownloadTask {
 
             //Descargar evaluaciones de infantes
             urlRequest = url + "/movil/zp07InfantAssessmentVisits/{username}";
-            publishProgress("Solicitando evaluaciones de infantes","16","16");
+            publishProgress("Solicitando evaluaciones de infantes","20","20");
             // Perform the HTTP GET request
             ResponseEntity<Zp07InfantAssessmentVisit[]> responseZp07InfantAssessmentVisit = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     Zp07InfantAssessmentVisit[].class, username);
             // convert the array to a list and return it
             mInfantAssessment = Arrays.asList(responseZp07InfantAssessmentVisit.getBody());
-			return null;
-		} catch (Exception e) {
-			Log.e(TAG, e.getMessage(), e);
-			return e.getLocalizedMessage();	
-		}
-	}
+            return null;
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getLocalizedMessage();
+        }
+    }
 }
