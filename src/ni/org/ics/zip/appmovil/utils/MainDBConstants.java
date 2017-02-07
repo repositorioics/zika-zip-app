@@ -121,6 +121,7 @@ public class MainDBConstants {
 	public static final String scrConsentD = "scrConsentD";
 	public static final String scrConsentE = "scrConsentE";
 	public static final String scrConsentF = "scrConsentF";
+	public static final String scrAddtConsentG = "scrAddtConsentG";
 	public static final String scrPreviousZip = "scrPreviousZip";
 	public static final String scrPreviousStudyId = "scrPreviousStudyId";
 	public static final String scrPreStudyNa = "scrPreStudyNa";
@@ -162,6 +163,7 @@ public class MainDBConstants {
 			+ scrConsentD + " text, "
 			+ scrConsentE + " text, "
 			+ scrConsentF + " text, "
+			+ scrAddtConsentG + " text, "
 			+ scrPreviousZip + " text, "
 			+ scrPreviousStudyId + " text, "
 			+ scrPreStudyNa  + " text, "
