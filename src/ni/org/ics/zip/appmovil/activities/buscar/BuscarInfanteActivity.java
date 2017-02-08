@@ -7,11 +7,11 @@ import ni.org.ics.zip.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
-import ni.org.ics.zip.appmovil.activities.nuevos.NewPreScreeningActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.MenuEmbarazadasActivity;
-import ni.org.ics.zip.appmovil.adapters.ScreeningAdapter;
+import ni.org.ics.zip.appmovil.adapters.ZpInfantDataAdapter;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.domain.Zp00Screening;
+import ni.org.ics.zip.appmovil.domain.ZpInfantData;
 import ni.org.ics.zip.appmovil.utils.Constants;
 import ni.org.ics.zip.appmovil.utils.MainDBConstants;
 import android.os.AsyncTask;
@@ -28,7 +28,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -40,26 +39,25 @@ import android.app.ActionBar;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 
-public class BuscarEmbarazadaActivity extends AbstractAsyncListActivity {
+public class BuscarInfanteActivity extends AbstractAsyncListActivity {
 
 
 	private Spinner mMetodoView;
 	private EditText mParametroView;
 	private ImageButton mBarcodeButton;
 	private ImageButton mFindButton;
-	private Button mAddButton;
 	
 	public static final int BARCODE_CAPTURE = 2;
 
 	private ZipAdapter zipA;
-	private List<Zp00Screening> mScreenings = new ArrayList<Zp00Screening>();
+	private List<ZpInfantData> mInfantes = new ArrayList<ZpInfantData>();
 	
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.selec_emb_list);
+		setContentView(R.layout.selec_inf_list);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			ActionBar actionBar = getActionBar();
@@ -71,7 +69,7 @@ public class BuscarEmbarazadaActivity extends AbstractAsyncListActivity {
 		mMetodoView = (Spinner) findViewById(R.id.metodo_busqueda);
 		List<String> list = new ArrayList<String>();
 		list.add(getString(R.string.desc_barcode));
-		list.add(getString(R.string.enter)+" "+getString(R.string.mat_id));
+		list.add(getString(R.string.enter)+" "+getString(R.string.inf_id));
 		
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, list);
@@ -92,7 +90,7 @@ public class BuscarEmbarazadaActivity extends AbstractAsyncListActivity {
 					mBarcodeButton.setVisibility(View.GONE);
 					mParametroView.requestFocus();
 					mParametroView.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
-					mParametroView.setHint(getString(R.string.mat_id));
+					mParametroView.setHint(getString(R.string.inf_id));
 				}
 			}
 			@Override
@@ -107,8 +105,6 @@ public class BuscarEmbarazadaActivity extends AbstractAsyncListActivity {
 
 		mBarcodeButton = (ImageButton) findViewById(R.id.barcode_button);
 		mFindButton = (ImageButton) findViewById(R.id.find_button);
-		mAddButton = (Button) findViewById(R.id.add_button);
-		mAddButton.setText(getString(R.string.add)+ " " +getString(R.string.main_maternal));
 
 		mBarcodeButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
@@ -129,13 +125,13 @@ public class BuscarEmbarazadaActivity extends AbstractAsyncListActivity {
 		mFindButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
 			public void onClick(View v) {
-				mScreenings.clear();
+				mInfantes.clear();
 				if ((mParametroView.getText().toString()==null) || (mParametroView.getText().toString().matches(""))){
 					mParametroView.requestFocus();
 					mParametroView.setError(getString(R.string.search_hint));
 					return;
 				}
-				if(!mParametroView.getText().toString().matches("^07[0-9][0-9][0-9][0-9][0][A-Y]$")){
+				if(!mParametroView.getText().toString().matches("^07[0-9][0-9][0-9][0-9][1-3][A-Y]$")){
 					mParametroView.requestFocus();
 					mParametroView.setError(getString(R.string.code_error));
 					return;
@@ -145,16 +141,6 @@ public class BuscarEmbarazadaActivity extends AbstractAsyncListActivity {
 		});
 
 		mFindButton.setVisibility(View.GONE);
-
-		mAddButton.setOnClickListener(new View.OnClickListener()  {
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(getApplicationContext(),
-						NewPreScreeningActivity.class);
-				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(i);
-			}
-		});
 
 	}
 	
@@ -240,7 +226,7 @@ public class BuscarEmbarazadaActivity extends AbstractAsyncListActivity {
 			String sb = intent.getStringExtra("SCAN_RESULT");
 			if (sb != null && sb.length() > 0) {
 				try{
-					if(!(sb.matches("^07[0-9][0-9][0-9][0-9][0][A-Y]$"))){
+					if(!(sb.matches("^07[0-9][0-9][0-9][0-9][1-3][A-Y]$"))){
 						showToast(getString(R.string.scan_error));
 						return;
 					}
@@ -278,7 +264,7 @@ public class BuscarEmbarazadaActivity extends AbstractAsyncListActivity {
 			filtro = values[0];
 			try {
 				zipA.open();
-				mScreenings = zipA.getZp00Screenings(filtro, MainDBConstants.recordId);
+				mInfantes = zipA.getZpInfantDatas(filtro, MainDBConstants.recordId);
 				zipA.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -299,9 +285,9 @@ public class BuscarEmbarazadaActivity extends AbstractAsyncListActivity {
 	// Private methods
 	// ***************************************
 	private void showResult(String resultado) {
-		ScreeningAdapter adapter = new ScreeningAdapter(this, R.layout.complex_list_item, mScreenings);
+		ZpInfantDataAdapter adapter = new ZpInfantDataAdapter(this, R.layout.complex_list_item, mInfantes);
 		setListAdapter(adapter);
-		if (mScreenings.isEmpty()) showToast(getString(R.string.no_items));
+		if (mInfantes.isEmpty()) showToast(getString(R.string.no_items));
 	}	
 
 	

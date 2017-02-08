@@ -2,6 +2,7 @@ package ni.org.ics.zip.appmovil;
 
 
 import ni.org.ics.zip.appmovil.activities.buscar.BuscarEmbarazadaActivity;
+import ni.org.ics.zip.appmovil.activities.buscar.BuscarInfanteActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.MenuControlConsentimientosActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.MenuControlUSActivity;
 import ni.org.ics.zip.appmovil.activities.server.DownloadAllActivity;
@@ -85,6 +86,12 @@ public class MainActivity extends ListActivity {
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(i);
 			break;
+		case 1: 
+			i = new Intent(getApplicationContext(),
+					BuscarInfanteActivity.class);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(i);
+			break;			
 		case 3: 
 			i = new Intent(getApplicationContext(),
 					MenuControlConsentimientosActivity.class);
