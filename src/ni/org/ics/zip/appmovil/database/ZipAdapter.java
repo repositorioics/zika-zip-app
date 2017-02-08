@@ -1329,7 +1329,7 @@ public class ZipAdapter {
     public boolean editarZpInfantData(ZpInfantData mZpInfantData) {
         ContentValues cv = ZpInfantDataHelper.crearZpInfantData(mZpInfantData);
         return mDb.update(MainDBConstants.INFANTDATA_TABLE, cv, MainDBConstants.recordId + "='"
-                + mZpInfantData.getRecordId(), null) > 0;
+                + mZpInfantData.getRecordId() +"'", null) > 0;
     }
     //Limpiar la tabla de ZpInfantData de la base de datos
     public boolean borrarZpInfantData() {
