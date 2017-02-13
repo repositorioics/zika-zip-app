@@ -462,7 +462,8 @@ public class UploadAllTask extends UploadTask {
 		                    .valueOf(c).toString());
 		        }
 	        }
-        } /***************INFANTES***********/
+        } 
+		/***************INFANTES***********/
         else if(opcion==MUESTRAS_INFANTE){
             c = mInfantCollections.size();
             if(c>0){
