@@ -269,12 +269,12 @@ public class NewZp02dInfantBiospecimenCollectionActivity extends AbstractAsyncAc
             mInfantBioCollection.setInfantMatVstUrnId(zp02dXml.getInfantMatVstUrnId());
             mInfantBioCollection.setInfantMatVstUrnTime(zp02dXml.getInfantMatVstUrnTime());
             mInfantBioCollection.setInfantMatVstUrnCom(zp02dXml.getInfantMatVstUrnCom());
-            mInfantBioCollection.setInfantPerson1(zp02dXml.getInfantPerson1());
-            mInfantBioCollection.setInfantCompleteDate1(zp02dXml.getInfantCompleteDate1());
-            mInfantBioCollection.setInfantPerson2(zp02dXml.getInfantPerson2());
-            mInfantBioCollection.setInfantCompleteDate2(zp02dXml.getInfantCompleteDate2());
-            mInfantBioCollection.setInfantPerson3(zp02dXml.getInfantPerson3());
-            mInfantBioCollection.setInfantCompleteDate3(zp02dXml.getInfantCompleteDate3());
+            mInfantBioCollection.setInfantPerson1(username);
+            mInfantBioCollection.setInfantCompleteDate1(new Date());
+            mInfantBioCollection.setInfantPerson2(username);
+            mInfantBioCollection.setInfantCompleteDate2(new Date());
+            mInfantBioCollection.setInfantPerson3(username);
+            mInfantBioCollection.setInfantCompleteDate3(new Date());
 
             mInfantBioCollection.setRecordDate(new Date());
             mInfantBioCollection.setRecordUser(username);
