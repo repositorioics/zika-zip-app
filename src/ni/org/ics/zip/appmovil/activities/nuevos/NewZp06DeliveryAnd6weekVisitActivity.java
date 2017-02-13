@@ -455,6 +455,8 @@ public class NewZp06DeliveryAnd6weekVisitActivity extends AbstractAsyncActivity 
         data.setInfantSexBaby(sexBaby);
         data.setEstado(Constants.STATUS_NOT_SUBMITTED);
         data.setInfantConsentInfant(mDelivery.getDeliConsentInfant());
+        data.setInfantReasonNoconsent(mDelivery.getDeliReasonNoconsent());
+        data.setInfantNoconsentOther(mDelivery.getDeliNoconsentOther());
         data.setStart(mDelivery.getStart());
         data.setEnd(mDelivery.getEnd());
         data.setDeviceid(mDelivery.getDeviceid());
