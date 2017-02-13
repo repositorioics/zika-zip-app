@@ -22,6 +22,7 @@ import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.domain.Zp06DeliveryAnd6weekVisit;
+import ni.org.ics.zip.appmovil.domain.ZpEstadoInfante;
 import ni.org.ics.zip.appmovil.domain.ZpInfantData;
 import ni.org.ics.zip.appmovil.parsers.Zp06DeliveryAnd6weekVisitXml;
 import ni.org.ics.zip.appmovil.preferences.PreferencesActivity;
@@ -47,6 +48,9 @@ public class NewZp06DeliveryAnd6weekVisitActivity extends AbstractAsyncActivity 
     private static ZpInfantData mZpInfantData1 = null;
     private static ZpInfantData mZpInfantData2 = null;
     private static ZpInfantData mZpInfantData3 = null;
+    private static ZpEstadoInfante mZpEstadoInfante1 = null;
+    private static ZpEstadoInfante mZpEstadoInfante2 = null;
+    private static ZpEstadoInfante mZpEstadoInfante3 = null;
 
     public static final int ADD_ZP06_ODK = 1;
 	public static final int EDIT_ZP06_ODK = 2;
@@ -174,7 +178,7 @@ public class NewZp06DeliveryAnd6weekVisitActivity extends AbstractAsyncActivity 
                 }
             }
             else{
-
+            	finish();
             }
         }
         super.onActivityResult(requestCode, resultCode, intent);
@@ -371,14 +375,33 @@ public class NewZp06DeliveryAnd6weekVisitActivity extends AbstractAsyncActivity 
             
             if(event.matches(Constants.DELIVERY) && zp06Xml.getDeliVisitType().matches("1")){
                 if(zp06Xml.getDeliNumBirth().matches("1")){
-                    completarDatosInfante(1);
-                }else if(zp06Xml.getDeliNumBirth().matches("2")){
-                    completarDatosInfante(1);
-                    completarDatosInfante(2);
+                	mZpInfantData1 = completarDatosInfante(1);
+                	mZpEstadoInfante1 = new ZpEstadoInfante(mZpInfantData1.getRecordId(), '0', '0', '0', '0', new Date(),
+                			username,'0',idInstancia,instanceFilePath,Constants.STATUS_NOT_SUBMITTED,zp06Xml.getStart(),
+                			zp06Xml.getEnd(),zp06Xml.getDeviceid(),zp06Xml.getSimserial(),zp06Xml.getPhonenumber(),zp06Xml.getToday());
+                }
+                else if(zp06Xml.getDeliNumBirth().matches("2")){
+                	mZpInfantData1 = completarDatosInfante(1);
+                	mZpInfantData2 = completarDatosInfante(2);
+                	mZpEstadoInfante1 = new ZpEstadoInfante(mZpInfantData1.getRecordId(), '0', '0', '0', '0', new Date(),
+                			username,'0',idInstancia,instanceFilePath,Constants.STATUS_NOT_SUBMITTED,zp06Xml.getStart(),
+                			zp06Xml.getEnd(),zp06Xml.getDeviceid(),zp06Xml.getSimserial(),zp06Xml.getPhonenumber(),zp06Xml.getToday());
+                	mZpEstadoInfante2 = new ZpEstadoInfante(mZpInfantData2.getRecordId(), '0', '0', '0', '0', new Date(),
+                			username,'0',idInstancia,instanceFilePath,Constants.STATUS_NOT_SUBMITTED,zp06Xml.getStart(),
+                			zp06Xml.getEnd(),zp06Xml.getDeviceid(),zp06Xml.getSimserial(),zp06Xml.getPhonenumber(),zp06Xml.getToday());
                 }else{
-                    completarDatosInfante(1);
-                    completarDatosInfante(2);
-                    completarDatosInfante(3);
+                	mZpInfantData1 = completarDatosInfante(1);
+                	mZpInfantData2 = completarDatosInfante(2);
+                	mZpInfantData3 = completarDatosInfante(3);
+                	mZpEstadoInfante1 = new ZpEstadoInfante(mZpInfantData1.getRecordId(), '0', '0', '0', '0', new Date(),
+                			username,'0',idInstancia,instanceFilePath,Constants.STATUS_NOT_SUBMITTED,zp06Xml.getStart(),
+                			zp06Xml.getEnd(),zp06Xml.getDeviceid(),zp06Xml.getSimserial(),zp06Xml.getPhonenumber(),zp06Xml.getToday());
+                	mZpEstadoInfante2 = new ZpEstadoInfante(mZpInfantData2.getRecordId(), '0', '0', '0', '0', new Date(),
+                			username,'0',idInstancia,instanceFilePath,Constants.STATUS_NOT_SUBMITTED,zp06Xml.getStart(),
+                			zp06Xml.getEnd(),zp06Xml.getDeviceid(),zp06Xml.getSimserial(),zp06Xml.getPhonenumber(),zp06Xml.getToday());
+                	mZpEstadoInfante3 = new ZpEstadoInfante(mZpInfantData3.getRecordId(), '0', '0', '0', '0', new Date(),
+                			username,'0',idInstancia,instanceFilePath,Constants.STATUS_NOT_SUBMITTED,zp06Xml.getStart(),
+                			zp06Xml.getEnd(),zp06Xml.getDeviceid(),zp06Xml.getSimserial(),zp06Xml.getPhonenumber(),zp06Xml.getToday());
                 }
             }
 
@@ -392,63 +415,46 @@ public class NewZp06DeliveryAnd6weekVisitActivity extends AbstractAsyncActivity 
         }
     }
 
-    private void completarDatosInfante(int numInfante) {
+    private ZpInfantData completarDatosInfante(int numInfante) {
         String madreId = mDelivery.getRecordId();
+        String bebeId = null;
+        String fetalOutcome = null;
+        String causeDeath = null;
+        String sexBaby = null;
         if (numInfante == 1) {
-            String bebe1Id = madreId.substring(0, madreId.length() - 2) + "1" + madreId.substring(madreId.length() - 1, madreId.length());
-            mZpInfantData1 = new ZpInfantData();
-            mZpInfantData1.setRecordId(bebe1Id);
-            mZpInfantData1.setPregnantId(madreId);
-            mZpInfantData1.setInfantBirthDate(mDelivery.getDeliDeliveryDate());
-            mZpInfantData1.setInfantMode(mDelivery.getDeliMode());
-            mZpInfantData1.setInfantDeliveryWho(mDelivery.getDeliDeliveryWho());
-            mZpInfantData1.setInfantDeliveryOccur(mDelivery.getDeliDeliveryOccur());
-            mZpInfantData1.setInfantHospitalId(mDelivery.getDeliHospitalId());
-            mZpInfantData1.setInfantClinicId(mDelivery.getDeliClinicId());
-            mZpInfantData1.setInfantDeliveryOther(mDelivery.getDeliDeliveryOther());
-            mZpInfantData1.setInfantNumBirth(mDelivery.getDeliNumBirth());
-            mZpInfantData1.setInfantFetalOutcome(mDelivery.getDeliFetalOutcome1());
-            mZpInfantData1.setInfantCauseDeath(mDelivery.getDeliCauseDeath1());
-            mZpInfantData1.setInfantSexBaby(mDelivery.getDeliSexBaby1());
-            mZpInfantData1.setEstado(Constants.STATUS_NOT_SUBMITTED);
+        	bebeId = madreId.substring(0, madreId.length() - 2) + "1" + madreId.substring(madreId.length() - 1, madreId.length());
+        	fetalOutcome = mDelivery.getDeliFetalOutcome1();
+        	causeDeath = mDelivery.getDeliCauseDeath1();
+        	sexBaby = mDelivery.getDeliSexBaby1();
         }
-        if (numInfante == 2) {
-            String bebe2Id = madreId.substring(0, madreId.length() - 2) + "2" + madreId.substring(madreId.length() - 1, madreId.length());
-            mZpInfantData2 = new ZpInfantData();
-            mZpInfantData2.setRecordId(bebe2Id);
-            mZpInfantData2.setPregnantId(madreId);
-            mZpInfantData2.setInfantBirthDate(mDelivery.getDeliDeliveryDate());
-            mZpInfantData2.setInfantMode(mDelivery.getDeliMode());
-            mZpInfantData2.setInfantDeliveryWho(mDelivery.getDeliDeliveryWho());
-            mZpInfantData2.setInfantDeliveryOccur(mDelivery.getDeliDeliveryOccur());
-            mZpInfantData2.setInfantHospitalId(mDelivery.getDeliHospitalId());
-            mZpInfantData2.setInfantClinicId(mDelivery.getDeliClinicId());
-            mZpInfantData2.setInfantDeliveryOther(mDelivery.getDeliDeliveryOther());
-            mZpInfantData2.setInfantNumBirth(mDelivery.getDeliNumBirth());
-            mZpInfantData2.setInfantFetalOutcome(mDelivery.getDeliFetalOutcome1());
-            mZpInfantData2.setInfantCauseDeath(mDelivery.getDeliCauseDeath1());
-            mZpInfantData2.setInfantSexBaby(mDelivery.getDeliSexBaby1());
-            mZpInfantData2.setEstado(Constants.STATUS_NOT_SUBMITTED);
+        else if (numInfante == 2) {
+        	bebeId = madreId.substring(0, madreId.length() - 2) + "2" + madreId.substring(madreId.length() - 1, madreId.length());
+        	fetalOutcome = mDelivery.getDeliFetalOutcome2();
+        	causeDeath = mDelivery.getDeliCauseDeath2();
+        	sexBaby = mDelivery.getDeliSexBaby2();
         }
-
-        if (numInfante == 3) {
-            String bebe2Id = madreId.substring(0, madreId.length() - 2) + "3" + madreId.substring(madreId.length() - 1, madreId.length());
-            mZpInfantData3 = new ZpInfantData();
-            mZpInfantData3.setRecordId(bebe2Id);
-            mZpInfantData3.setPregnantId(madreId);
-            mZpInfantData3.setInfantBirthDate(mDelivery.getDeliDeliveryDate());
-            mZpInfantData3.setInfantMode(mDelivery.getDeliMode());
-            mZpInfantData3.setInfantDeliveryWho(mDelivery.getDeliDeliveryWho());
-            mZpInfantData3.setInfantDeliveryOccur(mDelivery.getDeliDeliveryOccur());
-            mZpInfantData3.setInfantHospitalId(mDelivery.getDeliHospitalId());
-            mZpInfantData3.setInfantClinicId(mDelivery.getDeliClinicId());
-            mZpInfantData3.setInfantDeliveryOther(mDelivery.getDeliDeliveryOther());
-            mZpInfantData3.setInfantNumBirth(mDelivery.getDeliNumBirth());
-            mZpInfantData3.setInfantFetalOutcome(mDelivery.getDeliFetalOutcome1());
-            mZpInfantData3.setInfantCauseDeath(mDelivery.getDeliCauseDeath1());
-            mZpInfantData3.setInfantSexBaby(mDelivery.getDeliSexBaby1());
-            mZpInfantData3.setEstado(Constants.STATUS_NOT_SUBMITTED);
+        else if (numInfante == 3) {
+        	bebeId = madreId.substring(0, madreId.length() - 2) + "3" + madreId.substring(madreId.length() - 1, madreId.length());
+        	fetalOutcome = mDelivery.getDeliFetalOutcome3();
+        	causeDeath = mDelivery.getDeliCauseDeath3();
+        	sexBaby = mDelivery.getDeliSexBaby3();
         }
+        ZpInfantData data = new ZpInfantData();
+        data.setRecordId(bebeId);
+        data.setPregnantId(madreId);
+        data.setInfantBirthDate(mDelivery.getDeliDeliveryDate());
+        data.setInfantMode(mDelivery.getDeliMode());
+        data.setInfantDeliveryWho(mDelivery.getDeliDeliveryWho());
+        data.setInfantDeliveryOccur(mDelivery.getDeliDeliveryOccur());
+        data.setInfantHospitalId(mDelivery.getDeliHospitalId());
+        data.setInfantClinicId(mDelivery.getDeliClinicId());
+        data.setInfantDeliveryOther(mDelivery.getDeliDeliveryOther());
+        data.setInfantNumBirth(mDelivery.getDeliNumBirth());
+        data.setInfantFetalOutcome(fetalOutcome);
+        data.setInfantCauseDeath(causeDeath);
+        data.setInfantSexBaby(sexBaby);
+        data.setEstado(Constants.STATUS_NOT_SUBMITTED);
+        return data;
     }
 
     // ***************************************
@@ -476,6 +482,12 @@ public class NewZp06DeliveryAnd6weekVisitActivity extends AbstractAsyncActivity 
                             zipA.crearZpInfantData(mZpInfantData2);
                         if (mZpInfantData3!=null)
                             zipA.crearZpInfantData(mZpInfantData3);
+                        if (mZpEstadoInfante1!=null)
+                            zipA.crearZpEstadoInfante(mZpEstadoInfante1);
+                        if (mZpEstadoInfante2!=null)
+                        	zipA.crearZpEstadoInfante(mZpEstadoInfante2);
+                        if (mZpEstadoInfante3!=null)
+                        	zipA.crearZpEstadoInfante(mZpEstadoInfante3);
     				}
     				else{
     					zipA.editarZp06DeliveryAnd6weekVisit(mDelivery);

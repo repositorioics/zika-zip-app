@@ -33,7 +33,7 @@ public class UploadAllTask extends UploadTask {
 	}
 
 	protected static final String TAG = UploadAllTask.class.getSimpleName();
-    private static final String TOTAL_TASK = "21";
+    private static final String TOTAL_TASK = "22";
 	private ZipAdapter zipA = null;
 	private List<ZpPreScreening> mPreTamizajes = new ArrayList<ZpPreScreening>();
 	private List<Zp00Screening> mTamizajes = new ArrayList<Zp00Screening>();
@@ -54,6 +54,7 @@ public class UploadAllTask extends UploadTask {
     private List<ZpControlReporteUSSalida> mSalidasUS = new ArrayList<ZpControlReporteUSSalida>();
     private List<ZpControlReporteUSRecepcion> mRecepcionUS = new ArrayList<ZpControlReporteUSRecepcion>();
     private List<ZpInfantData> mInfantData = new ArrayList<ZpInfantData>();
+    private List<ZpEstadoInfante> mEstadoInfante = new ArrayList<ZpEstadoInfante>();
     private List<Zp02dInfantBiospecimenCollection> mInfantCollections = new ArrayList<Zp02dInfantBiospecimenCollection>();
     private List<Zp07InfantAssessmentVisit> mInfantAssessment = new ArrayList<Zp07InfantAssessmentVisit>();
 
@@ -83,6 +84,7 @@ public class UploadAllTask extends UploadTask {
     public static final int MUESTRAS_INFANTE = 18;
     public static final int EVAL_INFANTE = 19;
     public static final int DAT_INFANTE = 20;
+    public static final int ESTADO_INFANTE = 21;
 	
 
 	@Override
@@ -117,6 +119,7 @@ public class UploadAllTask extends UploadTask {
             mInfantData = zipA.getZpInfantDatas(filtro,null);
             mInfantCollections = zipA.getZp02dInfantBiospecimenCollections(filtro, MainDBConstants.recordId);
             mInfantAssessment = zipA.getZp07InfantAssessmentVisits(filtro, MainDBConstants.recordId);
+            mEstadoInfante = zipA.getZpEstadoInfantes(filtro, MainDBConstants.recordId);
 			publishProgress("Datos completos!", "2", "2");
 			actualizarBaseDatos(Constants.STATUS_SUBMITTED, PRE_TAMIZAJE);
 			error = cargarPreTamizajes(url, username, password);
@@ -243,6 +246,12 @@ public class UploadAllTask extends UploadTask {
             error = uploadInfantAssessment(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, EVAL_INFANTE);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, ESTADO_INFANTE);
+            error = uploadInfantStatus(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ESTADO_INFANTE);
                 return error;
             }
             zipA.close();
@@ -483,6 +492,17 @@ public class UploadAllTask extends UploadTask {
                     infantData.setEstado(estado);
                     zipA.editarZpInfantData(infantData);
                     publishProgress("Actualizando datos de infantes base de datos local", Integer.valueOf(mInfantData.indexOf(infantData)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        else if(opcion==ESTADO_INFANTE){
+            c = mEstadoInfante.size();
+            if(c>0){
+                for (ZpEstadoInfante infantEstado : mEstadoInfante) {
+                    infantEstado.setEstado(estado);
+                    zipA.editarZpEstadoInfante(infantEstado);
+                    publishProgress("Actualizando estado de infantes base de datos local", Integer.valueOf(mInfantData.indexOf(infantEstado)).toString(), Integer
                             .valueOf(c).toString());
                 }
             }
@@ -1200,7 +1220,7 @@ public class UploadAllTask extends UploadTask {
     protected String uploadInfantAssessment(String url, String username,
                                                        String password) throws Exception {
         try {
-            if(mRecepcionUS.size()>0){
+            if(mInfantAssessment.size()>0){
                 publishProgress("Enviando evaluaciones de infantes!", "21", TOTAL_TASK);
                 // La URL de la solicitud POST
                 final String urlRequest = url + "/movil/zp07InfantAssessmentVisits";
@@ -1227,5 +1247,40 @@ public class UploadAllTask extends UploadTask {
             return e.getMessage();
         }
     }
+    
+    /***************************************************/
+    /********************* ZpEstadoInfante******/
+    /***************************************************/
+    // url, username, password
+    protected String uploadInfantStatus(String url, String username,
+                                      String password) throws Exception {
+        try {
+            if(mEstadoInfante.size()>0){
+                publishProgress("Enviando datos de estado de infantes!", "22", TOTAL_TASK);
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/zpEstadoInfantes";
+                ZpEstadoInfante[] envio = mEstadoInfante.toArray(new ZpEstadoInfante[mEstadoInfante.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<ZpEstadoInfante[]> requestEntity =
+                        new HttpEntity<ZpEstadoInfante[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }    
 
 }

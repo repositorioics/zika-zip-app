@@ -85,10 +85,10 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
         //to set the message
         TextView message =(TextView) dialogInit.findViewById(R.id.yesnotext);
         if (mInfantAssessment !=null){
-            message.setText(getString(R.string.edit)+ " " + getString(R.string.infant_1)+"?");
+            message.setText(getString(R.string.edit)+ " " + getString(R.string.infant_b_1)+"?");
         }
         else{
-            message.setText(getString(R.string.add)+ " " + getString(R.string.infant_1)+"?");
+            message.setText(getString(R.string.add)+ " " + getString(R.string.infant_b_1)+"?");
         }
 
         //add some action to the buttons
@@ -168,7 +168,7 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
                 }
             }
             else{
-
+            	finish();
             }
         }
         super.onActivityResult(requestCode, resultCode, intent);
@@ -183,7 +183,7 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
                         "_id","jrFormId","displayName"};
                 //cursor que busca el formulario
                 Cursor c = getContentResolver().query(Constants.CONTENT_URI, projection,
-                        "jrFormId = 'ZP07_Infant_Assessment' and displayName = 'Estudio ZIP Visita de evaluacion al infante'", null, null);
+                        "jrFormId = 'ZP07_Infant_Assessment' and displayName = 'Estudio ZIP Visita de evaluación al infante'", null, null);
                 c.moveToFirst();
                 //captura el id del formulario
                 Integer id = Integer.parseInt(c.getString(0));

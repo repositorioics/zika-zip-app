@@ -74,6 +74,7 @@ public class ZipAdapter {
             db.execSQL(Zp02DBConstants.CREATE_INFANTBIOCOLLECTION_TABLE);
             db.execSQL(Zp07DBConstants.CREATE_INFANTASSESSMENT_TABLE);
             db.execSQL(MainDBConstants.CREATE_INFANTDATA_TABLE);
+            db.execSQL(MainDBConstants.CREATE_INFANTSTATUS_TABLE);
 		}
 
 		@Override
@@ -172,6 +173,7 @@ public class ZipAdapter {
 	            db.execSQL(Zp02DBConstants.CREATE_INFANTBIOCOLLECTION_TABLE);
 	            db.execSQL(Zp07DBConstants.CREATE_INFANTASSESSMENT_TABLE);
 	            db.execSQL(MainDBConstants.CREATE_INFANTDATA_TABLE);
+	            db.execSQL(MainDBConstants.CREATE_INFANTSTATUS_TABLE);
 			}
 		}	
 	}
@@ -1361,7 +1363,54 @@ public class ZipAdapter {
         }
         if (!cursor.isClosed()) cursor.close();
         return mZpInfantDatas;
-    }    
+    }   
+    
+    /**
+     * Metodos para ZpEstadoInfante en la base de datos
+     *
+     */
+    //Crear nuevo ZpEstadoInfante en la base de datos
+    public void crearZpEstadoInfante(ZpEstadoInfante mZpEstadoInfante) {
+        ContentValues cv = ZpEstadoInfanteHelper.crearZpEstadoInfante(mZpEstadoInfante);
+        mDb.insert(MainDBConstants.INFANTSTATUS_TABLE, null, cv);
+    }
+    //Editar ZpEstadoInfante existente en la base de datos
+    public boolean editarZpEstadoInfante(ZpEstadoInfante mZpEstadoInfante) {
+        ContentValues cv = ZpEstadoInfanteHelper.crearZpEstadoInfante(mZpEstadoInfante);
+        return mDb.update(MainDBConstants.INFANTSTATUS_TABLE, cv, MainDBConstants.recordId + "='"
+                + mZpEstadoInfante.getRecordId() +"'", null) > 0;
+    }
+    //Limpiar la tabla de ZpEstadoInfante de la base de datos
+    public boolean borrarZpEstadoInfante() {
+        return mDb.delete(MainDBConstants.INFANTSTATUS_TABLE, null, null) > 0;
+    }
+    //Obtener un ZpEstadoInfante de la base de datos
+    public ZpEstadoInfante getZpEstadoInfante(String filtro, String orden) throws SQLException {
+    	ZpEstadoInfante mZpEstadoInfante = null;
+        Cursor cursor = crearCursor(MainDBConstants.INFANTSTATUS_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mZpEstadoInfante=ZpEstadoInfanteHelper.crearZpEstadoInfante(cursor);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mZpEstadoInfante;
+    }
+    //Obtener una lista de ZpEstadoInfante de la base de datos
+    public List<ZpEstadoInfante> getZpEstadoInfantes(String filtro, String orden) throws SQLException {
+        List<ZpEstadoInfante> mZpEstadoInfantes = new ArrayList<ZpEstadoInfante>();
+        Cursor cursor = crearCursor(MainDBConstants.INFANTSTATUS_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mZpEstadoInfantes.clear();
+            do{
+            	ZpEstadoInfante mZpEstadoInfanteData = null;
+                mZpEstadoInfanteData = ZpEstadoInfanteHelper.crearZpEstadoInfante(cursor);
+                mZpEstadoInfantes.add(mZpEstadoInfanteData);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mZpEstadoInfantes;
+    }     
 
     public Boolean verificarData() throws SQLException{
 		Cursor c = null;
@@ -1408,6 +1457,8 @@ public class ZipAdapter {
         c = crearCursor(Zp02DBConstants.INFANT_BIOCOLLECTION_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c = crearCursor(MainDBConstants.INFANTDATA_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MainDBConstants.INFANTSTATUS_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
 		return false;

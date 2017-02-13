@@ -7,10 +7,9 @@ import ni.org.ics.zip.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
-import ni.org.ics.zip.appmovil.activities.paginas.MenuEmbarazadasActivity;
+import ni.org.ics.zip.appmovil.activities.paginas.MenuInfantesActivity;
 import ni.org.ics.zip.appmovil.adapters.ZpInfantDataAdapter;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
-import ni.org.ics.zip.appmovil.domain.Zp00Screening;
 import ni.org.ics.zip.appmovil.domain.ZpInfantData;
 import ni.org.ics.zip.appmovil.utils.Constants;
 import ni.org.ics.zip.appmovil.utils.MainDBConstants;
@@ -136,7 +135,7 @@ public class BuscarInfanteActivity extends AbstractAsyncListActivity {
 					mParametroView.setError(getString(R.string.code_error));
 					return;
 				}
-				buscarEmbarazada(mParametroView.getText().toString());
+				buscarInfante(mParametroView.getText().toString());
 			}
 		});
 
@@ -164,26 +163,20 @@ public class BuscarInfanteActivity extends AbstractAsyncListActivity {
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
 
-		Zp00Screening mTamizaje = (Zp00Screening) getListAdapter().getItem(position);
-		if (mTamizaje.getScrRemain().equals("0") || mTamizaje.getScrAge15().equals("0") || mTamizaje.getScrPregnant().equals("0")
-				|| mTamizaje.getScrPregant13().equals("0")|| mTamizaje.getScrZikaOther().equals("1") || mTamizaje.getScrMeetCriteria().equals("0")
-				|| mTamizaje.getScrConsentObta().equals("0")){
-			showToast(getString(R.string.notelegible));
-		}
-		else if(mTamizaje.getScrConsentObta().equals("1") && mTamizaje.getScrObAge()<18){
-			if(mTamizaje.getScrObAssent().matches("0")) showToast(getString(R.string.notelegible));
-            else cargarMenu(mTamizaje);
+		ZpInfantData mZpInfantData = (ZpInfantData) getListAdapter().getItem(position);
+		if (mZpInfantData.getInfantConsentInfant().matches("0")){
+			showToast(getString(R.string.no_cons));
 		}
 		else{
-            cargarMenu(mTamizaje);
+            cargarMenu(mZpInfantData);
 		}
 	}
 
-    private void cargarMenu(Zp00Screening mTamizaje){
+    private void cargarMenu(ZpInfantData mZpInfantData){
         Bundle arguments = new Bundle();
-        if (mTamizaje!=null) arguments.putSerializable(Constants.OBJECTO_ZP00 , mTamizaje);
+        if (mZpInfantData!=null) arguments.putSerializable(Constants.OBJECTO_ZPINFDATA , mZpInfantData);
         Intent i = new Intent(getApplicationContext(),
-                MenuEmbarazadasActivity.class);
+                MenuInfantesActivity.class);
         i.putExtras(arguments);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
@@ -230,7 +223,7 @@ public class BuscarInfanteActivity extends AbstractAsyncListActivity {
 						showToast(getString(R.string.scan_error));
 						return;
 					}
-					buscarEmbarazada(sb);
+					buscarInfante(sb);
 				}
 				catch(Exception e){
 					showToast(e.getLocalizedMessage());
@@ -242,7 +235,7 @@ public class BuscarInfanteActivity extends AbstractAsyncListActivity {
 
 	}
 	
-	public void buscarEmbarazada(String parametro){
+	public void buscarInfante(String parametro){
 		String filtro = MainDBConstants.recordId + "='" + parametro + "'";
 		new FetchDataTask().execute(filtro);
 	}

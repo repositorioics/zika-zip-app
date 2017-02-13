@@ -464,6 +464,9 @@ public class MainDBConstants {
     public static final String infantFetalOutcome = "infantFetalOutcome";
     public static final String infantCauseDeath = "infantCauseDeath";
     public static final String infantSexBaby = "infantSexBaby";
+    public static final String infantConsentInfant = "infantConsentInfant";
+    public static final String infantReasonNoconsent = "infantReasonNoconsent";
+    public static final String infantNoconsentOther = "infantNoconsentOther";
 
     //Crear tabla ZpInfantData
     public static final String CREATE_INFANTDATA_TABLE = "create table if not exists "
@@ -481,6 +484,9 @@ public class MainDBConstants {
             + infantFetalOutcome + " text, "
             + infantCauseDeath + " text, "
             + infantSexBaby + " text, "
+            + infantConsentInfant + " text, "
+            + infantReasonNoconsent + " text, "
+            + infantNoconsentOther + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "
@@ -494,5 +500,36 @@ public class MainDBConstants {
             + MainDBConstants.PHONE_NUMBER  + " text, "
             + MainDBConstants.TODAY  + " date, "
             + "primary key (" + recordId + "));";
+
+    //Tabla ZpInfantData
+    public static String INFANTSTATUS_TABLE = "zp_estado_infante";
+
+    public static final String nacimiento = "nacimiento";
+    public static final String mes3 = "mes3";
+    public static final String mes6 = "mes6";
+    public static final String mes12 = "mes12";
+
+
+    //Crear tabla ZpInfantData
+    public static final String CREATE_INFANTSTATUS_TABLE = "create table if not exists "
+            + INFANTSTATUS_TABLE + " ("
+            + recordId + " text not null, "
+            + nacimiento + " text, "
+            + mes3 + " text, "
+            + mes6 + " text, "
+            + mes12 + " text, "
+            + MainDBConstants.recordDate + " date, "
+            + MainDBConstants.recordUser + " text, "
+            + MainDBConstants.pasive + " text, "
+            + MainDBConstants.ID_INSTANCIA + " integer,"
+            + MainDBConstants.FILE_PATH + " text,"
+            + MainDBConstants.STATUS + " text not null, "
+            + MainDBConstants.START  + " text, "
+            + MainDBConstants.END  + " text, "
+            + MainDBConstants.DEVICE_ID  + " text, "
+            + MainDBConstants.SIM_SERIAL + " text, "
+            + MainDBConstants.PHONE_NUMBER  + " text, "
+            + MainDBConstants.TODAY  + " date, "
+            + "primary key (" + recordId + "));";    
 
 }

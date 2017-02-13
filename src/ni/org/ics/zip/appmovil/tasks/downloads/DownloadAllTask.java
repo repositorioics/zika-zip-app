@@ -32,7 +32,7 @@ public class DownloadAllTask extends DownloadTask {
 	}
 	
 	protected static final String TAG = DownloadAllTask.class.getSimpleName();
-    private static final String TOTAL_TASK = "21";
+    private static final String TOTAL_TASK = "22";
 	private ZipAdapter zipA = null;
 	private List<ZpPreScreening> mPreTamizajes = null;
 	private List<Zp00Screening> mTamizajes = null;
@@ -54,6 +54,7 @@ public class DownloadAllTask extends DownloadTask {
     private List<ZpControlReporteUSRecepcion> mZpControlReporteUSRecepcion = null;
 
     private List<ZpInfantData> mInfantData = null;
+    private List<ZpEstadoInfante> mEstadoInfante = null;
     private List<Zp02dInfantBiospecimenCollection> mInfantCollections = null;
     private List<Zp07InfantAssessmentVisit> mInfantAssessment = null;
 
@@ -100,8 +101,13 @@ public class DownloadAllTask extends DownloadTask {
         zipA.borrarZpControlConsentimientosRecepcion();
         zipA.borrarZpControlReporteUSSalida();
         zipA.borrarZpControlReporteUSRecepcion();
+        
         zipA.borrarZp02dInfantBiospecimenCollection();
         zipA.borrarZp07InfantAssessmentVisit();
+        
+        zipA.borrarZpInfantData();
+        zipA.borrarZpEstadoInfante();
+        
 		try {
 			if (mPreTamizajes != null){
 				v = mPreTamizajes.size();
@@ -272,6 +278,15 @@ public class DownloadAllTask extends DownloadTask {
                 while (iter.hasNext()){
                     zipA.crearZpInfantData(iter.next());
                     publishProgress("Insertando datos de infantes en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+            }
+            if (mEstadoInfante != null){
+                v = mEstadoInfante.size();
+                ListIterator<ZpEstadoInfante> iter = mEstadoInfante.listIterator();
+                while (iter.hasNext()){
+                    zipA.crearZpEstadoInfante(iter.next());
+                    publishProgress("Insertando datos de estado de infantes en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
                             .valueOf(v).toString());
                 }
             }
@@ -467,16 +482,24 @@ public class DownloadAllTask extends DownloadTask {
             mZpControlReporteUSRecepcion = Arrays.asList(responseZpControlReporteUSRecepcion.getBody());
             /***********INFANTES***********/
             //Descargar datos de infantes
-            urlRequest = url + "/movil/zpInfants";
+            urlRequest = url + "/movil/zpInfants/{username}";
             publishProgress("Solicitando datos de infantes","19",TOTAL_TASK);
             // Perform the HTTP GET request
             ResponseEntity<ZpInfantData[]> responseZpInfantData = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     ZpInfantData[].class, username);
             // convert the array to a list and return it
             mInfantData = Arrays.asList(responseZpInfantData.getBody());
+            //Descargar datos de estado de infantes
+            urlRequest = url + "/movil/zpEstadoInfantes/{username}";
+            publishProgress("Solicitando datos de estado de infantes","20",TOTAL_TASK);
+            // Perform the HTTP GET request
+            ResponseEntity<ZpEstadoInfante[]> responseZpEstadoInfante = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+            		ZpEstadoInfante[].class, username);
+            // convert the array to a list and return it
+            mEstadoInfante = Arrays.asList(responseZpEstadoInfante.getBody());
             //Descargar muestras de infantes
             urlRequest = url + "/movil/zp02dInfantBiospecimenCollections/{username}";
-            publishProgress("Solicitando muestras de infantes","20",TOTAL_TASK);
+            publishProgress("Solicitando muestras de infantes","21",TOTAL_TASK);
             // Perform the HTTP GET request
             ResponseEntity<Zp02dInfantBiospecimenCollection[]> responseZp02dInfantBiospecimenCollection = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     Zp02dInfantBiospecimenCollection[].class, username);
@@ -485,7 +508,7 @@ public class DownloadAllTask extends DownloadTask {
 
             //Descargar evaluaciones de infantes
             urlRequest = url + "/movil/zp07InfantAssessmentVisits/{username}";
-            publishProgress("Solicitando evaluaciones de infantes","21",TOTAL_TASK);
+            publishProgress("Solicitando evaluaciones de infantes","22",TOTAL_TASK);
             // Perform the HTTP GET request
             ResponseEntity<Zp07InfantAssessmentVisit[]> responseZp07InfantAssessmentVisit = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     Zp07InfantAssessmentVisit[].class, username);

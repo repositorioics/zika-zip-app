@@ -29,6 +29,9 @@ public class ZpInfantDataHelper {
         cv.put(MainDBConstants.infantFetalOutcome, zpInfantData.getInfantFetalOutcome());
         cv.put(MainDBConstants.infantCauseDeath, zpInfantData.getInfantCauseDeath());
         cv.put(MainDBConstants.infantSexBaby, zpInfantData.getInfantSexBaby());
+        cv.put(MainDBConstants.infantConsentInfant, zpInfantData.getInfantConsentInfant());
+        cv.put(MainDBConstants.infantReasonNoconsent, zpInfantData.getInfantReasonNoconsent());
+        cv.put(MainDBConstants.infantNoconsentOther, zpInfantData.getInfantNoconsentOther());
 
         if (zpInfantData.getRecordDate() != null) cv.put(MainDBConstants.recordDate, zpInfantData.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, zpInfantData.getRecordUser());
@@ -63,6 +66,9 @@ public class ZpInfantDataHelper {
         zpInfantData.setInfantFetalOutcome(cursor.getString(cursor.getColumnIndex(MainDBConstants.infantFetalOutcome)));
         zpInfantData.setInfantCauseDeath(cursor.getString(cursor.getColumnIndex(MainDBConstants.infantCauseDeath)));
         zpInfantData.setInfantSexBaby(cursor.getString(cursor.getColumnIndex(MainDBConstants.infantSexBaby)));
+        zpInfantData.setInfantConsentInfant(cursor.getString(cursor.getColumnIndex(MainDBConstants.infantConsentInfant)));
+        zpInfantData.setInfantReasonNoconsent(cursor.getString(cursor.getColumnIndex(MainDBConstants.infantReasonNoconsent)));
+        zpInfantData.setInfantNoconsentOther(cursor.getString(cursor.getColumnIndex(MainDBConstants.infantNoconsentOther)));
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) zpInfantData.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         zpInfantData.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
