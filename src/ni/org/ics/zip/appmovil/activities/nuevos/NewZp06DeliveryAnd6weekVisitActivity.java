@@ -454,6 +454,15 @@ public class NewZp06DeliveryAnd6weekVisitActivity extends AbstractAsyncActivity 
         data.setInfantCauseDeath(causeDeath);
         data.setInfantSexBaby(sexBaby);
         data.setEstado(Constants.STATUS_NOT_SUBMITTED);
+        data.setInfantConsentInfant(mDelivery.getDeliConsentInfant());
+        data.setStart(mDelivery.getStart());
+        data.setEnd(mDelivery.getEnd());
+        data.setDeviceid(mDelivery.getDeviceid());
+        data.setSimserial(mDelivery.getSimserial());
+        data.setPhonenumber(mDelivery.getPhonenumber());
+        data.setToday(mDelivery.getToday());
+        data.setRecordDate(new Date());
+        data.setRecordUser(username);
         return data;
     }
 
