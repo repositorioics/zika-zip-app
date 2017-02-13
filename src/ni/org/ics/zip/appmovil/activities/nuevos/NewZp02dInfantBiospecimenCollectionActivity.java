@@ -319,7 +319,7 @@ public class NewZp02dInfantBiospecimenCollectionActivity extends AbstractAsyncAc
                         zipA.crearZp02dInfantBiospecimenCollection(mInfantBioCollection);
                     }
                     else{
-                        zipA.crearZp02dInfantBiospecimenCollection(mInfantBioCollection);
+                        zipA.editarZp02dInfantBiospecimenCollection(mInfantBioCollection);
                     }
                     zipA.close();
                 } catch (Exception e) {
