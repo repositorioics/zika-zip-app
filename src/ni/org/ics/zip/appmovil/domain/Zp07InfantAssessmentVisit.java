@@ -14,7 +14,16 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
     private String redcapEventName;
     private Date infantVisitDate;
     private String infantStatus;
+    private Date infantDeathDt;
     private String infantVisit;
+    private Date infantVisitDate2;
+    private String infantStatus2;
+    private Date infantDeathDt2;
+    private String infantVisit2;
+    private Date infantVisitDate3;
+    private String infantStatus3;
+    private Date infantDeathDt3;
+    private String infantVisit3;
     private Float infantTemp;
     private String infantTmpUnit;
     private Float infantWt;
@@ -27,7 +36,7 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
     private Float infantHeadcircu;
     private Float infantHeapercen;
     private String infantHeapercenNa;
-    private String infantReferralNeuro;
+    private String infantHeasize;
     private String infantApgarNa;
     private Float infantApgar1min;
     private Float infantApgar5min;
@@ -38,60 +47,133 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
     private String infantAbdominal;
     private String infantLiverSpleen;
     private String infantOphth;
+    private String infantOphthType;
     private String infantOphthAbno;
-    private String infantWhichEye;//multiple
-    private String infantEyeCalci;
-    private String infantChoriore;
-    private String infantEyeOther;
-    private String infantOtherIssue;//multiple
-    private String infantEyeOtherSpecify;
-    private String infantReferralOphth;
     private String infantOae;
-    private String infantOaeAbnormal;
-    private String infantWhichEar; //multiple
-    private String infantReferralAudio;
-    private String infantAdditionalAudio;
-    private Float infatnHearLeft;
-    private Float infantHearRight;
+    private String infantHearingTest;
+    private String infantHearingOverall;
+    private String infantRoae;
+    private String infantRaabr;
+    private String infantLoae;
+    private String infantLaabr;
     private String infantBreastfeeding;
-    private String infantBreastReason;//multiple
+    private String infantBreastReason;
     private String infantBreastOther;
     private String infantNeurodeve;
-    private String infantNeurodeveType;//multiple
-    private String infantOtherSpecify;
-    private String infantExhibited; //multiple
-    private String infantOtherMovement;
+    private String infantExhibited;
+    private String infantAsymType;
+    private String infantOtherMove;
+    private String infantExhibitOther;
+    private String infantMicroce;
+    private String infantDefinition;
     private String infantFurtherNeuro;
-    private String infantHeadAltra;
-    private String infantUltraObtained;
-    private Date infantUltraDt;
-    private String infantResultsUltra;
-    private String infantResultsSpecify;
-    private String infantHeadCt;
-    private String infantCtObtained;
-    private Date infantCtDt;
-    private String infantResultsCt;
-    private String infantCtSpecify;
-    private String infantCerebrospinal;
-    private String infantCerebroStored;
-    private Date infantCerebroDt;
-    private Float infantCerebroAmount;
-    private String infantResultsCerebro;
-    private String infantCerebroSpecify;
-    private String infantMri;
-    private String infantMriObtained;
-    private Date infantMriDt;
-    private String infantResultsMri;
-    private String infantMriSpecify;
-    private String infantPreviousResults;
-    private String infantReferrCounselling;
-    private String infantOtherLabCollect;
+    private String infantEvaluation;
+    private String infantNeuroAsq;
+    private Float infantAsqCommuni;
+    private Float infantAsqGross;
+    private Float infantAsqFine;
+    private Float infantAsqProblem;
+    private Float infantAsqPersonal;
+    private String infantNeuroBisd;
+    private Float infantCgScore;
+    private String infantCgRisk;
+    private Float infantRpScore;
+    private String infantRpRisk;
+    private Float infantEpScore;
+    private String infantEpRisk;
+    private Float infantFmScore;
+    private String infantFmRisk;
+    private Float infantGmScore;
+    private String infantGmRisk;
+    private String infantNeuroOther;
+    private String infantOtherName;
+    private Float infantOtherScore;
+    private String infantResultScreening;
+    private String infantReferTesting;
+    private String infantFeverSymptom;
+    private String infantRashSymptom;
+    private String infantItch;
+    private String infantRashFirst;
+    private String infantRashDy;
+    private String infantRashMn;
+    private String infantRashYr;
+    private Float infantRashDur;
+    private String infantRashSpread;
+    private String infantSpreadPart;
+    private String infantFeverExperience;
+    private String infantTempMeasure;
+    private Float infantHighTemp;
+    private String infantHightemUnit;
+    private String infantTempunknown;
+    private String infantFeverDy;
+    private String infantFeverMn;
+    private String infantFeverYr;
+    private Float infantFeverDur;
+    private String infantRedeyes;
+    private String infantRedeyesDy;
+    private String infantRedeyesMn;
+    private String infantRedeyesYr;
+    private Float infantRedeyesDur;
+    private String infantJoint;
+    private String infantJointDy;
+    private String infantJointMn;
+    private String infantJointYr;
+    private Float infantJointDur;
+    private String infantHeadache;
+    private String infantHeadacheDy;
+    private String infantHeadacheMn;
+    private String infantHeadacheYr;
+    private Float infantHeadaDur;
+    private String infantSymptomOther;
+    private String infantSpecifySymptom;
+    private String infantOtherSymptom;
+    private String infantMedicare;
+    private String infantCareDy;
+    private String infantCareMn;
+    private String infantCareYr;
+    private String infantCareFacility;
+    private String infantHospitalized;
+    private String infantHospital;
+    private String infantDiagRubella;
+    private String infantDiagDengue;
+    private String infantDiagChikung;
+    private String infantDiagZika;
+    private String infantDiagCytome;
+    private String infantMedicine;
+    private String infantMedName;
+    private String infantSpDiary;
+    private String infantPreResults;
+    private String infantReferr;
+    private String infantOtherLab;
+    private String infantCommentsYn;
+    private String infantComments2;
+    private String infantCommentsYn2; //nuevo
+    private String infantComments2_2; //nuevo
+    private String infantCommentsYn3; //nuevo
+    private String infantComments2_3; //nuevo
     private String infantIdCompleting;
-    private Date infantDateCompleted;
+    private Date infantDtComp;
     private String infantIdReviewer;
-    private Date infantDateReviewed;
+    private Date infantDtReview;
     private String infantIdDataEntry;
-    private Date infantDateEntered;
+    private Date infantDtEnter;
+    private String infantIdCompleting2;
+    private Date infantDtComp2; //cambio nombre
+    private String infantIdReviewer2;
+    private Date infantDtReview2; //cambio nombre
+    private String infantIdDataEntry2;
+    private Date infantDtEnter2; //cambio nombre
+    private String infantIdCompleting3;
+    private Date infantDtComp3; //cambio nombre
+    private String infantIdReviewer3;
+    private Date infantDtReview3; //cambio nombre
+    private String infantIdDataEntry3;
+    private Date infantDtEnter3; //cambio nombre
+    private Integer part1;
+    private Integer part2;
+    private Integer part3;
+    private Integer idInstancia2;
+    private Integer idInstancia3;
 
     public String getRecordId() {
         return recordId;
@@ -125,12 +207,84 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
         this.infantStatus = infantStatus;
     }
 
+    public Date getInfantDeathDt() {
+        return infantDeathDt;
+    }
+
+    public void setInfantDeathDt(Date infantDeathDt) {
+        this.infantDeathDt = infantDeathDt;
+    }
+
     public String getInfantVisit() {
         return infantVisit;
     }
 
     public void setInfantVisit(String infantVisit) {
         this.infantVisit = infantVisit;
+    }
+
+    public Date getInfantVisitDate2() {
+        return infantVisitDate2;
+    }
+
+    public void setInfantVisitDate2(Date infantVisitDate2) {
+        this.infantVisitDate2 = infantVisitDate2;
+    }
+
+    public String getInfantStatus2() {
+        return infantStatus2;
+    }
+
+    public void setInfantStatus2(String infantStatus2) {
+        this.infantStatus2 = infantStatus2;
+    }
+
+    public Date getInfantDeathDt2() {
+        return infantDeathDt2;
+    }
+
+    public void setInfantDeathDt2(Date infantDeathDt2) {
+        this.infantDeathDt2 = infantDeathDt2;
+    }
+
+    public String getInfantVisit2() {
+        return infantVisit2;
+    }
+
+    public void setInfantVisit2(String infantVisit2) {
+        this.infantVisit2 = infantVisit2;
+    }
+
+    public Date getInfantVisitDate3() {
+        return infantVisitDate3;
+    }
+
+    public void setInfantVisitDate3(Date infantVisitDate3) {
+        this.infantVisitDate3 = infantVisitDate3;
+    }
+
+    public String getInfantStatus3() {
+        return infantStatus3;
+    }
+
+    public void setInfantStatus3(String infantStatus3) {
+        this.infantStatus3 = infantStatus3;
+    }
+
+    public Date getInfantDeathDt3() {
+        return infantDeathDt3;
+    }
+
+    public void setInfantDeathDt3(Date infantDeathDt3) {
+        this.infantDeathDt3 = infantDeathDt3;
+    }
+
+    public String getInfantVisit3() {
+        return infantVisit3;
+    }
+
+    public void setInfantVisit3(String infantVisit3) {
+        this.infantVisit3 = infantVisit3;
     }
 
     public Float getInfantTemp() {
@@ -229,12 +383,12 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
         this.infantHeapercenNa = infantHeapercenNa;
     }
 
-    public String getInfantReferralNeuro() {
-        return infantReferralNeuro;
+    public String getInfantHeasize() {
+        return infantHeasize;
     }
 
-    public void setInfantReferralNeuro(String infantReferralNeuro) {
-        this.infantReferralNeuro = infantReferralNeuro;
+    public void setInfantHeasize(String infantHeasize) {
+        this.infantHeasize = infantHeasize;
     }
 
     public String getInfantApgarNa() {
@@ -317,68 +471,20 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
         this.infantOphth = infantOphth;
     }
 
+    public String getInfantOphthType() {
+        return infantOphthType;
+    }
+
+    public void setInfantOphthType(String infantOphthType) {
+        this.infantOphthType = infantOphthType;
+    }
+
     public String getInfantOphthAbno() {
         return infantOphthAbno;
     }
 
     public void setInfantOphthAbno(String infantOphthAbno) {
         this.infantOphthAbno = infantOphthAbno;
-    }
-
-    public String getInfantWhichEye() {
-        return infantWhichEye;
-    }
-
-    public void setInfantWhichEye(String infantWhichEye) {
-        this.infantWhichEye = infantWhichEye;
-    }
-
-    public String getInfantEyeCalci() {
-        return infantEyeCalci;
-    }
-
-    public void setInfantEyeCalci(String infantEyeCalci) {
-        this.infantEyeCalci = infantEyeCalci;
-    }
-
-    public String getInfantChoriore() {
-        return infantChoriore;
-    }
-
-    public void setInfantChoriore(String infantChoriore) {
-        this.infantChoriore = infantChoriore;
-    }
-
-    public String getInfantEyeOther() {
-        return infantEyeOther;
-    }
-
-    public void setInfantEyeOther(String infantEyeOther) {
-        this.infantEyeOther = infantEyeOther;
-    }
-
-    public String getInfantOtherIssue() {
-        return infantOtherIssue;
-    }
-
-    public void setInfantOtherIssue(String infantOtherIssue) {
-        this.infantOtherIssue = infantOtherIssue;
-    }
-
-    public String getInfantEyeOtherSpecify() {
-        return infantEyeOtherSpecify;
-    }
-
-    public void setInfantEyeOtherSpecify(String infantEyeOtherSpecify) {
-        this.infantEyeOtherSpecify = infantEyeOtherSpecify;
-    }
-
-    public String getInfantReferralOphth() {
-        return infantReferralOphth;
-    }
-
-    public void setInfantReferralOphth(String infantReferralOphth) {
-        this.infantReferralOphth = infantReferralOphth;
     }
 
     public String getInfantOae() {
@@ -389,52 +495,52 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
         this.infantOae = infantOae;
     }
 
-    public String getInfantOaeAbnormal() {
-        return infantOaeAbnormal;
+    public String getInfantHearingTest() {
+        return infantHearingTest;
     }
 
-    public void setInfantOaeAbnormal(String infantOaeAbnormal) {
-        this.infantOaeAbnormal = infantOaeAbnormal;
+    public void setInfantHearingTest(String infantHearingTest) {
+        this.infantHearingTest = infantHearingTest;
     }
 
-    public String getInfantWhichEar() {
-        return infantWhichEar;
+    public String getInfantHearingOverall() {
+        return infantHearingOverall;
     }
 
-    public void setInfantWhichEar(String infantWhichEar) {
-        this.infantWhichEar = infantWhichEar;
+    public void setInfantHearingOverall(String infantHearingOverall) {
+        this.infantHearingOverall = infantHearingOverall;
     }
 
-    public String getInfantReferralAudio() {
-        return infantReferralAudio;
+    public String getInfantRoae() {
+        return infantRoae;
     }
 
-    public void setInfantReferralAudio(String infantReferralAudio) {
-        this.infantReferralAudio = infantReferralAudio;
+    public void setInfantRoae(String infantRoae) {
+        this.infantRoae = infantRoae;
     }
 
-    public String getInfantAdditionalAudio() {
-        return infantAdditionalAudio;
+    public String getInfantRaabr() {
+        return infantRaabr;
     }
 
-    public void setInfantAdditionalAudio(String infantAdditionalAudio) {
-        this.infantAdditionalAudio = infantAdditionalAudio;
+    public void setInfantRaabr(String infantRaabr) {
+        this.infantRaabr = infantRaabr;
     }
 
-    public Float getInfatnHearLeft() {
-        return infatnHearLeft;
+    public String getInfantLoae() {
+        return infantLoae;
     }
 
-    public void setInfatnHearLeft(Float infatnHearLeft) {
-        this.infatnHearLeft = infatnHearLeft;
+    public void setInfantLoae(String infantLoae) {
+        this.infantLoae = infantLoae;
     }
 
-    public Float getInfantHearRight() {
-        return infantHearRight;
+    public String getInfantLaabr() {
+        return infantLaabr;
     }
 
-    public void setInfantHearRight(Float infantHearRight) {
-        this.infantHearRight = infantHearRight;
+    public void setInfantLaabr(String infantLaabr) {
+        this.infantLaabr = infantLaabr;
     }
 
     public String getInfantBreastfeeding() {
@@ -469,22 +575,6 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
         this.infantNeurodeve = infantNeurodeve;
     }
 
-    public String getInfantNeurodeveType() {
-        return infantNeurodeveType;
-    }
-
-    public void setInfantNeurodeveType(String infantNeurodeveType) {
-        this.infantNeurodeveType = infantNeurodeveType;
-    }
-
-    public String getInfantOtherSpecify() {
-        return infantOtherSpecify;
-    }
-
-    public void setInfantOtherSpecify(String infantOtherSpecify) {
-        this.infantOtherSpecify = infantOtherSpecify;
-    }
-
     public String getInfantExhibited() {
         return infantExhibited;
     }
@@ -493,12 +583,44 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
         this.infantExhibited = infantExhibited;
     }
 
-    public String getInfantOtherMovement() {
-        return infantOtherMovement;
+    public String getInfantAsymType() {
+        return infantAsymType;
     }
 
-    public void setInfantOtherMovement(String infantOtherMovement) {
-        this.infantOtherMovement = infantOtherMovement;
+    public void setInfantAsymType(String infantAsymType) {
+        this.infantAsymType = infantAsymType;
+    }
+
+    public String getInfantOtherMove() {
+        return infantOtherMove;
+    }
+
+    public void setInfantOtherMove(String infantOtherMove) {
+        this.infantOtherMove = infantOtherMove;
+    }
+
+    public String getInfantExhibitOther() {
+        return infantExhibitOther;
+    }
+
+    public void setInfantExhibitOther(String infantExhibitOther) {
+        this.infantExhibitOther = infantExhibitOther;
+    }
+
+    public String getInfantMicroce() {
+        return infantMicroce;
+    }
+
+    public void setInfantMicroce(String infantMicroce) {
+        this.infantMicroce = infantMicroce;
+    }
+
+    public String getInfantDefinition() {
+        return infantDefinition;
+    }
+
+    public void setInfantDefinition(String infantDefinition) {
+        this.infantDefinition = infantDefinition;
     }
 
     public String getInfantFurtherNeuro() {
@@ -509,196 +631,676 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
         this.infantFurtherNeuro = infantFurtherNeuro;
     }
 
-    public String getInfantHeadAltra() {
-        return infantHeadAltra;
+    public String getInfantEvaluation() {
+        return infantEvaluation;
     }
 
-    public void setInfantHeadAltra(String infantHeadAltra) {
-        this.infantHeadAltra = infantHeadAltra;
+    public void setInfantEvaluation(String infantEvaluation) {
+        this.infantEvaluation = infantEvaluation;
     }
 
-    public String getInfantUltraObtained() {
-        return infantUltraObtained;
+    public String getInfantNeuroAsq() {
+        return infantNeuroAsq;
     }
 
-    public void setInfantUltraObtained(String infantUltraObtained) {
-        this.infantUltraObtained = infantUltraObtained;
+    public void setInfantNeuroAsq(String infantNeuroAsq) {
+        this.infantNeuroAsq = infantNeuroAsq;
     }
 
-    public Date getInfantUltraDt() {
-        return infantUltraDt;
+    public Float getInfantAsqCommuni() {
+        return infantAsqCommuni;
     }
 
-    public void setInfantUltraDt(Date infantUltraDt) {
-        this.infantUltraDt = infantUltraDt;
+    public void setInfantAsqCommuni(Float infantAsqCommuni) {
+        this.infantAsqCommuni = infantAsqCommuni;
     }
 
-    public String getInfantResultsUltra() {
-        return infantResultsUltra;
+    public Float getInfantAsqGross() {
+        return infantAsqGross;
     }
 
-    public void setInfantResultsUltra(String infantResultsUltra) {
-        this.infantResultsUltra = infantResultsUltra;
+    public void setInfantAsqGross(Float infantAsqGross) {
+        this.infantAsqGross = infantAsqGross;
     }
 
-    public String getInfantResultsSpecify() {
-        return infantResultsSpecify;
+    public Float getInfantAsqFine() {
+        return infantAsqFine;
     }
 
-    public void setInfantResultsSpecify(String infantResultsSpecify) {
-        this.infantResultsSpecify = infantResultsSpecify;
+    public void setInfantAsqFine(Float infantAsqFine) {
+        this.infantAsqFine = infantAsqFine;
     }
 
-    public String getInfantHeadCt() {
-        return infantHeadCt;
+    public Float getInfantAsqProblem() {
+        return infantAsqProblem;
     }
 
-    public void setInfantHeadCt(String infantHeadCt) {
-        this.infantHeadCt = infantHeadCt;
+    public void setInfantAsqProblem(Float infantAsqProblem) {
+        this.infantAsqProblem = infantAsqProblem;
     }
 
-    public String getInfantCtObtained() {
-        return infantCtObtained;
+    public Float getInfantAsqPersonal() {
+        return infantAsqPersonal;
     }
 
-    public void setInfantCtObtained(String infantCtObtained) {
-        this.infantCtObtained = infantCtObtained;
+    public void setInfantAsqPersonal(Float infantAsqPersonal) {
+        this.infantAsqPersonal = infantAsqPersonal;
     }
 
-    public Date getInfantCtDt() {
-        return infantCtDt;
+    public String getInfantNeuroBisd() {
+        return infantNeuroBisd;
     }
 
-    public void setInfantCtDt(Date infantCtDt) {
-        this.infantCtDt = infantCtDt;
+    public void setInfantNeuroBisd(String infantNeuroBisd) {
+        this.infantNeuroBisd = infantNeuroBisd;
     }
 
-    public String getInfantResultsCt() {
-        return infantResultsCt;
+    public Float getInfantCgScore() {
+        return infantCgScore;
     }
 
-    public void setInfantResultsCt(String infantResultsCt) {
-        this.infantResultsCt = infantResultsCt;
+    public void setInfantCgScore(Float infantCgScore) {
+        this.infantCgScore = infantCgScore;
     }
 
-    public String getInfantCtSpecify() {
-        return infantCtSpecify;
+    public String getInfantCgRisk() {
+        return infantCgRisk;
     }
 
-    public void setInfantCtSpecify(String infantCtSpecify) {
-        this.infantCtSpecify = infantCtSpecify;
+    public void setInfantCgRisk(String infantCgRisk) {
+        this.infantCgRisk = infantCgRisk;
     }
 
-    public String getInfantCerebrospinal() {
-        return infantCerebrospinal;
+    public Float getInfantRpScore() {
+        return infantRpScore;
     }
 
-    public void setInfantCerebrospinal(String infantCerebrospinal) {
-        this.infantCerebrospinal = infantCerebrospinal;
+    public void setInfantRpScore(Float infantRpScore) {
+        this.infantRpScore = infantRpScore;
     }
 
-    public String getInfantCerebroStored() {
-        return infantCerebroStored;
+    public String getInfantRpRisk() {
+        return infantRpRisk;
     }
 
-    public void setInfantCerebroStored(String infantCerebroStored) {
-        this.infantCerebroStored = infantCerebroStored;
+    public void setInfantRpRisk(String infantRpRisk) {
+        this.infantRpRisk = infantRpRisk;
     }
 
-    public Date getInfantCerebroDt() {
-        return infantCerebroDt;
+    public Float getInfantEpScore() {
+        return infantEpScore;
     }
 
-    public void setInfantCerebroDt(Date infantCerebroDt) {
-        this.infantCerebroDt = infantCerebroDt;
+    public void setInfantEpScore(Float infantEpScore) {
+        this.infantEpScore = infantEpScore;
     }
 
-    public Float getInfantCerebroAmount() {
-        return infantCerebroAmount;
+    public String getInfantEpRisk() {
+        return infantEpRisk;
     }
 
-    public void setInfantCerebroAmount(Float infantCerebroAmount) {
-        this.infantCerebroAmount = infantCerebroAmount;
+    public void setInfantEpRisk(String infantEpRisk) {
+        this.infantEpRisk = infantEpRisk;
     }
 
-    public String getInfantResultsCerebro() {
-        return infantResultsCerebro;
+    public Float getInfantFmScore() {
+        return infantFmScore;
     }
 
-    public void setInfantResultsCerebro(String infantResultsCerebro) {
-        this.infantResultsCerebro = infantResultsCerebro;
+    public void setInfantFmScore(Float infantFmScore) {
+        this.infantFmScore = infantFmScore;
     }
 
-    public String getInfantCerebroSpecify() {
-        return infantCerebroSpecify;
+    public String getInfantFmRisk() {
+        return infantFmRisk;
     }
 
-    public void setInfantCerebroSpecify(String infantCerebroSpecify) {
-        this.infantCerebroSpecify = infantCerebroSpecify;
+    public void setInfantFmRisk(String infantFmRisk) {
+        this.infantFmRisk = infantFmRisk;
     }
 
-    public String getInfantMri() {
-        return infantMri;
+    public Float getInfantGmScore() {
+        return infantGmScore;
     }
 
-    public void setInfantMri(String infantMri) {
-        this.infantMri = infantMri;
+    public void setInfantGmScore(Float infantGmScore) {
+        this.infantGmScore = infantGmScore;
     }
 
-    public String getInfantMriObtained() {
-        return infantMriObtained;
+    public String getInfantGmRisk() {
+        return infantGmRisk;
     }
 
-    public void setInfantMriObtained(String infantMriObtained) {
-        this.infantMriObtained = infantMriObtained;
+    public void setInfantGmRisk(String infantGmRisk) {
+        this.infantGmRisk = infantGmRisk;
     }
 
-    public Date getInfantMriDt() {
-        return infantMriDt;
+    public String getInfantNeuroOther() {
+        return infantNeuroOther;
     }
 
-    public void setInfantMriDt(Date infantMriDt) {
-        this.infantMriDt = infantMriDt;
+    public void setInfantNeuroOther(String infantNeuroOther) {
+        this.infantNeuroOther = infantNeuroOther;
     }
 
-    public String getInfantResultsMri() {
-        return infantResultsMri;
+    public String getInfantOtherName() {
+        return infantOtherName;
     }
 
-    public void setInfantResultsMri(String infantResultsMri) {
-        this.infantResultsMri = infantResultsMri;
+    public void setInfantOtherName(String infantOtherName) {
+        this.infantOtherName = infantOtherName;
     }
 
-    public String getInfantMriSpecify() {
-        return infantMriSpecify;
+    public Float getInfantOtherScore() {
+        return infantOtherScore;
     }
 
-    public void setInfantMriSpecify(String infantMriSpecify) {
-        this.infantMriSpecify = infantMriSpecify;
+    public void setInfantOtherScore(Float infantOtherScore) {
+        this.infantOtherScore = infantOtherScore;
     }
 
-    public String getInfantPreviousResults() {
-        return infantPreviousResults;
+    public String getInfantResultScreening() {
+        return infantResultScreening;
     }
 
-    public void setInfantPreviousResults(String infantPreviousResults) {
-        this.infantPreviousResults = infantPreviousResults;
+    public void setInfantResultScreening(String infantResultScreening) {
+        this.infantResultScreening = infantResultScreening;
     }
 
-    public String getInfantReferrCounselling() {
-        return infantReferrCounselling;
+    public String getInfantReferTesting() {
+        return infantReferTesting;
     }
 
-    public void setInfantReferrCounselling(String infantReferrCounselling) {
-        this.infantReferrCounselling = infantReferrCounselling;
+    public void setInfantReferTesting(String infantReferTesting) {
+        this.infantReferTesting = infantReferTesting;
     }
 
-    public String getInfantOtherLabCollect() {
-        return infantOtherLabCollect;
+    public String getInfantFeverSymptom() {
+        return infantFeverSymptom;
     }
 
-    public void setInfantOtherLabCollect(String infantOtherLabCollect) {
-        this.infantOtherLabCollect = infantOtherLabCollect;
+    public void setInfantFeverSymptom(String infantFeverSymptom) {
+        this.infantFeverSymptom = infantFeverSymptom;
+    }
+
+    public String getInfantRashSymptom() {
+        return infantRashSymptom;
+    }
+
+    public void setInfantRashSymptom(String infantRashSymptom) {
+        this.infantRashSymptom = infantRashSymptom;
+    }
+
+    public String getInfantItch() {
+        return infantItch;
+    }
+
+    public void setInfantItch(String infantItch) {
+        this.infantItch = infantItch;
+    }
+
+    public String getInfantRashFirst() {
+        return infantRashFirst;
+    }
+
+    public void setInfantRashFirst(String infantRashFirst) {
+        this.infantRashFirst = infantRashFirst;
+    }
+
+    public String getInfantRashDy() {
+        return infantRashDy;
+    }
+
+    public void setInfantRashDy(String infantRashDy) {
+        this.infantRashDy = infantRashDy;
+    }
+
+    public String getInfantRashMn() {
+        return infantRashMn;
+    }
+
+    public void setInfantRashMn(String infantRashMn) {
+        this.infantRashMn = infantRashMn;
+    }
+
+    public String getInfantRashYr() {
+        return infantRashYr;
+    }
+
+    public void setInfantRashYr(String infantRashYr) {
+        this.infantRashYr = infantRashYr;
+    }
+
+    public Float getInfantRashDur() {
+        return infantRashDur;
+    }
+
+    public void setInfantRashDur(Float infantRashDur) {
+        this.infantRashDur = infantRashDur;
+    }
+
+    public String getInfantRashSpread() {
+        return infantRashSpread;
+    }
+
+    public void setInfantRashSpread(String infantRashSpread) {
+        this.infantRashSpread = infantRashSpread;
+    }
+
+    public String getInfantSpreadPart() {
+        return infantSpreadPart;
+    }
+
+    public void setInfantSpreadPart(String infantSpreadPart) {
+        this.infantSpreadPart = infantSpreadPart;
+    }
+
+    public String getInfantFeverExperience() {
+        return infantFeverExperience;
+    }
+
+    public void setInfantFeverExperience(String infantFeverExperience) {
+        this.infantFeverExperience = infantFeverExperience;
+    }
+
+    public String getInfantTempMeasure() {
+        return infantTempMeasure;
+    }
+
+    public void setInfantTempMeasure(String infantTempMeasure) {
+        this.infantTempMeasure = infantTempMeasure;
+    }
+
+    public Float getInfantHighTemp() {
+        return infantHighTemp;
+    }
+
+    public void setInfantHighTemp(Float infantHighTemp) {
+        this.infantHighTemp = infantHighTemp;
+    }
+
+    public String getInfantHightemUnit() {
+        return infantHightemUnit;
+    }
+
+    public void setInfantHightemUnit(String infantHightemUnit) {
+        this.infantHightemUnit = infantHightemUnit;
+    }
+
+    public String getInfantTempunknown() {
+        return infantTempunknown;
+    }
+
+    public void setInfantTempunknown(String infantTempunknown) {
+        this.infantTempunknown = infantTempunknown;
+    }
+
+    public String getInfantFeverDy() {
+        return infantFeverDy;
+    }
+
+    public void setInfantFeverDy(String infantFeverDy) {
+        this.infantFeverDy = infantFeverDy;
+    }
+
+    public String getInfantFeverMn() {
+        return infantFeverMn;
+    }
+
+    public void setInfantFeverMn(String infantFeverMn) {
+        this.infantFeverMn = infantFeverMn;
+    }
+
+    public String getInfantFeverYr() {
+        return infantFeverYr;
+    }
+
+    public void setInfantFeverYr(String infantFeverYr) {
+        this.infantFeverYr = infantFeverYr;
+    }
+
+    public Float getInfantFeverDur() {
+        return infantFeverDur;
+    }
+
+    public void setInfantFeverDur(Float infantFeverDur) {
+        this.infantFeverDur = infantFeverDur;
+    }
+
+    public String getInfantRedeyes() {
+        return infantRedeyes;
+    }
+
+    public void setInfantRedeyes(String infantRedeyes) {
+        this.infantRedeyes = infantRedeyes;
+    }
+
+    public String getInfantRedeyesDy() {
+        return infantRedeyesDy;
+    }
+
+    public void setInfantRedeyesDy(String infantRedeyesDy) {
+        this.infantRedeyesDy = infantRedeyesDy;
+    }
+
+    public String getInfantRedeyesMn() {
+        return infantRedeyesMn;
+    }
+
+    public void setInfantRedeyesMn(String infantRedeyesMn) {
+        this.infantRedeyesMn = infantRedeyesMn;
+    }
+
+    public String getInfantRedeyesYr() {
+        return infantRedeyesYr;
+    }
+
+    public void setInfantRedeyesYr(String infantRedeyesYr) {
+        this.infantRedeyesYr = infantRedeyesYr;
+    }
+
+    public Float getInfantRedeyesDur() {
+        return infantRedeyesDur;
+    }
+
+    public void setInfantRedeyesDur(Float infantRedeyesDur) {
+        this.infantRedeyesDur = infantRedeyesDur;
+    }
+
+    public String getInfantJoint() {
+        return infantJoint;
+    }
+
+    public void setInfantJoint(String infantJoint) {
+        this.infantJoint = infantJoint;
+    }
+
+    public String getInfantJointDy() {
+        return infantJointDy;
+    }
+
+    public void setInfantJointDy(String infantJointDy) {
+        this.infantJointDy = infantJointDy;
+    }
+
+    public String getInfantJointMn() {
+        return infantJointMn;
+    }
+
+    public void setInfantJointMn(String infantJointMn) {
+        this.infantJointMn = infantJointMn;
+    }
+
+    public String getInfantJointYr() {
+        return infantJointYr;
+    }
+
+    public void setInfantJointYr(String infantJointYr) {
+        this.infantJointYr = infantJointYr;
+    }
+
+    public Float getInfantJointDur() {
+        return infantJointDur;
+    }
+
+    public void setInfantJointDur(Float infantJointDur) {
+        this.infantJointDur = infantJointDur;
+    }
+
+    public String getInfantHeadache() {
+        return infantHeadache;
+    }
+
+    public void setInfantHeadache(String infantHeadache) {
+        this.infantHeadache = infantHeadache;
+    }
+
+    public String getInfantHeadacheDy() {
+        return infantHeadacheDy;
+    }
+
+    public void setInfantHeadacheDy(String infantHeadacheDy) {
+        this.infantHeadacheDy = infantHeadacheDy;
+    }
+
+    public String getInfantHeadacheMn() {
+        return infantHeadacheMn;
+    }
+
+    public void setInfantHeadacheMn(String infantHeadacheMn) {
+        this.infantHeadacheMn = infantHeadacheMn;
+    }
+
+    public String getInfantHeadacheYr() {
+        return infantHeadacheYr;
+    }
+
+    public void setInfantHeadacheYr(String infantHeadacheYr) {
+        this.infantHeadacheYr = infantHeadacheYr;
+    }
+
+    public Float getInfantHeadaDur() {
+        return infantHeadaDur;
+    }
+
+    public void setInfantHeadaDur(Float infantHeadaDur) {
+        this.infantHeadaDur = infantHeadaDur;
+    }
+
+    public String getInfantSymptomOther() {
+        return infantSymptomOther;
+    }
+
+    public void setInfantSymptomOther(String infantSymptomOther) {
+        this.infantSymptomOther = infantSymptomOther;
+    }
+
+    public String getInfantSpecifySymptom() {
+        return infantSpecifySymptom;
+    }
+
+    public void setInfantSpecifySymptom(String infantSpecifySymptom) {
+        this.infantSpecifySymptom = infantSpecifySymptom;
+    }
+
+    public String getInfantOtherSymptom() {
+        return infantOtherSymptom;
+    }
+
+    public void setInfantOtherSymptom(String infantOtherSymptom) {
+        this.infantOtherSymptom = infantOtherSymptom;
+    }
+
+    public String getInfantMedicare() {
+        return infantMedicare;
+    }
+
+    public void setInfantMedicare(String infantMedicare) {
+        this.infantMedicare = infantMedicare;
+    }
+
+    public String getInfantCareDy() {
+        return infantCareDy;
+    }
+
+    public void setInfantCareDy(String infantCareDy) {
+        this.infantCareDy = infantCareDy;
+    }
+
+    public String getInfantCareMn() {
+        return infantCareMn;
+    }
+
+    public void setInfantCareMn(String infantCareMn) {
+        this.infantCareMn = infantCareMn;
+    }
+
+    public String getInfantCareYr() {
+        return infantCareYr;
+    }
+
+    public void setInfantCareYr(String infantCareYr) {
+        this.infantCareYr = infantCareYr;
+    }
+
+    public String getInfantCareFacility() {
+        return infantCareFacility;
+    }
+
+    public void setInfantCareFacility(String infantCareFacility) {
+        this.infantCareFacility = infantCareFacility;
+    }
+
+    public String getInfantHospitalized() {
+        return infantHospitalized;
+    }
+
+    public void setInfantHospitalized(String infantHospitalized) {
+        this.infantHospitalized = infantHospitalized;
+    }
+
+    public String getInfantHospital() {
+        return infantHospital;
+    }
+
+    public void setInfantHospital(String infantHospital) {
+        this.infantHospital = infantHospital;
+    }
+
+    public String getInfantDiagRubella() {
+        return infantDiagRubella;
+    }
+
+    public void setInfantDiagRubella(String infantDiagRubella) {
+        this.infantDiagRubella = infantDiagRubella;
+    }
+
+    public String getInfantDiagDengue() {
+        return infantDiagDengue;
+    }
+
+    public void setInfantDiagDengue(String infantDiagDengue) {
+        this.infantDiagDengue = infantDiagDengue;
+    }
+
+    public String getInfantDiagChikung() {
+        return infantDiagChikung;
+    }
+
+    public void setInfantDiagChikung(String infantDiagChikung) {
+        this.infantDiagChikung = infantDiagChikung;
+    }
+
+    public String getInfantDiagZika() {
+        return infantDiagZika;
+    }
+
+    public void setInfantDiagZika(String infantDiagZika) {
+        this.infantDiagZika = infantDiagZika;
+    }
+
+    public String getInfantDiagCytome() {
+        return infantDiagCytome;
+    }
+
+    public void setInfantDiagCytome(String infantDiagCytome) {
+        this.infantDiagCytome = infantDiagCytome;
+    }
+
+    public String getInfantMedicine() {
+        return infantMedicine;
+    }
+
+    public void setInfantMedicine(String infantMedicine) {
+        this.infantMedicine = infantMedicine;
+    }
+
+    public String getInfantMedName() {
+        return infantMedName;
+    }
+
+    public void setInfantMedName(String infantMedName) {
+        this.infantMedName = infantMedName;
+    }
+
+    public String getInfantSpDiary() {
+        return infantSpDiary;
+    }
+
+    public void setInfantSpDiary(String infantSpDiary) {
+        this.infantSpDiary = infantSpDiary;
+    }
+
+    public String getInfantPreResults() {
+        return infantPreResults;
+    }
+
+    public void setInfantPreResults(String infantPreResults) {
+        this.infantPreResults = infantPreResults;
+    }
+
+    public String getInfantReferr() {
+        return infantReferr;
+    }
+
+    public void setInfantReferr(String infantReferr) {
+        this.infantReferr = infantReferr;
+    }
+
+    public String getInfantOtherLab() {
+        return infantOtherLab;
+    }
+
+    public void setInfantOtherLab(String infantOtherLab) {
+        this.infantOtherLab = infantOtherLab;
+    }
+
+    public String getInfantCommentsYn() {
+        return infantCommentsYn;
+    }
+
+    public void setInfantCommentsYn(String infantCommentsYn) {
+        this.infantCommentsYn = infantCommentsYn;
+    }
+
+    public String getInfantComments2() {
+        return infantComments2;
+    }
+
+    public void setInfantComments2(String infantComments2) {
+        this.infantComments2 = infantComments2;
+    }
+
+    public String getInfantCommentsYn2() {
+        return infantCommentsYn2;
+    }
+
+    public void setInfantCommentsYn2(String infantCommentsYn2) {
+        this.infantCommentsYn2 = infantCommentsYn2;
+    }
+
+    public String getInfantComments2_2() {
+        return infantComments2_2;
+    }
+
+    public void setInfantComments2_2(String infantComments2_2) {
+        this.infantComments2_2 = infantComments2_2;
+    }
+
+    public String getInfantCommentsYn3() {
+        return infantCommentsYn3;
+    }
+
+    public void setInfantCommentsYn3(String infantCommentsYn3) {
+        this.infantCommentsYn3 = infantCommentsYn3;
+    }
+
+    public String getInfantComments2_3() {
+        return infantComments2_3;
+    }
+
+    public void setInfantComments2_3(String infantComments2_3) {
+        this.infantComments2_3 = infantComments2_3;
     }
 
     public String getInfantIdCompleting() {
@@ -709,12 +1311,12 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
         this.infantIdCompleting = infantIdCompleting;
     }
 
-    public Date getInfantDateCompleted() {
-        return infantDateCompleted;
+    public Date getInfantDtComp() {
+        return infantDtComp;
     }
 
-    public void setInfantDateCompleted(Date infantDateCompleted) {
-        this.infantDateCompleted = infantDateCompleted;
+    public void setInfantDtComp(Date infantDtComp) {
+        this.infantDtComp = infantDtComp;
     }
 
     public String getInfantIdReviewer() {
@@ -725,12 +1327,12 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
         this.infantIdReviewer = infantIdReviewer;
     }
 
-    public Date getInfantDateReviewed() {
-        return infantDateReviewed;
+    public Date getInfantDtReview() {
+        return infantDtReview;
     }
 
-    public void setInfantDateReviewed(Date infantDateReviewed) {
-        this.infantDateReviewed = infantDateReviewed;
+    public void setInfantDtReview(Date infantDtReview) {
+        this.infantDtReview = infantDtReview;
     }
 
     public String getInfantIdDataEntry() {
@@ -741,11 +1343,147 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
         this.infantIdDataEntry = infantIdDataEntry;
     }
 
-    public Date getInfantDateEntered() {
-        return infantDateEntered;
+    public Date getInfantDtEnter() {
+        return infantDtEnter;
     }
 
-    public void setInfantDateEntered(Date infantDateEntered) {
-        this.infantDateEntered = infantDateEntered;
+    public void setInfantDtEnter(Date infantDtEnter) {
+        this.infantDtEnter = infantDtEnter;
+    }
+
+    public String getInfantIdCompleting2() {
+        return infantIdCompleting2;
+    }
+
+    public void setInfantIdCompleting2(String infantIdCompleting2) {
+        this.infantIdCompleting2 = infantIdCompleting2;
+    }
+
+    public Date getInfantDtComp2() {
+        return infantDtComp2;
+    }
+
+    public void setInfantDtComp2(Date infantDtComp2) {
+        this.infantDtComp2 = infantDtComp2;
+    }
+
+    public String getInfantIdReviewer2() {
+        return infantIdReviewer2;
+    }
+
+    public void setInfantIdReviewer2(String infantIdReviewer2) {
+        this.infantIdReviewer2 = infantIdReviewer2;
+    }
+
+    public Date getInfantDtReview2() {
+        return infantDtReview2;
+    }
+
+    public void setInfantDtReview2(Date infantDtReview2) {
+        this.infantDtReview2 = infantDtReview2;
+    }
+
+    public String getInfantIdDataEntry2() {
+        return infantIdDataEntry2;
+    }
+
+    public void setInfantIdDataEntry2(String infantIdDataEntry2) {
+        this.infantIdDataEntry2 = infantIdDataEntry2;
+    }
+
+    public Date getInfantDtEnter2() {
+        return infantDtEnter2;
+    }
+
+    public void setInfantDtEnter2(Date infantDtEnter2) {
+        this.infantDtEnter2 = infantDtEnter2;
+    }
+
+    public String getInfantIdCompleting3() {
+        return infantIdCompleting3;
+    }
+
+    public void setInfantIdCompleting3(String infantIdCompleting3) {
+        this.infantIdCompleting3 = infantIdCompleting3;
+    }
+
+    public Date getInfantDtComp3() {
+        return infantDtComp3;
+    }
+
+    public void setInfantDtComp3(Date infantDtComp3) {
+        this.infantDtComp3 = infantDtComp3;
+    }
+
+    public String getInfantIdReviewer3() {
+        return infantIdReviewer3;
+    }
+
+    public void setInfantIdReviewer3(String infantIdReviewer3) {
+        this.infantIdReviewer3 = infantIdReviewer3;
+    }
+
+    public Date getInfantDtReview3() {
+        return infantDtReview3;
+    }
+
+    public void setInfantDtReview3(Date infantDtReview3) {
+        this.infantDtReview3 = infantDtReview3;
+    }
+
+    public String getInfantIdDataEntry3() {
+        return infantIdDataEntry3;
+    }
+
+    public void setInfantIdDataEntry3(String infantIdDataEntry3) {
+        this.infantIdDataEntry3 = infantIdDataEntry3;
+    }
+
+    public Date getInfantDtEnter3() {
+        return infantDtEnter3;
+    }
+
+    public void setInfantDtEnter3(Date infantDtEnter3) {
+        this.infantDtEnter3 = infantDtEnter3;
+    }
+
+    public Integer getPart1() {
+        return part1;
+    }
+
+    public void setPart1(Integer part1) {
+        this.part1 = part1;
+    }
+
+    public Integer getPart2() {
+        return part2;
+    }
+
+    public void setPart2(Integer part2) {
+        this.part2 = part2;
+    }
+
+    public Integer getPart3() {
+        return part3;
+    }
+
+    public void setPart3(Integer part3) {
+        this.part3 = part3;
+    }
+
+    public Integer getIdInstancia2() {
+        return idInstancia2;
+    }
+
+    public void setIdInstancia2(Integer idInstancia2) {
+        this.idInstancia2 = idInstancia2;
+    }
+
+    public Integer getIdInstancia3() {
+        return idInstancia3;
+    }
+
+    public void setIdInstancia3(Integer idInstancia3) {
+        this.idInstancia3 = idInstancia3;
     }
 }

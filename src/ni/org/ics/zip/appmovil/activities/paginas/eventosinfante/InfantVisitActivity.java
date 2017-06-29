@@ -6,14 +6,10 @@ import ni.org.ics.zip.appmovil.AbstractAsyncActivity;
 import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
-import ni.org.ics.zip.appmovil.activities.nuevos.NewZp02dInfantBiospecimenCollectionActivity;
-import ni.org.ics.zip.appmovil.activities.nuevos.NewZp07InfantAssessmentVisitActivity;
+import ni.org.ics.zip.appmovil.activities.nuevos.*;
 import ni.org.ics.zip.appmovil.adapters.eventosinfante.InfantVisitAdapter;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
-import ni.org.ics.zip.appmovil.domain.Zp02dInfantBiospecimenCollection;
-import ni.org.ics.zip.appmovil.domain.Zp07InfantAssessmentVisit;
-import ni.org.ics.zip.appmovil.domain.ZpEstadoInfante;
-import ni.org.ics.zip.appmovil.domain.ZpInfantData;
+import ni.org.ics.zip.appmovil.domain.*;
 import ni.org.ics.zip.appmovil.utils.Constants;
 import ni.org.ics.zip.appmovil.utils.MainDBConstants;
 import ni.org.ics.zip.appmovil.utils.Zp02DBConstants;
@@ -41,7 +37,10 @@ public class InfantVisitActivity extends AbstractAsyncActivity {
 	private static ZpEstadoInfante zpEstado = new ZpEstadoInfante();
 	private static Zp02dInfantBiospecimenCollection zp02d = null;
 	private static Zp07InfantAssessmentVisit zp07 = null;
-
+	private static Zp07aInfantOphtResults zp07a = null;
+	private static Zp07bInfantAudioResults zp07b = null;
+	private static Zp07cInfantImageStudies zp07c = null;
+	private static Zp07dInfantBayleyScales zp07d = null;
 
 	
 	private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
@@ -98,18 +97,61 @@ public class InfantVisitActivity extends AbstractAsyncActivity {
                 	i = new Intent(getApplicationContext(),
                 			NewZp07InfantAssessmentVisitActivity.class);
                     if (zp07!=null) arguments.putSerializable(Constants.OBJECTO_ZP07 , zp07);
-                    i.putExtras(arguments);
-                    startActivity(i);
-                    break;
-                case 1: //MUESTRAS
-                	i = new Intent(getApplicationContext(),
-                    		NewZp02dInfantBiospecimenCollectionActivity.class);
-                    if (zp02d!=null) arguments.putSerializable(Constants.OBJECTO_ZP02D , zp02d);
-                    i.putExtras(arguments);
-                    startActivity(i);
-                    break;
-				default:					
+					i.putExtras(arguments);
+					startActivity(i);
 					break;
+					case 1: //EVALUACION OFTALMOLOGICA
+						i = new Intent(getApplicationContext(),
+								NewZp07InfantAssessmentVisitOphtActivity.class);
+						if (zp07 != null) arguments.putSerializable(Constants.OBJECTO_ZP07, zp07);
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
+					case 2: //EVALUACION PSICOLOGICA
+						i = new Intent(getApplicationContext(),
+								NewZp07InfantAssessmentVisitPsyActivity.class);
+						if (zp07 != null) arguments.putSerializable(Constants.OBJECTO_ZP07, zp07);
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
+
+					case 3: //MUESTRAS
+						i = new Intent(getApplicationContext(),
+								NewZp02dInfantBiospecimenCollectionActivity.class);
+						if (zp02d != null) arguments.putSerializable(Constants.OBJECTO_ZP02D, zp02d);
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
+					case 4: //RESULTADOS OFTALMOLOGICOS
+						i = new Intent(getApplicationContext(),
+								NewZp07aInfantOphtResultsActivity.class);
+						if (zp07a != null) arguments.putSerializable(Constants.OBJECTO_ZP07A, zp07a);
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
+					case 5: //RESULTADOS AUDIOLOGICOS
+						i = new Intent(getApplicationContext(),
+								NewZp07bInfantAudioResultsActivity.class);
+						if (zp07b != null) arguments.putSerializable(Constants.OBJECTO_ZP07B, zp07b);
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
+					case 6: //ESTUDIOS DE IMAGENES
+						i = new Intent(getApplicationContext(),
+								NewZp07cInfantImageStudiesActivity.class);
+						if (zp07c != null) arguments.putSerializable(Constants.OBJECTO_ZP07C, zp07c);
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
+					case 7: //ESCALA BAYLEY
+						i = new Intent(getApplicationContext(),
+								NewZp07dInfantBayleyScalesActivity.class);
+						if (zp07d != null) arguments.putSerializable(Constants.OBJECTO_ZP07D, zp07d);
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
+					default:
+						break;
 				}
 			}
 		});
@@ -245,7 +287,12 @@ public class InfantVisitActivity extends AbstractAsyncActivity {
 					filtro = MainDBConstants.recordId + "='" + zpInfante.getRecordId() + "' and " + Zp02DBConstants.redcapEventName + "='" + eventoaFiltrar +"'";
 					zp02d = zipA.getZp02dInfantBiospecimenCollection(filtro, MainDBConstants.recordId);
 					zp07 = zipA.getZp07InfantAssessmentVisit(filtro, MainDBConstants.recordId);
-					if (zp02d!=null && zp07!=null){
+					zp07a = zipA.getZp07aInfantOphtResult(filtro, MainDBConstants.recordId);
+					zp07b = zipA.getZp07bInfantAudioResult(filtro, MainDBConstants.recordId);
+					zp07c = zipA.getZp07cInfantImageSt(filtro, MainDBConstants.recordId);
+					zp07d = zipA.getZp07dInfantBayleySc(filtro, MainDBConstants.recordId);
+
+					if (zp02d!=null && zp07!=null && zp07a!=null && zp07b!=null && zp07c!=null && zp07d!=null){
 						if(eventoaFiltrar.matches(Constants.BIRTH)){
 							zpEstado.setNacimiento('1');
 						}
@@ -271,7 +318,7 @@ public class InfantVisitActivity extends AbstractAsyncActivity {
 			protected void onPostExecute(String resultado) {
 				// after the network request completes, hide the progress indicator
 				gridView.setAdapter(new InfantVisitAdapter(getApplicationContext(), R.layout.menu_item_2, menu_infante_info, 
-						zp02d, zp07));
+						zp02d, zp07, zp07a, zp07b, zp07c, zp07d));
 				dismissProgressDialog();
 			}
 
