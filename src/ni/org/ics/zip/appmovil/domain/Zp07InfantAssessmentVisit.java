@@ -2,6 +2,8 @@ package ni.org.ics.zip.appmovil.domain;
 
 import java.util.Date;
 
+
+
 /**
  * Created by FIRSTICT on 1/31/2017.
  * V1.0
@@ -1486,4 +1488,34 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
     public void setIdInstancia3(Integer idInstancia3) {
         this.idInstancia3 = idInstancia3;
     }
+    
+    //added v2.4
+    private Date infantDob;
+    private Integer infantWeeks;
+    private Integer infantDays;
+
+    
+    public Date getInfantDob() {
+		return infantDob;
+	}
+
+	public void setInfantDob(Date infantDob) {
+		this.infantDob = infantDob;
+	}
+
+	public Integer getInfantWeeks() {
+		return infantWeeks;
+	}
+
+	public void setInfantWeeks(Integer infantWeeks) {
+		this.infantWeeks = infantWeeks;
+	}
+	
+	public Integer getInfantDays() {
+		return infantDays;
+	}
+
+	public void setInfantDays(Integer infantDays) {
+		this.infantDays = infantDays;
+	}
 }

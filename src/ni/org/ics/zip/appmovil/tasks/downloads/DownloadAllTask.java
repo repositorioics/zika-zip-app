@@ -528,7 +528,7 @@ public class DownloadAllTask extends DownloadTask {
                     ZpControlReporteUSRecepcion[].class, username);
             // convert the array to a list and return it
             mZpControlReporteUSRecepcion = Arrays.asList(responseZpControlReporteUSRecepcion.getBody());
-            /***********INFANTES***********/
+            /***********INFANTES*******/
             //Descargar datos de infantes
             urlRequest = url + "/movil/zpInfants/{username}";
             publishProgress("Solicitando datos de infantes","19",TOTAL_TASK);

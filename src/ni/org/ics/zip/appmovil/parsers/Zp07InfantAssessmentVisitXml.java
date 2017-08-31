@@ -404,6 +404,7 @@ public class Zp07InfantAssessmentVisitXml {
     private String question3;
     @Element(required=false)
     private String question4;
+    
 
 
     @Attribute
@@ -427,9 +428,47 @@ public class Zp07InfantAssessmentVisitXml {
     private String imei;
     @Element(required=false)
     private Date today;
+    
+    @Element(required=false)
+    private Date infantDob;
+    @Element(required=false)
+    private Integer infantWeeks;
+    @Element(required=false)
+    private Integer infantDays;
+    
+    
+    @Element(required=false)
+    private Integer group23;
+    @Element(required=false)
+    private Integer noteB;
+    @Element(required=false)
+    private Integer infantDaysAfterBirth;
 
+    public Date getInfantDob() {
+		return infantDob;
+	}
 
-    public Date getInfantVisitDate() {
+	public Integer getInfantWeeks() {
+		return infantWeeks;
+	}
+
+	public Integer getInfantDays() {
+		return infantDays;
+	}
+
+	public void setInfantDob(Date infantDob) {
+		this.infantDob = infantDob;
+	}
+
+	public void setInfantWeeks(Integer infantWeeks) {
+		this.infantWeeks = infantWeeks;
+	}
+
+	public void setInfantDays(Integer infantDays) {
+		this.infantDays = infantDays;
+	}
+
+	public Date getInfantVisitDate() {
         return infantVisitDate;
     }
 

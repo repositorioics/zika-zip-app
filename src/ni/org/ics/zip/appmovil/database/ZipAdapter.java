@@ -142,8 +142,9 @@ public class ZipAdapter {
 	            db.execSQL(MainDBConstants.CREATE_DATA_USREC_TABLE);
 	            db.execSQL(MainDBConstants.CREATE_DATA_CONSSAL_TABLE);
 	            db.execSQL(MainDBConstants.CREATE_DATA_CONSREC_TABLE);
+	            return;
 			}
-			if(oldVersion==2){
+			if(oldVersion<2){
 				db.execSQL("ALTER TABLE " + MainDBConstants.SCREENING_TABLE + " ADD COLUMN " + MainDBConstants.studyInm + " text");
 				db.execSQL("UPDATE " + MainDBConstants.SCREENING_TABLE + " SET " + MainDBConstants.studyInm + "='2'");
 				db.execSQL("DROP TABLE " + MainDBConstants.DATA_USREC_TABLE);
@@ -155,7 +156,7 @@ public class ZipAdapter {
 	            db.execSQL(MainDBConstants.CREATE_DATA_CONSSAL_TABLE);
 	            db.execSQL(MainDBConstants.CREATE_DATA_CONSREC_TABLE);
 			}
-			if(oldVersion==3){
+			if(oldVersion<3){
 				db.execSQL("DROP TABLE " + MainDBConstants.DATA_USREC_TABLE);
 				db.execSQL("DROP TABLE " + MainDBConstants.DATA_USSAL_TABLE);
 				db.execSQL("DROP TABLE " + MainDBConstants.DATA_CONSSAL_TABLE);
@@ -165,7 +166,7 @@ public class ZipAdapter {
 	            db.execSQL(MainDBConstants.CREATE_DATA_CONSSAL_TABLE);
 	            db.execSQL(MainDBConstants.CREATE_DATA_CONSREC_TABLE);
 			}
-			if(oldVersion==4){
+			if(oldVersion<4){
 				db.execSQL("DROP TABLE " + MainDBConstants.DATA_USREC_TABLE);
 				db.execSQL("DROP TABLE " + MainDBConstants.DATA_USSAL_TABLE);
 				db.execSQL("DROP TABLE " + MainDBConstants.DATA_CONSSAL_TABLE);
@@ -182,6 +183,16 @@ public class ZipAdapter {
 				db.execSQL(Zp07bDBConstants.CREATE_BINFANT_AUDIORESULTS_TABLE);
 				db.execSQL(Zp07cDBConstants.CREATE_CINFANT_IMAGESTUDIES_TABLE);
 				db.execSQL(Zp07dDBConstants.CREATE_DINFANT_BAYLEYSCALES_TABLE);
+			}
+			if(oldVersion<5){
+				db.execSQL("ALTER TABLE " + Zp06DBConstants.DELIVERY6WVISIT_TABLE + " ADD COLUMN " + Zp06DBConstants.deliHyperDisease + " text");
+				db.execSQL("ALTER TABLE " + Zp06DBConstants.DELIVERY6WVISIT_TABLE + " ADD COLUMN " + Zp06DBConstants.deliPreterm1 + " text");
+				db.execSQL("ALTER TABLE " + Zp06DBConstants.DELIVERY6WVISIT_TABLE + " ADD COLUMN " + Zp06DBConstants.deliPreterm2 + " text");
+				db.execSQL("ALTER TABLE " + Zp06DBConstants.DELIVERY6WVISIT_TABLE + " ADD COLUMN " + Zp06DBConstants.deliPreterm3 + " text");
+				db.execSQL("ALTER TABLE " + Zp06DBConstants.DELIVERY6WVISIT_TABLE + " ADD COLUMN " + Zp06DBConstants.deliDeliverEarly + " text");
+				db.execSQL("ALTER TABLE " + Zp07DBConstants.INFANTASSESSMENT_TABLE + " ADD COLUMN " + Zp07DBConstants.infantDob + " date");
+				db.execSQL("ALTER TABLE " + Zp07DBConstants.INFANTASSESSMENT_TABLE + " ADD COLUMN " + Zp07DBConstants.infantWeeks + " text");
+				db.execSQL("ALTER TABLE " + Zp07DBConstants.INFANTASSESSMENT_TABLE + " ADD COLUMN " + Zp07DBConstants.infantDays + " text");
 			}
 		}	
 	}
