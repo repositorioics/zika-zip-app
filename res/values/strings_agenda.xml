@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="h_menu_agenda"> Agenda</string>
+    <string name="_appointment"> Cita</string>
+    <string name="_appointment_date"> Fecha de agenda</string>
+    <string name="_appointment_time">  Hora de Cita</string>
+    <string name="_especialidad">  Especialidad</string>
+    <string name="nuevacita">    Nueva Cita</string>
+    <string name="unidadsalud"> Unidad de salud:</string>
+    <string name="especialidad"> Especialidad:</string>
+    <string name="proveedor"> Proveedor:</string>
+    <string name="tipocita"> Tipo Cita:</string>
+    <string name="turno"> Turno:</string>
+    <string name="autorizasms"> Autoriza envio SMS:</string>
+    <string name="numero_celular"> Nro Celuar:</string>
+    <string name="observacion"> Comentarios:</string>
+    <string name="fecha">Fecha:</string>
+    <string name="fecha_hora">Fecha y Hora:</string>
+    <string name="hora">Hora:</string>
+</resources>
