@@ -66,7 +66,8 @@ public class DateFragment extends Fragment {
 			mDatePickerInput.setMinDate(mMinDate.getMillis());
 			mDatePickerInput.setMaxDate(mMaxDate.getMillis());
 		}
-		mDatePickerInput.init(mDatePickerInput.getYear(), mDatePickerInput.getMonth(), mDatePickerInput.getDayOfMonth(),new OnDateChangedListener() {
+		mDatePickerInput.init(mDatePickerInput.getYear(), mDatePickerInput.getMonth(), mDatePickerInput.getDayOfMonth()
+				,new OnDateChangedListener() {
      	   @Override
      	   public void onDateChanged(DatePicker arg0, int arg1, int arg2, int arg3) {
      	    // TODO Auto-generated method stub
@@ -78,17 +79,6 @@ public class DateFragment extends Fragment {
 		return rootView;
 	}
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-
-		if (!(activity instanceof PageFragmentCallbacks)) {
-			throw new ClassCastException(
-					"Activity must implement PageFragmentCallbacks");
-		}
-
-		mCallbacks = (PageFragmentCallbacks) activity;
-	}
 
 	@Override
 	public void onDetach() {

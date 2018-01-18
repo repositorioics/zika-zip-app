@@ -7,6 +7,7 @@
         <item>@string/main_specimen</item>
         <item>@string/main_consent</item>
         <item>@string/main_us</item>
+        <item>@string/main_agenda</item>
     </string-array>
     
     <string-array name="menu_maternal_a">
@@ -252,6 +253,52 @@
         <item>@string/noimn</item>
         <item>@string/no_def</item>
     </string-array>
-   	
+
+  <!-- Agenda -> Lista de Tipo de Cita | A.L. 15/11/2017, MOD 18-12-17 -->
+    <string-array name="list_tipo_cita">
+        <item>2 SEMANAS</item>
+        <item>4 SEMANAS</item>
+        <item>6 SEMANAS</item>
+        <item>8 SEMANAS</item>
+        <item>10 SEMANAS</item>
+        <item>12 SEMANAS</item>
+        <item>14 SEMANAS</item>
+        <item>16 SEMANAS</item>
+        <item>18 SEMANAS</item>
+        <item>20 SEMANAS</item>
+        <item>22 SEMANAS</item>
+        <item>24 SEMANAS</item>
+        <item>26 SEMANAS</item>
+        <item>28 SEMANAS</item>
+        <item>30 SEMANAS</item>
+        <item>32 SEMANAS</item>
+        <item>34 SEMANAS</item>
+        <item>36 SEMANAS</item>
+        <item>38 SEMANAS</item>
+        <item>40 SEMANAS</item>
+        <item>42 SEMANAS</item>
+        <item>44 SEMANAS</item>
+        <item>POST PARTO 6 SEMANAS</item>
+        <item>POST ABORTO 48 HORAS</item>
+        <item>POST ABORTO 6 SEMANAS</item>
+        <item>ULTRASONIDO</item>
+        <item>INFANTE 3 MESES</item>
+        <item>INTANTE 6 MESES</item>
+        <item>INFANTE 12 MESES</item>
+        <item>ULTRASONIDO</item>
+    </string-array>
+
+    <string-array name="list_proveedores">
+        <item>item 1</item>
+        <item>item 2</item>
+        <item>item 3</item>
+    </string-array>
+
+    <string-array name="lista_turnos">
+        <item>MATUTINO</item>
+        <item>VERPERTINO</item>
+    </string-array>
+
+
     
 </resources>

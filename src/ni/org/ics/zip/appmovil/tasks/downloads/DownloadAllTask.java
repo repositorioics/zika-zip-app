@@ -32,7 +32,7 @@ public class DownloadAllTask extends DownloadTask {
 	}
 	
 	protected static final String TAG = DownloadAllTask.class.getSimpleName();
-    private static final String TOTAL_TASK = "26";
+    private static final String TOTAL_TASK = "31";
 	private ZipAdapter zipA = null;
 	private List<ZpPreScreening> mPreTamizajes = null;
 	private List<Zp00Screening> mTamizajes = null;
@@ -61,6 +61,13 @@ public class DownloadAllTask extends DownloadTask {
     private List<Zp07bInfantAudioResults> mbInfantAudioResult = null;
     private List<Zp07cInfantImageStudies> mcInfantImageSt = null;
     private List<Zp07dInfantBayleyScales> mdInfantBayleySc = null;
+    private List<ZpAgendaEstudio> agendaStudioResult = null;
+    //
+    private List<ZpCenter> centerResult = null;
+    private List<ZpSpecialities> especialidadResult = null;
+    //
+    private List<Parametro> parametrosResult = null;
+    private List<Provider> ProviderResult = null;
 
 	private String error = null;
 	private String url = null;
@@ -115,7 +122,14 @@ public class DownloadAllTask extends DownloadTask {
         
         zipA.borrarZpInfantData();
         zipA.borrarZpEstadoInfante();
-        
+
+        zipA.borrarZpAgendaStudio();
+
+        zipA.borrarZpCenter();
+        zipA.borrarZpEspecialidad();
+        zipA.borrarProviders();
+        zipA.borrarParametro();
+
 		try {
 			if (mPreTamizajes != null){
 				v = mPreTamizajes.size();
@@ -354,6 +368,61 @@ public class DownloadAllTask extends DownloadTask {
                     zipA.crearZp07dInfantBayleyScales(iter.next());
                     publishProgress("Insertando escala Bayley...", Integer.valueOf(iter.nextIndex()).toString(), Integer
                             .valueOf(v).toString());
+                }
+            }
+
+            if(agendaStudioResult != null){
+                 v = agendaStudioResult.size();
+                ListIterator<ZpAgendaEstudio> iter = agendaStudioResult.listIterator();
+                while(iter.hasNext()){
+                    zipA.crearZpAgendaStudio(iter.next());
+                    publishProgress("Insertando agenda de estudios...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+
+                }
+            }
+            ///// Catalogos
+            if(centerResult != null){
+                v = centerResult.size();
+                ListIterator<ZpCenter> iter = centerResult.listIterator();
+                while(iter.hasNext()){
+                    zipA.crearZpCentro(iter.next());
+                    publishProgress("Insertando unidades de salud...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+
+                }
+            }
+
+            if(especialidadResult != null){
+                v = especialidadResult.size();
+                ListIterator<ZpSpecialities> iter = especialidadResult.listIterator();
+                while(iter.hasNext()){
+                    zipA.crearZpEspecialidad(iter.next());
+                    publishProgress("Insertando especialidad ...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+
+                }
+            }
+
+            if(parametrosResult != null){
+                v = parametrosResult.size();
+                ListIterator<Parametro> iter = parametrosResult.listIterator();
+                while(iter.hasNext()){
+                    zipA.crearParametro(iter.next());
+                    publishProgress("Insertando Parametros para Agenda ...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+
+                }
+            }
+
+            if(ProviderResult != null){
+                v = ProviderResult.size();
+                ListIterator<Provider> iter = ProviderResult.listIterator();
+                while(iter.hasNext()){
+                    zipA.crearProvider(iter.next());
+                    publishProgress("Insertando Proveedor para Agenda ...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+
                 }
             }
 
@@ -598,6 +667,48 @@ public class DownloadAllTask extends DownloadTask {
                     Zp07dInfantBayleyScales[].class, username);
             // convert the array to a list and return it
             mdInfantBayleySc = Arrays.asList(responseZp07dBayleyScales.getBody());
+
+            // Descargar la agenda  | A.L. 09/11/2017
+            urlRequest = url + "/movil/zpAgendaStudio/{username}";
+            publishProgress("Solicitando agenda de estudios","27",TOTAL_TASK);
+            // Perform the HTTP GET request
+            ResponseEntity<ZpAgendaEstudio[]> responseZpAgendaStudio = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    ZpAgendaEstudio[].class, username);
+            // convert the array to a list and return it
+            agendaStudioResult = Arrays.asList(responseZpAgendaStudio.getBody());
+
+            // Descargar la centros de salud por usuario  | A.L. 17/11/2017
+            urlRequest = url + "/movil/centers/{username}";
+            publishProgress("Solicitando unidades de salud","28",TOTAL_TASK);
+            // Perform the HTTP GET request
+            ResponseEntity<ZpCenter[]> responseZpCenters = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    ZpCenter[].class, username);
+            // convert the array to a list and return it
+            centerResult = Arrays.asList(responseZpCenters.getBody());
+
+            // Descargar la ESPECIALIDADES de salud por usuario  | A.L. 17/11/2017
+            urlRequest = url + "/movil/specialities/{username}";
+            publishProgress("Solicitando especialidades","29",TOTAL_TASK);
+            // Perform the HTTP GET request
+            ResponseEntity<ZpSpecialities[]> responseZpEspecialidades = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    ZpSpecialities[].class, username);
+            // convert the array to a list and return it
+            especialidadResult = Arrays.asList(responseZpEspecialidades.getBody());
+
+            // Descargar la Parametros de agenda  | A.L. 23/11/2017
+            urlRequest = url + "/movil/paramerters/{username}";
+            publishProgress("Solicitando parametros","30",TOTAL_TASK);
+            ResponseEntity<Parametro[]> responseParameters = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    Parametro[].class, username);
+            parametrosResult = Arrays.asList(responseParameters.getBody());
+
+            // Descargar la Proveedores   | A.L. 23/11/2017
+            urlRequest = url + "/movil/providers/{username}";
+            publishProgress("Solicitando Proveedores","31",TOTAL_TASK);
+            ResponseEntity<Provider[]> responseProviders = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    Provider[].class, username);
+            ProviderResult = Arrays.asList(responseProviders.getBody());
+
 
             return null;
         } catch (Exception e) {

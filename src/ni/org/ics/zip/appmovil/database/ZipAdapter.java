@@ -20,6 +20,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.util.Log;
+
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteQueryBuilder;
 
@@ -50,6 +52,7 @@ public class ZipAdapter {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
+
 			db.execSQL(MainDBConstants.CREATE_USER_TABLE);
 			db.execSQL(MainDBConstants.CREATE_ROLE_TABLE);
 			db.execSQL(MainDBConstants.CREATE_SCREENING_TABLE);
@@ -79,6 +82,12 @@ public class ZipAdapter {
 			db.execSQL(Zp07bDBConstants.CREATE_BINFANT_AUDIORESULTS_TABLE);
 			db.execSQL(Zp07cDBConstants.CREATE_CINFANT_IMAGESTUDIES_TABLE);
 			db.execSQL(Zp07dDBConstants.CREATE_DINFANT_BAYLEYSCALES_TABLE);
+			String createTable = MainDBConstants.CREATE_TABLE_AGENDA_STUDIO;
+			db.execSQL(createTable); // Crear tabla agenda | AL 07/11/17
+			db.execSQL(ZpCenterConstans.CREATE_CENTER_TABLE);  // Crear tabla Centros | AL 17/11/17
+			db.execSQL(ZpSpecialityConstans.CREATE_SPECIALTY_TABLE);// Crear tabla Especialidad | AL 17/11/17
+			db.execSQL(ParametroConstans.CREATE_PARAMETROS_TABLE);// Crear tabla Parametros | AL 23/11/17
+			db.execSQL(ProviderConstans.CREATE_PROVIDER_TABLE);// Crear tabla Parametros | AL 23/11/17
 		}
 
 		@Override
@@ -138,6 +147,7 @@ public class ZipAdapter {
 				db.execSQL("DROP TABLE " + MainDBConstants.DATA_USSAL_TABLE);
 				db.execSQL("DROP TABLE " + MainDBConstants.DATA_CONSSAL_TABLE);
 				db.execSQL("DROP TABLE " + MainDBConstants.DATA_CONSREC_TABLE);
+
 	            db.execSQL(MainDBConstants.CREATE_DATA_USSAL_TABLE);
 	            db.execSQL(MainDBConstants.CREATE_DATA_USREC_TABLE);
 	            db.execSQL(MainDBConstants.CREATE_DATA_CONSSAL_TABLE);
@@ -1618,9 +1628,239 @@ public class ZipAdapter {
         }
         if (!cursor.isClosed()) cursor.close();
         return mZpEstadoInfantes;
-    }     
+    }
 
-    public Boolean verificarData() throws SQLException{
+
+	/**
+	 * Metodos para AgendaStudio en la base de datos
+	 * A.L. 09/11/2017
+	 */
+	//Crear nuevo Agenda en la base de datos
+	public void crearZpAgendaStudio(ZpAgendaEstudio agenda) {
+		ContentValues cv = ZpAgendaEstudioHelper.crearZpAgendaStudioValues(agenda);
+		mDb.insert(MainDBConstants.ZpAgendaEstudio, null, cv);
+	}
+	//Editar Zp07dInfantBayleyScales existente en la base de datos
+	public boolean editarZpAgendaStudio(ZpAgendaEstudio agenda) {
+		ContentValues cv = ZpAgendaEstudioHelper.crearZpAgendaStudioValues(agenda);
+		return mDb.update(MainDBConstants.ZpAgendaEstudio, cv, MainDBConstants.id + "='"
+				+ agenda.getId() + "'", null) > 0;
+	}
+	//Limpiar la tabla de ZpAgendaEstudio de la base de datos
+	public boolean borrarZpAgendaStudio() {
+		return mDb.delete(MainDBConstants.ZpAgendaEstudio, null, null) > 0;
+	}
+	//Obtener una cita de la base de datos
+	public ZpAgendaEstudio getAgendaStudioFromDd(String filtro, String orden) throws SQLException {
+		ZpAgendaEstudio agenda = null;
+		Cursor cursor = crearCursor(MainDBConstants.ZpAgendaEstudio, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			agenda = ZpAgendaEstudioHelper.crearZpAgendaEstudio(cursor);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return agenda;
+	}
+	//Obtener una lista de citas de la base de datos
+	public List<ZpAgendaEstudio> getAgendaStudios(String filtro, String orden) throws SQLException {
+		List<ZpAgendaEstudio> citas = new ArrayList<ZpAgendaEstudio>();
+		Cursor cursor = crearCursor(MainDBConstants.ZpAgendaEstudio, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			citas.clear();
+			do{
+				ZpAgendaEstudio agenda = null;
+				agenda = ZpAgendaEstudioHelper.crearZpAgendaEstudio(cursor);
+				citas.add(agenda);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return citas;
+	}
+
+	//Obtener una lista de proveedores de la base de datos
+	// A.L.  23/11/2017
+	public List<Provider> getProveedores(String filtro, String orden) throws SQLException {
+		List<Provider> lista = new ArrayList<Provider>();
+		Cursor cursor = crearCursor(ProviderConstans.PROVIDER_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			lista.clear();
+			do{
+				Provider obj = null;
+				obj = ProviderHelper.crearProvider(cursor);
+				lista.add(obj);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return lista;
+	}
+	//Obtener una cita de la base de datos
+	public Provider getProveedorFromDd(String filtro, String orden) throws SQLException {
+
+		Provider proveedor = null;
+		try {
+			Cursor cursor = crearCursor(ProviderConstans.PROVIDER_TABLE, filtro, null, orden);
+			if (cursor != null && cursor.getCount() > 0) {
+				cursor.moveToFirst();
+				proveedor = ProviderHelper.crearProvider(cursor);
+			}
+			if (!cursor.isClosed()) cursor.close();
+		}
+		catch (Exception ex){
+			Log.e("ZipAdapter", ex.getMessage(), ex);
+		}
+		return proveedor;
+	}
+
+	//Obtener una lista de parametros de la base de datos
+	// A.L.  23/11/2017
+	public List<Parametro> getParametros(String filtro, String orden) throws SQLException {
+		List<Parametro> lista = new ArrayList<Parametro>();
+		Cursor cursor = crearCursor(ParametroConstans.PARAMETRO_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			lista.clear();
+			do{
+				Parametro obj = null;
+				obj = ParametroHelper.crearParametro(cursor);
+				lista.add(obj);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return lista;
+	}
+
+	//Obtener un Parametro de la base de datos
+	public Parametro getParametro(String filtro, String orden) throws SQLException {
+		Parametro obj = null;
+		Cursor cursor = crearCursor(ParametroConstans.PARAMETRO_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			obj = ParametroHelper.crearParametro(cursor);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return obj;
+	}
+
+
+	///
+
+
+	/**
+	 * Metodos para Centros de Salud en la base de datos
+	 * A.L. 16/11/2017
+	 */
+	//Crear nuevo centro de salud en la base de datos
+	public void crearZpCentro(ZpCenter centro) {
+		ContentValues cv = ZpCenterHelper.crearZpCenterValues(centro);
+		mDb.insert(ZpCenterConstans.CENTER_TABLE, null, cv);
+	}
+	//Limpiar la tabla de la base de datos
+	public boolean borrarZpCenter() {
+		return mDb.delete(ZpCenterConstans.CENTER_TABLE, null, null) > 0;
+	}
+
+	//Obtener una lista de citas de la base de datos
+	public List<ZpCenter> getCenters(String filtro, String orden) throws Exception {
+		try {
+			List<ZpCenter> centros = new ArrayList<ZpCenter>();
+			Cursor cursor = crearCursor(ZpCenterConstans.CENTER_TABLE, filtro, null, orden);
+			if (cursor != null && cursor.getCount() > 0) {
+				cursor.moveToFirst();
+				centros.clear();
+				do {
+					ZpCenter centro = null;
+					centro = ZpCenterHelper.crearZpCenter(cursor);
+					centros.add(centro);
+				} while (cursor.moveToNext());
+			}
+			if (!cursor.isClosed()) cursor.close();
+			return centros;
+		}
+		catch (SQLException ex){
+			return new ArrayList<ZpCenter>();
+		}
+	}
+	///
+//////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	/**
+	 * Metodos para Especialidades en la base de datos
+	 * A.L. 16/11/2017
+	 */
+	//Crear una nueva especialidad en la base de datos
+	public void crearZpEspecialidad(ZpSpecialities obj) {
+		ContentValues cv = ZpSpecialityHelper.crearZpSpecialityValues(obj);
+		mDb.insert(ZpSpecialityConstans.SPECIALTY_TABLE, null, cv);
+	}
+	//Limpiar la tabla de la base de datos
+	public boolean borrarZpEspecialidad() {
+		return mDb.delete(ZpSpecialityConstans.SPECIALTY_TABLE, null, null) > 0;
+	}
+
+	//Obtener una lista de citas de la base de datos
+	public List<ZpSpecialities> getEspecialidades(String filtro, String orden) throws SQLException {
+		List<ZpSpecialities> especialidades = new ArrayList<ZpSpecialities>();
+		Cursor cursor = crearCursor(ZpSpecialityConstans.SPECIALTY_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			especialidades.clear();
+			do{
+				ZpSpecialities obj = null;
+				obj = ZpSpecialityHelper.crearZpSpeciality(cursor);
+				especialidades.add(obj);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return especialidades;
+	}
+	// Parametros
+	//Crear un parametro en la base de datos
+	public void crearParametro(Parametro obj) {
+		ContentValues cv = ParametroHelper.crearParametroValues(obj);
+		mDb.insert(ParametroConstans.PARAMETRO_TABLE, null, cv);
+	}
+	//Limpiar la tabla de la base de datos
+	public boolean borrarParametro() {
+		return mDb.delete(ParametroConstans.PARAMETRO_TABLE, null, null) > 0;
+	}
+
+
+	// Proveedores
+	//Crear un Proveedor en la base de datos
+	public void crearProvider(Provider obj) {
+		ContentValues cv = ProviderHelper.crearProviderValues(obj);
+		mDb.insert(ProviderConstans.PROVIDER_TABLE, null, cv);
+	}
+	//Limpiar la tabla de la base de datos
+	public boolean borrarProviders() {
+		return mDb.delete(ParametroConstans.PARAMETRO_TABLE, null, null) > 0;
+	}
+
+	//Obtener una lista de citas de la base de datos
+	public List<Provider> getProvider(String filtro, String orden) throws SQLException {
+		List<Provider> lista = new ArrayList<Provider>();
+		Cursor cursor = crearCursor(ProviderConstans.PROVIDER_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			lista.clear();
+			do{
+				Provider obj = null;
+				obj = ProviderHelper.crearProvider(cursor);
+				lista.add(obj);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return lista;
+	}
+
+	//
+
+	public Boolean verificarData() throws SQLException{
 		Cursor c = null;
 		c = crearCursor(MainDBConstants.SCREENING_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
@@ -1668,7 +1908,18 @@ public class ZipAdapter {
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c = crearCursor(MainDBConstants.INFANTSTATUS_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MainDBConstants.ZpAgendaEstudio, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
 		return false;
 	}
+
+
+    public Boolean verificarAgendaData() throws SQLException{
+        Cursor c = null;
+        c = crearCursor(MainDBConstants.ZpAgendaEstudio, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        return false;
+    }
 }

@@ -50,8 +50,7 @@ public class DownloadAllActivity extends Activity implements DownloadListener{
 		
 		settings =
 				PreferenceManager.getDefaultSharedPreferences(this);
-		url =
-				settings.getString(PreferencesActivity.KEY_SERVER_URL, this.getString(R.string.default_server_url));
+		url = settings.getString(PreferencesActivity.KEY_SERVER_URL, this.getString(R.string.default_server_url));
 		username =
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
@@ -66,6 +65,15 @@ public class DownloadAllActivity extends Activity implements DownloadListener{
 	}
 
 	private void downloadAllData(){   
+		if (downloadAllTask != null)
+			return;
+		showDialog(PROGRESS_DIALOG);
+		downloadAllTask = new DownloadAllTask(this.getApplicationContext());
+		downloadAllTask.setDownloadListener(DownloadAllActivity.this);
+		downloadAllTask.execute(url, username, password);
+	}
+
+	private void downloadAgendaData(){
 		if (downloadAllTask != null)
 			return;
 		showDialog(PROGRESS_DIALOG);

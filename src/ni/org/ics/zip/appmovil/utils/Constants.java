@@ -51,7 +51,7 @@ public class Constants {
 	
 	public static final String OBJECTO_ZPINFDATA = "zpdatosinfante";
 	public static final String OBJECTO_ZPESTINF = "zpestadoinfante";
-	
+	public static final String OBJECTO_ZPDATAAGENDA = "zpagendaestudio";
 	//Eventos
 	public static final String EVENT = "event";
 	public static final String SCREENING = "screening_arm_1";
@@ -105,6 +105,8 @@ public class Constants {
 	public static final String FORM_DATOS_EMB = "datos_embarazada";
 	public static final String ROJO = "#db0000";
 	public static final String WIZARD = "#ff0099cc";
+
+	public static final String FORM_DATOS_AGENDA = "datos_agenda";
 
 
 }

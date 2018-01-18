@@ -33,7 +33,7 @@ public class UploadAllTask extends UploadTask {
 	}
 
 	protected static final String TAG = UploadAllTask.class.getSimpleName();
-    private static final String TOTAL_TASK = "26";
+    private static final String TOTAL_TASK = "27";
 	private ZipAdapter zipA = null;
 	private List<ZpPreScreening> mPreTamizajes = new ArrayList<ZpPreScreening>();
 	private List<Zp00Screening> mTamizajes = new ArrayList<Zp00Screening>();
@@ -62,6 +62,7 @@ public class UploadAllTask extends UploadTask {
 	private List<Zp07cInfantImageStudies> mcInfantImageStudies = new ArrayList<Zp07cInfantImageStudies>();
 	private List<Zp07dInfantBayleyScales> mdInfantBayleyScales = new ArrayList<Zp07dInfantBayleyScales>();
 
+	private List<ZpAgendaEstudio> mZpAgendaResults = new ArrayList<ZpAgendaEstudio>();
 
 	private String url = null;
 	private String username = null;
@@ -94,6 +95,7 @@ public class UploadAllTask extends UploadTask {
 	public static final int AUDIO_RESULTS = 24;
 	public static final int IMAGE_STUDIES = 25;
 	public static final int BAYLEY_SCALES = 26;
+	public static  final int CITAS = 27;
 	
 
 	@Override
@@ -133,6 +135,9 @@ public class UploadAllTask extends UploadTask {
 			mcInfantImageStudies = zipA.getZp07cInfantImageStudies(filtro, MainDBConstants.recordId);
 			mdInfantBayleyScales = zipA.getZp07dInfantBayleyScales(filtro, MainDBConstants.recordId);
             mEstadoInfante = zipA.getZpEstadoInfantes(filtro, MainDBConstants.recordId);
+			// Envio de Agenda Ingresada
+			mZpAgendaResults = zipA.getAgendaStudios(filtro,MainDBConstants.id); //A.L | 21/11/2017
+
 			publishProgress("Datos completos!", "2", "2");
 			actualizarBaseDatos(Constants.STATUS_SUBMITTED, PRE_TAMIZAJE);
 			error = cargarPreTamizajes(url, username, password);
@@ -293,6 +298,14 @@ public class UploadAllTask extends UploadTask {
 			error = uploadInfantBayleyScales(url, username, password);
 			if (!error.matches("Datos recibidos!")){
 				actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, BAYLEY_SCALES);
+				return error;
+			}
+
+			///// AGENDA - A.L. 21/11/17//////
+			actualizarBaseDatos(Constants.STATUS_SUBMITTED, CITAS);
+			error = uploadAgendaEstudio(url, username, password);
+			if (!error.matches("Datos recibidos!")){
+				actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CITAS);
 				return error;
 			}
 
@@ -594,6 +607,18 @@ public class UploadAllTask extends UploadTask {
 					dInfantBayleySc.setEstado(estado);
 					zipA.editarZp07dInfantBayleyScales(dInfantBayleySc);
 					publishProgress("Actualizando escala de Bayley de base de datos local", Integer.valueOf(mdInfantBayleyScales.indexOf(dInfantBayleySc)).toString(), Integer
+							.valueOf(c).toString());
+				}
+			}
+		}
+		//Actualizar Status de la Agenda
+		else if(opcion == CITAS){
+			c = mZpAgendaResults.size();
+			if(c>0){
+				for (ZpAgendaEstudio cita : mZpAgendaResults) {
+					cita.setEstado(estado);
+					zipA.editarZpAgendaStudio(cita);
+					publishProgress("Actualizando agenda estudio de base de datos local", Integer.valueOf(mZpAgendaResults.indexOf(cita)).toString(), Integer
 							.valueOf(c).toString());
 				}
 			}
@@ -1347,7 +1372,7 @@ public class UploadAllTask extends UploadTask {
 											 String password) throws Exception {
 		try {
 			if( mAInfantOphtResults.size()>0){
-				publishProgress("Enviando resultado oftalmológico infantes!", "23", TOTAL_TASK);
+				publishProgress("Enviando resultado oftalmolÃ³gico infantes!", "23", TOTAL_TASK);
 				// La URL de la solicitud POST
 				final String urlRequest = url + "/movil/zp07aInfantOphtResults";
 				Zp07aInfantOphtResults[] envio = mAInfantOphtResults.toArray(new Zp07aInfantOphtResults[mAInfantOphtResults.size()]);
@@ -1515,6 +1540,43 @@ public class UploadAllTask extends UploadTask {
             Log.e(TAG, e.getMessage(), e);
             return e.getMessage();
         }
-    }    
+    }
+
+
+
+	/***************************************************/
+	/********************* ZpAgendaEstudio******/
+	/***************************************************/
+	// url, username, password
+	protected String uploadAgendaEstudio(String url, String username,
+										String password) throws Exception {
+		try {
+			if(mZpAgendaResults.size()>0){
+				publishProgress("Enviando datos de agenda!", "27", TOTAL_TASK);
+				// La URL de la solicitud POST
+				final String urlRequest = url + "/movil/zpAgendaStudio";
+				ZpAgendaEstudio[] envio = mZpAgendaResults.toArray(new ZpAgendaEstudio[mZpAgendaResults.size()]);
+				HttpHeaders requestHeaders = new HttpHeaders();
+				HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+				requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+				requestHeaders.setAuthorization(authHeader);
+				HttpEntity<ZpAgendaEstudio[]> requestEntity =
+						new HttpEntity<ZpAgendaEstudio[]>(envio, requestHeaders);
+				RestTemplate restTemplate = new RestTemplate();
+				restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+				restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+				// Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+				ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+						String.class);
+				return response.getBody();
+			}
+			else{
+				return "Datos recibidos!";
+			}
+		} catch (Exception e) {
+			Log.e(TAG, e.getMessage(), e);
+			return e.getMessage();
+		}
+	}
 
 }

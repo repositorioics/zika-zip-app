@@ -5,4 +5,5 @@
     <string name="main_specimen">Muestras</string>
     <string name="main_consent">Control Consentimientos</string>
     <string name="main_us">Control Reportes US</string>
+    <string name="main_agenda">Agenda</string>
 </resources>

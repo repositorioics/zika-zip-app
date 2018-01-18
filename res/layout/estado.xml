@@ -55,19 +55,32 @@
           android:layout_width="fill_parent"
           android:layout_weight="1" />
 
-	<LinearLayout android:id="@+id/footer" android:layout_width="fill_parent"
-    android:layout_height="wrap_content" android:orientation="horizontal"
-    style="@android:style/ButtonBar">
+	<LinearLayout
+		android:id="@+id/footer"
+		style="@android:style/ButtonBar"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
 
-	    <Button android:id="@+id/saveButton" android:layout_width="wrap_content"
-	        android:layout_height="wrap_content" android:layout_weight="1"
-	        android:text="@string/save" android:drawableLeft="@drawable/ic_ok"
-        	android:drawableStart="@drawable/ic_ok" style="?android:attr/button"/>
-	
-	    <Button android:id="@+id/cancelButton" android:layout_width="wrap_content"
-	        android:layout_height="wrap_content" android:layout_weight="1"
-	        android:text="@string/finish" android:drawableLeft="@drawable/ic_error"
-        	android:drawableStart="@drawable/ic_error" style="?android:attr/button"/>
-	</LinearLayout>    
-    
+		<Button
+			android:id="@+id/saveButton"
+			style="?android:attr/button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:drawableLeft="@drawable/ic_ok"
+			android:drawableStart="@drawable/ic_ok"
+			android:text="@string/save" />
+
+		<Button
+			android:id="@+id/cancelButton"
+			style="?android:attr/button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:drawableLeft="@drawable/ic_error"
+			android:drawableStart="@drawable/ic_error"
+			android:text="@string/finish" />
+	</LinearLayout>
+
 </LinearLayout>

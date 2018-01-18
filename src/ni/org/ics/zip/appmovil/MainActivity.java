@@ -5,6 +5,7 @@ import ni.org.ics.zip.appmovil.activities.buscar.BuscarEmbarazadaActivity;
 import ni.org.ics.zip.appmovil.activities.buscar.BuscarInfanteActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.MenuControlConsentimientosActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.MenuControlUSActivity;
+import ni.org.ics.zip.appmovil.activities.paginas.agenda.Appointments;
 import ni.org.ics.zip.appmovil.activities.server.DownloadAllActivity;
 import ni.org.ics.zip.appmovil.activities.server.UploadAllActivity;
 import ni.org.ics.zip.appmovil.adapters.MainActivityAdapter;
@@ -44,6 +45,8 @@ public class MainActivity extends ListActivity {
 		setListAdapter(new MainActivityAdapter(this, R.layout.menu_item, menu_main));
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
 		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
+
+
 	}
 
 	@Override
@@ -78,34 +81,46 @@ public class MainActivity extends ListActivity {
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
 		// Opcion de menu seleccionada
-		Intent i;
-		switch(position){
-		case 0: 
-			i = new Intent(getApplicationContext(),
-					BuscarEmbarazadaActivity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
-			break;
-		case 1: 
-			i = new Intent(getApplicationContext(),
-					BuscarInfanteActivity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
-			break;			
-		case 3: 
-			i = new Intent(getApplicationContext(),
-					MenuControlConsentimientosActivity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
-			break;
-		case 4: 
-			i = new Intent(getApplicationContext(),
-					MenuControlUSActivity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
-			break;
-		default: 
-			String s = (String) getListAdapter().getItem(position);
+		try {
+			Intent i;
+			switch (position) {
+				case 0:
+					i = new Intent(getApplicationContext(),
+							BuscarEmbarazadaActivity.class);
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(i);
+					break;
+				case 1:
+					i = new Intent(getApplicationContext(),
+							BuscarInfanteActivity.class);
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(i);
+					break;
+				case 3:
+					i = new Intent(getApplicationContext(),
+							MenuControlConsentimientosActivity.class);
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(i);
+					break;
+				case 4:
+					i = new Intent(getApplicationContext(),
+							MenuControlUSActivity.class);
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(i);
+					break;
+				case 5:
+					i = new Intent(getApplicationContext(),
+							Appointments.class);
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(i);
+					break;
+				default:
+					String s = (String) getListAdapter().getItem(position);
+					Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+			}
+		}
+		catch (Exception ex){
+			String s = (String)ex.getMessage();
 			Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
 		}
 	}

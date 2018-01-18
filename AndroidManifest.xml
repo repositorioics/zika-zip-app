@@ -1,81 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ni.org.ics.zip.appmovil"
-    android:versionCode="1"
-    android:versionName="1.0" >
+          package="ni.org.ics.zip.appmovil"
+          android:versionCode="1"
+          android:versionName="1.0">
 
     <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="17" />
+            android:minSdkVersion="14"
+            android:targetSdkVersion="17"/>
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <supports-screens
-        android:anyDensity="true"
-        android:largeScreens="true"
-        android:normalScreens="true" />
+            android:anyDensity="true"
+            android:largeScreens="true"
+            android:normalScreens="true"/>
 
     <application
-        android:allowBackup="false"
-        android:name=".MyZipApplication"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <activity
-            android:name="ni.org.ics.zip.appmovil.LoginActivity"
+            android:allowBackup="false"
+            android:name=".MyZipApplication"
+            android:icon="@drawable/ic_launcher"
             android:label="@string/app_name"
-            android:windowSoftInputMode="stateVisible" >
+            android:theme="@style/AppTheme">
+        <activity
+                android:name="ni.org.ics.zip.appmovil.LoginActivity"
+                android:label="@string/app_name"
+                android:windowSoftInputMode="stateVisible">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="ni.org.ics.zip.appmovil.MainActivity" 
-            android:screenOrientation="portrait" />
-        <activity android:name="ni.org.ics.zip.appmovil.activities.DataEnterActivity" 
-            android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.zip.appmovil.MainActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="ni.org.ics.zip.appmovil.activities.DataEnterActivity"
+                  android:screenOrientation="portrait"/>
         <activity android:name="ni.org.ics.zip.appmovil.activities.buscar.BuscarEmbarazadaActivity"
-            android:screenOrientation="portrait" />
+                  android:screenOrientation="portrait"/>
         <activity android:name="ni.org.ics.zip.appmovil.activities.buscar.BuscarInfanteActivity"
-            android:screenOrientation="portrait" />
+                  android:screenOrientation="portrait"/>
         <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp00ScreeningActivity"
-            android:screenOrientation="portrait"></activity>
+                  android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.activities.server.UploadAllActivity"
-            android:screenOrientation="portrait" />
+                  android:screenOrientation="portrait"/>
         <activity android:name="ni.org.ics.zip.appmovil.activities.server.DownloadAllActivity"
-            android:screenOrientation="portrait" />
+                  android:screenOrientation="portrait"/>
+        <activity
+                android:name=".activities.server.DownloadAgendaActivity"
+                android:screenOrientation="portrait"/>
         <activity android:name="ni.org.ics.zip.appmovil.activities.paginas.MenuEmbarazadasActivity"
-            android:screenOrientation="portrait"></activity>
+                  android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.activities.paginas.MenuInfantesActivity"
-            android:screenOrientation="portrait"></activity>
+                  android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.IngresoActivity"
-            android:screenOrientation="portrait"></activity>
+                  android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.MonthlyVisitActivity"
-            android:screenOrientation="portrait"></activity>
+                  android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.UnscheduledVisitActivity"
-            android:screenOrientation="portrait"></activity>
+                  android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.TwoWeekVisitActivity"
-            android:screenOrientation="portrait"></activity>
+                  android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.DeliveryVisitActivity"
-            android:screenOrientation="portrait"></activity>
+                  android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.PostPartumVisitActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name="ni.org.ics.zip.appmovil.activities.paginas.eventosinfante.UnscheduledInfantVisitActivity"
-            android:screenOrientation="portrait"></activity>
+                  android:screenOrientation="portrait"></activity>
+        <activity
+                android:name="ni.org.ics.zip.appmovil.activities.paginas.eventosinfante.UnscheduledInfantVisitActivity"
+                android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.activities.paginas.eventosinfante.InfantVisitActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name="ni.org.ics.zip.appmovil.preferences.PreferencesActivity" />
+                  android:screenOrientation="portrait"></activity>
+        <activity android:name="ni.org.ics.zip.appmovil.preferences.PreferencesActivity"/>
         <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp01StudyEntrySectionAtoDActivity"
-            android:screenOrientation="portrait"></activity>
+                  android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp01StudyEntrySectionEActivity"
                   android:screenOrientation="portrait"></activity>.
         <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp04TrimesterVisitSectionAtoDActivity"
@@ -100,22 +104,22 @@
                   android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp08StudyExitActivity"
                   android:screenOrientation="portrait"></activity>
-       	<activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewDatosEmbarazadaActivity"
+        <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewDatosEmbarazadaActivity"
                   android:screenOrientation="portrait"></activity>
-       	<activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewPreScreeningActivity"
+        <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewPreScreeningActivity"
                   android:screenOrientation="portrait"></activity>
-       	<activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZpControlConsentimientosSalidaActivity"
+        <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZpControlConsentimientosSalidaActivity"
                   android:screenOrientation="portrait"></activity>
-       	<activity android:name="ni.org.ics.zip.appmovil.activities.paginas.MenuControlConsentimientosActivity"
+        <activity android:name="ni.org.ics.zip.appmovil.activities.paginas.MenuControlConsentimientosActivity"
                   android:screenOrientation="portrait"></activity>
-       	<activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZpControlConsentimientosRecepcionActivity"
+        <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZpControlConsentimientosRecepcionActivity"
                   android:screenOrientation="portrait"></activity>
-       	<activity android:name="ni.org.ics.zip.appmovil.activities.paginas.MenuControlUSActivity"
+        <activity android:name="ni.org.ics.zip.appmovil.activities.paginas.MenuControlUSActivity"
                   android:screenOrientation="portrait"></activity>
-       	<activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZpControlUSRecepcionActivity"
+        <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZpControlUSRecepcionActivity"
                   android:screenOrientation="portrait"></activity>
-		<activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZpControlUSSalidaActivity"
-                  android:screenOrientation="portrait"></activity>   
+        <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZpControlUSSalidaActivity"
+                  android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.activities.edit.UpdateEstadoActivity"
                   android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp07InfantAssessmentVisitOphtActivity"
@@ -130,6 +134,11 @@
                   android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp07dInfantBayleyScalesActivity"
                   android:screenOrientation="portrait"></activity>
+        <activity android:name=".activities.paginas.MenuControlAgendaActivity"/>
+        <activity android:name=".activities.paginas.agenda.Appointments"
+                  android:label="@string/title_activity_appointments"/>
+        <activity android:name=".activities.paginas.agenda.NewAppointment"
+                  android:label="@string/title_activity_newappointment"></activity>
     </application>
 
 </manifest>

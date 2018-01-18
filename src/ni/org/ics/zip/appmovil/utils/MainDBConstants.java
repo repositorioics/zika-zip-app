@@ -45,6 +45,8 @@ public class MainDBConstants {
 	public static final String accountNonLocked = "accountnonlocked";
 	public static final String createdBy = "createdby";
 	public static final String modifiedBy = "modifiedby";
+
+
 	//Crear tabla usuarios
 	public static final String CREATE_USER_TABLE = "create table if not exists "
 			+ USER_TABLE + " ("
@@ -79,6 +81,7 @@ public class MainDBConstants {
 	public static final String recordDate = "recordDate";
 	public static final String recordUser = "recordUser";
 	public static final String pasive = "pasive";
+	public static final String PASIVO = "PASIVO";
 	//Campos comunes para manejo ODK
 	public static final String ID_INSTANCIA = "id_instancia";
 	public static final String FILE_PATH = "path_instancia";
@@ -530,6 +533,59 @@ public class MainDBConstants {
             + MainDBConstants.SIM_SERIAL + " text, "
             + MainDBConstants.PHONE_NUMBER  + " text, "
             + MainDBConstants.TODAY  + " date, "
-            + "primary key (" + recordId + "));";    
+            + "primary key (" + recordId + "));";
+
+	//Crear tabla zp_agenda_estudio | AL 07/11/2017
+	public static final String ZpAgendaEstudio = "zp_agenda_estudio";
+	public static final String id = "ID";
+	public static final String appointmentDateTime = "FECHA_HORA_CITA";
+	public static final String provider = "PROVEEDOR";
+	public static final String healtUnit = "US";
+	public static final String record_Id = "RECORD_ID";
+	public static final String subjectType = "TIPO_SUJETO";
+	public static final String appointmentType = "TIPO_CITA";
+	public static final String specialityType = "ESPECIALISTA";
+	public static final String cellNumAuth = "AutorizaSms";
+	public static final String smsNumber = "NumeroMensaje";
+	public static final String pacienteAsistio = "asistio";
+	public static final String obs = "OBSERVACIONES";
+	public static final String turno = "turno";
+	public static final String appointmentEndTime = "FECHA_HORA_CITA_FIN";
+    public static final String REGISTER_USER = "USUARIO_REGISTRO";
+	public static  final String CREATE_TABLE_AGENDA_STUDIO;
+//"drop table "+ ZpAgendaEstudio +";
+    static {
+        CREATE_TABLE_AGENDA_STUDIO =" create table if not exists " + ZpAgendaEstudio
+                + "(\n" +
+                id + "  INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                DEVICE_ID + "   text,\n" +
+				ID_INSTANCIA + "   text,\n" +
+                END + "   text,\n" +
+                STATUS + "   text,\n" +
+				pasive + "   text,\n" +
+				SIM_SERIAL + "   text,\n" +
+				FILE_PATH + "  text,\n" +
+                PHONE_NUMBER + "   text,\n" +
+                REGISTER_USER + "   text,\n" +
+                START + "   text,\n" +
+                TODAY + "   date,\n" +
+                appointmentDateTime + "   date,\n" +
+				recordUser + "   text,\n" +
+				recordDate + "   date,\n" +
+                obs + "   text,\n" +
+                record_Id + "   text,\n" +
+                appointmentType + "   text,\n" +
+                healtUnit + "   text,\n" +
+				specialityType + "   text,\n" +
+                provider + "   text,\n" +
+                subjectType + "   text,\n" +
+                smsNumber + "   text,\n" +
+				pacienteAsistio + "   text,\n" +
+                cellNumAuth + "   text,\n" +
+				turno + "   text,\n" +
+				appointmentEndTime + "   date\n" +
+                ");";
+
+    }
 
 }
