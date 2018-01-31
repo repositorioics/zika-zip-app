@@ -96,6 +96,7 @@
     <string name="c2fOport">f. Permiso de ser re-contactada sobre oportunidades de participar en otras investigaciones en el futuro:</string>
     <string name="title_activity_appointments">appointments</string>
     <string name="title_activity_newappointment">newappointment</string>
+    <string name="err_duplicated2">Se han encontrado registros de consentimiento de infantes asociados a la embarazada!</string>
 
     <!-- ///////////////////////////////////////////// -->
     <string name="minutos_error">Hora seleccionada no es válida, minutos permitidos (00,30)</string>

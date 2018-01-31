@@ -11,6 +11,8 @@ import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.activities.edit.UpdateEstadoActivity;
+import ni.org.ics.zip.appmovil.activities.nuevos.NewZp00ScreeningActivity;
+import ni.org.ics.zip.appmovil.activities.nuevos.NewZp00aInfantScreeningActivity;
 import ni.org.ics.zip.appmovil.activities.nuevos.NewZp08StudyExitActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.DeliveryVisitActivity;
 import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.IngresoActivity;
@@ -21,6 +23,7 @@ import ni.org.ics.zip.appmovil.activities.paginas.eventosembarazo.UnscheduledVis
 import ni.org.ics.zip.appmovil.adapters.MenuEmbarazadasAdapter;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.domain.Zp00Screening;
+import ni.org.ics.zip.appmovil.domain.Zp00aInfantScreening;
 import ni.org.ics.zip.appmovil.domain.Zp08StudyExit;
 import ni.org.ics.zip.appmovil.domain.ZpEstadoEmbarazada;
 import ni.org.ics.zip.appmovil.utils.Constants;
@@ -49,6 +52,7 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 	private static Zp00Screening zp00 = new Zp00Screening();
 	private static ZpEstadoEmbarazada zpEstado = new ZpEstadoEmbarazada();
 	private static Zp08StudyExit zpSalida= new Zp08StudyExit();
+	private static Zp00aInfantScreening zp00a = new Zp00aInfantScreening();
 	private GridView gridView;
 	private TextView textView;
 	private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
@@ -79,6 +83,7 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
 		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
 		zp00 = (Zp00Screening) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP00);
+		zp00a = (Zp00aInfantScreening) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP00a);
 		filtro = MainDBConstants.recordId + "='" + zp00.getRecordId() + "'";
 		new FetchDataEmbarazadaTask().execute(filtro);
 		menu_maternal_info = getResources().getStringArray(R.array.menu_maternal_a);
@@ -454,7 +459,16 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 			if (zp00!=null) arguments.putSerializable(Constants.OBJECTO_ZP00 , zp00);
 			i.putExtras(arguments);
 			startActivity(i);
-			break;	
+			break;
+			case 31:
+				i = new Intent(getApplicationContext(),
+						NewZp00aInfantScreeningActivity.class);
+				//Aca se pasa evento, tamizaje y estado
+				if (zp00a!=null) arguments.putSerializable(Constants.OBJECTO_ZP00a , zp00a);
+				arguments.putString(Constants.RECORDID, zp00.getRecordId());
+				i.putExtras(arguments);
+				startActivity(i);
+				break;
 		default:
 			break;
 		}
@@ -489,6 +503,8 @@ public class MenuEmbarazadasActivity extends AbstractAsyncActivity {
 			try {
 				zipA.open();
 				zpEstado = zipA.getZpEstadoEmbarazada(filtro, MainDBConstants.recordId);
+				String filter =  MainDBConstants.pregnantId + "='" +  zp00.getRecordId() + "'";
+				zp00a = zipA.getZp00aInfantScreening(filter, null);
 				zpSalida = zipA.getZp08StudyExit(filtro, null);
 				zipA.close();
 			} catch (Exception e) {

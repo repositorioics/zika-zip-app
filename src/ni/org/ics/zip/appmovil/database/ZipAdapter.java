@@ -82,6 +82,7 @@ public class ZipAdapter {
 			db.execSQL(Zp07bDBConstants.CREATE_BINFANT_AUDIORESULTS_TABLE);
 			db.execSQL(Zp07cDBConstants.CREATE_CINFANT_IMAGESTUDIES_TABLE);
 			db.execSQL(Zp07dDBConstants.CREATE_DINFANT_BAYLEYSCALES_TABLE);
+			db.execSQL(MainDBConstants.CREATE_INF_SCREENING_TABLE);
 			String createTable = MainDBConstants.CREATE_TABLE_AGENDA_STUDIO;
 			db.execSQL(createTable); // Crear tabla agenda | AL 07/11/17
 			db.execSQL(ZpCenterConstans.CREATE_CENTER_TABLE);  // Crear tabla Centros | AL 17/11/17
@@ -1142,6 +1143,19 @@ public class ZipAdapter {
         if (!cursor.isClosed()) cursor.close();
         return ultrasoundExam;
     }
+
+	//Obtener un Zp05UltrasoundExam de la base de datos
+	public Zp05UltrasoundExam getZp05UltrasoundExam1(String filtro, String orden) throws SQLException {
+		Zp05UltrasoundExam ultrasoundExam = null;
+		Cursor cursor = crearCursor(Zp05DBConstants.ULTRASOUNDEXAM_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToLast();
+			ultrasoundExam=Zp05UltrasoundExamHelper.crearZp05UltrasoundExam(cursor);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return ultrasoundExam;
+	}
+
     //Obtener una lista de Zp05UltrasoundExam de la base de datos
     public List<Zp05UltrasoundExam> getZp05UltrasoundExams(String filtro, String orden) throws SQLException {
         List<Zp05UltrasoundExam> ultrasoundExams = new ArrayList<Zp05UltrasoundExam>();
@@ -1629,6 +1643,53 @@ public class ZipAdapter {
         if (!cursor.isClosed()) cursor.close();
         return mZpEstadoInfantes;
     }
+
+	/**
+	 * Metodos para Zp00aInfantScreening en la base de datos
+	 *
+	 */
+	//Crear nuevo Zp00aInfantScreening en la base de datos
+	public void crearZp00aInfantScreening(Zp00aInfantScreening dInfantScreening) {
+		ContentValues cv = Zp00aInfantScreeningHelper.crearZp00aInfantScreeningValues(dInfantScreening);
+		mDb.insert(MainDBConstants.INFANTSCREENING_TABLE, null, cv);
+	}
+	//Editar Zp00aInfantScreening existente en la base de datos
+	public boolean editarZp00aInfantScreening(Zp00aInfantScreening dInfantScreening) {
+		ContentValues cv = Zp00aInfantScreeningHelper.crearZp00aInfantScreeningValues(dInfantScreening);
+		return mDb.update(MainDBConstants.INFANTSCREENING_TABLE, cv, MainDBConstants.recordId + "='"
+				+ dInfantScreening.getRecordId() + "' and " + MainDBConstants.redcapEventName + "='" + dInfantScreening.getRedcapEventName() +"'", null) > 0;
+	}
+	//Limpiar la tabla de Zp00aInfantScreening de la base de datos
+	public boolean borrarZp00aInfantScreening() {
+		return mDb.delete(MainDBConstants.INFANTSCREENING_TABLE, null, null) > 0;
+	}
+	//Obtener un Zp00aInfantScreening de la base de datos
+	public Zp00aInfantScreening getZp00aInfantScreening(String filtro, String orden) throws SQLException {
+		Zp00aInfantScreening dInfantScreening = null;
+		Cursor cursor = crearCursor(MainDBConstants.INFANTSCREENING_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			dInfantScreening=Zp00aInfantScreeningHelper.crearZp00aInfantScreening(cursor);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return dInfantScreening;
+	}
+	//Obtener una lista de Zp00aInfantScreening de la base de datos
+	public List<Zp00aInfantScreening> getZp00aInfantScreenings(String filtro, String orden) throws SQLException {
+		List<Zp00aInfantScreening> dInfantScreenings = new ArrayList<Zp00aInfantScreening>();
+		Cursor cursor = crearCursor(MainDBConstants.INFANTSCREENING_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			dInfantScreenings.clear();
+			do{
+				Zp00aInfantScreening dInfantScreeningData = null;
+				dInfantScreeningData = Zp00aInfantScreeningHelper.crearZp00aInfantScreening(cursor);
+				dInfantScreenings.add(dInfantScreeningData);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return dInfantScreenings;
+	}
 
 
 	/**

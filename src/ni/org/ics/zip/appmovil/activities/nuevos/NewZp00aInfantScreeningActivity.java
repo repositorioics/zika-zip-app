@@ -1,14 +1,14 @@
 package ni.org.ics.zip.appmovil.activities.nuevos;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ContentUris;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,9 +21,9 @@ import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
-import ni.org.ics.zip.appmovil.domain.Zp08StudyExit;
-import ni.org.ics.zip.appmovil.domain.ZpInfantData;
-import ni.org.ics.zip.appmovil.parsers.Zp08StudyExitXml;
+import ni.org.ics.zip.appmovil.domain.Zp00aInfantScreening;
+import ni.org.ics.zip.appmovil.domain.Zp05UltrasoundExam;
+import ni.org.ics.zip.appmovil.parsers.Zp00aInfantScreeningXml;
 import ni.org.ics.zip.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.zip.appmovil.utils.Constants;
 import ni.org.ics.zip.appmovil.utils.FileUtils;
@@ -33,24 +33,29 @@ import org.simpleframework.xml.core.Persister;
 
 import java.io.File;
 import java.util.Date;
-import java.util.List;
+
+import static android.R.id.message;
 
 /**
- * Created by FIRSTICT on 10/31/2016.
- * V1.0
+ * Created by ics on 22/1/2018.
  */
-public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
-    protected static final String TAG = NewZp08StudyExitActivity.class.getSimpleName();
+public class NewZp00aInfantScreeningActivity extends AbstractAsyncActivity {
 
     private ZipAdapter zipA;
-    private static Zp08StudyExit mExit = new Zp08StudyExit();
+    private static Zp00aInfantScreening iTamizaje = null;
+    private static Zp00aInfantScreening infScr = null;
+    private static Zp05UltrasoundExam mZp05 = null;
+    private AlertDialog alertDialog;
 
-    public static final int ADD_EXIT_ODK = 1;
+
+    public static final int ADD_TAM = 1;
 
     Dialog dialogInit;
     private SharedPreferences settings;
     private String username;
     private String mRecordId = "";
+    private String infantId = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +72,35 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
                         null);
         String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
         zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
+        infScr = (Zp00aInfantScreening) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP00a);
         mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
-        createInitDialog();
+        if (infScr != null){
+            createDialog();
+        }else{
+            createInitDialog();
+        }
+
+
+    }
+
+    private void createDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(this.getString(R.string.inf_tam));
+        String labelHeader = "";
+
+        labelHeader = labelHeader + "<br/><font color='black'>"+ this.getString(R.string.err_duplicated2)+"</font>";
+
+        builder.setMessage(Html.fromHtml(labelHeader));
+        builder.setPositiveButton(this.getString(R.string.ok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+
+        alertDialog = builder.create();
+        alertDialog.show();
     }
 
     /**
@@ -82,8 +114,8 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
 
         //to set the message
         TextView message =(TextView) dialogInit.findViewById(R.id.yesnotext);
-        message.setText(getString(R.string.mat_retire)+"\n"+getString(R.string.verify));
-        
+            message.setText(getString(R.string.add)+ " " + getString(R.string.inf_tam));
+
         //add some action to the buttons
 
         Button yes = (Button) dialogInit.findViewById(R.id.yesnoYes);
@@ -91,7 +123,7 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
 
             public void onClick(View v) {
                 dialogInit.dismiss();
-                addZp08StudyExit();
+                addZp00aInfantScreening();
             }
         });
 
@@ -135,7 +167,7 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent intent) {
-        if(requestCode == ADD_EXIT_ODK) {
+        if(requestCode == ADD_TAM) {
             if(resultCode == RESULT_OK) {
                 Uri instanceUri = intent.getData();
                 //Busca la instancia resultado
@@ -154,27 +186,27 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
                 }
                 if (complete.matches("complete")){
                     //Parsear el resultado obteniendo un tamizaje si esta completo
-                    parseZp08StudyExit(idInstancia, instanceFilePath);
+                    parseTamizaje(idInstancia, instanceFilePath);
                 }
                 else{
                     Toast.makeText(getApplicationContext(),	getString(R.string.err_not_completed), Toast.LENGTH_LONG).show();
                 }
             }
             else{
-            	finish();
+                finish();
             }
         }
         super.onActivityResult(requestCode, resultCode, intent);
     }
 
-    private void addZp08StudyExit() {
+    private void addZp00aInfantScreening() {
         try{
             //campos de proveedor de collect
             String[] projection = new String[] {
                     "_id","jrFormId","displayName"};
             //cursor que busca el formulario
             Cursor c = getContentResolver().query(Constants.CONTENT_URI, projection,
-                    "jrFormId = 'Zp08_Study_Exit' and displayName = 'Estudio ZIP Salida del Estudio'", null, null);
+                    "jrFormId = 'ZP00a_Infant_Screening' and displayName = 'Estudio Zip Formato de Consentimiento del Infante'", null, null);
             c.moveToFirst();
             //captura el id del formulario
             Integer id = Integer.parseInt(c.getString(0));
@@ -186,7 +218,7 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
             Uri formUri = ContentUris.withAppendedId(Constants.CONTENT_URI, id);
             //Arranca la actividad ODK Collect en busca de resultado
             Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
-            startActivityForResult(odkA, ADD_EXIT_ODK);
+            startActivityForResult(odkA, ADD_TAM);
         }
         catch(Exception e){
             //No existe el formulario en el equipo
@@ -195,43 +227,42 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
         }
     }
 
-    private void parseZp08StudyExit(Integer idInstancia, String instanceFilePath) {
+
+    private void parseTamizaje(Integer idInstancia, String instanceFilePath) {
         Serializer serializer = new Persister();
         File source = new File(instanceFilePath);
         try {
-            Zp08StudyExitXml zp08Xml = serializer.read(Zp08StudyExitXml.class, source);
-            mExit.setRecordId(mRecordId);
-            mExit.setRedcapEventName(Constants.EXIT);
-            mExit.setExtStudyExitDate(zp08Xml.getExtStudyExitDate());
-            mExit.setExtSubjClass(zp08Xml.getExtSubjClass());
-            mExit.setExtStudyExitReason(zp08Xml.getExtStudyExitReason());
-            mExit.setExtNonpregMatrnlDth(zp08Xml.getExtNonpregMatrnlDth());
-            mExit.setExtAcuteHealthSpec(zp08Xml.getExtAcuteHealthSpec());
-            mExit.setExtHealthCondSpec(zp08Xml.getExtHealthCondSpec());
-            mExit.setExtFatalInjSpec(zp08Xml.getExtFatalInjSpec());
-            mExit.setExtInfDeathTime(zp08Xml.getExtInfDeathTime());
-            mExit.setExtTestResultsRcvd(zp08Xml.getExtTestResultsRcvd());
-            mExit.setExtCounselingRcvd(zp08Xml.getExtCounselingRcvd());
-            mExit.setExtComments(zp08Xml.getExtComments());
-            mExit.setExtIdCompleting(zp08Xml.getExtIdCompleting());
-            mExit.setExtDateCompleted(zp08Xml.getExtDateCompleted());
-            mExit.setExtIdReviewer(zp08Xml.getExtIdReviewer());
-            mExit.setExtDateReviewed(zp08Xml.getExtDateReviewed());
-            mExit.setExtIdDataEntry(zp08Xml.getExtIdDataEntry());
-            mExit.setExtDateEntered(zp08Xml.getExtDateEntered());
-
-            mExit.setRecordDate(new Date());
-            mExit.setRecordUser(username);
-            mExit.setIdInstancia(idInstancia);
-            mExit.setInstancePath(instanceFilePath);
-            mExit.setEstado(Constants.STATUS_NOT_SUBMITTED);
-            mExit.setStart(zp08Xml.getStart());
-            mExit.setEnd(zp08Xml.getEnd());
-            mExit.setDeviceid(zp08Xml.getDeviceid());
-            mExit.setSimserial(zp08Xml.getSimserial());
-            mExit.setPhonenumber(zp08Xml.getPhonenumber());
-            mExit.setToday(zp08Xml.getToday());
-
+            Zp00aInfantScreeningXml zp00aXml = serializer.read(Zp00aInfantScreeningXml.class, source);
+            iTamizaje = new Zp00aInfantScreening();
+            iTamizaje.setPregnantId(mRecordId);
+            iTamizaje.setRedcapEventName(Constants.BIRTH);
+            iTamizaje.setInfVisitDt(zp00aXml.getInfVisitDt());
+            iTamizaje.setInfRemain(zp00aXml.getInfRemain());
+            iTamizaje.setInfConsent(zp00aXml.getInfConsent());
+            iTamizaje.setInfConsenta(zp00aXml.getInfConsenta());
+            iTamizaje.setInfConsentb(zp00aXml.getInfConsentb());
+            iTamizaje.setInfConsentc(zp00aXml.getInfConsentc());
+            iTamizaje.setInfConsentd(zp00aXml.getInfConsentd());
+            iTamizaje.setInfInfid(zp00aXml.getInfInfid());
+            iTamizaje.setInfReasonno(zp00aXml.getInfReasonno());
+            iTamizaje.setInfReasonOther(zp00aXml.getInfReasonOther());
+            iTamizaje.setInfIdCompleting(username);
+            iTamizaje.setInfDateCompleted(new Date());
+            iTamizaje.setInfIdReviewer(username);
+            iTamizaje.setInfDateReviewed(new Date());
+            iTamizaje.setInfIdDataEntry(username);
+            iTamizaje.setInfDateEntered(new Date());
+            iTamizaje.setRecordDate(new Date());
+            iTamizaje.setRecordUser(username);
+            iTamizaje.setIdInstancia(idInstancia);
+            iTamizaje.setInstancePath(instanceFilePath);
+            iTamizaje.setEstado(Constants.STATUS_NOT_SUBMITTED);
+            iTamizaje.setStart(zp00aXml.getStart());
+            iTamizaje.setEnd(zp00aXml.getEnd());
+            iTamizaje.setDeviceid(zp00aXml.getDeviceid());
+            iTamizaje.setSimserial(zp00aXml.getSimserial());
+            iTamizaje.setPhonenumber(zp00aXml.getPhonenumber());
+            iTamizaje.setToday(zp00aXml.getToday());
             new SaveDataTask().execute();
 
         } catch (Exception e) {
@@ -256,16 +287,24 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
         protected String doInBackground(String... values) {
             try {
                 zipA.open();
-                zipA.crearZp08StudyExit(mExit);
-                if (mExit.getRecordId().matches("^07[0-9][0-9][0-9][0-9][0-3][A-Y]$")){
-                    List<ZpInfantData> infantesMadre = zipA.getZpInfantDatas(MainDBConstants.pregnantId + " = '"+mExit.getRecordId()+"'", null);
-                    for (ZpInfantData infantData : infantesMadre){
-                        mExit.setRecordId(infantData.getRecordId());
-                        int numInfante = Integer.valueOf(infantData.getRecordId().substring(6,7))+1;
-                        mExit.setExtSubjClass(String.valueOf(numInfante));
-                        zipA.crearZp08StudyExit(mExit);
+
+                String id =  MainDBConstants.recordId + "='" +  mRecordId + "'";
+                mZp05 = zipA.getZp05UltrasoundExam1(id, null);
+                     if (mZp05 != null){
+                        int numFe = mZp05.getUltFnumFetuses();
+                        if (numFe != 0) {
+                            for (int i = 1; i <= numFe; i++) {
+                                infantId = mRecordId.substring(0, mRecordId.length() - 2) + i + mRecordId.substring(mRecordId.length() - 1, mRecordId.length());
+                                iTamizaje.setRecordId(infantId);
+                                zipA.crearZp00aInfantScreening(iTamizaje);
+                            }
+                        }
+                    }else{
+                        infantId = mRecordId.substring(0, mRecordId.length() - 2) + "1" + mRecordId.substring(mRecordId.length() - 1, mRecordId.length());
+                         iTamizaje.setRecordId(infantId);
+                         zipA.crearZp00aInfantScreening(iTamizaje);
+
                     }
-                }
                 zipA.close();
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
@@ -289,4 +328,7 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
         Toast.makeText(getApplicationContext(),	resultado, Toast.LENGTH_LONG).show();
         finish();
     }
+
+
+
 }

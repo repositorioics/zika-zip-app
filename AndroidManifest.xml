@@ -134,6 +134,8 @@
                   android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp07dInfantBayleyScalesActivity"
                   android:screenOrientation="portrait"></activity>
+        <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp00aInfantScreeningActivity"
+                  android:screenOrientation="portrait"></activity>
         <activity android:name=".activities.paginas.MenuControlAgendaActivity"/>
         <activity android:name=".activities.paginas.agenda.Appointments"
                   android:label="@string/title_activity_appointments"/>

@@ -33,7 +33,7 @@ public class UploadAllTask extends UploadTask {
 	}
 
 	protected static final String TAG = UploadAllTask.class.getSimpleName();
-    private static final String TOTAL_TASK = "27";
+    private static final String TOTAL_TASK = "28";
 	private ZipAdapter zipA = null;
 	private List<ZpPreScreening> mPreTamizajes = new ArrayList<ZpPreScreening>();
 	private List<Zp00Screening> mTamizajes = new ArrayList<Zp00Screening>();
@@ -61,6 +61,7 @@ public class UploadAllTask extends UploadTask {
 	private List<Zp07bInfantAudioResults> mbInfantAudioResults = new ArrayList<Zp07bInfantAudioResults>();
 	private List<Zp07cInfantImageStudies> mcInfantImageStudies = new ArrayList<Zp07cInfantImageStudies>();
 	private List<Zp07dInfantBayleyScales> mdInfantBayleyScales = new ArrayList<Zp07dInfantBayleyScales>();
+	private List<Zp00aInfantScreening> infantScreeening = new ArrayList<Zp00aInfantScreening>();
 
 	private List<ZpAgendaEstudio> mZpAgendaResults = new ArrayList<ZpAgendaEstudio>();
 
@@ -96,6 +97,7 @@ public class UploadAllTask extends UploadTask {
 	public static final int IMAGE_STUDIES = 25;
 	public static final int BAYLEY_SCALES = 26;
 	public static  final int CITAS = 27;
+	public static  final int INFSCREENING = 28;
 	
 
 	@Override
@@ -135,6 +137,7 @@ public class UploadAllTask extends UploadTask {
 			mcInfantImageStudies = zipA.getZp07cInfantImageStudies(filtro, MainDBConstants.recordId);
 			mdInfantBayleyScales = zipA.getZp07dInfantBayleyScales(filtro, MainDBConstants.recordId);
             mEstadoInfante = zipA.getZpEstadoInfantes(filtro, MainDBConstants.recordId);
+			infantScreeening = zipA.getZp00aInfantScreenings(filtro, null);
 			// Envio de Agenda Ingresada
 			mZpAgendaResults = zipA.getAgendaStudios(filtro,MainDBConstants.id); //A.L | 21/11/2017
 
@@ -298,6 +301,13 @@ public class UploadAllTask extends UploadTask {
 			error = uploadInfantBayleyScales(url, username, password);
 			if (!error.matches("Datos recibidos!")){
 				actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, BAYLEY_SCALES);
+				return error;
+			}
+
+			actualizarBaseDatos(Constants.STATUS_SUBMITTED, INFSCREENING);
+			error = uploadInfantScreening(url, username, password);
+			if (!error.matches("Datos recibidos!")){
+				actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, INFSCREENING);
 				return error;
 			}
 
@@ -611,6 +621,21 @@ public class UploadAllTask extends UploadTask {
 				}
 			}
 		}
+
+		else if(opcion==INFSCREENING){
+			c = infantScreeening.size();
+			if(c>0){
+				for (Zp00aInfantScreening dInfScr : infantScreeening) {
+					dInfScr.setEstado(estado);
+					zipA.editarZp00aInfantScreening(dInfScr);
+					publishProgress("Actualizando consentimiento de infantes", Integer.valueOf(infantScreeening.indexOf(dInfScr)).toString(), Integer
+							.valueOf(c).toString());
+				}
+			}
+		}
+
+
+
 		//Actualizar Status de la Agenda
 		else if(opcion == CITAS){
 			c = mZpAgendaResults.size();
@@ -1542,6 +1567,40 @@ public class UploadAllTask extends UploadTask {
         }
     }
 
+	/***************************************************/
+	/********************* Zp00aInfantScreening******/
+	/***************************************************/
+	// url, username, password
+	protected String uploadInfantScreening(String url, String username,
+										String password) throws Exception {
+		try {
+			if(infantScreeening.size()>0){
+				publishProgress("Enviando datos de consentimiento de infantes!", "28", TOTAL_TASK);
+				// La URL de la solicitud POST
+				final String urlRequest = url + "/movil/zp00aInfantScreenings";
+				Zp00aInfantScreening[] envio = infantScreeening.toArray(new Zp00aInfantScreening[infantScreeening.size()]);
+				HttpHeaders requestHeaders = new HttpHeaders();
+				HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+				requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+				requestHeaders.setAuthorization(authHeader);
+				HttpEntity<Zp00aInfantScreening[]> requestEntity =
+						new HttpEntity<Zp00aInfantScreening[]>(envio, requestHeaders);
+				RestTemplate restTemplate = new RestTemplate();
+				restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+				restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+				// Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+				ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+						String.class);
+				return response.getBody();
+			}
+			else{
+				return "Datos recibidos!";
+			}
+		} catch (Exception e) {
+			Log.e(TAG, e.getMessage(), e);
+			return e.getMessage();
+		}
+	}
 
 
 	/***************************************************/
