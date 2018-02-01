@@ -26,51 +26,51 @@ public class Zp02BiospecimenCollectionXml{
     @Element(required=false)
     private String bscMatBldId1;
     @Element(required=false)
-    private Integer bscMatBldVol1;
+    private Float bscMatBldVol1;
     @Element(required=false)
     private String bscMatBldTyp2;
     @Element(required=false)
     private String bscMatBldId2;
     @Element(required=false)
-    private Integer bscMatBldVol2;
+    private Float bscMatBldVol2;
     @Element(required=false)
     private String bscMatBldTyp3;
     @Element(required=false)
     private String bscMatBldId3;
     @Element(required=false)
-    private Integer bscMatBldVol3;
+    private Float bscMatBldVol3;
     @Element(required=false)
     private String bscMatBldTyp4;
     @Element(required=false)
     private String bscMatBldId4;
     @Element(required=false)
-    private Integer bscMatBldVol4;
+    private Float bscMatBldVol4;
     @Element(required=false)
     private String bscMatBldTyp5;
     @Element(required=false)
     private String bscMatBldId5;
     @Element(required=false)
-    private Integer bscMatBldVol5;
+    private Float bscMatBldVol5;
     @Element(required=false)
     private String bscMatBldTyp6;
     @Element(required=false)
     private String bscMatBldId6;
     @Element(required=false)
-    private Integer bscMatBldVol6;
+    private Float bscMatBldVol6;
     @Element(required=false)
     private String bscMatBldTyp7;
     @Element(required=false)
     private String bscMatBldId7;
     @Element(required=false)
-    private Integer bscMatBldVol7;
+    private Float bscMatBldVol7;
     @Element(required=false)
     private String bscMatBldTyp8;
     @Element(required=false)
     private String bscMatBldId8;
     @Element(required=false)
-    private Integer bscMatBldVol8;
+    private Float bscMatBldVol8;
     @Element(required=false)
-    private Integer bscMatBldTotVol;
+    private Float bscMatBldTotVol;
     @Element(required=false)
     private String bscMatBldTime;
     @Element(required=false)
@@ -504,7 +504,7 @@ public class Zp02BiospecimenCollectionXml{
         return bscMatBldId1;
     }
 
-    public Integer getBscMatBldVol1() {
+    public Float getBscMatBldVol1() {
         return bscMatBldVol1;
     }
 
@@ -516,7 +516,7 @@ public class Zp02BiospecimenCollectionXml{
         return bscMatBldId2;
     }
 
-    public Integer getBscMatBldVol2() {
+    public Float getBscMatBldVol2() {
         return bscMatBldVol2;
     }
 
@@ -528,7 +528,7 @@ public class Zp02BiospecimenCollectionXml{
         return bscMatBldId3;
     }
 
-    public Integer getBscMatBldVol3() {
+    public Float getBscMatBldVol3() {
         return bscMatBldVol3;
     }
 
@@ -540,7 +540,7 @@ public class Zp02BiospecimenCollectionXml{
         return bscMatBldId4;
     }
 
-    public Integer getBscMatBldVol4() {
+    public Float getBscMatBldVol4() {
         return bscMatBldVol4;
     }
 
@@ -552,7 +552,7 @@ public class Zp02BiospecimenCollectionXml{
         return bscMatBldId5;
     }
 
-    public Integer getBscMatBldVol5() {
+    public Float getBscMatBldVol5() {
         return bscMatBldVol5;
     }
 
@@ -564,7 +564,7 @@ public class Zp02BiospecimenCollectionXml{
         return bscMatBldId6;
     }
 
-    public Integer getBscMatBldVol6() {
+    public Float getBscMatBldVol6() {
         return bscMatBldVol6;
     }
 
@@ -576,7 +576,7 @@ public class Zp02BiospecimenCollectionXml{
         return bscMatBldId7;
     }
 
-    public Integer getBscMatBldVol7() {
+    public Float getBscMatBldVol7() {
         return bscMatBldVol7;
     }
 
@@ -588,11 +588,11 @@ public class Zp02BiospecimenCollectionXml{
         return bscMatBldId8;
     }
 
-    public Integer getBscMatBldVol8() {
+    public Float getBscMatBldVol8() {
         return bscMatBldVol8;
     }
 
-    public Integer getBscMatBldTotVol() {
+    public Float getBscMatBldTotVol() {
         return bscMatBldTotVol;
     }
 

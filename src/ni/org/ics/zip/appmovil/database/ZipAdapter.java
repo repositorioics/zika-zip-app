@@ -90,11 +90,45 @@ public class ZipAdapter {
 			db.execSQL(ParametroConstans.CREATE_PARAMETROS_TABLE);// Crear tabla Parametros | AL 23/11/17
 			db.execSQL(ProviderConstans.CREATE_PROVIDER_TABLE);// Crear tabla Parametros | AL 23/11/17
 		}
+		
+		public void deleteTables(SQLiteDatabase db) {
+			db.execSQL("DROP TABLE " + MainDBConstants.SCREENING_TABLE);
+			db.execSQL("DROP TABLE " + MainDBConstants.STATUS_PREG_TABLE);
+			db.execSQL("DROP TABLE " + MainDBConstants.DATA_PREG_TABLE);
+			db.execSQL("DROP TABLE " + MainDBConstants.DATA_PRESCREEN_TABLE);
+			db.execSQL("DROP TABLE " + Zp01DBConstants.STUDYENTRY_AD_TABLE);
+			db.execSQL("DROP TABLE " + Zp01DBConstants.STUDYENTRY_E_TABLE);
+			db.execSQL("DROP TABLE " + Zp01DBConstants.STUDYENTRY_FK_TABLE);
+			db.execSQL("DROP TABLE " + Zp02DBConstants.BIOCOLLECTION_TABLE);
+			db.execSQL("DROP TABLE " + Zp03DBConstants.MONTHLYVISIT_TABLE);
+			db.execSQL("DROP TABLE " + Zp04DBConstants.TRIMESTERVISIT_AD_TABLE);
+			db.execSQL("DROP TABLE " + Zp04DBConstants.TRIMESTERVISIT_E_TABLE);
+			db.execSQL("DROP TABLE " + Zp04DBConstants.TRIMESTERVISIT_FH_TABLE);
+			db.execSQL("DROP TABLE " + Zp05DBConstants.ULTRASOUNDEXAM_TABLE);
+			db.execSQL("DROP TABLE " + Zp06DBConstants.DELIVERY6WVISIT_TABLE);
+			db.execSQL("DROP TABLE " + Zp08DBConstants.STUDYEXIT_TABLE);
+			db.execSQL("DROP TABLE " + MainDBConstants.DATA_CONSSAL_TABLE);
+			db.execSQL("DROP TABLE " + MainDBConstants.DATA_CONSREC_TABLE);
+			db.execSQL("DROP TABLE " + MainDBConstants.DATA_USSAL_TABLE);
+			db.execSQL("DROP TABLE " + MainDBConstants.DATA_USREC_TABLE);
+			db.execSQL("DROP TABLE " + Zp02DBConstants.INFANT_BIOCOLLECTION_TABLE);
+			db.execSQL("DROP TABLE " + MainDBConstants.INFANTDATA_TABLE);
+			db.execSQL("DROP TABLE " + MainDBConstants.INFANTSTATUS_TABLE);
+			db.execSQL("DROP TABLE " + Zp07aDBConstants.AINFANT_OPHTRESULTS_TABLE);
+			db.execSQL("DROP TABLE " + Zp07bDBConstants.BINFANT_AUDIORESULTS_TABLE);
+			db.execSQL("DROP TABLE " + Zp07cDBConstants.CINFANT_IMAGESTUDIES_TABLE);
+			db.execSQL("DROP TABLE " + Zp07dDBConstants.DINFANT_BAYLEYSCALES_TABLE);
+		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			onCreate(db);
 			if(oldVersion==0) return;
+			if(oldVersion>=6){
+				deleteTables(db);
+				onCreate(db);
+				return;
+			}
 			if(oldVersion==1){
 				db.execSQL("ALTER TABLE " + Zp01DBConstants.STUDYENTRY_AD_TABLE + " ADD COLUMN " + Zp01DBConstants.seaAddtChronicDiseases + " text");
 				db.execSQL("ALTER TABLE " + Zp01DBConstants.STUDYENTRY_AD_TABLE + " ADD COLUMN " + Zp01DBConstants.seaAddtChronicDiseases1 + " text");

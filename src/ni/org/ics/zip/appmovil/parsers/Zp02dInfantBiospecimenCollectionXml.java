@@ -30,51 +30,51 @@ public class Zp02dInfantBiospecimenCollectionXml {
     @Element(required=false)
     private String infantMatBldId1;
     @Element(required=false)
-    private Integer infantMatBldVol1;
+    private Float infantMatBldVol1;
     @Element(required=false)
     private String infantMatBldTyp2;
     @Element(required=false)
     private String infantMatBldId2;
     @Element(required=false)
-    private Integer infantMatBldVol2;
+    private Float infantMatBldVol2;
     @Element(required=false)
     private String infantMatBldTyp3;
     @Element(required=false)
     private String infantMatBldId3;
     @Element(required=false)
-    private Integer infantMatBldVol3;
+    private Float infantMatBldVol3;
     @Element(required=false)
     private String infantMatBldTyp4;
     @Element(required=false)
     private String infantMatBldId4;
     @Element(required=false)
-    private Integer infantMatBldVol4;
+    private Float infantMatBldVol4;
     @Element(required=false)
     private String infantMatBldTyp5;
     @Element(required=false)
     private String infantMatBldId5;
     @Element(required=false)
-    private Integer infantMatBldVol5;
+    private Float infantMatBldVol5;
     @Element(required=false)
     private String infantMatBldTyp6;
     @Element(required=false)
     private String infantMatBldId6;
     @Element(required=false)
-    private Integer infantMatBldVol6;
+    private Float infantMatBldVol6;
     @Element(required=false)
     private String infantMatBldTyp7;
     @Element(required=false)
     private String infantMatBldId7;
     @Element(required=false)
-    private Integer infantMatBldVol7;
+    private Float infantMatBldVol7;
     @Element(required=false)
     private String infantMatBldTyp8;
     @Element(required=false)
     private String infantMatBldId8;
     @Element(required=false)
-    private Integer infantMatBldVol8;
+    private Float infantMatBldVol8;
     @Element(required=false)
-    private Integer infantMatBldTotVol;
+    private Float infantMatBldTotVol;
     @Element(required=false)
     private String infantMatBldTime;
     @Element(required=false)
@@ -268,7 +268,7 @@ public class Zp02dInfantBiospecimenCollectionXml {
         return infantMatBldId1;
     }
 
-    public Integer getInfantMatBldVol1() {
+    public Float getInfantMatBldVol1() {
         return infantMatBldVol1;
     }
 
@@ -280,7 +280,7 @@ public class Zp02dInfantBiospecimenCollectionXml {
         return infantMatBldId2;
     }
 
-    public Integer getInfantMatBldVol2() {
+    public Float getInfantMatBldVol2() {
         return infantMatBldVol2;
     }
 
@@ -292,7 +292,7 @@ public class Zp02dInfantBiospecimenCollectionXml {
         return infantMatBldId3;
     }
 
-    public Integer getInfantMatBldVol3() {
+    public Float getInfantMatBldVol3() {
         return infantMatBldVol3;
     }
 
@@ -304,7 +304,7 @@ public class Zp02dInfantBiospecimenCollectionXml {
         return infantMatBldId4;
     }
 
-    public Integer getInfantMatBldVol4() {
+    public Float getInfantMatBldVol4() {
         return infantMatBldVol4;
     }
 
@@ -316,7 +316,7 @@ public class Zp02dInfantBiospecimenCollectionXml {
         return infantMatBldId5;
     }
 
-    public Integer getInfantMatBldVol5() {
+    public Float getInfantMatBldVol5() {
         return infantMatBldVol5;
     }
 
@@ -328,7 +328,7 @@ public class Zp02dInfantBiospecimenCollectionXml {
         return infantMatBldId6;
     }
 
-    public Integer getInfantMatBldVol6() {
+    public Float getInfantMatBldVol6() {
         return infantMatBldVol6;
     }
 
@@ -340,7 +340,7 @@ public class Zp02dInfantBiospecimenCollectionXml {
         return infantMatBldId7;
     }
 
-    public Integer getInfantMatBldVol7() {
+    public Float getInfantMatBldVol7() {
         return infantMatBldVol7;
     }
 
@@ -352,11 +352,11 @@ public class Zp02dInfantBiospecimenCollectionXml {
         return infantMatBldId8;
     }
 
-    public Integer getInfantMatBldVol8() {
+    public Float getInfantMatBldVol8() {
         return infantMatBldVol8;
     }
 
-    public Integer getInfantMatBldTotVol() {
+    public Float getInfantMatBldTotVol() {
         return infantMatBldTotVol;
     }
 

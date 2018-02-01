@@ -20,29 +20,29 @@ public class Zp02dInfantBiospecimenCollection extends BaseMetaData {
     private String infantMatBldSpecify;
     private String infantMatBldTyp1;
     private String infantMatBldId1;
-    private Integer infantMatBldVol1;
+    private Float infantMatBldVol1;
     private String infantMatBldTyp2;
     private String infantMatBldId2;
-    private Integer infantMatBldVol2;
+    private Float infantMatBldVol2;
     private String infantMatBldTyp3;
     private String infantMatBldId3;
-    private Integer infantMatBldVol3;
+    private Float infantMatBldVol3;
     private String infantMatBldTyp4;
     private String infantMatBldId4;
-    private Integer infantMatBldVol4;
+    private Float infantMatBldVol4;
     private String infantMatBldTyp5;
     private String infantMatBldId5;
-    private Integer infantMatBldVol5;
+    private Float infantMatBldVol5;
     private String infantMatBldTyp6;
     private String infantMatBldId6;
-    private Integer infantMatBldVol6;
+    private Float infantMatBldVol6;
     private String infantMatBldTyp7;
     private String infantMatBldId7;
-    private Integer infantMatBldVol7;
+    private Float infantMatBldVol7;
     private String infantMatBldTyp8;
     private String infantMatBldId8;
-    private Integer infantMatBldVol8;
-    private Integer infantMatBldTotVol;
+    private Float infantMatBldVol8;
+    private Float infantMatBldTotVol;
     private String infantMatBldTime;
     private String infantMatBldCom;
     private String infantMatSlvaCol;
@@ -152,11 +152,11 @@ public class Zp02dInfantBiospecimenCollection extends BaseMetaData {
         this.infantMatBldId1 = infantMatBldId1;
     }
 
-    public Integer getInfantMatBldVol1() {
+    public Float getInfantMatBldVol1() {
         return infantMatBldVol1;
     }
 
-    public void setInfantMatBldVol1(Integer infantMatBldVol1) {
+    public void setInfantMatBldVol1(Float infantMatBldVol1) {
         this.infantMatBldVol1 = infantMatBldVol1;
     }
 
@@ -176,11 +176,11 @@ public class Zp02dInfantBiospecimenCollection extends BaseMetaData {
         this.infantMatBldId2 = infantMatBldId2;
     }
 
-    public Integer getInfantMatBldVol2() {
+    public Float getInfantMatBldVol2() {
         return infantMatBldVol2;
     }
 
-    public void setInfantMatBldVol2(Integer infantMatBldVol2) {
+    public void setInfantMatBldVol2(Float infantMatBldVol2) {
         this.infantMatBldVol2 = infantMatBldVol2;
     }
 
@@ -200,11 +200,11 @@ public class Zp02dInfantBiospecimenCollection extends BaseMetaData {
         this.infantMatBldId3 = infantMatBldId3;
     }
 
-    public Integer getInfantMatBldVol3() {
+    public Float getInfantMatBldVol3() {
         return infantMatBldVol3;
     }
 
-    public void setInfantMatBldVol3(Integer infantMatBldVol3) {
+    public void setInfantMatBldVol3(Float infantMatBldVol3) {
         this.infantMatBldVol3 = infantMatBldVol3;
     }
 
@@ -224,11 +224,11 @@ public class Zp02dInfantBiospecimenCollection extends BaseMetaData {
         this.infantMatBldId4 = infantMatBldId4;
     }
 
-    public Integer getInfantMatBldVol4() {
+    public Float getInfantMatBldVol4() {
         return infantMatBldVol4;
     }
 
-    public void setInfantMatBldVol4(Integer infantMatBldVol4) {
+    public void setInfantMatBldVol4(Float infantMatBldVol4) {
         this.infantMatBldVol4 = infantMatBldVol4;
     }
 
@@ -248,11 +248,11 @@ public class Zp02dInfantBiospecimenCollection extends BaseMetaData {
         this.infantMatBldId5 = infantMatBldId5;
     }
 
-    public Integer getInfantMatBldVol5() {
+    public Float getInfantMatBldVol5() {
         return infantMatBldVol5;
     }
 
-    public void setInfantMatBldVol5(Integer infantMatBldVol5) {
+    public void setInfantMatBldVol5(Float infantMatBldVol5) {
         this.infantMatBldVol5 = infantMatBldVol5;
     }
 
@@ -272,11 +272,11 @@ public class Zp02dInfantBiospecimenCollection extends BaseMetaData {
         this.infantMatBldId6 = infantMatBldId6;
     }
 
-    public Integer getInfantMatBldVol6() {
+    public Float getInfantMatBldVol6() {
         return infantMatBldVol6;
     }
 
-    public void setInfantMatBldVol6(Integer infantMatBldVol6) {
+    public void setInfantMatBldVol6(Float infantMatBldVol6) {
         this.infantMatBldVol6 = infantMatBldVol6;
     }
 
@@ -296,11 +296,11 @@ public class Zp02dInfantBiospecimenCollection extends BaseMetaData {
         this.infantMatBldId7 = infantMatBldId7;
     }
 
-    public Integer getInfantMatBldVol7() {
+    public Float getInfantMatBldVol7() {
         return infantMatBldVol7;
     }
 
-    public void setInfantMatBldVol7(Integer infantMatBldVol7) {
+    public void setInfantMatBldVol7(Float infantMatBldVol7) {
         this.infantMatBldVol7 = infantMatBldVol7;
     }
 
@@ -320,19 +320,19 @@ public class Zp02dInfantBiospecimenCollection extends BaseMetaData {
         this.infantMatBldId8 = infantMatBldId8;
     }
 
-    public Integer getInfantMatBldVol8() {
+    public Float getInfantMatBldVol8() {
         return infantMatBldVol8;
     }
 
-    public void setInfantMatBldVol8(Integer infantMatBldVol8) {
+    public void setInfantMatBldVol8(Float infantMatBldVol8) {
         this.infantMatBldVol8 = infantMatBldVol8;
     }
 
-    public Integer getInfantMatBldTotVol() {
+    public Float getInfantMatBldTotVol() {
         return infantMatBldTotVol;
     }
 
-    public void setInfantMatBldTotVol(Integer infantMatBldTotVol) {
+    public void setInfantMatBldTotVol(Float infantMatBldTotVol) {
         this.infantMatBldTotVol = infantMatBldTotVol;
     }
 

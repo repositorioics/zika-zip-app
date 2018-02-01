@@ -18,29 +18,29 @@ public class Zp02BiospecimenCollection extends BaseMetaData{
     private String bscMatBldSpecify;
     private String bscMatBldTyp1;
     private String bscMatBldId1;
-    private Integer bscMatBldVol1;
+    private Float bscMatBldVol1;
     private String bscMatBldTyp2;
     private String bscMatBldId2;
-    private Integer bscMatBldVol2;
+    private Float bscMatBldVol2;
     private String bscMatBldTyp3;
     private String bscMatBldId3;
-    private Integer bscMatBldVol3;
+    private Float bscMatBldVol3;
     private String bscMatBldTyp4;
     private String bscMatBldId4;
-    private Integer bscMatBldVol4;
+    private Float bscMatBldVol4;
     private String bscMatBldTyp5;
     private String bscMatBldId5;
-    private Integer bscMatBldVol5;
+    private Float bscMatBldVol5;
     private String bscMatBldTyp6;
     private String bscMatBldId6;
-    private Integer bscMatBldVol6;
+    private Float bscMatBldVol6;
     private String bscMatBldTyp7;
     private String bscMatBldId7;
-    private Integer bscMatBldVol7;
+    private Float bscMatBldVol7;
     private String bscMatBldTyp8;
     private String bscMatBldId8;
-    private Integer bscMatBldVol8;
-    private Integer bscMatBldTotVol;
+    private Float bscMatBldVol8;
+    private Float bscMatBldTotVol;
     private String bscMatBldTime;
     private String bscMatBldCom;
     private String bscMatSlvaCol;
@@ -210,11 +210,11 @@ public class Zp02BiospecimenCollection extends BaseMetaData{
         this.bscMatBldId1 = bscMatBldId1;
     }
 
-    public Integer getBscMatBldVol1() {
+    public Float getBscMatBldVol1() {
         return bscMatBldVol1;
     }
 
-    public void setBscMatBldVol1(Integer bscMatBldVol1) {
+    public void setBscMatBldVol1(Float bscMatBldVol1) {
         this.bscMatBldVol1 = bscMatBldVol1;
     }
 
@@ -234,11 +234,11 @@ public class Zp02BiospecimenCollection extends BaseMetaData{
         this.bscMatBldId2 = bscMatBldId2;
     }
 
-    public Integer getBscMatBldVol2() {
+    public Float getBscMatBldVol2() {
         return bscMatBldVol2;
     }
 
-    public void setBscMatBldVol2(Integer bscMatBldVol2) {
+    public void setBscMatBldVol2(Float bscMatBldVol2) {
         this.bscMatBldVol2 = bscMatBldVol2;
     }
 
@@ -258,11 +258,11 @@ public class Zp02BiospecimenCollection extends BaseMetaData{
         this.bscMatBldId3 = bscMatBldId3;
     }
 
-    public Integer getBscMatBldVol3() {
+    public Float getBscMatBldVol3() {
         return bscMatBldVol3;
     }
 
-    public void setBscMatBldVol3(Integer bscMatBldVol3) {
+    public void setBscMatBldVol3(Float bscMatBldVol3) {
         this.bscMatBldVol3 = bscMatBldVol3;
     }
 
@@ -282,11 +282,11 @@ public class Zp02BiospecimenCollection extends BaseMetaData{
         this.bscMatBldId4 = bscMatBldId4;
     }
 
-    public Integer getBscMatBldVol4() {
+    public Float getBscMatBldVol4() {
         return bscMatBldVol4;
     }
 
-    public void setBscMatBldVol4(Integer bscMatBldVol4) {
+    public void setBscMatBldVol4(Float bscMatBldVol4) {
         this.bscMatBldVol4 = bscMatBldVol4;
     }
 
@@ -306,11 +306,11 @@ public class Zp02BiospecimenCollection extends BaseMetaData{
         this.bscMatBldId5 = bscMatBldId5;
     }
 
-    public Integer getBscMatBldVol5() {
+    public Float getBscMatBldVol5() {
         return bscMatBldVol5;
     }
 
-    public void setBscMatBldVol5(Integer bscMatBldVol5) {
+    public void setBscMatBldVol5(Float bscMatBldVol5) {
         this.bscMatBldVol5 = bscMatBldVol5;
     }
 
@@ -330,11 +330,11 @@ public class Zp02BiospecimenCollection extends BaseMetaData{
         this.bscMatBldId6 = bscMatBldId6;
     }
 
-    public Integer getBscMatBldVol6() {
+    public Float getBscMatBldVol6() {
         return bscMatBldVol6;
     }
 
-    public void setBscMatBldVol6(Integer bscMatBldVol6) {
+    public void setBscMatBldVol6(Float bscMatBldVol6) {
         this.bscMatBldVol6 = bscMatBldVol6;
     }
 
@@ -354,11 +354,11 @@ public class Zp02BiospecimenCollection extends BaseMetaData{
         this.bscMatBldId7 = bscMatBldId7;
     }
 
-    public Integer getBscMatBldVol7() {
+    public Float getBscMatBldVol7() {
         return bscMatBldVol7;
     }
 
-    public void setBscMatBldVol7(Integer bscMatBldVol7) {
+    public void setBscMatBldVol7(Float bscMatBldVol7) {
         this.bscMatBldVol7 = bscMatBldVol7;
     }
 
@@ -378,19 +378,19 @@ public class Zp02BiospecimenCollection extends BaseMetaData{
         this.bscMatBldId8 = bscMatBldId8;
     }
 
-    public Integer getBscMatBldVol8() {
+    public Float getBscMatBldVol8() {
         return bscMatBldVol8;
     }
 
-    public void setBscMatBldVol8(Integer bscMatBldVol8) {
+    public void setBscMatBldVol8(Float bscMatBldVol8) {
         this.bscMatBldVol8 = bscMatBldVol8;
     }
 
-    public Integer getBscMatBldTotVol() {
+    public Float getBscMatBldTotVol() {
         return bscMatBldTotVol;
     }
 
-    public void setBscMatBldTotVol(Integer bscMatBldTotVol) {
+    public void setBscMatBldTotVol(Float bscMatBldTotVol) {
         this.bscMatBldTotVol = bscMatBldTotVol;
     }
 
