@@ -40,7 +40,7 @@ public class UnscheduledInfantVisitActivity extends AbstractAsyncActivity {
 	private static Zp07bInfantAudioResults zp07b = null;
 	private static Zp07cInfantImageStudies zp07c = null;
 	private static Zp07dInfantBayleyScales zp07d = null;
-
+	private static Zp07InfantOtoacousticEmissions zp07OtoE = null;
 	
 	private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
 	private static String evento;
@@ -144,6 +144,13 @@ public class UnscheduledInfantVisitActivity extends AbstractAsyncActivity {
 						i = new Intent(getApplicationContext(),
 								NewZp07dInfantBayleyScalesActivity.class);
 						if (zp07d != null) arguments.putSerializable(Constants.OBJECTO_ZP07D, zp07d);
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
+					case 8: //EVALUACION OTOACUSTICA
+						i = new Intent(getApplicationContext(),
+								NewZp07InfantOtoacousticEmissionsActivity.class);
+						if (zp07OtoE != null) arguments.putSerializable(Constants.OBJECTO_ZP07OtoE, zp07OtoE);
 						i.putExtras(arguments);
 						startActivity(i);
 						break;
@@ -288,6 +295,7 @@ public class UnscheduledInfantVisitActivity extends AbstractAsyncActivity {
 					zp07b = zipA.getZp07bInfantAudioResult(filtro, MainDBConstants.recordId);
 					zp07c = zipA.getZp07cInfantImageSt(filtro, MainDBConstants.recordId);
 					zp07d = zipA.getZp07dInfantBayleySc(filtro, MainDBConstants.recordId);
+					zp07OtoE = zipA.getZp07InfantOtoacousticE(filtro, MainDBConstants.recordId);
 					zipA.close();
 				} catch (Exception e) {
 					Log.e(TAG, e.getLocalizedMessage(), e);
@@ -299,7 +307,7 @@ public class UnscheduledInfantVisitActivity extends AbstractAsyncActivity {
 			protected void onPostExecute(String resultado) {
 				// after the network request completes, hide the progress indicator
 				gridView.setAdapter(new InfantVisitAdapter(getApplicationContext(), R.layout.menu_item_2, menu_infante_info, 
-						zp02d, zp07,zp07a, zp07b, zp07c, zp07d));
+						zp02d, zp07,zp07a, zp07b, zp07c, zp07d, zp07OtoE));
 				dismissProgressDialog();
 			}
 

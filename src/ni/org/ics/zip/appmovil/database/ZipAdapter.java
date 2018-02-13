@@ -83,6 +83,7 @@ public class ZipAdapter {
 			db.execSQL(Zp07cDBConstants.CREATE_CINFANT_IMAGESTUDIES_TABLE);
 			db.execSQL(Zp07dDBConstants.CREATE_DINFANT_BAYLEYSCALES_TABLE);
 			db.execSQL(MainDBConstants.CREATE_INF_SCREENING_TABLE);
+			db.execSQL(Zp07OtoEDBConstants.CREATE_INFANT_OTO_EMS_TABLE);
 			String createTable = MainDBConstants.CREATE_TABLE_AGENDA_STUDIO;
 			db.execSQL(createTable); // Crear tabla agenda | AL 07/11/17
 			db.execSQL(ZpCenterConstans.CREATE_CENTER_TABLE);  // Crear tabla Centros | AL 17/11/17
@@ -118,13 +119,14 @@ public class ZipAdapter {
 			db.execSQL("DROP TABLE " + Zp07bDBConstants.BINFANT_AUDIORESULTS_TABLE);
 			db.execSQL("DROP TABLE " + Zp07cDBConstants.CINFANT_IMAGESTUDIES_TABLE);
 			db.execSQL("DROP TABLE " + Zp07dDBConstants.DINFANT_BAYLEYSCALES_TABLE);
+			db.execSQL("DROP TABLE " + Zp07OtoEDBConstants.INFANT_OTO_EMS_TABLE);
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			onCreate(db);
 			if(oldVersion==0) return;
-			if(oldVersion>=6){
+			if(oldVersion>=7){
 				deleteTables(db);
 				onCreate(db);
 				return;
@@ -1723,6 +1725,53 @@ public class ZipAdapter {
 		}
 		if (!cursor.isClosed()) cursor.close();
 		return dInfantScreenings;
+	}
+
+	/**
+	 * Metodos para Zp07InfantOtoacousticEmissions en la base de datos
+	 *
+	 */
+	//Crear nuevo Zp07InfantOtoacousticEmissions en la base de datos
+	public void crearZp07InfantOtoacousticEm(Zp07InfantOtoacousticEmissions infantOtoEm) {
+		ContentValues cv = Zp07InfantOtoacousticEmissionsHelper.crearZp07InfantOtoacousticEmissions(infantOtoEm);
+		mDb.insert(Zp07OtoEDBConstants.INFANT_OTO_EMS_TABLE, null, cv);
+	}
+	//Editar Zp07InfantOtoacousticEmissions existente en la base de datos
+	public boolean editarcrearZp07InfantOtoacousticEm(Zp07InfantOtoacousticEmissions infantOtoEms) {
+		ContentValues cv = Zp07InfantOtoacousticEmissionsHelper.crearZp07InfantOtoacousticEmissions(infantOtoEms);
+		return mDb.update(Zp07OtoEDBConstants.INFANT_OTO_EMS_TABLE, cv, Zp07OtoEDBConstants.recordId + "='"
+				+ infantOtoEms.getRecordId() + "' and " + Zp07OtoEDBConstants.redcapEventName + "='" + infantOtoEms.getRedcapEventName() +"'", null) > 0;
+	}
+	//Limpiar la tabla de Zp07InfantOtoacousticEmissions de la base de datos
+	public boolean borrarZp07InfantOtoacousticE() {
+		return mDb.delete(Zp07OtoEDBConstants.INFANT_OTO_EMS_TABLE, null, null) > 0;
+	}
+	//Obtener un Zp07InfantOtoacousticEmissions de la base de datos
+	public Zp07InfantOtoacousticEmissions getZp07InfantOtoacousticE(String filtro, String orden) throws SQLException {
+		Zp07InfantOtoacousticEmissions infantOtoEm = null;
+		Cursor cursor = crearCursor(Zp07OtoEDBConstants.INFANT_OTO_EMS_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			infantOtoEm = Zp07InfantOtoacousticEmissionsHelper.crearZp07InfantOtoacousticEmissions(cursor);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return infantOtoEm;
+	}
+	//Obtener una lista de Zp07InfantAssessmentVisit de la base de datos
+	public List<Zp07InfantOtoacousticEmissions> getZp07InfantOtoacousticEms(String filtro, String orden) throws SQLException {
+		List<Zp07InfantOtoacousticEmissions> infantOtoEms = new ArrayList<Zp07InfantOtoacousticEmissions>();
+		Cursor cursor = crearCursor(Zp07OtoEDBConstants.INFANT_OTO_EMS_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			infantOtoEms.clear();
+			do{
+				Zp07InfantOtoacousticEmissions infantOtoE = null;
+				infantOtoE = Zp07InfantOtoacousticEmissionsHelper.crearZp07InfantOtoacousticEmissions(cursor);
+				infantOtoEms.add(infantOtoE);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return infantOtoEms;
 	}
 
 

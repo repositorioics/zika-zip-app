@@ -440,6 +440,10 @@ public class Zp02dInfantBiospecimenCollectionXml {
         return infantCompleteDate3;
     }
 
+    public String getQuestion1() {
+        return question1;
+    }
+
     public String getId() {
         return id;
     }
