@@ -53,14 +53,23 @@ public class InfantVisitAdapter extends ArrayAdapter<String> {
 		
 		// Change icon based on position
 		Drawable img = null;
-		switch (position){
-
-		case 0:
-			if(mZp07!=null){
-				if (mZp07.getPart1() != null){
-					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
-				}else{
+		switch (position) {
+			case 0:
+				if (mZp02d != null) {
+					textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
+				} else {
 					textView.setTextColor(Color.RED);
+					textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.pending));
+				}
+				img = getContext().getResources().getDrawable(R.drawable.ic_sample);
+				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+				break;
+			case 1:
+				if (mZp07 != null) {
+					if (mZp07.getPart1() != null) {
+						textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
+					} else {
+						textView.setTextColor(Color.RED);
 					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				}
 
@@ -72,7 +81,7 @@ public class InfantVisitAdapter extends ArrayAdapter<String> {
 			img=getContext().getResources().getDrawable( R.drawable.ic_monthly);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
-			case 1:
+			case 2:
 				if(mZp07!=null){
 					if(mZp07.getPart2() != null){
 						textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
@@ -89,34 +98,9 @@ public class InfantVisitAdapter extends ArrayAdapter<String> {
 				img=getContext().getResources().getDrawable( R.drawable.ic_monthly);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;
-			case 2:
-				if(mZp07!=null){
-					if (mZp07.getPart3() != null){
-						textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
-					}else{
-						textView.setTextColor(Color.RED);
-						textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
-					}
-									}
-				else{
-					textView.setTextColor(Color.RED);
-					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
-				}
-				img=getContext().getResources().getDrawable( R.drawable.ic_monthly);
-				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-				break;
+
+
 			case 3:
-				if(mZp02d!=null){
-					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
-				}
-				else{
-					textView.setTextColor(Color.RED);
-					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
-				}
-				img=getContext().getResources().getDrawable( R.drawable.ic_sample);
-				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-				break;
-			case 4:
 				if (mZp07a != null) {
 					textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
 				} else {
@@ -126,7 +110,7 @@ public class InfantVisitAdapter extends ArrayAdapter<String> {
 				img = getContext().getResources().getDrawable(R.drawable.ic_opht);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;
-			case 5:
+			case 4:
 				if (mZp07b != null) {
 					textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
 				} else {
@@ -136,8 +120,7 @@ public class InfantVisitAdapter extends ArrayAdapter<String> {
 				img = getContext().getResources().getDrawable(R.drawable.ic_audio);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;
-
-			case 6:
+			case 5:
 				if (mZp07c != null) {
 					textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
 				} else {
@@ -145,6 +128,16 @@ public class InfantVisitAdapter extends ArrayAdapter<String> {
 					textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.pending));
 				}
 				img = getContext().getResources().getDrawable(R.drawable.ic_image);
+				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+				break;
+			case 6:
+				if (mZp07OtoE != null) {
+					textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
+				} else {
+					textView.setTextColor(Color.RED);
+					textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.pending));
+				}
+				img = getContext().getResources().getDrawable(R.drawable.ic_oae);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;
 			case 7:
@@ -158,15 +151,24 @@ public class InfantVisitAdapter extends ArrayAdapter<String> {
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;
 			case 8:
-				if (mZp07OtoE != null) {
-					textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
-				} else {
-					textView.setTextColor(Color.RED);
-					textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.pending));
+				if(mZp07!=null){
+					if (mZp07.getPart3() != null){
+						textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+					}else{
+						textView.setTextColor(Color.RED);
+						textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+					}
 				}
-				img = getContext().getResources().getDrawable(R.drawable.ic_oae);
+				else{
+					textView.setTextColor(Color.RED);
+					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+				}
+				img=getContext().getResources().getDrawable( R.drawable.ic_monthly);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;
+
+
+
 		default:
 			img=getContext().getResources().getDrawable( R.drawable.ic_launcher);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);

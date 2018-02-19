@@ -221,7 +221,6 @@ public class NewZp02dInfantBiospecimenCollectionActivity extends AbstractAsyncAc
             if (accion== ADD_ZP02D_ODK) mInfantBioCollection = new Zp02dInfantBiospecimenCollection();
             mInfantBioCollection.setRecordId(mRecordId);
             mInfantBioCollection.setRedcapEventName(event);
-
             mInfantBioCollection.setInfantDov(zp02dXml.getInfantDov());
             mInfantBioCollection.setWhomAddtVisit(zp02dXml.getWhomAddtVisit());
             mInfantBioCollection.setInfantAddtVisit(zp02dXml.getInfantAddtVisit());
@@ -298,14 +297,17 @@ public class NewZp02dInfantBiospecimenCollectionActivity extends AbstractAsyncAc
             }
 
             if (mInfantBioCollection.getRedcapEventName() != null) {
-                if (mInfantBioCollection.getRedcapEventName().equals(Constants.BIRTH))  {
+                String eventName = mInfantBioCollection.getRedcapEventName();
+                if (eventName.equals(Constants.BIRTH))  {
                     codEvent = 15;
-                } else if (mInfantBioCollection.getRedcapEventName().equals(Constants.MONTH3) ) {
+                } else if (eventName.equals(Constants.MONTH3) ) {
                     codEvent = 16;
-                } else if (mInfantBioCollection.getRedcapEventName().equals(Constants.MONTH6)) {
+                } else if (eventName.equals(Constants.MONTH6)) {
                     codEvent = 17;
-                } else if (mInfantBioCollection.getRedcapEventName().equals(Constants.MONTH12)) {
+                } else if (eventName.equals(Constants.MONTH12)) {
                     codEvent = 18;
+                }else if (eventName.equals(Constants.UNSHEDINF1)|| eventName.equals(Constants.UNSHEDINF2) || eventName.equals(Constants.UNSHEDINF3) || eventName.equals(Constants.UNSHEDINF4) || eventName.equals(Constants.UNSHEDINF5) ) {
+                    codEvent = 19;
                 }
             }
 
@@ -376,6 +378,29 @@ public class NewZp02dInfantBiospecimenCollectionActivity extends AbstractAsyncAc
 
             }
 
+            //validation event form
+            String infantVisit = mInfantBioCollection.getInfantAddtVisit();
+            if (infantVisit!= null && codEvent != 0){
+                Integer eventForm = Integer.valueOf(infantVisit);
+
+                switch (codEvent) {
+                    case 15:
+                        if(eventForm != 1) showToast(getString(R.string.code_error_event_form));
+                        break;
+                    case 16:
+                        if(eventForm != 2) showToast(getString(R.string.code_error_event_form));
+                        break;
+                    case 17:
+                        if(eventForm != 3) showToast(getString(R.string.code_error_event_form));
+                        break;
+                    case 18:
+                        if(eventForm != 4) showToast(getString(R.string.code_error_event_form));
+                        break;
+                    case 19:
+                        if(eventForm != 5) showToast(getString(R.string.code_error_event_form));
+                        break;
+                }
+            }
 
             new SaveDataTask().execute(accion);
 

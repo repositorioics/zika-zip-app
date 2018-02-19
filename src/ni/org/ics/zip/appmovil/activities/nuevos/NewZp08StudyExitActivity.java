@@ -257,7 +257,7 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
             try {
                 zipA.open();
                 zipA.crearZp08StudyExit(mExit);
-                if (mExit.getRecordId().matches("^07[0-9][0-9][0-9][0-9][0-3][A-Y]$")){
+              /*  if (mExit.getRecordId().matches("^07[0-9][0-9][0-9][0-9][0-3][A-Y]$")){
                     List<ZpInfantData> infantesMadre = zipA.getZpInfantDatas(MainDBConstants.pregnantId + " = '"+mExit.getRecordId()+"'", null);
                     for (ZpInfantData infantData : infantesMadre){
                         mExit.setRecordId(infantData.getRecordId());
@@ -265,7 +265,7 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
                         mExit.setExtSubjClass(String.valueOf(numInfante));
                         zipA.crearZp08StudyExit(mExit);
                     }
-                }
+                }*/
                 zipA.close();
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);

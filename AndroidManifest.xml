@@ -77,6 +77,8 @@
                 android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.activities.paginas.eventosinfante.InfantVisitActivity"
                   android:screenOrientation="portrait"></activity>
+        <activity android:name="ni.org.ics.zip.appmovil.activities.paginas.eventosinfante.BirthVisitActivity"
+                  android:screenOrientation="portrait"></activity>
         <activity android:name="ni.org.ics.zip.appmovil.preferences.PreferencesActivity"/>
         <activity android:name="ni.org.ics.zip.appmovil.activities.nuevos.NewZp01StudyEntrySectionAtoDActivity"
                   android:screenOrientation="portrait"></activity>

@@ -1031,7 +1031,7 @@ public class MenuEmbarazadasAdapter extends ArrayAdapter<String> {
 		case 31:
 				textView.setTextColor(Color.BLACK);
 			//	textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.inf_tam)+"\n\n");
-				img=getContext().getResources().getDrawable( R.drawable.inf_scr);
+				img=getContext().getResources().getDrawable( R.drawable.ic_scr);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;
 		default:

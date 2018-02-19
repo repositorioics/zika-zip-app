@@ -33,7 +33,7 @@ public class UploadAllTask extends UploadTask {
 	}
 
 	protected static final String TAG = UploadAllTask.class.getSimpleName();
-    private static final String TOTAL_TASK = "28";
+    private static final String TOTAL_TASK = "29";
 	private ZipAdapter zipA = null;
 	private List<ZpPreScreening> mPreTamizajes = new ArrayList<ZpPreScreening>();
 	private List<Zp00Screening> mTamizajes = new ArrayList<Zp00Screening>();

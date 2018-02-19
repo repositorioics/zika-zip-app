@@ -91,55 +91,54 @@ public class InfantVisitActivity extends AbstractAsyncActivity {
 				Bundle arguments = new Bundle();
 				Intent i;
 				arguments.putString(Constants.EVENT, evento);
-                arguments.putString(Constants.RECORDID, zpInfante.getRecordId());
-				switch(position){ 
-                case 0: //EVALUACION
-                	i = new Intent(getApplicationContext(),
-                			NewZp07InfantAssessmentVisitActivity.class);
-                    if (zp07!=null) arguments.putSerializable(Constants.OBJECTO_ZP07 , zp07);
-					i.putExtras(arguments);
-					startActivity(i);
-					break;
-					case 1: //EVALUACION OFTALMOLOGICA
-						i = new Intent(getApplicationContext(),
-								NewZp07InfantAssessmentVisitOphtActivity.class);
-						if (zp07 != null) arguments.putSerializable(Constants.OBJECTO_ZP07, zp07);
-						i.putExtras(arguments);
-						startActivity(i);
-						break;
-					case 2: //EVALUACION PSICOLOGICA
-						i = new Intent(getApplicationContext(),
-								NewZp07InfantAssessmentVisitPsyActivity.class);
-						if (zp07 != null) arguments.putSerializable(Constants.OBJECTO_ZP07, zp07);
-						i.putExtras(arguments);
-						startActivity(i);
-						break;
-
-					case 3: //MUESTRAS
+				arguments.putString(Constants.RECORDID, zpInfante.getRecordId());
+				switch (position) {
+					case 0: //MUESTRAS
 						i = new Intent(getApplicationContext(),
 								NewZp02dInfantBiospecimenCollectionActivity.class);
 						if (zp02d != null) arguments.putSerializable(Constants.OBJECTO_ZP02D, zp02d);
 						i.putExtras(arguments);
 						startActivity(i);
 						break;
-					case 4: //RESULTADOS OFTALMOLOGICOS
+					case 1: //EVALUACION
+						i = new Intent(getApplicationContext(),
+								NewZp07InfantAssessmentVisitActivity.class);
+						if (zp07 != null) arguments.putSerializable(Constants.OBJECTO_ZP07, zp07);
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
+					case 2: //EVALUACION OFTALMOLOGICA
+						i = new Intent(getApplicationContext(),
+								NewZp07InfantAssessmentVisitOphtActivity.class);
+						if (zp07 != null) arguments.putSerializable(Constants.OBJECTO_ZP07, zp07);
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
+					case 3: //RESULTADOS OFTALMOLOGICOS
 						i = new Intent(getApplicationContext(),
 								NewZp07aInfantOphtResultsActivity.class);
 						if (zp07a != null) arguments.putSerializable(Constants.OBJECTO_ZP07A, zp07a);
 						i.putExtras(arguments);
 						startActivity(i);
 						break;
-					case 5: //RESULTADOS AUDIOLOGICOS
+					case 4: //RESULTADOS AUDIOLOGICOS
 						i = new Intent(getApplicationContext(),
 								NewZp07bInfantAudioResultsActivity.class);
 						if (zp07b != null) arguments.putSerializable(Constants.OBJECTO_ZP07B, zp07b);
 						i.putExtras(arguments);
 						startActivity(i);
 						break;
-					case 6: //ESTUDIOS DE IMAGENES
+					case 5: //ESTUDIOS DE IMAGENES
 						i = new Intent(getApplicationContext(),
 								NewZp07cInfantImageStudiesActivity.class);
 						if (zp07c != null) arguments.putSerializable(Constants.OBJECTO_ZP07C, zp07c);
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
+					case 6: //EVALUACION OTOACUSTICA
+						i = new Intent(getApplicationContext(),
+								NewZp07InfantOtoacousticEmissionsActivity.class);
+						if (zp07OtoE != null) arguments.putSerializable(Constants.OBJECTO_ZP07OtoE, zp07OtoE);
 						i.putExtras(arguments);
 						startActivity(i);
 						break;
@@ -150,10 +149,10 @@ public class InfantVisitActivity extends AbstractAsyncActivity {
 						i.putExtras(arguments);
 						startActivity(i);
 						break;
-					case 8: //EVALUACION OTOACUSTICA
+					case 8: //EVALUACION PSICOLOGICA
 						i = new Intent(getApplicationContext(),
-								NewZp07InfantOtoacousticEmissionsActivity.class);
-						if (zp07OtoE != null) arguments.putSerializable(Constants.OBJECTO_ZP07OtoE, zp07OtoE);
+								NewZp07InfantAssessmentVisitPsyActivity.class);
+						if (zp07 != null) arguments.putSerializable(Constants.OBJECTO_ZP07, zp07);
 						i.putExtras(arguments);
 						startActivity(i);
 						break;

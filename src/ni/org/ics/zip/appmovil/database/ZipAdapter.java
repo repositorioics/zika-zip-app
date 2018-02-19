@@ -1757,7 +1757,7 @@ public class ZipAdapter {
 		if (!cursor.isClosed()) cursor.close();
 		return infantOtoEm;
 	}
-	//Obtener una lista de Zp07InfantAssessmentVisit de la base de datos
+	//Obtener una lista de Zp07InfantOtoacousticEmissions de la base de datos
 	public List<Zp07InfantOtoacousticEmissions> getZp07InfantOtoacousticEms(String filtro, String orden) throws SQLException {
 		List<Zp07InfantOtoacousticEmissions> infantOtoEms = new ArrayList<Zp07InfantOtoacousticEmissions>();
 		Cursor cursor = crearCursor(Zp07OtoEDBConstants.INFANT_OTO_EMS_TABLE, filtro, null, orden);

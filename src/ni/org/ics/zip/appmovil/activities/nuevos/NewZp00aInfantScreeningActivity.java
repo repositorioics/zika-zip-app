@@ -61,7 +61,7 @@ public class NewZp00aInfantScreeningActivity extends AbstractAsyncActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!FileUtils.storageReady()) {
-            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.error, R.string.storage_error),Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.error) + "," + getString(R.string.storage_error) ,Toast.LENGTH_LONG);
             toast.show();
             finish();
         }
@@ -243,7 +243,6 @@ public class NewZp00aInfantScreeningActivity extends AbstractAsyncActivity {
             iTamizaje.setInfConsentb(zp00aXml.getInfConsentb());
             iTamizaje.setInfConsentc(zp00aXml.getInfConsentc());
             iTamizaje.setInfConsentd(zp00aXml.getInfConsentd());
-            iTamizaje.setInfInfid(zp00aXml.getInfInfid());
             iTamizaje.setInfReasonno(zp00aXml.getInfReasonno());
             iTamizaje.setInfReasonOther(zp00aXml.getInfReasonOther());
             iTamizaje.setInfIdCompleting(username);
@@ -292,16 +291,35 @@ public class NewZp00aInfantScreeningActivity extends AbstractAsyncActivity {
                 mZp05 = zipA.getZp05UltrasoundExam1(id, null);
                      if (mZp05 != null){
                         int numFe = mZp05.getUltFnumFetuses();
-                        if (numFe != 0) {
-                            for (int i = 1; i <= numFe; i++) {
-                                infantId = mRecordId.substring(0, mRecordId.length() - 2) + i + mRecordId.substring(mRecordId.length() - 1, mRecordId.length());
-                                iTamizaje.setRecordId(infantId);
-                                zipA.crearZp00aInfantScreening(iTamizaje);
-                            }
-                        }
+                        int numFe1 = mZp05.getUltSnumFetuses();
+
+                         if (numFe1 >0 || numFe > 0){
+                             if (numFe1 > 0 ) {
+                                 for (int i = 1; i <= numFe1; i++) {
+                                     infantId = mRecordId.substring(0, mRecordId.length() - 2) + i + mRecordId.substring(mRecordId.length() - 1, mRecordId.length());
+                                     iTamizaje.setRecordId(infantId);
+                                     iTamizaje.setInfInfid(infantId);
+                                     zipA.crearZp00aInfantScreening(iTamizaje);
+                                 }
+                             }else if (numFe > 0){
+                                 for (int i = 1; i <= numFe; i++) {
+                                     infantId = mRecordId.substring(0, mRecordId.length() - 2) + i + mRecordId.substring(mRecordId.length() - 1, mRecordId.length());
+                                     iTamizaje.setRecordId(infantId);
+                                     iTamizaje.setInfInfid(infantId);
+                                     zipA.crearZp00aInfantScreening(iTamizaje);
+                                 }
+                             }
+                         }else{
+                             infantId = mRecordId.substring(0, mRecordId.length() - 2) + "1" + mRecordId.substring(mRecordId.length() - 1, mRecordId.length());
+                             iTamizaje.setRecordId(infantId);
+                             iTamizaje.setInfInfid(infantId);
+                             zipA.crearZp00aInfantScreening(iTamizaje);
+                         }
+
                     }else{
                         infantId = mRecordId.substring(0, mRecordId.length() - 2) + "1" + mRecordId.substring(mRecordId.length() - 1, mRecordId.length());
                          iTamizaje.setRecordId(infantId);
+                         iTamizaje.setInfInfid(infantId);
                          zipA.crearZp00aInfantScreening(iTamizaje);
 
                     }
