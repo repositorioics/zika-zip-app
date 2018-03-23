@@ -271,7 +271,21 @@ public class UploadAllTask extends UploadTask {
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, EVAL_INFANTE);
                 return error;
-            }
+            }else{
+				for (Zp07InfantAssessmentVisit infantAssessmentVisit : mInfantAssessment) {
+					if (infantAssessmentVisit.getPart1() != null){
+						infantAssessmentVisit.setPart1(1);
+					}
+					if (infantAssessmentVisit.getPart2() != null){
+						infantAssessmentVisit.setPart2(1);
+					}
+					if (infantAssessmentVisit.getPart3() != null){
+						infantAssessmentVisit.setPart3(1);
+					}
+					zipA.editarZp07InfantAssessmentVisit(infantAssessmentVisit);
+
+				}
+			}
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, ESTADO_INFANTE);
             error = uploadInfantStatus(url, username, password);
             if (!error.matches("Datos recibidos!")){

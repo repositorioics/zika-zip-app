@@ -377,7 +377,6 @@ public class NewZp07InfantAssessmentVisitPsyActivity extends AbstractAsyncActivi
             mInfantAssessment.setInfantDtReview3(new Date());
             mInfantAssessment.setInfantIdDataEntry3(username);
             mInfantAssessment.setInfantDtEnter3(new Date());
-            mInfantAssessment.setPart3(1);
             mInfantAssessment.setIdInstancia3(idInstancia3);
 
 
@@ -420,9 +419,11 @@ public class NewZp07InfantAssessmentVisitPsyActivity extends AbstractAsyncActivi
                 try {
                     zipA.open();
                     if (accionaRealizar == ADD_ZP07_ODK){
+                        mInfantAssessment.setPart3(1);
                         zipA.crearZp07InfantAssessmentVisit(mInfantAssessment);
                     }
                     else{
+                        mInfantAssessment.setPart3(2);
                         zipA.editarZp07InfantAssessmentVisit(mInfantAssessment);
                     }
                     zipA.close();
