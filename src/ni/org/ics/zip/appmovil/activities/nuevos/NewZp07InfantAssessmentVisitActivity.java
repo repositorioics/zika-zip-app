@@ -56,7 +56,7 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!FileUtils.storageReady()) {
-            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.error, R.string.storage_error),Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.error) + "," + getString(R.string.storage_error), Toast.LENGTH_LONG);
             toast.show();
             finish();
         }
@@ -66,7 +66,7 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
                 settings.getString(PreferencesActivity.KEY_USERNAME,
                         null);
         String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
-        zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
+        zipA = new ZipAdapter(this.getApplicationContext(), mPass, false, false);
         mRecordId = getIntent().getExtras().getString(Constants.RECORDID);
         mInfantAssessment = (Zp07InfantAssessmentVisit) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZP07);
         event = getIntent().getExtras().getString(Constants.EVENT);
@@ -83,18 +83,17 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
         dialogInit.setCancelable(false);
 
         //to set the message
-        TextView message =(TextView) dialogInit.findViewById(R.id.yesnotext);
-        if (mInfantAssessment !=null){
+        TextView message = (TextView) dialogInit.findViewById(R.id.yesnotext);
+        if (mInfantAssessment != null) {
 
-            if(mInfantAssessment.getPart1()!= null){
-                message.setText(getString(R.string.edit)+ " " + getString(R.string.infant_b_1)+"?");
-            }else{
-                message.setText(getString(R.string.add)+ " " + getString(R.string.infant_b_1)+"?");
+            if (mInfantAssessment.getPart1() != null) {
+                message.setText(getString(R.string.edit) + " " + getString(R.string.infant_b_1) + "?");
+            } else {
+                message.setText(getString(R.string.add) + " " + getString(R.string.infant_b_1) + "?");
             }
 
-        }
-        else{
-            message.setText(getString(R.string.add)+ " " + getString(R.string.infant_b_1)+"?");
+        } else {
+            message.setText(getString(R.string.add) + " " + getString(R.string.infant_b_1) + "?");
         }
 
         //add some action to the buttons
@@ -128,19 +127,17 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==R.id.MENU_BACK){
+        if (item.getItemId() == R.id.MENU_BACK) {
             finish();
             return true;
-        }
-        else if(item.getItemId()==R.id.MENU_HOME){
+        } else if (item.getItemId() == R.id.MENU_HOME) {
             Intent i = new Intent(getApplicationContext(),
                     MainActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
             finish();
             return true;
-        }
-        else{
+        } else {
             return super.onOptionsItemSelected(item);
         }
     }
@@ -148,12 +145,12 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent intent) {
-        if(requestCode == ADD_ZP07_ODK ||requestCode == EDIT_ZP07_ODK) {
-            if(resultCode == RESULT_OK) {
+        if (requestCode == ADD_ZP07_ODK || requestCode == EDIT_ZP07_ODK) {
+            if (resultCode == RESULT_OK) {
                 Uri instanceUri = intent.getData();
                 //Busca la instancia resultado
-                String[] projection = new String[] {
-                        "_id","instanceFilePath", "status","displaySubtext"};
+                String[] projection = new String[]{
+                        "_id", "instanceFilePath", "status", "displaySubtext"};
                 Cursor c = getContentResolver().query(instanceUri, projection,
                         null, null, null);
                 c.moveToFirst();
@@ -165,28 +162,26 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
                 if (c != null) {
                     c.close();
                 }
-                if (complete.matches("complete")){
+                if (complete.matches("complete")) {
                     //Parsear el resultado obteniendo un tamizaje si esta completo
                     parseZp07InfantAssessmentVisit(idInstancia, instanceFilePath, accion);
+                } else {
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_not_completed), Toast.LENGTH_LONG).show();
                 }
-                else{
-                    Toast.makeText(getApplicationContext(),	getString(R.string.err_not_completed), Toast.LENGTH_LONG).show();
-                }
-            }
-            else{
-            	finish();
+            } else {
+                finish();
             }
         }
         super.onActivityResult(requestCode, resultCode, intent);
     }
 
     private void addZp07InfantAssessmentVisit() {
-        try{
+        try {
             Uri formUri;
-            if(mInfantAssessment ==null){
+            if (mInfantAssessment == null) {
                 //campos de proveedor de collect
-                String[] projection = new String[] {
-                        "_id","jrFormId","displayName"};
+                String[] projection = new String[]{
+                        "_id", "jrFormId", "displayName"};
                 //cursor que busca el formulario
                 Cursor c = getContentResolver().query(Constants.CONTENT_URI, projection,
                         "jrFormId = 'ZP07_Infant_Assessment_Pediatrician' and displayName = 'Zika Zip Visita de evaluacion al infante'", null, null);
@@ -200,15 +195,14 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
                 //forma el uri para ODK Collect
                 formUri = ContentUris.withAppendedId(Constants.CONTENT_URI, id);
                 accion = ADD_ZP07_ODK;
-            }
-            else{
+            } else {
 
 
                 //en caso que no  exista un registro de evaluacion pediatrica
-                if(mInfantAssessment.getPart1() == null){
+                if (mInfantAssessment.getPart1() == null) {
                     //campos de proveedor de collect
-                    String[] projection = new String[] {
-                            "_id","jrFormId","displayName"};
+                    String[] projection = new String[]{
+                            "_id", "jrFormId", "displayName"};
                     //cursor que busca el formulario
                     Cursor c = getContentResolver().query(Constants.CONTENT_URI, projection,
                             "jrFormId = 'ZP07_Infant_Assessment_Pediatrician' and displayName = 'Zika Zip Visita de evaluacion al infante'", null, null);
@@ -222,19 +216,18 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
                     //forma el uri para ODK Collect
                     formUri = ContentUris.withAppendedId(Constants.CONTENT_URI, id);
                     accion = EDIT_ZP07_ODK;
-                }else{
+                } else {
                     //en caso que exista un registro de evaluacion pediatrica
                     //forma el uri para la instancia en ODK Collect
                     Integer id = mInfantAssessment.getIdInstancia();
-                    formUri = ContentUris.withAppendedId(Constants.CONTENT_URI_I,id);
+                    formUri = ContentUris.withAppendedId(Constants.CONTENT_URI_I, id);
                     accion = EDIT_ZP07_ODK;
                 }
             }
             //Arranca la actividad ODK Collect en busca de resultado
-            Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
+            Intent odkA = new Intent(Intent.ACTION_EDIT, formUri);
             startActivityForResult(odkA, accion);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             //No existe el formulario en el equipo
             Log.e(TAG, e.getMessage(), e);
             Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
@@ -247,7 +240,7 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
         File source = new File(instanceFilePath);
         try {
             Zp07InfantAssessmentVisitXml zp07Xml = serializer.read(Zp07InfantAssessmentVisitXml.class, source);
-            if (accion== ADD_ZP07_ODK) mInfantAssessment = new Zp07InfantAssessmentVisit();
+            if (accion == ADD_ZP07_ODK) mInfantAssessment = new Zp07InfantAssessmentVisit();
             mInfantAssessment.setRecordId(mRecordId);
             mInfantAssessment.setRedcapEventName(event);
             mInfantAssessment.setInfantVisitDate(zp07Xml.getInfantVisitDate());
@@ -290,13 +283,15 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
             mInfantAssessment.setInfantBreastReason(zp07Xml.getInfantBreastReason());
             mInfantAssessment.setInfantBreastOther(zp07Xml.getInfantBreastOther());
             mInfantAssessment.setInfantNeurodeve(zp07Xml.getInfantNeurodeve());
-            mInfantAssessment.setInfantExhibited(zp07Xml.getInfantExhibited());
+
+
             mInfantAssessment.setInfantAsymType(zp07Xml.getInfantAsymType());
             mInfantAssessment.setInfantOtherMove(zp07Xml.getInfantOtherMove());
             mInfantAssessment.setInfantExhibitOther(zp07Xml.getInfantExhibitOther());
             mInfantAssessment.setInfantMicroce(zp07Xml.getInfantMicroce());
             mInfantAssessment.setInfantDefinition(zp07Xml.getInfantDefinition());
             mInfantAssessment.setInfantFurtherNeuro(zp07Xml.getInfantFurtherNeuro());
+
            /* mInfantAssessment.setInfantEvaluation(zp07Xml.getInfantEvaluation());
             mInfantAssessment.setInfantNeuroAsq(zp07Xml.getInfantNeuroAsq());
             mInfantAssessment.setInfantAsqCommuni(zp07Xml.getInfantAsqCommuni());
@@ -359,7 +354,6 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
             mInfantAssessment.setInfantOtherSymptom(zp07Xml.getInfantOtherSymptom());
             mInfantAssessment.setInfantMedicare(zp07Xml.getInfantMedicare());
             mInfantAssessment.setInfantCareDy(zp07Xml.getInfantCareDy());
-            mInfantAssessment.setInfantCareDy(zp07Xml.getInfantCareDy());
             mInfantAssessment.setInfantCareMn(zp07Xml.getInfantCareMn());
             mInfantAssessment.setInfantCareYr(zp07Xml.getInfantCareYr());
             mInfantAssessment.setInfantCareFacility(zp07Xml.getInfantCareFacility());
@@ -386,7 +380,7 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
             mInfantAssessment.setInfantDtEnter(new Date());
             mInfantAssessment.setIdInstancia(idInstancia);
             mInfantAssessment.setPart1(1);
-            
+
             mInfantAssessment.setInfantDob(zp07Xml.getInfantDob());
             mInfantAssessment.setInfantWeeks(zp07Xml.getInfantWeeks());
             mInfantAssessment.setInfantDays(zp07Xml.getInfantDays());
@@ -401,6 +395,24 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
             mInfantAssessment.setSimserial(zp07Xml.getSimserial());
             mInfantAssessment.setPhonenumber(zp07Xml.getPhonenumber());
             mInfantAssessment.setToday(zp07Xml.getToday());
+
+            //v2.5
+            mInfantAssessment.setInfantNeuroDt(zp07Xml.getInfantNeuroDt());
+            mInfantAssessment.setInfantHearDt(zp07Xml.getInfantHearDt());
+            mInfantAssessment.setInfantExhibited1(zp07Xml.getInfantExhibited1());
+            mInfantAssessment.setInfantExhibited2(zp07Xml.getInfantExhibited2());
+            mInfantAssessment.setInfantExhibited3(zp07Xml.getInfantExhibited3());
+            mInfantAssessment.setInfantExhibited4(zp07Xml.getInfantExhibited4());
+            mInfantAssessment.setInfantExhibited5(zp07Xml.getInfantExhibited5());
+            mInfantAssessment.setInfantExhibited6(zp07Xml.getInfantExhibited6());
+            mInfantAssessment.setInfantExhibited7(zp07Xml.getInfantExhibited7());
+            mInfantAssessment.setInfantExhibited8(zp07Xml.getInfantExhibited8());
+            mInfantAssessment.setInfantExhibited9(zp07Xml.getInfantExhibited9());
+            mInfantAssessment.setInfantExhibited10(zp07Xml.getInfantExhibited10());
+            mInfantAssessment.setInfantExhibited11(zp07Xml.getInfantExhibited11());
+            mInfantAssessment.setInfantExhibited12(zp07Xml.getInfantExhibited12());
+            mInfantAssessment.setInfantExhibited13(zp07Xml.getInfantExhibited13());
+            mInfantAssessment.setInfantExhibited14(zp07Xml.getInfantExhibited14());
 
             new SaveDataTask().execute(accion);
 
@@ -417,6 +429,7 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
     // ***************************************
     private class SaveDataTask extends AsyncTask<Integer, Void, String> {
         private Integer accionaRealizar = null;
+
         @Override
         protected void onPreExecute() {
             // before the request begins, show a progress indicator
@@ -429,10 +442,11 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
                 accionaRealizar = values[0];
                 try {
                     zipA.open();
-                    if (accionaRealizar == ADD_ZP07_ODK){
+                    if (accionaRealizar == ADD_ZP07_ODK) {
+                        mInfantAssessment.setPart1(1);
                         zipA.crearZp07InfantAssessmentVisit(mInfantAssessment);
-                    }
-                    else{
+                    } else {
+                        mInfantAssessment.setPart1(2);
                         zipA.editarZp07InfantAssessmentVisit(mInfantAssessment);
                     }
                     zipA.close();
@@ -459,7 +473,7 @@ public class NewZp07InfantAssessmentVisitActivity extends AbstractAsyncActivity 
     // Private methods
     // ***************************************
     private void showResult(String resultado) {
-        Toast.makeText(getApplicationContext(),	resultado, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
         finish();
     }
 }

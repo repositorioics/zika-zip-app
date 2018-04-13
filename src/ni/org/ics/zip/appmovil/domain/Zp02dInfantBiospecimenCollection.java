@@ -64,6 +64,11 @@ public class Zp02dInfantBiospecimenCollection extends BaseMetaData {
     private String infantPerson3;
     private Date infantCompleteDate3;
 
+    //added v2.5
+    private Date infantMatBldDt;
+    private Date infantMatSlvaDt;
+    private Date infantMatUrineDt;
+
     public String getRecordId() {
         return recordId;
     }
@@ -494,5 +499,29 @@ public class Zp02dInfantBiospecimenCollection extends BaseMetaData {
 
     public void setInfantCompleteDate3(Date infantCompleteDate3) {
         this.infantCompleteDate3 = infantCompleteDate3;
+    }
+
+    public Date getInfantMatBldDt() {
+        return infantMatBldDt;
+    }
+
+    public void setInfantMatBldDt(Date infantMatBldDt) {
+        this.infantMatBldDt = infantMatBldDt;
+    }
+
+    public Date getInfantMatSlvaDt() {
+        return infantMatSlvaDt;
+    }
+
+    public void setInfantMatSlvaDt(Date infantMatSlvaDt) {
+        this.infantMatSlvaDt = infantMatSlvaDt;
+    }
+
+    public Date getInfantMatUrineDt() {
+        return infantMatUrineDt;
+    }
+
+    public void setInfantMatUrineDt(Date infantMatUrineDt) {
+        this.infantMatUrineDt = infantMatUrineDt;
     }
 }

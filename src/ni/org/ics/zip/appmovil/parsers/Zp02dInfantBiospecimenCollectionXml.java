@@ -116,6 +116,14 @@ public class Zp02dInfantBiospecimenCollectionXml {
     @Element(required=false)
     private Date infantCompleteDate3;
 
+    //v2.5
+    @Element(required=false)
+    private Date infantMatBldDt;
+    @Element(required=false)
+    private Date infantMatSlvaDt;
+    @Element(required=false)
+    private Date infantMatUrineDt;
+
     @Element(required=false)
     private String group1;
     @Element(required=false)
@@ -438,6 +446,18 @@ public class Zp02dInfantBiospecimenCollectionXml {
 
     public Date getInfantCompleteDate3() {
         return infantCompleteDate3;
+    }
+
+    public Date getInfantMatBldDt() {
+        return infantMatBldDt;
+    }
+
+    public Date getInfantMatSlvaDt() {
+        return infantMatSlvaDt;
+    }
+
+    public Date getInfantMatUrineDt() {
+        return infantMatUrineDt;
     }
 
     public String getQuestion1() {

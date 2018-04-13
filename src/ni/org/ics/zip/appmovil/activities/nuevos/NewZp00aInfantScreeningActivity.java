@@ -31,6 +31,7 @@ import ni.org.ics.zip.appmovil.utils.MainDBConstants;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
+import java.awt.*;
 import java.io.File;
 import java.util.Date;
 
@@ -288,10 +289,17 @@ public class NewZp00aInfantScreeningActivity extends AbstractAsyncActivity {
                 zipA.open();
 
                 String id =  MainDBConstants.recordId + "='" +  mRecordId + "'";
+                int numFe = 0;
+                int numFe1 = 0;
                 mZp05 = zipA.getZp05UltrasoundExam1(id, null);
                      if (mZp05 != null){
-                        int numFe = mZp05.getUltFnumFetuses();
-                        int numFe1 = mZp05.getUltSnumFetuses();
+                         if(mZp05.getUltFnumFetuses() != null){
+                             numFe = mZp05.getUltFnumFetuses();
+                         }
+
+                         if(mZp05.getUltSnumFetuses() != null){
+                             numFe1 = mZp05.getUltSnumFetuses();
+                         }
 
                          if (numFe1 >0 || numFe > 0){
                              if (numFe1 > 0 ) {

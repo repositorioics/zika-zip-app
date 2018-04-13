@@ -120,6 +120,7 @@ public class ZipAdapter {
 			db.execSQL("DROP TABLE " + Zp07cDBConstants.CINFANT_IMAGESTUDIES_TABLE);
 			db.execSQL("DROP TABLE " + Zp07dDBConstants.DINFANT_BAYLEYSCALES_TABLE);
 			db.execSQL("DROP TABLE " + Zp07OtoEDBConstants.INFANT_OTO_EMS_TABLE);
+			db.execSQL("DROP TABLE " + Zp07DBConstants.INFANTASSESSMENT_TABLE);
 		}
 
 		@Override
