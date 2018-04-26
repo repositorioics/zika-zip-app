@@ -29,6 +29,11 @@ public class Zp08DBConstants {
     public static final String extDateReviewed = "extDateReviewed";
     public static final String extIdDataEntry = "extIdDataEntry";
     public static final String extDateEntered = "extDateEntered";
+    public static final String extReasonIneligi = "extReasonIneligi";
+    public static final String extIneigiOther = "extIneigiOther";
+    public static final String extDeathDt1 = "extDeathDt1";
+    public static final String extDeathDt2 = "extDeathDt2";
+    public static final String extDeathDt3 = "extDeathDt3";
 
     //Crear tabla Zp08StudyExit
     public static final String CREATE_STUDYEXIT_TABLE = "create table if not exists "
@@ -52,6 +57,11 @@ public class Zp08DBConstants {
             + extDateReviewed + " date, "
             + extIdDataEntry + " text, "
             + extDateEntered + " date, "
+            + extDeathDt1 + " date, "
+            + extDeathDt2 + " date, "
+            + extDeathDt3 + " date, "
+            + extReasonIneligi + " text, "
+            + extIneigiOther + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "

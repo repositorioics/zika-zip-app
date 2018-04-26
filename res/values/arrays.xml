@@ -184,15 +184,19 @@
         <item>Lohana Julissa Zeledón López</item>
         <item>Izamar Altamirano Arias</item>
         <item>Gloria Liseth Baldelomar Carballo</item>
-        <item>Mabel Gissell Sequeira González</item>
+        <!--<item>Mabel Gissell Sequeira González</item>-->
         <item>Anna Gajewski</item>
         <item>Elsa Videa López</item>
         <item>Liliam Llufrío González</item>
         <item>William Rivas</item>
         <item>Josue Narvaez</item>
-        <item>Carmen Gisselle Arauz</item>
+        <!--<item>Carmen Gisselle Arauz</item>-->
         <item>Fabio Marchena</item>
         <item>Oscar Ortega</item>
+        <item>Yamileth Hernandez</item>
+        <item>Emile Ivan Olivieri</item>
+        <item>Joxiry Rios</item>
+
     </string-array>
     
    	<string-array name="list_personas_llegada_cons">
@@ -203,9 +207,12 @@
         <item>Ennio Sáenz Martínez</item>
         <item>William Rivas</item>
         <item>Josue Narvaez</item>
-        <item>Carmen Gisselle Arauz</item>
+        <!--<item>Carmen Gisselle Arauz</item>-->
         <item>Fabio Marchena</item>
         <item>Oscar Ortega</item>
+        <item>Yamileth Hernandez</item>
+        <item>Emile Ivan Olivieri</item>
+        <item>Joxiry Rios</item>
     </string-array>   
     
    	<string-array name="list_personas_salida_us">
@@ -215,16 +222,19 @@
         <item>Lohana Julissa Zeledón López</item>
         <item>Izamar Altamirano Arias</item>
         <item>Gloria Liseth Baldelomar Carballo</item>
-        <item>Mabel Gissell Sequeira González</item>
+        <!--<item>Mabel Gissell Sequeira González</item>-->
         <item>Heidi del Carmen González Gaitán</item>
         <item>Anna Gajewski</item>
         <item>Elsa Videa López</item>
         <item>Liliam Llufrío González</item>
         <item>William Rivas</item>
         <item>Josue Narvaez</item>
-        <item>Carmen Gisselle Arauz</item>
+        <!--<item>Carmen Gisselle Arauz</item>-->
         <item>Fabio Marchena</item>
         <item>Oscar Ortega</item>
+        <item>Yamileth Hernandez</item>
+        <item>Emile Ivan Olivieri</item>
+        <item>Joxiry Rios</item>
     </string-array>
     
    	<string-array name="list_personas_llegada_us">
@@ -236,9 +246,12 @@
         <item>Ennio Sáenz Martínez</item>
         <item>William Rivas</item>
         <item>Josue Narvaez</item>
-        <item>Carmen Gisselle Arauz</item>
+        <!--<item>Carmen Gisselle Arauz</item>-->
         <item>Fabio Marchena</item>
         <item>Oscar Ortega</item>
+        <item>Yamileth Hernandez</item>
+        <item>Emile Ivan Olivieri</item>
+        <item>Joxiry Rios</item>
     </string-array>
     
     <string-array name="list_lugares_salida">
