@@ -182,7 +182,7 @@ public class Zp07InfantAssessmentVisitXml {
     @Element(required=false)
     private String infantRashYr;
     @Element(required=false)
-    private Float infantRashDur;
+    private Integer infantRashDur;
     @Element(required=false)
     private String infantRashSpread;
     @Element(required=false)
@@ -204,7 +204,7 @@ public class Zp07InfantAssessmentVisitXml {
     @Element(required=false)
     private String infantFeverYr;
     @Element(required=false)
-    private Float infantFeverDur;
+    private Integer infantFeverDur;
     @Element(required=false)
     private String infantRedeyes;
     @Element(required=false)
@@ -214,7 +214,7 @@ public class Zp07InfantAssessmentVisitXml {
     @Element(required=false)
     private String infantRedeyesYr;
     @Element(required=false)
-    private Float infantRedeyesDur;
+    private Integer infantRedeyesDur;
     @Element(required=false)
     private String infantJoint;
     @Element(required=false)
@@ -224,7 +224,7 @@ public class Zp07InfantAssessmentVisitXml {
     @Element(required=false)
     private String infantJointYr;
     @Element(required=false)
-    private Float infantJointDur;
+    private Integer infantJointDur;
     @Element(required=false)
     private String infantHeadache;
     @Element(required=false)
@@ -234,7 +234,7 @@ public class Zp07InfantAssessmentVisitXml {
     @Element(required=false)
     private String infantHeadacheYr;
     @Element(required=false)
-    private Float infantHeadaDur;
+    private Integer infantHeadaDur;
     @Element(required=false)
     private String infantSymptomOther;
     @Element(required=false)
@@ -843,10 +843,6 @@ public class Zp07InfantAssessmentVisitXml {
         return infantRashYr;
     }
 
-    public Float getInfantRashDur() {
-        return infantRashDur;
-    }
-
     public String getInfantRashSpread() {
         return infantRashSpread;
     }
@@ -887,10 +883,6 @@ public class Zp07InfantAssessmentVisitXml {
         return infantFeverYr;
     }
 
-    public Float getInfantFeverDur() {
-        return infantFeverDur;
-    }
-
     public String getInfantRedeyes() {
         return infantRedeyes;
     }
@@ -905,10 +897,6 @@ public class Zp07InfantAssessmentVisitXml {
 
     public String getInfantRedeyesYr() {
         return infantRedeyesYr;
-    }
-
-    public Float getInfantRedeyesDur() {
-        return infantRedeyesDur;
     }
 
     public String getInfantJoint() {
@@ -927,10 +915,6 @@ public class Zp07InfantAssessmentVisitXml {
         return infantJointYr;
     }
 
-    public Float getInfantJointDur() {
-        return infantJointDur;
-    }
-
     public String getInfantHeadache() {
         return infantHeadache;
     }
@@ -945,10 +929,6 @@ public class Zp07InfantAssessmentVisitXml {
 
     public String getInfantHeadacheYr() {
         return infantHeadacheYr;
-    }
-
-    public Float getInfantHeadaDur() {
-        return infantHeadaDur;
     }
 
     public String getInfantSymptomOther() {
@@ -1221,6 +1201,26 @@ public class Zp07InfantAssessmentVisitXml {
 
     public Date getInfantOpDt() {
         return infantOpDt;
+    }
+
+    public Integer getInfantRashDur() {
+        return infantRashDur;
+    }
+
+    public Integer getInfantFeverDur() {
+        return infantFeverDur;
+    }
+
+    public Integer getInfantRedeyesDur() {
+        return infantRedeyesDur;
+    }
+
+    public Integer getInfantJointDur() {
+        return infantJointDur;
+    }
+
+    public Integer getInfantHeadaDur() {
+        return infantHeadaDur;
     }
 
     public String getId() {

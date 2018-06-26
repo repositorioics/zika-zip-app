@@ -1,27 +1,13 @@
 package ni.org.ics.zip.appmovil.activities.paginas.eventosinfante;
 
-import java.text.SimpleDateFormat;
-
-import ni.org.ics.zip.appmovil.AbstractAsyncActivity;
-import ni.org.ics.zip.appmovil.MainActivity;
-import ni.org.ics.zip.appmovil.MyZipApplication;
-import ni.org.ics.zip.appmovil.R;
-import ni.org.ics.zip.appmovil.activities.nuevos.*;
-import ni.org.ics.zip.appmovil.adapters.eventosinfante.InfantVisitAdapter;
-import ni.org.ics.zip.appmovil.database.ZipAdapter;
-import ni.org.ics.zip.appmovil.domain.*;
-import ni.org.ics.zip.appmovil.utils.Constants;
-import ni.org.ics.zip.appmovil.utils.MainDBConstants;
-import ni.org.ics.zip.appmovil.utils.Zp02DBConstants;
-
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Bundle;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,14 +16,24 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
+import ni.org.ics.zip.appmovil.AbstractAsyncActivity;
+import ni.org.ics.zip.appmovil.MainActivity;
+import ni.org.ics.zip.appmovil.MyZipApplication;
+import ni.org.ics.zip.appmovil.R;
+import ni.org.ics.zip.appmovil.activities.nuevos.*;
+import ni.org.ics.zip.appmovil.adapters.eventosinfante.Infant07aVisitAdapter;
+import ni.org.ics.zip.appmovil.database.ZipAdapter;
+import ni.org.ics.zip.appmovil.domain.*;
+import ni.org.ics.zip.appmovil.utils.Constants;
+import ni.org.ics.zip.appmovil.utils.MainDBConstants;
 
-public class UnscheduledInfantVisitActivity extends AbstractAsyncActivity {
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+public class Infant07aVisitActivity extends AbstractAsyncActivity {
 	private ZipAdapter zipA;
 	private static ZpInfantData zpInfante = new ZpInfantData();
-	private static Zp02dInfantBiospecimenCollection zp02d = null;
-	private static Zp07InfantAssessmentVisit zp07 = null;
-	private static Zp07InfantOtoacousticEmissions zp07OtoE = null;
-	
+	private static List<Zp07aInfantOphtResults> zp07a = null;
 	private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
 	private static String evento;
 	private GridView gridView;
@@ -68,15 +64,14 @@ public class UnscheduledInfantVisitActivity extends AbstractAsyncActivity {
 		String mPass = ((MyZipApplication) this.getApplication()).getPassApp();
 		zipA = new ZipAdapter(this.getApplicationContext(),mPass,false,false);
 		/*Aca se recupera evento, tamizaje y estado*/
-		evento = getIntent().getStringExtra(Constants.EVENT);
 		zpInfante = (ZpInfantData) getIntent().getExtras().getSerializable(Constants.OBJECTO_ZPINFDATA);
 		//Aca se recupera los datos de los formularios para ver si estan realizados o no...
-		new FetchUnshedVisitaInfanteTask().execute(evento);
+		new FetchUnshedVisitaInfanteTask().execute();
 		textView = (TextView) findViewById(R.id.label);
 		textView.setText(getString(R.string.forms)+"\n"+
 				getString(R.string.inf_id)+": "+zpInfante.getRecordId()+"\n"+
 						getString(R.string.inf_dob)+": "+ mDateFormat.format(zpInfante.getInfantBirthDate()));
-		menu_infante_info = getResources().getStringArray(R.array.menu_infant_visit);
+		menu_infante_info = getResources().getStringArray(R.array.menu_infant_exam);
 		gridView = (GridView) findViewById(R.id.gridView1);
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -84,50 +79,103 @@ public class UnscheduledInfantVisitActivity extends AbstractAsyncActivity {
 					int position, long id) {
 				Bundle arguments = new Bundle();
 				Intent i;
-				arguments.putString(Constants.EVENT, evento);
 				arguments.putString(Constants.RECORDID, zpInfante.getRecordId());
 				switch (position) {
-					case 0: //MUESTRAS
+					case 0: //RESULTADOS OFTALMOLOGICOS
 						i = new Intent(getApplicationContext(),
-								NewZp02dInfantBiospecimenCollectionActivity.class);
-						if (zp02d != null) arguments.putSerializable(Constants.OBJECTO_ZP02D, zp02d);
-						i.putExtras(arguments);
-						startActivity(i);
-						break;
-					case 1: //EVALUACION
-						i = new Intent(getApplicationContext(),
-								NewZp07InfantAssessmentVisitActivity.class);
-						if (zp07 != null) arguments.putSerializable(Constants.OBJECTO_ZP07, zp07);
-						i.putExtras(arguments);
-						startActivity(i);
-						break;
-					case 2: //EVALUACION OFTALMOLOGICA
-						i = new Intent(getApplicationContext(),
-								NewZp07InfantAssessmentVisitOphtActivity.class);
-						if (zp07 != null) arguments.putSerializable(Constants.OBJECTO_ZP07, zp07);
+								NewZp07aInfantOphtResultsActivity.class);
+						arguments.putString(Constants.EVENT, Constants.EXAM1);
+						if (!zp07a.isEmpty()) {
+							for (Zp07aInfantOphtResults zp: zp07a) {
+								if (zp.getRedcapEventName().matches(Constants.EXAM1)){
+									arguments.putSerializable(Constants.OBJECTO_ZP07A, zp);
+									break;
+								}
+							}
+						}
 						i.putExtras(arguments);
 						startActivity(i);
 						break;
 
-					case 3: //EVALUACION OTOACUSTICA
+					case 1: //RESULTADOS OFTALMOLOGICOS
 						i = new Intent(getApplicationContext(),
-								NewZp07InfantOtoacousticEmissionsActivity.class);
-						if (zp07OtoE != null) arguments.putSerializable(Constants.OBJECTO_ZP07OtoE, zp07OtoE);
+								NewZp07aInfantOphtResultsActivity.class);
+						arguments.putString(Constants.EVENT, Constants.EXAM2);
+						if (!zp07a.isEmpty()) {
+							for (Zp07aInfantOphtResults zp: zp07a) {
+								if (zp.getRedcapEventName().matches(Constants.EXAM2)){
+									arguments.putSerializable(Constants.OBJECTO_ZP07A, zp);
+									break;
+								}
+							}
+						}
 						i.putExtras(arguments);
 						startActivity(i);
 						break;
-
-					case 4: //EVALUACION PSICOLOGICA
+					case 2: //RESULTADOS OFTALMOLOGICOS
 						i = new Intent(getApplicationContext(),
-								NewZp07InfantAssessmentVisitPsyActivity.class);
-						if (zp07 != null) arguments.putSerializable(Constants.OBJECTO_ZP07, zp07);
+								NewZp07aInfantOphtResultsActivity.class);
+						arguments.putString(Constants.EVENT, Constants.EXAM3);
+						if (!zp07a.isEmpty()) {
+							for (Zp07aInfantOphtResults zp: zp07a) {
+								if (zp.getRedcapEventName().matches(Constants.EXAM3)){
+									arguments.putSerializable(Constants.OBJECTO_ZP07A, zp);
+									break;
+								}
+							}
+						}
 						i.putExtras(arguments);
 						startActivity(i);
 						break;
-
+					case 3: //RESULTADOS OFTALMOLOGICOS
+						i = new Intent(getApplicationContext(),
+								NewZp07aInfantOphtResultsActivity.class);
+						arguments.putString(Constants.EVENT, Constants.EXAM4);
+						if (!zp07a.isEmpty()) {
+							for (Zp07aInfantOphtResults zp: zp07a) {
+								if (zp.getRedcapEventName().matches(Constants.EXAM4)){
+									arguments.putSerializable(Constants.OBJECTO_ZP07A, zp);
+									break;
+								}
+							}
+						}
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
+					case 4: //RESULTADOS OFTALMOLOGICOS
+						i = new Intent(getApplicationContext(),
+								NewZp07aInfantOphtResultsActivity.class);
+						arguments.putString(Constants.EVENT, Constants.EXAM5);
+						if (!zp07a.isEmpty()) {
+							for (Zp07aInfantOphtResults zp: zp07a) {
+								if (zp.getRedcapEventName().matches(Constants.EXAM5)){
+									arguments.putSerializable(Constants.OBJECTO_ZP07A, zp);
+									break;
+								}
+							}
+						}
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
+					case 5: //RESULTADOS OFTALMOLOGICOS
+						i = new Intent(getApplicationContext(),
+								NewZp07aInfantOphtResultsActivity.class);
+						arguments.putString(Constants.EVENT, Constants.EXAM6);
+						if (!zp07a.isEmpty()) {
+							for (Zp07aInfantOphtResults zp: zp07a) {
+								if (zp.getRedcapEventName().matches(Constants.EXAM6)){
+									arguments.putSerializable(Constants.OBJECTO_ZP07A, zp);
+									break;
+								}
+							}
+						}
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
 					default:
 						break;
 				}
+
 			}
 		});
 
@@ -246,7 +294,7 @@ public class UnscheduledInfantVisitActivity extends AbstractAsyncActivity {
 		// Private classes
 		// ***************************************
 		private class FetchUnshedVisitaInfanteTask extends AsyncTask<String, Void, String> {
-			private String eventoaFiltrar = null;
+			//private String eventoaFiltrar = null;
 			private String filtro = null;
 			@Override
 			protected void onPreExecute() {
@@ -256,13 +304,11 @@ public class UnscheduledInfantVisitActivity extends AbstractAsyncActivity {
 
 			@Override
 			protected String doInBackground(String... values) {
-				eventoaFiltrar = values[0];
+
 				try {
 					zipA.open();
-					filtro = MainDBConstants.recordId + "='" + zpInfante.getRecordId() + "' and " + Zp02DBConstants.redcapEventName + "='" + eventoaFiltrar +"'";
-					zp02d = zipA.getZp02dInfantBiospecimenCollection(filtro, MainDBConstants.recordId);
-					zp07 = zipA.getZp07InfantAssessmentVisit(filtro, MainDBConstants.recordId);
-					zp07OtoE = zipA.getZp07InfantOtoacousticE(filtro, MainDBConstants.recordId);
+					filtro = MainDBConstants.recordId + "='" + zpInfante.getRecordId() + "' and " + MainDBConstants.redcapEventName + " like '" + "exam_%" +"'";
+					zp07a = zipA.getZp07aInfantOphtResults(filtro, MainDBConstants.recordId);
 					zipA.close();
 				} catch (Exception e) {
 					Log.e(TAG, e.getLocalizedMessage(), e);
@@ -273,8 +319,8 @@ public class UnscheduledInfantVisitActivity extends AbstractAsyncActivity {
 
 			protected void onPostExecute(String resultado) {
 				// after the network request completes, hide the progress indicator
-				gridView.setAdapter(new InfantVisitAdapter(getApplicationContext(), R.layout.menu_item_2, menu_infante_info, 
-						zp02d, zp07, zp07OtoE));
+				gridView.setAdapter(new Infant07aVisitAdapter(getApplicationContext(), R.layout.menu_item_2, menu_infante_info,
+						zp07a));
 				dismissProgressDialog();
 			}
 

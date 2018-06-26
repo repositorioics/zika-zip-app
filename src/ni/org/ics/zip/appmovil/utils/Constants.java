@@ -99,6 +99,13 @@ public class Constants {
 	public static final String UNSHEDINF4 = "unscheduled_visit_arm_2d";
 	public static final String UNSHEDINF5 = "unscheduled_visit_arm_2e";
 
+	public static final String EXAM1 = "exam_1_arm_2";
+	public static final String EXAM2 = "exam_2_arm_2";
+	public static final String EXAM3 = "exam_3_arm_2";
+	public static final String EXAM4 = "exam_4_arm_2";
+	public static final String EXAM5 = "exam_5_arm_2";
+	public static final String EXAM6 = "exam_6_arm_2";
+
 	public static final String PRESCREENID = "preScreeningId";
     public static final String RECORDID = "recordId";
     

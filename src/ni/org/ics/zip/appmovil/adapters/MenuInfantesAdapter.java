@@ -80,7 +80,7 @@ public class MenuInfantesAdapter extends ArrayAdapter<String> {
 			if(String.valueOf(mZpEstado.getNacimiento()).equals("0")){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
 				long dif = getDateDiff(fechaEvento,todayDate,TimeUnit.DAYS);
-				//Se realizó el cambio porque existen formularios que son completados al mes de nacido del infante
+				//Se realizï¿½ el cambio porque existen formularios que son completados al mes de nacido del infante
 				if(dif>35){
 					textView.setTextColor(Color.RED);
 					textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.delayed));
@@ -194,37 +194,61 @@ public class MenuInfantesAdapter extends ArrayAdapter<String> {
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			fechaIngreso.add(Calendar.DATE, -365);
 			break;
-		case 4: 
+			case 4:
+				textView.setTextColor(Color.BLACK);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.available)+"\n\n");
+				img=getContext().getResources().getDrawable( R.drawable.ic_opht);
+				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+				break;
+			case 5:
+				textView.setTextColor(Color.BLACK);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.available)+"\n\n");
+				img=getContext().getResources().getDrawable( R.drawable.ic_audio);
+				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+				break;
+			case 6:
+				textView.setTextColor(Color.BLACK);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.available)+"\n\n");
+				img=getContext().getResources().getDrawable( R.drawable.ic_image);
+				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+				break;
+			case 7:
+				textView.setTextColor(Color.BLACK);
+				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.available)+"\n\n");
+				img=getContext().getResources().getDrawable( R.drawable.ic_bayley);
+				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+				break;
+		case 8:
 			textView.setTextColor(Color.BLACK);
 			textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.available)+"\n\n");
 			img=getContext().getResources().getDrawable( R.drawable.ic_addvisit);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
-		case 5: 
+		case 9:
 			textView.setTextColor(Color.BLACK);
 			textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.available)+"\n\n");
 			img=getContext().getResources().getDrawable( R.drawable.ic_addvisit);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
-		case 6: 
+		case 10:
 			textView.setTextColor(Color.BLACK);
 			textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.available)+"\n\n");
 			img=getContext().getResources().getDrawable( R.drawable.ic_addvisit);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
-		case 7: 
+		case 11:
 			textView.setTextColor(Color.BLACK);
 			textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.available)+"\n\n");
 			img=getContext().getResources().getDrawable( R.drawable.ic_addvisit);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
-		case 8: 
+		case 12:
 			textView.setTextColor(Color.BLACK);
 			textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.available)+"\n\n");
 			img=getContext().getResources().getDrawable( R.drawable.ic_addvisit);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
-		case 9: 
+		case 13:
 			textView.setTextColor(Color.BLACK);
 			if(mZpSalida!=null){
 				textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.inf_retired)+"\n\n");

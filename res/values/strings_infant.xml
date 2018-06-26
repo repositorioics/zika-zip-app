@@ -6,6 +6,10 @@
     <string name="infant_a_2">3 meses</string>
     <string name="infant_a_3">6 meses</string>
     <string name="infant_a_4">12 meses</string>
+    <string name="infant_a_11">Resultados Oftalmológicos</string>
+    <string name="infant_a_12">Resultados audiológicos anormales</string>
+    <string name="infant_a_13">Estudios de Imágenes</string>
+    <string name="infant_a_14">Escala de Bayley</string>
     <string name="infant_a_5">No programada 1</string>
     <string name="infant_a_6">No programada 2</string>
     <string name="infant_a_7">No programada 3</string>
@@ -29,4 +33,12 @@
     <string name="inf_dob">Fecha de nacimiento</string>
     <string name="inf_retired">Infante retirado del estudio</string>
     <string name="inf_exit">Fecha de salida</string>
+
+    <string name="infant_c_1">Examen 1</string>
+    <string name="infant_c_2">Examen 2</string>
+    <string name="infant_c_3">Examen 3</string>
+    <string name="infant_c_4">Examen 4</string>
+    <string name="infant_c_5">Examen 5</string>
+    <string name="infant_c_6">Examen 6</string>
+
 </resources>

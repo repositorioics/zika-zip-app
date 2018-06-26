@@ -117,7 +117,7 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
     private String infantRashDy;
     private String infantRashMn;
     private String infantRashYr;
-    private Float infantRashDur;
+    private Integer infantRashDur;
     private String infantRashSpread;
     private String infantSpreadPart;
     private String infantFeverExperience;
@@ -128,22 +128,22 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
     private String infantFeverDy;
     private String infantFeverMn;
     private String infantFeverYr;
-    private Float infantFeverDur;
+    private Integer infantFeverDur;
     private String infantRedeyes;
     private String infantRedeyesDy;
     private String infantRedeyesMn;
     private String infantRedeyesYr;
-    private Float infantRedeyesDur;
+    private Integer infantRedeyesDur;
     private String infantJoint;
     private String infantJointDy;
     private String infantJointMn;
     private String infantJointYr;
-    private Float infantJointDur;
+    private Integer infantJointDur;
     private String infantHeadache;
     private String infantHeadacheDy;
     private String infantHeadacheMn;
     private String infantHeadacheYr;
-    private Float infantHeadaDur;
+    private Integer infantHeadaDur;
     private String infantSymptomOther;
     private String infantSpecifySymptom;
     private String infantOtherSymptom;
@@ -883,14 +883,6 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
         this.infantRashYr = infantRashYr;
     }
 
-    public Float getInfantRashDur() {
-        return infantRashDur;
-    }
-
-    public void setInfantRashDur(Float infantRashDur) {
-        this.infantRashDur = infantRashDur;
-    }
-
     public String getInfantRashSpread() {
         return infantRashSpread;
     }
@@ -971,14 +963,6 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
         this.infantFeverYr = infantFeverYr;
     }
 
-    public Float getInfantFeverDur() {
-        return infantFeverDur;
-    }
-
-    public void setInfantFeverDur(Float infantFeverDur) {
-        this.infantFeverDur = infantFeverDur;
-    }
-
     public String getInfantRedeyes() {
         return infantRedeyes;
     }
@@ -1009,14 +993,6 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
 
     public void setInfantRedeyesYr(String infantRedeyesYr) {
         this.infantRedeyesYr = infantRedeyesYr;
-    }
-
-    public Float getInfantRedeyesDur() {
-        return infantRedeyesDur;
-    }
-
-    public void setInfantRedeyesDur(Float infantRedeyesDur) {
-        this.infantRedeyesDur = infantRedeyesDur;
     }
 
     public String getInfantJoint() {
@@ -1051,14 +1027,6 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
         this.infantJointYr = infantJointYr;
     }
 
-    public Float getInfantJointDur() {
-        return infantJointDur;
-    }
-
-    public void setInfantJointDur(Float infantJointDur) {
-        this.infantJointDur = infantJointDur;
-    }
-
     public String getInfantHeadache() {
         return infantHeadache;
     }
@@ -1089,14 +1057,6 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
 
     public void setInfantHeadacheYr(String infantHeadacheYr) {
         this.infantHeadacheYr = infantHeadacheYr;
-    }
-
-    public Float getInfantHeadaDur() {
-        return infantHeadaDur;
-    }
-
-    public void setInfantHeadaDur(Float infantHeadaDur) {
-        this.infantHeadaDur = infantHeadaDur;
     }
 
     public String getInfantSymptomOther() {
@@ -1498,7 +1458,47 @@ public class Zp07InfantAssessmentVisit extends BaseMetaData {
     public void setIdInstancia3(Integer idInstancia3) {
         this.idInstancia3 = idInstancia3;
     }
-    
+
+    public Integer getInfantRashDur() {
+        return infantRashDur;
+    }
+
+    public void setInfantRashDur(Integer infantRashDur) {
+        this.infantRashDur = infantRashDur;
+    }
+
+    public Integer getInfantFeverDur() {
+        return infantFeverDur;
+    }
+
+    public void setInfantFeverDur(Integer infantFeverDur) {
+        this.infantFeverDur = infantFeverDur;
+    }
+
+    public Integer getInfantRedeyesDur() {
+        return infantRedeyesDur;
+    }
+
+    public void setInfantRedeyesDur(Integer infantRedeyesDur) {
+        this.infantRedeyesDur = infantRedeyesDur;
+    }
+
+    public Integer getInfantJointDur() {
+        return infantJointDur;
+    }
+
+    public void setInfantJointDur(Integer infantJointDur) {
+        this.infantJointDur = infantJointDur;
+    }
+
+    public Integer getInfantHeadaDur() {
+        return infantHeadaDur;
+    }
+
+    public void setInfantHeadaDur(Integer infantHeadaDur) {
+        this.infantHeadaDur = infantHeadaDur;
+    }
+
     //added v2.4
     private Date infantDob;
     private Integer infantWeeks;

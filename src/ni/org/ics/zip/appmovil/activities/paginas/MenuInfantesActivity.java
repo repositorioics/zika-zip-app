@@ -11,9 +11,7 @@ import ni.org.ics.zip.appmovil.MainActivity;
 import ni.org.ics.zip.appmovil.MyZipApplication;
 import ni.org.ics.zip.appmovil.R;
 import ni.org.ics.zip.appmovil.activities.nuevos.NewZp08StudyExitActivity;
-import ni.org.ics.zip.appmovil.activities.paginas.eventosinfante.BirthVisitActivity;
-import ni.org.ics.zip.appmovil.activities.paginas.eventosinfante.InfantVisitActivity;
-import ni.org.ics.zip.appmovil.activities.paginas.eventosinfante.UnscheduledInfantVisitActivity;
+import ni.org.ics.zip.appmovil.activities.paginas.eventosinfante.*;
 import ni.org.ics.zip.appmovil.adapters.MenuInfantesAdapter;
 import ni.org.ics.zip.appmovil.database.ZipAdapter;
 import ni.org.ics.zip.appmovil.domain.Zp08StudyExit;
@@ -232,20 +230,56 @@ public class MenuInfantesActivity extends AbstractAsyncActivity {
 				i.putExtras(arguments);
 				startActivity(i);
 				break;
-		case 4: case 5:case 6:case 7:case 8:
-			i = new Intent(getApplicationContext(),
-					UnscheduledInfantVisitActivity.class);
-			//Aca se pasa evento, tamizaje y estado
-			if(position==4)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF1);
-			if(position==5)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF2);
-			if(position==6)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF3);
-			if(position==7)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF4);
-			if(position==8)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF5);
-			if (zpInfante!=null) arguments.putSerializable(Constants.OBJECTO_ZPINFDATA , zpInfante);
-			i.putExtras(arguments);
-			startActivity(i);
-			break;	
-		case 9:
+			case 4:
+				i = new Intent(getApplicationContext(),
+                        Infant07aVisitActivity.class);
+				//Aca se pasa evento, tamizaje y estado
+				if (zpInfante!=null) arguments.putSerializable(Constants.OBJECTO_ZPINFDATA , zpInfante);
+				i.putExtras(arguments);
+				startActivity(i);
+				break;
+
+            case 5:
+                i = new Intent(getApplicationContext(),
+                        Infant07bVisitActivity.class);
+                //Aca se pasa evento, tamizaje y estado
+                if (zpInfante!=null) arguments.putSerializable(Constants.OBJECTO_ZPINFDATA , zpInfante);
+                i.putExtras(arguments);
+                startActivity(i);
+                break;
+
+            case 6:
+                i = new Intent(getApplicationContext(),
+                        Infant07cVisitActivity.class);
+                //Aca se pasa evento, tamizaje y estado
+                if (zpInfante!=null) arguments.putSerializable(Constants.OBJECTO_ZPINFDATA , zpInfante);
+                i.putExtras(arguments);
+                startActivity(i);
+                break;
+
+            case 7:
+                i = new Intent(getApplicationContext(),
+                        Infant07dVisitActivity.class);
+                //Aca se pasa evento, tamizaje y estado
+                if (zpInfante!=null) arguments.putSerializable(Constants.OBJECTO_ZPINFDATA , zpInfante);
+                i.putExtras(arguments);
+                startActivity(i);
+                break;
+
+			case 8: case 9:case 10:case 11:case 12:
+				i = new Intent(getApplicationContext(),
+						UnscheduledInfantVisitActivity.class);
+				//Aca se pasa evento, tamizaje y estado
+				if(position==4)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF1);
+				if(position==5)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF2);
+				if(position==6)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF3);
+				if(position==7)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF4);
+				if(position==8)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF5);
+				if (zpInfante!=null) arguments.putSerializable(Constants.OBJECTO_ZPINFDATA , zpInfante);
+				i.putExtras(arguments);
+				startActivity(i);
+				break;
+			case 13:
 			i = new Intent(getApplicationContext(),
 					NewZp08StudyExitActivity.class);
 			//Aca se pasa evento, tamizaje y estado
