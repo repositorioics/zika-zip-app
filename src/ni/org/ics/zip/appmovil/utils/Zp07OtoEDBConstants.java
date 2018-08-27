@@ -30,6 +30,7 @@ public class Zp07OtoEDBConstants {
     public static final String infantDtReview = "infantDtReview";
     public static final String infantIdDataEntry= "infantIdDataEntry";
     public static final String infantDtEnter = "infantDtEnter";
+    public static final String infantHearDt = "infantHearDt";
 
 
     //Crear tabla Zp07InfantOtoacousticEmissions
@@ -55,6 +56,7 @@ public class Zp07OtoEDBConstants {
             + infantDtReview + " date, "
             + infantIdDataEntry + " text, "
             + infantDtEnter + " date, "
+            + infantHearDt + " date, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "

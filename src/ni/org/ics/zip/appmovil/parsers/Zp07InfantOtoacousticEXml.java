@@ -47,6 +47,8 @@ public class Zp07InfantOtoacousticEXml {
     private String infantIdDataEntry;
     @Element(required=false)
     private Date infantDtEnter;
+    @Element(required=false)
+    private Date infantHearDt;
 
 
     @Element(required=false)
@@ -222,6 +224,14 @@ public class Zp07InfantOtoacousticEXml {
 
     public void setInfantDtEnter(Date infantDtEnter) {
         this.infantDtEnter = infantDtEnter;
+    }
+
+    public Date getInfantHearDt() {
+        return infantHearDt;
+    }
+
+    public void setInfantHearDt(Date infantHearDt) {
+        this.infantHearDt = infantHearDt;
     }
 
     public String getId() {

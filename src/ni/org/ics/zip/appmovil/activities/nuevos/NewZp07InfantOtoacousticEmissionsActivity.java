@@ -249,6 +249,7 @@ public class NewZp07InfantOtoacousticEmissionsActivity extends AbstractAsyncActi
             mInfOtoE.setSimserial(zp07Xml.getSimserial());
             mInfOtoE.setPhonenumber(zp07Xml.getPhonenumber());
             mInfOtoE.setToday(zp07Xml.getToday());
+            mInfOtoE.setInfantHearDt(zp07Xml.getInfantHearDt());
 
             new SaveDataTask().execute(accion);
 

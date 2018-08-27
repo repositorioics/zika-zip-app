@@ -88,6 +88,7 @@ public class Constants {
 	public static final String UNSHED4 = "unscheduled_visit_arm_1d";
 	public static final String UNSHED5 = "unscheduled_visit_arm_1e";
 	public static final String EXIT = "study_exit_arm_1";
+	public static final String INFEXIT = "exit_arm_2";
 	
 	public static final String BIRTH = "birth_arm_2";
 	public static final String MONTH3 = "3_months_arm_2";

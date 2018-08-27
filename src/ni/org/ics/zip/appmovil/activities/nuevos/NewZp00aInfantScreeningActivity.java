@@ -236,7 +236,7 @@ public class NewZp00aInfantScreeningActivity extends AbstractAsyncActivity {
             Zp00aInfantScreeningXml zp00aXml = serializer.read(Zp00aInfantScreeningXml.class, source);
             iTamizaje = new Zp00aInfantScreening();
             iTamizaje.setPregnantId(mRecordId);
-            iTamizaje.setRedcapEventName(Constants.BIRTH);
+            iTamizaje.setRedcapEventName(Constants.SCREENING);
             iTamizaje.setInfVisitDt(zp00aXml.getInfVisitDt());
             iTamizaje.setInfRemain(zp00aXml.getInfRemain());
             iTamizaje.setInfConsent(zp00aXml.getInfConsent());

@@ -48,6 +48,8 @@ public class Zp07InfantOtoacousticEmissionsHelper {
         cv.put(MainDBConstants.SIM_SERIAL, zp07InfantOtoEms.getSimserial());
         cv.put(MainDBConstants.PHONE_NUMBER, zp07InfantOtoEms.getPhonenumber());
         if (zp07InfantOtoEms.getToday() != null) cv.put(MainDBConstants.TODAY, zp07InfantOtoEms.getToday().getTime());
+        if (zp07InfantOtoEms.getInfantHearDt()!=null) cv.put(Zp07OtoEDBConstants.infantHearDt, zp07InfantOtoEms.getInfantHearDt().getTime());
+
         return cv;
     }
 
@@ -74,6 +76,9 @@ public class Zp07InfantOtoacousticEmissionsHelper {
         if (cursorIA.getLong(cursorIA.getColumnIndex(Zp07OtoEDBConstants.infantDtReview))>0) infantOtoE.setInfantDtReview(new Date(cursorIA.getLong(cursorIA.getColumnIndex(Zp07OtoEDBConstants.infantDtReview))));
         infantOtoE.setInfantIdDataEntry(cursorIA.getString(cursorIA.getColumnIndex(Zp07OtoEDBConstants.infantIdDataEntry)));
         if (cursorIA.getLong(cursorIA.getColumnIndex(Zp07OtoEDBConstants.infantDtEnter))>0) infantOtoE.setInfantDtEnter(new Date(cursorIA.getLong(cursorIA.getColumnIndex(Zp07OtoEDBConstants.infantDtEnter))));
+        if (cursorIA.getLong(cursorIA.getColumnIndex(Zp07OtoEDBConstants.infantHearDt))>0) infantOtoE.setInfantHearDt(new Date(cursorIA.getLong(cursorIA.getColumnIndex(Zp07OtoEDBConstants.infantHearDt))));
+
+
 
         if(cursorIA.getLong(cursorIA.getColumnIndex(MainDBConstants.recordDate))>0) infantOtoE.setRecordDate(new Date(cursorIA.getLong(cursorIA.getColumnIndex(MainDBConstants.recordDate))));
         infantOtoE.setRecordUser(cursorIA.getString(cursorIA.getColumnIndex(MainDBConstants.recordUser)));

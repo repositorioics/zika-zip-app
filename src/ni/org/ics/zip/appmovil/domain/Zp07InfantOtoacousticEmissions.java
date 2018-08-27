@@ -31,6 +31,7 @@ public class Zp07InfantOtoacousticEmissions extends BaseMetaData {
     private Date infantDtReview;
     private String infantIdDataEntry;
     private Date infantDtEnter;
+    private Date infantHearDt;
 
     public String getRecordId() {
         return recordId;
@@ -190,5 +191,13 @@ public class Zp07InfantOtoacousticEmissions extends BaseMetaData {
 
     public void setInfantDtEnter(Date infantDtEnter) {
         this.infantDtEnter = infantDtEnter;
+    }
+
+    public Date getInfantHearDt() {
+        return infantHearDt;
+    }
+
+    public void setInfantHearDt(Date infantHearDt) {
+        this.infantHearDt = infantHearDt;
     }
 }

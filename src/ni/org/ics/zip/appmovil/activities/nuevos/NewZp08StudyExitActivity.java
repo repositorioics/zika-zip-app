@@ -201,7 +201,13 @@ public class NewZp08StudyExitActivity  extends AbstractAsyncActivity {
         try {
             Zp08StudyExitXml zp08Xml = serializer.read(Zp08StudyExitXml.class, source);
             mExit.setRecordId(mRecordId);
-            mExit.setRedcapEventName(Constants.EXIT);
+
+            if (mRecordId.matches("^07[0-9][0-9][0-9][0-9][0][A-Y]$")){
+                mExit.setRedcapEventName(Constants.EXIT);
+            }else{
+                mExit.setRedcapEventName(Constants.INFEXIT);
+            }
+
             mExit.setExtStudyExitDate(zp08Xml.getExtStudyExitDate());
             mExit.setExtSubjClass(zp08Xml.getExtSubjClass());
             mExit.setExtStudyExitReason(zp08Xml.getExtStudyExitReason());
