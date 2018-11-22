@@ -304,29 +304,39 @@ public class NewZp00aInfantScreeningActivity extends AbstractAsyncActivity {
                          if (numFe1 >0 || numFe > 0){
                              if (numFe1 > 0 ) {
                                  for (int i = 1; i <= numFe1; i++) {
-                                     infantId = mRecordId.substring(0, mRecordId.length() - 2) + i + mRecordId.substring(mRecordId.length() - 1, mRecordId.length());
-                                     iTamizaje.setRecordId(infantId);
-                                     iTamizaje.setInfInfid(infantId);
-                                     zipA.crearZp00aInfantScreening(iTamizaje);
+                                	 if(infantId=="") {
+                                		 infantId = mRecordId.substring(0, mRecordId.length() - 2) + i + mRecordId.substring(mRecordId.length() - 1, mRecordId.length());
+                                	 }
+                                	 else {
+                                		 infantId = infantId + " / " + mRecordId.substring(0, mRecordId.length() - 2) + i + mRecordId.substring(mRecordId.length() - 1, mRecordId.length());
+                                	 }
                                  }
+                                 iTamizaje.setRecordId(mRecordId);
+                                 iTamizaje.setInfInfid(infantId);
+                                 zipA.crearZp00aInfantScreening(iTamizaje);
                              }else if (numFe > 0){
                                  for (int i = 1; i <= numFe; i++) {
-                                     infantId = mRecordId.substring(0, mRecordId.length() - 2) + i + mRecordId.substring(mRecordId.length() - 1, mRecordId.length());
-                                     iTamizaje.setRecordId(infantId);
-                                     iTamizaje.setInfInfid(infantId);
-                                     zipA.crearZp00aInfantScreening(iTamizaje);
+                                	 if(infantId=="") {
+                                		 infantId = mRecordId.substring(0, mRecordId.length() - 2) + i + mRecordId.substring(mRecordId.length() - 1, mRecordId.length());
+                                	 }
+                                	 else {
+                                		 infantId = infantId + " / " + mRecordId.substring(0, mRecordId.length() - 2) + i + mRecordId.substring(mRecordId.length() - 1, mRecordId.length());
+                                	 }
                                  }
+                                 iTamizaje.setRecordId(mRecordId);
+                                 iTamizaje.setInfInfid(infantId);
+                                 zipA.crearZp00aInfantScreening(iTamizaje);
                              }
                          }else{
                              infantId = mRecordId.substring(0, mRecordId.length() - 2) + "1" + mRecordId.substring(mRecordId.length() - 1, mRecordId.length());
-                             iTamizaje.setRecordId(infantId);
+                             iTamizaje.setRecordId(mRecordId);
                              iTamizaje.setInfInfid(infantId);
                              zipA.crearZp00aInfantScreening(iTamizaje);
                          }
 
                     }else{
                         infantId = mRecordId.substring(0, mRecordId.length() - 2) + "1" + mRecordId.substring(mRecordId.length() - 1, mRecordId.length());
-                         iTamizaje.setRecordId(infantId);
+                         iTamizaje.setRecordId(mRecordId);
                          iTamizaje.setInfInfid(infantId);
                          zipA.crearZp00aInfantScreening(iTamizaje);
 

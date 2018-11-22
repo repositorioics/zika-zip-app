@@ -1743,6 +1743,7 @@ public class ZipAdapter {
 		return mDb.update(Zp07OtoEDBConstants.INFANT_OTO_EMS_TABLE, cv, Zp07OtoEDBConstants.recordId + "='"
 				+ infantOtoEms.getRecordId() + "' and " + Zp07OtoEDBConstants.redcapEventName + "='" + infantOtoEms.getRedcapEventName() +"'", null) > 0;
 	}
+
 	//Limpiar la tabla de Zp07InfantOtoacousticEmissions de la base de datos
 	public boolean borrarZp07InfantOtoacousticE() {
 		return mDb.delete(Zp07OtoEDBConstants.INFANT_OTO_EMS_TABLE, null, null) > 0;
@@ -2007,56 +2008,80 @@ public class ZipAdapter {
 
 	public Boolean verificarData() throws SQLException{
 		Cursor c = null;
+		boolean hayDatos = false;
 		c = crearCursor(MainDBConstants.SCREENING_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(MainDBConstants.DATA_PREG_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(MainDBConstants.STATUS_PREG_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(MainDBConstants.DATA_PRESCREEN_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(Zp01DBConstants.STUDYENTRY_AD_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(Zp01DBConstants.STUDYENTRY_E_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(Zp01DBConstants.STUDYENTRY_FK_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(Zp02DBConstants.BIOCOLLECTION_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(Zp03DBConstants.MONTHLYVISIT_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(Zp04DBConstants.TRIMESTERVISIT_AD_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(Zp04DBConstants.TRIMESTERVISIT_E_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(Zp04DBConstants.TRIMESTERVISIT_FH_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(Zp05DBConstants.ULTRASOUNDEXAM_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(Zp06DBConstants.DELIVERY6WVISIT_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(Zp08DBConstants.STUDYEXIT_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(MainDBConstants.DATA_CONSSAL_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(MainDBConstants.DATA_CONSREC_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(MainDBConstants.DATA_USSAL_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(MainDBConstants.DATA_USREC_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-        if (c != null && c.getCount()>0) {c.close();return true;}
-        c = crearCursor(Zp07DBConstants.INFANTASSESSMENT_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-        if (c != null && c.getCount()>0) {c.close();return true;}
-        c = crearCursor(Zp02DBConstants.INFANT_BIOCOLLECTION_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(MainDBConstants.INFANTDATA_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(MainDBConstants.INFANTSTATUS_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c = crearCursor(MainDBConstants.ZpAgendaEstudio, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
+		if (c != null && c.getCount()>0) hayDatos = true;
 		c.close();
-		return false;
+		c = crearCursor(MainDBConstants.DATA_PREG_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(MainDBConstants.STATUS_PREG_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(MainDBConstants.DATA_PRESCREEN_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(Zp01DBConstants.STUDYENTRY_AD_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(Zp01DBConstants.STUDYENTRY_E_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(Zp01DBConstants.STUDYENTRY_FK_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(Zp02DBConstants.BIOCOLLECTION_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(Zp03DBConstants.MONTHLYVISIT_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(Zp04DBConstants.TRIMESTERVISIT_AD_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(Zp04DBConstants.TRIMESTERVISIT_E_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(Zp04DBConstants.TRIMESTERVISIT_FH_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(Zp05DBConstants.ULTRASOUNDEXAM_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(Zp06DBConstants.DELIVERY6WVISIT_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(Zp08DBConstants.STUDYEXIT_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(MainDBConstants.DATA_CONSSAL_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(MainDBConstants.DATA_CONSREC_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(MainDBConstants.DATA_USSAL_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(MainDBConstants.DATA_USREC_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+        c = crearCursor(Zp07DBConstants.INFANTASSESSMENT_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) hayDatos = true;
+        c.close();
+        c = crearCursor(Zp02DBConstants.INFANT_BIOCOLLECTION_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) hayDatos = true;
+        c.close();
+		c = crearCursor(MainDBConstants.INFANTDATA_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(MainDBConstants.INFANTSTATUS_TABLE, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		c = crearCursor(MainDBConstants.ZpAgendaEstudio, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) hayDatos = true;
+		c.close();
+		return hayDatos;
 	}
 
 
@@ -2064,7 +2089,6 @@ public class ZipAdapter {
         Cursor c = null;
         c = crearCursor(MainDBConstants.ZpAgendaEstudio, MainDBConstants.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
         if (c != null && c.getCount()>0) {c.close();return true;}
-        c.close();
         return false;
     }
 }

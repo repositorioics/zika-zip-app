@@ -1,6 +1,8 @@
 package ni.org.ics.zip.appmovil.activities.paginas.eventosinfante;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import ni.org.ics.zip.appmovil.AbstractAsyncActivity;
 import ni.org.ics.zip.appmovil.MainActivity;

@@ -270,11 +270,11 @@ public class MenuInfantesActivity extends AbstractAsyncActivity {
 				i = new Intent(getApplicationContext(),
 						UnscheduledInfantVisitActivity.class);
 				//Aca se pasa evento, tamizaje y estado
-				if(position==4)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF1);
-				if(position==5)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF2);
-				if(position==6)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF3);
-				if(position==7)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF4);
-				if(position==8)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF5);
+				if(position==8)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF1);
+				if(position==9)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF2);
+				if(position==10)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF3);
+				if(position==11)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF4);
+				if(position==12)	arguments.putString(Constants.EVENT, Constants.UNSHEDINF5);
 				if (zpInfante!=null) arguments.putSerializable(Constants.OBJECTO_ZPINFDATA , zpInfante);
 				i.putExtras(arguments);
 				startActivity(i);

@@ -200,4 +200,9 @@ public class Zp07InfantOtoacousticEmissions extends BaseMetaData {
     public void setInfantHearDt(Date infantHearDt) {
         this.infantHearDt = infantHearDt;
     }
+    @Override
+	public String toString(){
+		return this.recordId + " " +this.redcapEventName + " " + this.infantVisitDate+ " " + this.infantDtEnter;
+	}
+    
 }
