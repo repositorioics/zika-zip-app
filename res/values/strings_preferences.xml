@@ -5,7 +5,7 @@
     
     <string name="server_preferences">Configuración Servidor</string>
     <!--<string name="default_server_url">http://192.168.1.178:8080/zika-zip-0.1/</string> &lt;!&ndash; URL LOCAL PARA PRUEBAS &ndash;&gt;-->
-    <string name="default_server_url">http://nicaumich.miserver.it.umich.edu/zika-zip</string>
+    <string name="default_server_url">http://nicaumich3.miserver.it.umich.edu/zika-zip</string>
     <string name="server_url">URL de servidor</string>
     <string name="check_server">Verificar en el servidor</string>
     <string name="check_wipe">Limpiar base de datos</string>
@@ -14,7 +14,7 @@
     
     <string name="app_preferences">Configuración Aplicación</string>
     <string name="update_app_preferences">Actualizar Aplicación</string>
-    <string name="version_app_preferences">Versión 9</string>
-    <string name="versiondate_app_preferences">Noviembre 21, 2018</string>
+    <string name="version_app_preferences">Versión 9.1</string>
+    <string name="versiondate_app_preferences">Ago 15, 2022</string>
   
 </resources>
